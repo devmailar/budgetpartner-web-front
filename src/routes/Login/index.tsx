@@ -62,7 +62,7 @@ function Login() {
 
 				<div className="flex flex-col">
 					<input
-						className="-mt-2 btn bg-[#895FF5] text-sm text-white font-medium py-2.5 mb-6 rounded-lg"
+						className="mt-4 btn bg-[#895FF5] text-sm text-white font-medium py-2.5 mb-5 rounded-lg"
 						type="submit"
 						value="Login with email"
 						disabled={isLoading}
@@ -76,7 +76,7 @@ function Login() {
 
 					<button
 						type="button"
-						className="btn bg-[#4B4B4B] py-2.5 mt-6 rounded-lg"
+						className="btn bg-[#4B4B4B] py-2.5 mt-5 rounded-lg"
 						onClick={() => navigate("/create-an-account")}
 						disabled={isLoading}
 					>

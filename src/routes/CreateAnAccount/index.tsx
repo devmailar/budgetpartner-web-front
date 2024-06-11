@@ -1,4 +1,5 @@
 import React from "react";
+import { request } from "../../utils";
 
 function CreateAnAccount() {
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -8,12 +9,28 @@ function CreateAnAccount() {
 	): Promise<void> => {
 		try {
 			event.preventDefault();
+			setIsLoading(true);
 
 			const form: FormData = new FormData(event.currentTarget);
 			const email: string = form.get("email") as string;
 
-			console.table({ email });
-			setIsLoading(true);
+			if (!email) {
+				return;
+			}
+
+			await request.post(
+				"/create-an-account",
+				{
+					email: email,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+			);
+
+			setIsLoading(false);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				throw error;
@@ -34,17 +51,15 @@ function CreateAnAccount() {
 						</p>
 					</div>
 
-					<div className="flex flex-col gap-y-3 ">
-						<input
-							className="bg-[#202020] border-[#895FF5] border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
-							type="email"
-							id="email"
-							name="email"
-							placeholder="support@budget-partner.com"
-							autoComplete="email"
-							required
-						/>
-					</div>
+					<input
+						className="bg-[#202020] border-[#895FF5] border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
+						type="email"
+						id="email"
+						name="email"
+						placeholder="support@budget-partner.com"
+						autoComplete="email"
+						required
+					/>
 				</div>
 
 				<div className="flex flex-col gap-y-3">

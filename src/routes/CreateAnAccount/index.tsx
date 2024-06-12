@@ -1,7 +1,9 @@
 import React from "react";
+import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { request } from "../../utils";
 
 function CreateAnAccount() {
+	const navigate: NavigateFunction = useNavigate();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
 	const handleCreate = async (
@@ -13,15 +15,17 @@ function CreateAnAccount() {
 
 			const form: FormData = new FormData(event.currentTarget);
 			const email: string = form.get("email") as string;
+			const password: string = form.get("password") as string;
 
-			if (!email) {
+			if (!email || !password) {
 				return;
 			}
 
 			await request.post(
-				"/create-an-account",
+				"users/create-an-account",
 				{
 					email: email,
+					password: password,
 				},
 				{
 					headers: {
@@ -30,7 +34,7 @@ function CreateAnAccount() {
 				},
 			);
 
-			setIsLoading(false);
+			navigate("/");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				throw error;
@@ -51,15 +55,27 @@ function CreateAnAccount() {
 						</p>
 					</div>
 
-					<input
-						className="bg-[#202020] border-[#895FF5] border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
-						type="email"
-						id="email"
-						name="email"
-						placeholder="support@budget-partner.com"
-						autoComplete="email"
-						required
-					/>
+					<div className="flex flex-col gap-y-3">
+						<input
+							className="bg-[#202020] border-[#895FF5] border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
+							type="email"
+							id="email"
+							name="email"
+							placeholder="support@budget-partner.com"
+							autoComplete="email"
+							required
+						/>
+
+						<input
+							className="bg-[#202020] border-[#895FF5] border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
+							type="password"
+							id="password"
+							name="password"
+							placeholder="******"
+							autoComplete="password"
+							required
+						/>
+					</div>
 				</div>
 
 				<div className="flex flex-col gap-y-3">

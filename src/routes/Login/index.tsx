@@ -1,5 +1,6 @@
 import React from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { request } from "../../utils";
 
 function Login() {
 	const navigate: NavigateFunction = useNavigate();
@@ -10,13 +11,31 @@ function Login() {
 	): Promise<void> => {
 		try {
 			event.preventDefault();
+			setIsLoading(true);
 
 			const form: FormData = new FormData(event.currentTarget);
 			const email: string = form.get("email") as string;
 			const password: string = form.get("password") as string;
 
-			console.table({ email, password });
-			setIsLoading(true);
+			if (!email || !password) {
+				return;
+			}
+
+			const { data } = await request.post(
+				"users/login",
+				{
+					email: email,
+					password: password,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				},
+			);
+
+			alert(data);
+			setIsLoading(false);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				throw error;

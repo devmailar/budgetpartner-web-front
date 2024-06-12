@@ -1,5 +1,6 @@
 import React from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { setCookie } from "typescript-cookie";
 import { request } from "../../utils";
 
 function Login() {
@@ -21,7 +22,7 @@ function Login() {
 				return;
 			}
 
-			const { data } = await request.post(
+			const req = await request.post(
 				"users/login",
 				{
 					email: email,
@@ -34,7 +35,22 @@ function Login() {
 				},
 			);
 
-			alert(data);
+			if (req.headers.get) {
+				// @ts-expect-error
+				const authorizationHeader: string = req.headers.get("Authorization");
+				const authorization: string = authorizationHeader?.split(" ")[1];
+
+				setCookie("Authorization", authorization, {
+					path: "/",
+					domain: "localhost",
+					expires: 1,
+					sameSite: "strict",
+					secure: true,
+				});
+
+				return navigate("/");
+			}
+
 			setIsLoading(false);
 		} catch (error: unknown) {
 			if (error instanceof Error) {

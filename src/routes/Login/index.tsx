@@ -44,10 +44,10 @@ function Login() {
 				}
 
 				// @ts-expect-error
-				const authorizationHeader: string = req.headers.get("Authorization");
-				const authorization: string = authorizationHeader?.split(" ")[1];
+				const authHeader: string = req.headers.get("Authorization");
+				const auth: string = authHeader?.split(" ")[1];
 
-				setCookie("Authorization", authorization, {
+				setCookie("Authorization", auth, {
 					path: "/",
 					domain: "localhost",
 					expires: 1,
@@ -69,9 +69,9 @@ function Login() {
 			return;
 		}
 
-		const authorization: string | undefined = getCookie("Authorization");
+		const auth: string | undefined = getCookie("Authorization");
 
-		if (authorization) {
+		if (auth) {
 			navigate("/budget");
 		}
 	}, [navigate]);

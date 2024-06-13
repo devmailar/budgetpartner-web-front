@@ -1,8 +1,9 @@
 export type TUser = {
-	telegram_id: string;
-	first_name: string;
-	new: boolean;
+	id: number;
+	email: string;
+	password_hash: string;
 	created_at: Date;
+	update_at: Date;
 };
 
 export type TBudget = {

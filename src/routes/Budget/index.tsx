@@ -1,6 +1,7 @@
 import React from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
+import type { TUser } from "../../types";
 import { request } from "../../utils";
 
 function Budget() {
@@ -8,14 +9,18 @@ function Budget() {
 
 	const handleGetUser = React.useCallback(async (auth: string) => {
 		try {
-			const { data } = await request.get("users/get-one", {
+			const {
+				data: user,
+			}: {
+				data: TUser;
+			} = await request.get("users/get-one", {
 				headers: {
 					Authorization: `Bearer ${auth}`,
 				},
 			});
 
 			console.log({
-				data,
+				user,
 			});
 		} catch (error: unknown) {
 			if (error instanceof Error) {

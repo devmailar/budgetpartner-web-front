@@ -48,7 +48,7 @@ function Login() {
 					secure: true,
 				});
 
-				return navigate("/");
+				navigate("/");
 			}
 
 			setIsLoading(false);

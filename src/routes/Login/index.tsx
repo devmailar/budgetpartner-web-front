@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import React from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { setCookie } from "typescript-cookie";
@@ -22,7 +23,7 @@ function Login() {
 				return;
 			}
 
-			const req = await request.post(
+			const req: AxiosResponse = await request.post(
 				"users/login",
 				{
 					email: email,
@@ -36,6 +37,12 @@ function Login() {
 			);
 
 			if (req.headers.get) {
+				setIsLoading(false);
+
+				if (req.data === "Invalid email or password.") {
+					return alert(req.data);
+				}
+
 				// @ts-expect-error
 				const authorizationHeader: string = req.headers.get("Authorization");
 				const authorization: string = authorizationHeader?.split(" ")[1];
@@ -50,8 +57,6 @@ function Login() {
 
 				navigate("/");
 			}
-
-			setIsLoading(false);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				throw error;

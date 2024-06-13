@@ -1,7 +1,7 @@
-import { AxiosResponse } from "axios";
+import type { AxiosResponse } from "axios";
 import React from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import { setCookie } from "typescript-cookie";
+import { getCookie, setCookie } from "typescript-cookie";
 import { request } from "../../utils";
 
 function Login() {
@@ -55,7 +55,7 @@ function Login() {
 					secure: true,
 				});
 
-				navigate("/");
+				window.location.reload();
 			}
 		} catch (error: unknown) {
 			if (error instanceof Error) {
@@ -63,6 +63,18 @@ function Login() {
 			}
 		}
 	};
+
+	React.useEffect(() => {
+		if (!getCookie("Authorization")) {
+			return;
+		}
+
+		const authorization: string | undefined = getCookie("Authorization");
+
+		if (authorization) {
+			navigate("/budget");
+		}
+	}, [navigate]);
 
 	return (
 		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">

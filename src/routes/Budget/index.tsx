@@ -25,9 +25,7 @@ function Budget() {
 
 				dispatch(setUser(user));
 
-				if (user.is_new) {
-					navigate("get-started");
-				}
+				if (user.is_new) navigate("get-started");
 			} catch (error: unknown) {
 				if (error instanceof Error) {
 					throw error;

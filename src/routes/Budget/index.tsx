@@ -4,6 +4,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
+import { Autoplay, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { getCookie, removeCookie } from "typescript-cookie";
 import { setBudget } from "../../stores/Budget";
 import { setError } from "../../stores/Error";
@@ -91,8 +93,8 @@ function Budget() {
 
 	return (
 		<div className="flex items-start justify-center bg-radial-gradient w-screen h-screen">
-			<div className="flex flex-col gap-y-20 items-center mt-20">
-				<div className="flex flex-col gap-y-10 items-center">
+			<div className="flex flex-col gap-y-8 items-center mt-28">
+				<div className="flex flex-col items-center">
 					<nav className="flex items-center p-1 bg-[#202020] rounded-full">
 						<button
 							type="button"
@@ -118,33 +120,54 @@ function Budget() {
 						</button>
 					</nav>
 
-					<div className="flex flex-col gap-y-2 items-center">
-						<h1 className="text-[2.6rem] text-[#895FF5] font-black font-rubik">
-							{budget.income_amount_monthly?.toFixed(2)} €
-						</h1>
+					<Swiper
+						className="w-[40rem] h-fit"
+						autoplay={{
+							delay: 3500,
+							disableOnInteraction: false,
+						}}
+						pagination={{
+							clickable: true,
+						}}
+						modules={[Autoplay, Pagination]}
+					>
+						<SwiperSlide>
+							<div className="flex flex-col gap-y-2 items-center py-11">
+								<h1 className="text-[2.8rem] text-[#895FF5] font-black font-rubik">
+									{budget.income_amount_monthly?.toFixed(2)} €
+								</h1>
 
-						<span className="text-xl text-[#895FF5] font-light font-rubik">
-							/day
-						</span>
-					</div>
+								<span className="text-xl text-[#895FF5] font-light font-rubik">
+									/day
+								</span>
+							</div>
+						</SwiperSlide>
+
+						<SwiperSlide>
+							<div className="flex flex-col gap-y-2 items-center py-11">
+								<h1 className="text-[2.8rem] text-[#895FF5] font-black font-rubik">
+									{(budget.income_amount_monthly * 4.3)?.toFixed(2)} €
+								</h1>
+
+								<span className="text-xl text-[#895FF5] font-light font-rubik">
+									/month
+								</span>
+							</div>
+						</SwiperSlide>
+
+						<SwiperSlide>
+							<div className="flex flex-col gap-y-2 items-center py-11">
+								<h1 className="text-[2.8rem] text-[#895FF5] font-black font-rubik">
+									{(budget.income_amount_monthly * 12)?.toFixed(2)} €
+								</h1>
+
+								<span className="text-xl text-[#895FF5] font-light font-rubik">
+									/year
+								</span>
+							</div>
+						</SwiperSlide>
+					</Swiper>
 				</div>
-				{/* <div className="flex gap-x-1 items-center">
-						<button type="button" className="btn primary py-1">
-							<span className="text-xs text-white font-normal font-rubik">
-								Daily
-							</span>
-						</button>
-						<button type="button" className="btn bg-[#202020] py-1">
-							<span className="text-xs text-[#4B4B4B] font-normal font-rubik">
-								Monthly
-							</span>
-						</button>
-						<button type="button" className="btn bg-[#202020] py-1">
-							<span className="text-xs text-[#4B4B4B] font-normal font-rubik">
-								Yearly
-							</span>
-						</button>
-					</div> */}
 
 				<div className="flex flex-col gap-y-4 items-center">
 					<button

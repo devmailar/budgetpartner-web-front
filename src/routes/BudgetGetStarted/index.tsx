@@ -1,11 +1,17 @@
+import type { Dispatch } from "@reduxjs/toolkit";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
+import { setError } from "../../stores/Error";
 import { request } from "../../utils";
+import type { AxiosError, AxiosResponse } from "axios";
 
 function BudgetGetStarted() {
-	const [step, setStep] = React.useState<number>(0);
-	const [error, setError] = React.useState<string>("");
+	const dispatch: Dispatch = useDispatch();
+	const navigate: NavigateFunction = useNavigate();
 
+	const [step, setStep] = React.useState<number>(0);
 	const [regularIncomeModal, setRegularIncomeModal] =
 		React.useState<boolean>(false);
 
@@ -21,35 +27,60 @@ function BudgetGetStarted() {
 			const income: number = Number.parseInt(incomeString);
 
 			if (income <= 0 || Number.isNaN(income)) {
-				setError("Please enter a valid income amount.");
+				dispatch(setError("Please enter valid amount"));
 				return;
 			}
 
 			const authorization: string | undefined = getCookie("Authorization");
 			if (!authorization) {
+				dispatch(setError("Please login to continue"));
+				navigate("/");
 				return;
 			}
 
-			await request.post(
-				"budgets/create",
-				{
-					income_amount_monthly: income,
-				},
-				{
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${authorization}`,
+			await request
+				.post(
+					"budgets/create",
+					{
+						income_amount_monthly: income,
 					},
-				},
-			);
-
-			setRegularIncomeModal(false);
+					{
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${authorization}`,
+						},
+					},
+				)
+				.then((response: AxiosResponse) => {
+					navigate("/");
+					return;
+				})
+				.catch((error: AxiosError) => {
+					dispatch(setError(error.response?.data.message));
+					navigate("/");
+					return;
+				});
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				throw error;
 			}
 		}
 	};
+
+	React.useEffect((): void => {
+		try {
+			const authorization: string | undefined = getCookie("Authorization");
+
+			if (!authorization) {
+				navigate("/");
+				return;
+			}
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				throw error;
+			}
+		}
+	}, [navigate]);
 
 	return (
 		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">
@@ -140,12 +171,6 @@ function BudgetGetStarted() {
 												EUR/MONTH
 											</span>
 										</div>
-
-										{error && (
-											<span className="text-xs text-red-500 font-light font-rubik">
-												{error}
-											</span>
-										)}
 									</div>
 								</div>
 

@@ -1,6 +1,6 @@
-export interface IRootState {
-	user: TUser;
-}
+export type TError = {
+	errorMessage: string;
+};
 
 export type TUser = {
 	id: number;
@@ -40,3 +40,8 @@ export type TMenu = {
 	addRecurringexpense: boolean;
 	addSavings: boolean;
 };
+
+export interface IRootState {
+	error: TError;
+	user: TUser;
+}

@@ -1,30 +1,38 @@
+export interface IRootState {
+	user: TUser;
+}
+
 export type TUser = {
 	id: number;
 	email: string;
 	password_hash: string;
+	is_new: boolean;
 	created_at: Date;
 	update_at: Date;
 };
 
 export type TBudget = {
-	telegram_id: string;
+	user_id: number;
 	income_amount_total: number;
 	income_amount_monthly: number;
 	created_at: Date;
+	updated_at: Date;
 };
 
 export type TBudgetExtraincome = {
-	telegram_id: string;
+	user_id: number;
 	income_type: string;
 	income_amount_monthly: number;
 	created_at: Date;
+	updated_at: Date;
 };
 
 export type TBudgetRecurringexpense = {
-	telegram_id: string;
+	user_id: number;
 	expense_type: string;
 	expense_amount_monthly: number;
 	created_at: Date;
+	updated_at: Date;
 };
 
 export type TMenu = {

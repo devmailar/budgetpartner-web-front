@@ -44,10 +44,10 @@ function Login() {
 				}
 
 				// @ts-expect-error
-				const authHeader: string = req.headers.get("Authorization");
-				const auth: string = authHeader?.split(" ")[1];
+				const authorizationHeader: string = req.headers.get("Authorization");
+				const authorization: string = authorizationHeader?.split(" ")[1];
 
-				setCookie("Authorization", auth, {
+				setCookie("Authorization", authorization, {
 					path: "/",
 					domain: "localhost",
 					expires: 1,
@@ -64,16 +64,14 @@ function Login() {
 		}
 	};
 
-	React.useEffect(() => {
-		if (!getCookie("Authorization")) {
+	React.useEffect((): void => {
+		const authorization: string | undefined = getCookie("Authorization");
+
+		if (!authorization) {
 			return;
 		}
 
-		const auth: string | undefined = getCookie("Authorization");
-
-		if (auth) {
-			navigate("/budget");
-		}
+		navigate("/budget");
 	}, [navigate]);
 
 	return (

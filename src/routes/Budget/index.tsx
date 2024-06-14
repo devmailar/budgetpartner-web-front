@@ -1,16 +1,18 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import type { KyResponse } from "ky";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import { getCookie } from "typescript-cookie";
+import { getCookie, removeCookie } from "typescript-cookie";
+import { setError } from "../../stores/Error";
 import { setUser } from "../../stores/User";
-import type { TUser } from "../../types";
+import type { IRootState, TUser } from "../../types";
 import { request } from "../../utils";
 
 function Budget() {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
+	const user: TUser = useSelector((state: IRootState) => state.user);
 
 	React.useEffect((): void => {
 		const handleGetUser = async (authorization: string): Promise<void> => {
@@ -28,7 +30,9 @@ function Budget() {
 				if (user.is_new) navigate("get-started");
 			} catch (error: unknown) {
 				if (error instanceof Error) {
-					throw error;
+					dispatch(setError(error.name));
+					removeCookie("Authorization");
+					window.location.reload();
 				}
 			}
 		};
@@ -44,7 +48,9 @@ function Budget() {
 	}, [navigate, dispatch]);
 
 	return (
-		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen" />
+		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">
+			<code className="text-4xl text-white">{JSON.stringify(user)}</code>
+		</div>
 	);
 }
 

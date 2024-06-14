@@ -44,4 +44,5 @@ export type TMenu = {
 export interface IRootState {
 	error: TError;
 	user: TUser;
+	budget: TBudget;
 }

@@ -16,10 +16,6 @@ function Budget() {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const user: TUser = useSelector((state: IRootState) => {
-		return state.user;
-	});
-
 	const budget: TBudget = useSelector((state: IRootState) => {
 		return state.budget;
 	});

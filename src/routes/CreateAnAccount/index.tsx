@@ -10,8 +10,9 @@ function CreateAnAccount() {
 		event: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		try {
-			event.preventDefault();
 			setIsLoading(true);
+
+			event.preventDefault();
 
 			const form: FormData = new FormData(event.currentTarget);
 			const email: string = form.get("email") as string;
@@ -21,18 +22,12 @@ function CreateAnAccount() {
 				return;
 			}
 
-			await request.post(
-				"users/create-an-account",
-				{
+			await request.post("users/create-an-account", {
+				json: {
 					email: email,
 					password: password,
 				},
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				},
-			);
+			});
 
 			navigate("/");
 		} catch (error: unknown) {

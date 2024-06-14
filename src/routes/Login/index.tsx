@@ -1,19 +1,25 @@
-import type { AxiosResponse } from "axios";
+import type { Dispatch } from "@reduxjs/toolkit";
+import type { KyResponse } from "ky";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie, setCookie } from "typescript-cookie";
+import { setError } from "../../stores/Error";
 import { request } from "../../utils";
 
 function Login() {
+	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
+
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
 	const handleLogin = async (
 		event: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		try {
-			event.preventDefault();
 			setIsLoading(true);
+
+			event.preventDefault();
 
 			const form: FormData = new FormData(event.currentTarget);
 			const email: string = form.get("email") as string;
@@ -23,43 +29,33 @@ function Login() {
 				return;
 			}
 
-			const req: AxiosResponse = await request.post(
-				"users/login",
-				{
+			const response: KyResponse = await request.post("users/login", {
+				json: {
 					email: email,
 					password: password,
 				},
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				},
-			);
+			});
 
-			if (req.headers.get) {
-				setIsLoading(false);
+			// @ts-expect-error
+			const authorizationHeader: string = response.headers.get("Authorization");
+			const authorization: string = authorizationHeader?.split(" ")[1];
 
-				if (req.data === "Invalid email or password.") {
-					return alert(req.data);
-				}
+			setCookie("Authorization", authorization, {
+				path: "/",
+				domain: "localhost",
+				expires: 1,
+				sameSite: "strict",
+				secure: true,
+			});
 
-				// @ts-expect-error
-				const authorizationHeader: string = req.headers.get("Authorization");
-				const authorization: string = authorizationHeader?.split(" ")[1];
-
-				setCookie("Authorization", authorization, {
-					path: "/",
-					domain: "localhost",
-					expires: 1,
-					sameSite: "strict",
-					secure: true,
-				});
-
-				window.location.reload();
-			}
+			navigate("/budget");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				throw error;
+				dispatch(setError("Invalid email or password"));
+
+				setTimeout(() => {
+					setIsLoading(false);
+				}, 2000);
 			}
 		}
 	};
@@ -112,7 +108,7 @@ function Login() {
 
 				<div className="flex flex-col">
 					<input
-						className="mt-4 btn bg-[#895FF5] text-sm text-white font-medium py-2.5 mb-5 rounded-lg"
+						className={`mt-4 btn ${isLoading ? "bg-[#4B4B4B]" : "bg-[#895FF5]"} text-sm text-white font-medium py-2.5 mb-5 rounded-lg`}
 						type="submit"
 						value="Login with email"
 						disabled={isLoading}

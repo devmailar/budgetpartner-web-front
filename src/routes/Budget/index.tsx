@@ -1,4 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit";
+import type { KyResponse } from "ky";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
@@ -11,35 +12,29 @@ function Budget() {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const handleGetUser = React.useCallback(
-		async (authorization: string): Promise<void> => {
+	React.useEffect((): void => {
+		const handleGetUser = async (authorization: string): Promise<void> => {
 			try {
-				const {
-					data: user,
-				}: {
-					data: TUser;
-				} = await request.get("users/get-one", {
+				const response: KyResponse = await request.get("users/get-one", {
 					headers: {
 						Authorization: `Bearer ${authorization}`,
 					},
 				});
 
+				const user: TUser = await response.json();
+
 				dispatch(setUser(user));
 
 				if (user.is_new) {
-					navigate("/budget/get-started");
-					return;
+					navigate("get-started");
 				}
 			} catch (error: unknown) {
 				if (error instanceof Error) {
 					throw error;
 				}
 			}
-		},
-		[navigate, dispatch],
-	);
+		};
 
-	React.useEffect((): void => {
 		const authorization: string | undefined = getCookie("Authorization");
 
 		if (!authorization) {
@@ -48,7 +43,7 @@ function Budget() {
 		}
 
 		handleGetUser(authorization);
-	}, [navigate, handleGetUser]);
+	}, [navigate, dispatch]);
 
 	return (
 		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen" />

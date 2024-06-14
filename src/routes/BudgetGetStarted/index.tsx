@@ -5,7 +5,6 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import { request } from "../../utils";
-import type { AxiosError, AxiosResponse } from "axios";
 
 function BudgetGetStarted() {
 	const dispatch: Dispatch = useDispatch();
@@ -19,66 +18,47 @@ function BudgetGetStarted() {
 		event: React.FormEvent<HTMLFormElement>,
 	): Promise<void> => {
 		try {
-			event.preventDefault();
 			setError("");
 
+			event.preventDefault();
+
 			const form: FormData = new FormData(event.currentTarget);
-			const incomeString: string = form.get("income") as string;
-			const income: number = Number.parseInt(incomeString);
+			const income: number = Number.parseInt(form.get("income") as string);
+			const authorization: string | undefined = getCookie("Authorization");
+
+			if (!authorization) {
+				dispatch(setError("Please login to continue"));
+				return;
+			}
 
 			if (income <= 0 || Number.isNaN(income)) {
 				dispatch(setError("Please enter valid amount"));
 				return;
 			}
 
-			const authorization: string | undefined = getCookie("Authorization");
-			if (!authorization) {
-				dispatch(setError("Please login to continue"));
-				navigate("/");
-				return;
-			}
+			await request.post("budgets/create", {
+				json: {
+					income_amount_monthly: income,
+				},
+				headers: {
+					Authorization: `Bearer ${authorization}`,
+				},
+			});
 
-			await request
-				.post(
-					"budgets/create",
-					{
-						income_amount_monthly: income,
-					},
-					{
-						headers: {
-							"Content-Type": "application/json",
-							Authorization: `Bearer ${authorization}`,
-						},
-					},
-				)
-				.then((response: AxiosResponse) => {
-					navigate("/");
-					return;
-				})
-				.catch((error: AxiosError) => {
-					dispatch(setError(error.response?.data.message));
-					navigate("/");
-					return;
-				});
+			navigate("/");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				throw error;
+				dispatch(setError("Budget already exists"));
+				navigate("/");
 			}
 		}
 	};
 
 	React.useEffect((): void => {
-		try {
-			const authorization: string | undefined = getCookie("Authorization");
+		const authorization: string | undefined = getCookie("Authorization");
 
-			if (!authorization) {
-				navigate("/");
-				return;
-			}
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				throw error;
-			}
+		if (!authorization) {
+			navigate("/");
 		}
 	}, [navigate]);
 

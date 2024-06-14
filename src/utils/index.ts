@@ -1,6 +1,3 @@
-import axios from "axios";
+import ky from "ky";
 
-export const request = axios.create({
-	baseURL: "http://localhost:8080/",
-	timeout: 1000,
-});
+export const request = ky.create({ prefixUrl: "http://localhost:8080" });

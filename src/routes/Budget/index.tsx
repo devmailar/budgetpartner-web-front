@@ -31,7 +31,7 @@ function Budget() {
 				dispatch(setUser(user));
 
 				if (user.is_new) {
-					navigate("get-started");
+					navigate("/budget/get-started");
 				}
 
 				return user;

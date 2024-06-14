@@ -48,7 +48,7 @@ function Login() {
 				secure: true,
 			});
 
-			navigate("budget");
+			navigate("/budget");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError("Invalid email or password"));

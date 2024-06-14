@@ -16,9 +16,7 @@ function Budget() {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const budget: TBudget = useSelector((state: IRootState) => {
-		return state.budget;
-	});
+	const budget: TBudget = useSelector((state: IRootState) => state.budget);
 
 	const handleGetUser = React.useCallback(
 		async (authorization: string): Promise<TUser> => {

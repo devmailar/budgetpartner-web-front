@@ -41,8 +41,15 @@ export type TMenu = {
 	addSavings: boolean;
 };
 
+export type TModal = {
+	extraincomeModal: boolean;
+	recurringexpensesModal: boolean;
+	incomeModalEdit: boolean;
+};
+
 export interface IRootState {
 	error: TError;
 	user: TUser;
 	budget: TBudget;
+	modal: TModal;
 }

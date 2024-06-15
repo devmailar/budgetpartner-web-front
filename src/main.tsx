@@ -5,6 +5,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { budgetStore } from "./stores/Budget/index.tsx";
 import { errorStore } from "./stores/Error";
+import { modalStore } from "./stores/Modal/index.tsx";
 import { userStore } from "./stores/User";
 
 const rootElement: HTMLElement | null = document.getElementById("root");
@@ -14,6 +15,7 @@ const store: Store = configureStore({
 		error: errorStore.reducer,
 		user: userStore.reducer,
 		budget: budgetStore.reducer,
+		modal: modalStore.reducer,
 	},
 });
 

@@ -1,12 +1,36 @@
+import type { Dispatch } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { setModal } from "../../stores/Modal";
+
 function Modal({
 	index,
 	children,
 }: { index: number; children: React.ReactNode }) {
+	const dispatch: Dispatch = useDispatch();
+
 	return (
 		<div
 			className={`absolute z-${index} flex items-center justify-center w-screen h-screen bg-black bg-opacity-40`}
+			onClick={(): void => {
+				dispatch(
+					setModal({
+						extraincomeModal: false,
+						recurringexpensesModal: false,
+						incomeModalEdit: false,
+					}),
+				);
+			}}
+			onKeyUp={(): void => {}}
+			onKeyDown={(): void => {}}
 		>
-			<div className="flex flex-col bg-[#1A1A1A] rounded-2xl max-w-96">
+			<div
+				className="flex flex-col bg-[#1A1A1A] rounded-2xl max-w-96"
+				onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+					e.stopPropagation();
+				}}
+				onKeyUp={() => {}}
+				onKeyDown={() => {}}
+			>
 				{children}
 			</div>
 		</div>

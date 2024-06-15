@@ -2,6 +2,7 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { removeCookie } from "typescript-cookie";
+import Modal from "./components/Modal";
 import Budget from "./routes/Budget";
 import BudgetGetStarted from "./routes/BudgetGetStarted";
 import CreateAnAccount from "./routes/CreateAnAccount";
@@ -113,23 +114,21 @@ function App() {
 			</div>
 
 			{errorMessage && (
-				<div className="absolute z-20 flex items-center justify-center w-screen h-screen bg-black bg-opacity-40">
-					<div className="flex flex-col bg-[#1A1A1A] rounded-2xl max-w-96">
-						<div className="px-4 py-4">
-							<span className="text-sm text-[#FFFFFF] font-medium font-rubik">
-								{errorMessage}
-							</span>
-						</div>
-
-						<button
-							type="button"
-							className="btn btn-[#1A1A1A] border-t-[1px] border-t-[#242424]"
-							onClick={() => dispatch(setError(""))}
-						>
-							<span className="text-sm text-[#895FF5] font-normal">Close</span>
-						</button>
+				<Modal>
+					<div className="px-4 py-4">
+						<span className="text-sm text-[#FFFFFF] font-medium font-rubik">
+							{errorMessage}
+						</span>
 					</div>
-				</div>
+
+					<button
+						type="button"
+						className="btn btn-[#1A1A1A] border-t-[1px] border-t-[#242424]"
+						onClick={() => dispatch(setError(""))}
+					>
+						<span className="text-sm text-[#895FF5] font-normal">Close</span>
+					</button>
+				</Modal>
 			)}
 
 			<RouterProvider router={router} />

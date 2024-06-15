@@ -54,7 +54,7 @@ function IncomeModalEdit() {
 		<Modal index={10}>
 			<form className="flex flex-col gap-y-6 px-4 py-4" onSubmit={handleSubmit}>
 				<span className="text-sm text-[#FFFFFF] font-medium font-rubik">
-					Set new income ✍️
+					Set income ✍️
 				</span>
 
 				<div className="flex gap-x-4 items-center justify-between p-2 border-[1px] border-[#4B4B4B] rounded-lg">

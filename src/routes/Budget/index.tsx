@@ -11,10 +11,17 @@ import { getCookie, removeCookie } from "typescript-cookie";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
 import IncomeModalEdit from "../../components/IncomeModalEdit";
 import { setBudget } from "../../stores/Budget";
+import { setBudgetExtraincome } from "../../stores/BudgetExtraincome";
 import { setError } from "../../stores/Error";
 import { setModal } from "../../stores/Modal";
 import { setUser } from "../../stores/User";
-import type { IRootState, TBudget, TModal, TUser } from "../../types";
+import type {
+	IRootState,
+	TBudget,
+	TBudgetExtraincome,
+	TModal,
+	TUser,
+} from "../../types";
 import { request } from "../../utils";
 import "./index.css";
 
@@ -98,6 +105,47 @@ function Budget() {
 		[dispatch],
 	);
 
+	const handleGetBudgetExtraincome = React.useCallback(
+		async (authorization: string): Promise<void> => {
+			try {
+				const response: KyResponse = await request.get(
+					"budgets-extraincome/get-one",
+					{
+						headers: {
+							Authorization: `Bearer ${authorization}`,
+						},
+					},
+				);
+
+				const budgetExtraincome: TBudgetExtraincome = await response.json();
+
+				if (Object.keys(budgetExtraincome).length === 0) {
+					dispatch(setError("budgetExtraincome not found! 🚫"));
+					return;
+				}
+
+				// TODO: Fetch extra income and recurring expenses and set them in the budget state as well
+				dispatch(
+					setBudgetExtraincome({
+						user_id: budgetExtraincome.user_id,
+						extraincome_type: budgetExtraincome.extraincome_type,
+						extraincome_amount_monthly:
+							budgetExtraincome.extraincome_amount_monthly,
+						created_at: budgetExtraincome.created_at,
+						updated_at: budgetExtraincome.updated_at,
+					}),
+				);
+
+				setTimeout((): void => setIsLoading(false), 1000);
+			} catch (error) {
+				if (error instanceof Error) {
+					dispatch(setError(error.name));
+				}
+			}
+		},
+		[dispatch],
+	);
+
 	React.useEffect(() => {
 		async function onLoad(): Promise<void> {
 			const authorization: string | undefined = getCookie("Authorization");
@@ -116,7 +164,7 @@ function Budget() {
 				return;
 			}
 
-			return handleGetBudget(authorization);
+			handleGetBudget(authorization);
 		}
 
 		onLoad();

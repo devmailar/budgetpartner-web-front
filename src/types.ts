@@ -21,8 +21,8 @@ export type TBudget = {
 
 export type TBudgetExtraincome = {
 	user_id: number;
-	income_type: string;
-	income_amount_monthly: number;
+	extraincome_type: string;
+	extraincome_amount_monthly: number;
 	created_at: Date;
 	updated_at: Date;
 };

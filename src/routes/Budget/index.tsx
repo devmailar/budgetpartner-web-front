@@ -9,6 +9,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { getCookie, removeCookie } from "typescript-cookie";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
+import IncomeModalEdit from "../../components/IncomeModalEdit";
 import { setBudget } from "../../stores/Budget";
 import { setError } from "../../stores/Error";
 import { setModal } from "../../stores/Modal";
@@ -16,7 +17,6 @@ import { setUser } from "../../stores/User";
 import type { IRootState, TBudget, TModal, TUser } from "../../types";
 import { request } from "../../utils";
 import "./index.css";
-import IncomeModalEdit from "../../components/IncomeModalEdit";
 
 function Budget() {
 	const dispatch: Dispatch = useDispatch();

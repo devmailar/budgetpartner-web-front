@@ -24,6 +24,8 @@ function Budget() {
 
 	const [openEditIncome, setOpenEditIncome] = React.useState<boolean>(false);
 
+	const [isContentLoading, setContentLoading] = React.useState<boolean>(true);
+
 	const handleGetUser = React.useCallback(
 		async (authorization: string): Promise<TUser> => {
 			try {
@@ -66,6 +68,10 @@ function Budget() {
 				const budget: TBudget = await response.json();
 
 				dispatch(setBudget(budget));
+
+				setTimeout((): void => {
+					setContentLoading(false);
+				}, 1000);
 			} catch (error) {
 				if (error instanceof Error) {
 					dispatch(setError(error.name));
@@ -146,123 +152,133 @@ function Budget() {
 
 	return (
 		<div className="flex items-start justify-center bg-radial-gradient w-screen h-screen">
-			<div className="flex flex-col gap-y-16 items-center mt-[4.5rem]">
-				<div className="flex flex-col items-center">
-					<nav className="flex items-center p-1 bg-[#202020] rounded-full">
-						<button
-							type="button"
-							className="flex items-center justify-center bg-transparent px-10 py-2.5 rounded-full"
-							onClick={(): void => {
-								dispatch(
-									setError("Previous year budget cannot be accessed! 🚫"),
-								);
+			{isContentLoading ? (
+				<div className="flex items-center justify-center w-screen h-screen pb-40">
+					<div className="loader" />
+				</div>
+			) : (
+				<div className="flex flex-col gap-y-16 items-center mt-[4.5rem]">
+					<div className="flex flex-col items-center">
+						<nav className="flex items-center p-1 bg-[#202020] rounded-full">
+							<button
+								type="button"
+								className="flex items-center justify-center bg-transparent px-10 py-2.5 rounded-full"
+								onClick={(): void => {
+									dispatch(
+										setError("Previous year budget cannot be accessed! 🚫"),
+									);
+								}}
+							>
+								<span className="text-base text-[#4B4B4B] font-normal font-rubik">
+									{new Date().getFullYear() - 1}
+								</span>
+							</button>
+
+							<button
+								type="button"
+								className="flex items-center justify-center primary px-10 py-2.5 rounded-full"
+							>
+								<span className="text-base text-[#FFFFFF] font-normal font-rubik">
+									{new Date().getFullYear()}
+								</span>
+							</button>
+						</nav>
+
+						<Swiper
+							className="w-[60rem] h-fit"
+							autoplay={{
+								delay: 5000,
+								disableOnInteraction: false,
 							}}
+							pagination={{
+								clickable: true,
+							}}
+							modules={[Autoplay, Pagination]}
 						>
-							<span className="text-base text-[#4B4B4B] font-normal font-rubik">
-								{new Date().getFullYear() - 1}
+							<SwiperSlide>
+								<div className="flex flex-col gap-y-1 items-center py-11">
+									<button
+										type="button"
+										onClick={(): void => setOpenEditIncome(true)}
+									>
+										<h1 className="text-3xl text-[#895FF5] font-black font-rubik">
+											{incomeAmountDaily.toFixed(2)}€
+										</h1>
+									</button>
+
+									<span className="text-base text-[#895FF5] font-light font-rubik">
+										/day
+									</span>
+								</div>
+							</SwiperSlide>
+
+							<SwiperSlide>
+								<div className="flex flex-col gap-y-1 items-center py-11">
+									<button
+										type="button"
+										onClick={(): void => setOpenEditIncome(true)}
+									>
+										<h1 className="text-3xl text-[#895FF5] font-black font-rubik">
+											{incomeAmountMonthly.toFixed(2)}€
+										</h1>
+									</button>
+
+									<span className="text-base text-[#895FF5] font-light font-rubik">
+										/month
+									</span>
+								</div>
+							</SwiperSlide>
+
+							<SwiperSlide>
+								<div className="flex flex-col gap-y-1 items-center py-11">
+									<button
+										type="button"
+										onClick={(): void => setOpenEditIncome(true)}
+									>
+										<h1 className="text-3xl text-[#895FF5] font-black font-rubik">
+											{incomeAmountYearly.toFixed(2)}€
+										</h1>
+									</button>
+
+									<span
+										className={"text-base text-[#895FF5] font-light font-rubik"}
+									>
+										/year
+									</span>
+								</div>
+							</SwiperSlide>
+						</Swiper>
+					</div>
+
+					<div className="flex flex-col gap-y-4 items-center">
+						<button
+							type="button"
+							className="flex gap-x-2 items-center justify-center btn bg-[#895FF5] px-4 py-1.5 regular-income-glow rounded-full"
+						>
+							<span className="text-lg text-black font-medium font-rubik">
+								+
+							</span>
+
+							<span className="text-sm text-black font-medium font-rubik">
+								Extra income
 							</span>
 						</button>
 
 						<button
 							type="button"
-							className="flex items-center justify-center primary px-10 py-2.5 rounded-full"
+							className="flex gap-x-2 items-center justify-center btn bg-[#9E553C] px-4 py-1.5 recurring-expenses-glow rounded-full"
 						>
-							<span className="text-base text-[#FFFFFF] font-normal font-rubik">
-								{new Date().getFullYear()}
+							<span className="text-lg text-black font-medium font-rubik">
+								+
+							</span>
+
+							<span className="text-sm text-black font-medium font-rubik">
+								Recurring expenses
 							</span>
 						</button>
-					</nav>
-
-					<Swiper
-						className="w-[60rem] h-fit"
-						autoplay={{
-							delay: 5000,
-							disableOnInteraction: false,
-						}}
-						pagination={{
-							clickable: true,
-						}}
-						modules={[Autoplay, Pagination]}
-					>
-						<SwiperSlide>
-							<div className="flex flex-col gap-y-1 items-center py-11">
-								<button
-									type="button"
-									onClick={(): void => setOpenEditIncome(true)}
-								>
-									<h1 className="text-3xl text-[#895FF5] font-black font-rubik">
-										{incomeAmountDaily.toFixed(2)}€
-									</h1>
-								</button>
-
-								<span className="text-base text-[#895FF5] font-light font-rubik">
-									/day
-								</span>
-							</div>
-						</SwiperSlide>
-
-						<SwiperSlide>
-							<div className="flex flex-col gap-y-1 items-center py-11">
-								<button
-									type="button"
-									onClick={(): void => setOpenEditIncome(true)}
-								>
-									<h1 className="text-3xl text-[#895FF5] font-black font-rubik">
-										{incomeAmountMonthly.toFixed(2)}€
-									</h1>
-								</button>
-
-								<span className="text-base text-[#895FF5] font-light font-rubik">
-									/month
-								</span>
-							</div>
-						</SwiperSlide>
-
-						<SwiperSlide>
-							<div className="flex flex-col gap-y-1 items-center py-11">
-								<button
-									type="button"
-									onClick={(): void => setOpenEditIncome(true)}
-								>
-									<h1 className="text-3xl text-[#895FF5] font-black font-rubik">
-										{incomeAmountYearly.toFixed(2)}€
-									</h1>
-								</button>
-
-								<span
-									className={"text-base text-[#895FF5] font-light font-rubik"}
-								>
-									/year
-								</span>
-							</div>
-						</SwiperSlide>
-					</Swiper>
+					</div>
 				</div>
-
-				<div className="flex flex-col gap-y-4 items-center">
-					<button
-						type="button"
-						className="flex gap-x-2 items-center justify-center btn bg-[#895FF5] px-4 py-1.5 regular-income-glow rounded-full"
-					>
-						<span className="text-lg text-black font-medium font-rubik">+</span>
-
-						<span className="text-sm text-black font-medium font-rubik">
-							Extra income
-						</span>
-					</button>
-
-					<button
-						type="button"
-						className="flex gap-x-2 items-center justify-center btn bg-[#9E553C] px-4 py-1.5 recurring-expenses-glow rounded-full"
-					>
-						<span className="text-lg text-black font-medium font-rubik">+</span>
-
-						<span className="text-sm text-black font-medium font-rubik">
-							Recurring expenses
-						</span>
-					</button>
-				</div>
-			</div>
+			)}
 
 			{openEditIncome && (
 				<Modal index={10}>

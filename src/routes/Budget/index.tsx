@@ -146,7 +146,7 @@ function Budget() {
 
 	return (
 		<div className="flex items-start justify-center bg-radial-gradient w-screen h-screen">
-			<div className="flex flex-col gap-y-16 items-center mt-16">
+			<div className="flex flex-col gap-y-16 items-center mt-[4.5rem]">
 				<div className="flex flex-col items-center">
 					<nav className="flex items-center p-1 bg-[#202020] rounded-full">
 						<button
@@ -185,54 +185,54 @@ function Budget() {
 						modules={[Autoplay, Pagination]}
 					>
 						<SwiperSlide>
-							<div className="flex flex-col gap-y-2 items-center py-11">
+							<div className="flex flex-col gap-y-1 items-center py-11">
 								<button
 									type="button"
 									onClick={(): void => setOpenEditIncome(true)}
 								>
-									<h1 className="text-4xl text-[#895FF5] font-black font-rubik">
-										{incomeAmountDaily.toFixed(2)}
+									<h1 className="text-3xl text-[#895FF5] font-black font-rubik">
+										{incomeAmountDaily.toFixed(2)}€
 									</h1>
 								</button>
 
 								<span className="text-base text-[#895FF5] font-light font-rubik">
-									EUR/day
+									/day
 								</span>
 							</div>
 						</SwiperSlide>
 
 						<SwiperSlide>
-							<div className="flex flex-col gap-y-2 items-center py-11">
+							<div className="flex flex-col gap-y-1 items-center py-11">
 								<button
 									type="button"
 									onClick={(): void => setOpenEditIncome(true)}
 								>
-									<h1 className="text-4xl text-[#895FF5] font-black font-rubik">
-										{incomeAmountMonthly.toFixed(2)}
+									<h1 className="text-3xl text-[#895FF5] font-black font-rubik">
+										{incomeAmountMonthly.toFixed(2)}€
 									</h1>
 								</button>
 
 								<span className="text-base text-[#895FF5] font-light font-rubik">
-									EUR/month
+									/month
 								</span>
 							</div>
 						</SwiperSlide>
 
 						<SwiperSlide>
-							<div className="flex flex-col gap-y-2 items-center py-11">
+							<div className="flex flex-col gap-y-1 items-center py-11">
 								<button
 									type="button"
 									onClick={(): void => setOpenEditIncome(true)}
 								>
-									<h1 className="text-4xl text-[#895FF5] font-black font-rubik">
-										{incomeAmountYearly.toFixed(2)}
+									<h1 className="text-3xl text-[#895FF5] font-black font-rubik">
+										{incomeAmountYearly.toFixed(2)}€
 									</h1>
 								</button>
 
 								<span
 									className={"text-base text-[#895FF5] font-light font-rubik"}
 								>
-									EUR/year
+									/year
 								</span>
 							</div>
 						</SwiperSlide>

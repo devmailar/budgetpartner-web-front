@@ -265,7 +265,7 @@ function Budget() {
 			</div>
 
 			{openEditIncome && (
-				<Modal>
+				<Modal index={10}>
 					<form
 						className="flex flex-col gap-y-6 px-4 py-4"
 						onSubmit={handleSubmitEditIncome}
@@ -305,7 +305,7 @@ function Budget() {
 								onClick={() => setOpenEditIncome(false)}
 							>
 								<span className="text-sm text-[#895FF5] font-normal">
-									Close
+									Cancel
 								</span>
 							</button>
 						</div>

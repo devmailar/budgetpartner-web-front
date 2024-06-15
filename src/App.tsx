@@ -114,7 +114,7 @@ function App() {
 			</div>
 
 			{errorMessage && (
-				<Modal>
+				<Modal index={20}>
 					<div className="px-4 py-4">
 						<span className="text-sm text-[#FFFFFF] font-medium font-rubik">
 							{errorMessage}

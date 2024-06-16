@@ -36,6 +36,10 @@ function Login() {
 				},
 			});
 
+			if (!response.ok) {
+				return;
+			}
+
 			// @ts-expect-error
 			const authorizationHeader: string = response.headers.get("Authorization");
 			const authorization: string = authorizationHeader?.split(" ")[1];

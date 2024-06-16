@@ -19,7 +19,7 @@ export type TBudget = {
 	updated_at: Date;
 };
 
-export type TBudgetExtraincome = {
+export type TExtraincome = {
 	user_id: number;
 	extraincome_type: string;
 	extraincome_amount_monthly: number;
@@ -52,4 +52,10 @@ export interface IRootState {
 	user: TUser;
 	budget: TBudget;
 	modal: TModal;
+}
+
+export interface IErrorResponse {
+	statusCode: number;
+	error: string;
+	message: string;
 }

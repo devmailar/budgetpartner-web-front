@@ -11,17 +11,10 @@ import { getCookie, removeCookie } from "typescript-cookie";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
 import IncomeModalEdit from "../../components/IncomeModalEdit";
 import { setBudget } from "../../stores/Budget";
-import { setBudgetExtraincome } from "../../stores/BudgetExtraincome";
 import { setError } from "../../stores/Error";
 import { setModal } from "../../stores/Modal";
 import { setUser } from "../../stores/User";
-import type {
-	IRootState,
-	TBudget,
-	TBudgetExtraincome,
-	TModal,
-	TUser,
-} from "../../types";
+import type { IRootState, TBudget, TModal, TUser } from "../../types";
 import { request } from "../../utils";
 import "./index.css";
 
@@ -77,10 +70,14 @@ function Budget() {
 					},
 				});
 
+				if (response.ok === false) {
+					return;
+				}
+
 				const budget: TBudget = await response.json();
 
 				if (Object.keys(budget).length === 0) {
-					dispatch(setError("Budget not found! 🚫"));
+					dispatch(setError("budget not found! 🚫"));
 					return;
 				}
 
@@ -98,48 +95,7 @@ function Budget() {
 				setTimeout((): void => setIsLoading(false), 1000);
 			} catch (error) {
 				if (error instanceof Error) {
-					dispatch(setError(error.name));
-				}
-			}
-		},
-		[dispatch],
-	);
-
-	const handleGetBudgetExtraincome = React.useCallback(
-		async (authorization: string): Promise<void> => {
-			try {
-				const response: KyResponse = await request.get(
-					"budgets-extraincome/get-one",
-					{
-						headers: {
-							Authorization: `Bearer ${authorization}`,
-						},
-					},
-				);
-
-				const budgetExtraincome: TBudgetExtraincome = await response.json();
-
-				if (Object.keys(budgetExtraincome).length === 0) {
-					dispatch(setError("budgetExtraincome not found! 🚫"));
-					return;
-				}
-
-				// TODO: Fetch extra income and recurring expenses and set them in the budget state as well
-				dispatch(
-					setBudgetExtraincome({
-						user_id: budgetExtraincome.user_id,
-						extraincome_type: budgetExtraincome.extraincome_type,
-						extraincome_amount_monthly:
-							budgetExtraincome.extraincome_amount_monthly,
-						created_at: budgetExtraincome.created_at,
-						updated_at: budgetExtraincome.updated_at,
-					}),
-				);
-
-				setTimeout((): void => setIsLoading(false), 1000);
-			} catch (error) {
-				if (error instanceof Error) {
-					dispatch(setError(error.name));
+					throw error;
 				}
 			}
 		},
@@ -166,7 +122,7 @@ function Budget() {
 
 			handleGetBudget(authorization);
 		}
-
+																																																	
 		onLoad();
 	}, [navigate, handleGetUser, handleGetBudget]);
 
@@ -187,7 +143,7 @@ function Budget() {
 					<div className="loader" />
 				</div>
 			) : (
-				<div className="flex flex-col gap-y-16 items-center mt-24">
+				<div className="flex flex-col gap-y-10 items-center mt-16">
 					<div className="flex flex-col items-center">
 						<nav className="flex items-center p-1 bg-[#202020] rounded-full">
 							<button
@@ -215,13 +171,13 @@ function Budget() {
 						</nav>
 
 						<Swiper
-							className="w-[60rem] h-fit"
+							className="w-[60rem] h-fit z-10"
 							autoplay={{ delay: 5000, disableOnInteraction: false }}
 							pagination={{ clickable: true }}
 							modules={[Autoplay, Pagination]}
 						>
 							<SwiperSlide>
-								<div className="flex flex-col gap-y-4 items-center py-8">
+								<div className="flex flex-col gap-y-1 items-center pt-10 pb-10">
 									<button
 										type="button"
 										onClick={(): void => {
@@ -234,19 +190,19 @@ function Budget() {
 											);
 										}}
 									>
-										<h1 className="text-[2rem] text-[#895FF5] font-black font-rubik">
+										<h1 className="text-[2.4rem] text-[#895FF5] font-black font-rubik">
 											{incomeAmountDaily.toFixed(2)} €
 										</h1>
 									</button>
 
-									<span className="text-base text-[#895FF5] font-light font-rubik">
+									<span className="text-lg text-[#895FF5] font-thin font-rubik">
 										/day
 									</span>
 								</div>
 							</SwiperSlide>
 
 							<SwiperSlide>
-								<div className="flex flex-col gap-y-4 items-center py-8">
+								<div className="flex flex-col gap-y-1 items-center pt-10 pb-10">
 									<button
 										type="button"
 										onClick={(): void => {
@@ -259,19 +215,19 @@ function Budget() {
 											);
 										}}
 									>
-										<h1 className="text-[2rem] text-[#895FF5] font-black font-rubik">
+										<h1 className="text-[2.4rem] text-[#895FF5] font-black font-rubik">
 											{incomeAmountMonthly.toFixed(2)} €
 										</h1>
 									</button>
 
-									<span className="text-base text-[#895FF5] font-light font-rubik">
+									<span className="text-lg text-[#895FF5] font-thin font-rubik">
 										/month
 									</span>
 								</div>
 							</SwiperSlide>
 
 							<SwiperSlide>
-								<div className="flex flex-col gap-y-4 items-center py-8">
+								<div className="flex flex-col gap-y-1 items-center pt-10 pb-10">
 									<button
 										type="button"
 										onClick={(): void => {
@@ -284,14 +240,12 @@ function Budget() {
 											);
 										}}
 									>
-										<h1 className="text-[2rem] text-[#895FF5] font-black font-rubik">
+										<h1 className="text-[2.4rem] text-[#895FF5] font-black font-rubik">
 											{incomeAmountYearly.toFixed(2)} €
 										</h1>
 									</button>
 
-									<span
-										className={"text-base text-[#895FF5] font-light font-rubik"}
-									>
+									<span className="text-lg text-[#895FF5] font-thin font-rubik">
 										/year
 									</span>
 								</div>

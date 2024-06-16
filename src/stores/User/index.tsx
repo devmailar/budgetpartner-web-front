@@ -1,14 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { type Slice, createSlice } from "@reduxjs/toolkit";
 import type { TUser } from "../../types";
 
-export const userStore = createSlice({
+export const userStore: Slice = createSlice({
 	name: "user",
 	initialState: {} as TUser,
 	reducers: {
 		setUser: (state, action) => {
 			return {
 				...state,
-				value: action.payload,
+				...action.payload,
 			};
 		},
 	},

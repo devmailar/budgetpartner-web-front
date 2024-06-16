@@ -32,19 +32,17 @@ export const router = createBrowserRouter([
 function App() {
 	const dispatch: Dispatch = useDispatch();
 
-	const errorMessage: string = useSelector((state: IRootState) => {
-		return state.error.errorMessage;
-	});
+	const error: string = useSelector((state: IRootState) => state.error);
 
 	return (
 		<>
 			<Sidebar />
 
-			{errorMessage && (
+			{error && (
 				<Modal index={50}>
 					<div className="px-4 py-4">
 						<span className="text-sm text-[#FFFFFF] font-medium font-rubik">
-							{errorMessage}
+							{error}
 						</span>
 					</div>
 

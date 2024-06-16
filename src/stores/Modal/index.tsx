@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type Slice } from "@reduxjs/toolkit";
 import type { TModal } from "../../types";
 
-export const modalStore = createSlice({
+export const modalStore: Slice = createSlice({
 	name: "modal",
 	initialState: {} as TModal,
 	reducers: {

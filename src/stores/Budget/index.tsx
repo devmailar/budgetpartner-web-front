@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { type Slice, createSlice } from "@reduxjs/toolkit";
 import type { TBudget } from "../../types";
 
-export const budgetStore = createSlice({
+export const budgetStore: Slice = createSlice({
 	name: "budget",
 	initialState: {} as TBudget,
 	reducers: {

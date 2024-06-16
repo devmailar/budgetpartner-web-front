@@ -1,7 +1,3 @@
-export type TError = {
-	errorMessage: string;
-};
-
 export type TUser = {
 	id: number;
 	email: string;
@@ -48,7 +44,7 @@ export type TModal = {
 };
 
 export interface IRootState {
-	error: TError;
+	error: string;
 	user: TUser;
 	budget: TBudget;
 	modal: TModal;

@@ -122,7 +122,7 @@ function Budget() {
 
 			handleGetBudget(authorization);
 		}
-																																																	
+
 		onLoad();
 	}, [navigate, handleGetUser, handleGetBudget]);
 

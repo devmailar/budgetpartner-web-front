@@ -6,47 +6,45 @@ function ExtraincomeModal() {
 
 	return (
 		<Modal index={10}>
-			<form className="flex flex-col p-4 w-80">
-				<div className="flex flex-col gap-y-3">
-					<div className="flex items-center justify-between">
-						<span className="text-sm text-white font-medium font-rubik">
-							Extraincome 🚀
-						</span>
-						<span className="text-sm text-white font-medium font-rubik">
-							1230.00 €
-						</span>
-					</div>
-
-					<div className="flex flex-col">
-						<button type="button" className="flex items-center justify-between">
-							<span className="text-xs text-[#895FF5] font-thin font-rubik">
-								Oneway Mission
-							</span>
-							<span className="text-xs text-[#895FF5] font-thin font-rubik">
-								1230.00
-							</span>
-						</button>
-
-						<button type="button" className="flex items-center justify-between">
-							<span className="text-xs text-[#895FF5] font-thin font-rubik">
-								Nordnet
-							</span>
-							<span className="text-xs text-[#895FF5] font-thin font-rubik">
-								150.00
-							</span>
-						</button>
-					</div>
+			<div className="flex flex-col gap-y-3 p-4 w-80">
+				<div className="flex items-center justify-between">
+					<span className="text-sm text-white font-medium font-rubik">
+						Extraincome 🚀
+					</span>
+					<span className="text-sm text-white font-medium font-rubik">
+						1230.00 €
+					</span>
 				</div>
-			</form>
+
+				<div className="flex flex-col">
+					<button type="button" className="flex items-center justify-between">
+						<span className="text-xs text-[#895FF5] font-thin font-rubik">
+							Oneway Mission
+						</span>
+						<span className="text-xs text-[#895FF5] font-thin font-rubik">
+							1230.00
+						</span>
+					</button>
+
+					<button type="button" className="flex items-center justify-between">
+						<span className="text-xs text-[#895FF5] font-thin font-rubik">
+							Nordnet
+						</span>
+						<span className="text-xs text-[#895FF5] font-thin font-rubik">
+							150.00
+						</span>
+					</button>
+				</div>
+			</div>
 
 			{addExtraincome ? (
 				<form className="flex flex-col gap-y-2">
 					<div className="flex items-center justify-between mx-4 p-2 border-[1px] border-[#4B4B4B] rounded-lg">
 						<input
 							className="bg-transparent w-full text-xs text-white placeholder:text-white font-light font-rubik focus:outline-none"
-							type="number"
-							name="income"
-							id="income"
+							type="text"
+							name="extraincome_type"
+							id="extraincome_type"
 							required
 						/>
 					</div>
@@ -55,9 +53,9 @@ function ExtraincomeModal() {
 						<input
 							className="bg-transparent w-full text-xs text-white placeholder:text-white font-light font-rubik focus:outline-none"
 							type="number"
-							name="income"
-							id="income"
-							placeholder="0.00 €"
+							name="extraincome_amount_monthly"
+							id="extraincome_amount_monthly"
+							placeholder="0.00"
 							required
 						/>
 
@@ -66,7 +64,7 @@ function ExtraincomeModal() {
 						</span>
 					</div>
 
-					<button type="button" className="btn border-t border-t-[#242424]">
+					<button type="submit" className="btn border-t border-t-[#242424]">
 						<div className="flex gap-x-1 items-center justify-center">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"

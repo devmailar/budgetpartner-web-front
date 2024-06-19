@@ -151,7 +151,7 @@ function Budget() {
 								className="flex items-center justify-center bg-transparent px-10 py-2.5 rounded-full"
 								onClick={(): void => {
 									dispatch(
-										setError("Previous year budget cannot be accessed! 🚫"),
+										setError("Previous year budget cannot be accessed 🚫"),
 									);
 								}}
 							>
@@ -171,7 +171,7 @@ function Budget() {
 						</nav>
 
 						<Swiper
-							className="w-[60rem] h-fit z-10"
+							className="w-[60rem] h-fit z-auto"
 							autoplay={{ delay: 5000, disableOnInteraction: false }}
 							pagination={{ clickable: true }}
 							modules={[Autoplay, Pagination]}

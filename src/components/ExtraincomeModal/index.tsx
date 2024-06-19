@@ -1,114 +1,145 @@
+import type { KyResponse } from "ky";
 import React from "react";
+import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { getCookie } from "typescript-cookie";
+import type { TExtraincome } from "../../types";
+import { request } from "../../utils";
 import Modal from "../Modal";
 
 function ExtraincomeModal() {
+	const navigate: NavigateFunction = useNavigate();
+
 	const [addExtraincome, setAddExtraincome] = React.useState<boolean>(false);
+	const [extraincomes, setExtraincomes] = React.useState<TExtraincome[]>([]);
+
+	const handleGetExtraincomes = React.useCallback(
+		async (authorization: string): Promise<void> => {
+			try {
+				const response: KyResponse = await request.get("extraincomes/get-all", {
+					headers: {
+						Authorization: `Bearer ${authorization}`,
+					},
+				});
+
+				const extraincomes: TExtraincome[] = await response.json();
+
+				if (Object.keys(extraincomes).length === 0) {
+					return;
+				}
+
+				setExtraincomes(extraincomes);
+			} catch (error) {
+				if (error instanceof Error) {
+					console.error(error.message);
+				}
+			}
+		},
+		[],
+	);
+
+	React.useEffect((): void => {
+		async function onLoad(): Promise<void> {
+			const authorization: string | undefined = getCookie("Authorization");
+
+			if (!authorization) {
+				navigate("/");
+				return;
+			}
+
+			handleGetExtraincomes(authorization);
+		}
+
+		onLoad();
+	}, [handleGetExtraincomes, navigate]);
 
 	return (
-		<Modal index={10}>
-			<div className="flex flex-col gap-y-3 p-4 w-80">
-				<div className="flex items-center justify-between">
-					<span className="text-sm text-white font-medium font-rubik">
-						Extraincome 🚀
-					</span>
-					<span className="text-sm text-white font-medium font-rubik">
-						1230.00 €
-					</span>
-				</div>
+		<Modal index={50}>
+			<div className="flex flex-col w-80">
+				{addExtraincome ? (
+					<form className="flex flex-col">
+						<div className="flex px-4 pt-4">
+							<h1 className="text-sm text-white font-normal font-rubik">
+								Add new Extraincome 💰
+							</h1>
+						</div>
 
-				<div className="flex flex-col">
-					<button type="button" className="flex items-center justify-between">
-						<span className="text-xs text-[#895FF5] font-thin font-rubik">
-							Oneway Mission
-						</span>
-						<span className="text-xs text-[#895FF5] font-thin font-rubik">
-							1230.00
-						</span>
-					</button>
-
-					<button type="button" className="flex items-center justify-between">
-						<span className="text-xs text-[#895FF5] font-thin font-rubik">
-							Nordnet
-						</span>
-						<span className="text-xs text-[#895FF5] font-thin font-rubik">
-							150.00
-						</span>
-					</button>
-				</div>
-			</div>
-
-			{addExtraincome ? (
-				<form className="flex flex-col gap-y-2">
-					<div className="flex items-center justify-between mx-4 p-2 border-[1px] border-[#4B4B4B] rounded-lg">
-						<input
-							className="bg-transparent w-full text-xs text-white placeholder:text-white font-light font-rubik focus:outline-none"
-							type="text"
-							name="extraincome_type"
-							id="extraincome_type"
-							required
-						/>
-					</div>
-
-					<div className="flex items-center justify-between mx-4 p-2 border-[1px] border-[#4B4B4B] rounded-lg">
-						<input
-							className="bg-transparent w-full text-xs text-white placeholder:text-white font-light font-rubik focus:outline-none"
-							type="number"
-							name="extraincome_amount_monthly"
-							id="extraincome_amount_monthly"
-							placeholder="0.00"
-							required
-						/>
-
-						<span className="text-xs text-white font-light font-rubik">
-							€/M
-						</span>
-					</div>
-
-					<button type="submit" className="btn border-t border-t-[#242424]">
-						<div className="flex gap-x-1 items-center justify-center">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="1.25em"
-								height="1.25em"
-								viewBox="0 0 24 24"
-							>
-								<title>Save</title>
-								<path
-									fill="#895FF5"
-									d="M21 7v12q0 .825-.587 1.413T19 21H5q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h12zm-9 11q1.25 0 2.125-.875T15 15t-.875-2.125T12 12t-2.125.875T9 15t.875 2.125T12 18m-6-8h9V6H6z"
+						<div className="flex flex-col gap-y-2.5 px-4 py-4">
+							<div className="flex items-center justify-between p-2.5 border-[0.5px] border-[#4B4B4B] rounded-lg">
+								<input
+									className="bg-transparent w-full text-sm text-white placeholder:text-white font-normal font-rubik focus:outline-none"
+									type="text"
+									name="extraincome_type"
+									id="extraincome_type"
+									placeholder="Description"
+									required
 								/>
-							</svg>
+							</div>
+
+							<div className="flex items-center justify-between p-2.5 border-[0.5px] border-[#4B4B4B] rounded-lg">
+								<input
+									className="bg-transparent w-full text-sm text-white placeholder:text-white font-normal font-rubik focus:outline-none"
+									type="number"
+									name="extraincome_amount_monthly"
+									id="extraincome_amount_monthly"
+									placeholder="0.00"
+									required
+								/>
+
+								<span className="text-sm text-white font-normal font-rubik">
+									€/MO
+								</span>
+							</div>
+						</div>
+
+						<button
+							type="submit"
+							className="btn border-t border-t-[#242424] py-2.5"
+						>
 							<span className="text-sm text-[#895FF5] font-normal font-rubik">
 								Save
 							</span>
+						</button>
+					</form>
+				) : (
+					<div className="flex flex-col">
+						<div className="flex items-center justify-between px-4 py-4">
+							<span className="text-sm text-white font-normal font-rubik">
+								Extraincome 💰
+							</span>
+							<span className="text-sm text-white font-medium font-rubik">
+								1062.50 €
+							</span>
 						</div>
-					</button>
-				</form>
-			) : (
-				<button
-					type="button"
-					className="btn border-t border-t-[#242424]"
-					onClick={(): void => setAddExtraincome(true)}
-				>
-					<div className="flex gap-x-0.5 items-center justify-center">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="1.25em"
-							height="1.25em"
-							viewBox="0 0 24 24"
+
+						<div className="flex flex-col px-4 pb-4">
+							{extraincomes.map((extraincome: TExtraincome) => (
+								<button
+									key={extraincome.extraincome_type}
+									type="button"
+									className="flex items-center justify-between"
+								>
+									<span className="text-sm text-[#4B4B4B] font-normal font-rubik">
+										{extraincome.extraincome_type}
+									</span>
+									<span className="text-sm text-white font-medium font-rubik">
+										{extraincome.extraincome_amount_monthly.toFixed(2)} €
+									</span>
+								</button>
+							))}
+						</div>
+
+						<button
+							type="button"
+							className="btn border-t border-t-[#202020] py-2.5"
+							onClick={(): void => setAddExtraincome(true)}
 						>
-							<title>Plus</title>
-							<path
-								fill="#895FF5"
-								d="M11 13H6q-.425 0-.712-.288T5 12t.288-.712T6 11h5V6q0-.425.288-.712T12 5t.713.288T13 6v5h5q.425 0 .713.288T19 12t-.288.713T18 13h-5v5q0 .425-.288.713T12 19t-.712-.288T11 18z"
-							/>
-						</svg>
-						<span className="text-sm text-[#895FF5] font-normal font-rubik">
-							New
-						</span>
+							<span className="text-sm text-[#895FF5] font-normal font-rubik">
+								+ Add New
+							</span>
+						</button>
 					</div>
-				</button>
-			)}
+				)}
+			</div>
 		</Modal>
 	);
 }

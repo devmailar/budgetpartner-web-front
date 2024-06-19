@@ -41,17 +41,19 @@ function App() {
 			{error && (
 				<Modal index={50}>
 					<div className="px-4 py-4">
-						<span className="text-sm text-[#FFFFFF] font-medium font-rubik">
+						<span className="text-sm text-[#FFFFFF] font-thin font-rubik">
 							{error}
 						</span>
 					</div>
 
 					<button
 						type="button"
-						className="btn btn-[#1A1A1A] border-t-[1px] border-t-[#242424]"
+						className="btn border-t border-t-[#202020] py-2.5"
 						onClick={() => dispatch(setError(""))}
 					>
-						<span className="text-sm text-[#895FF5] font-normal">Close</span>
+						<span className="text-sm text-[#895FF5] font-normal font-rubik">
+							Close
+						</span>
 					</button>
 				</Modal>
 			)}

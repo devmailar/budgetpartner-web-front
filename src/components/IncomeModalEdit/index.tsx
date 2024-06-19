@@ -51,7 +51,7 @@ function IncomeModalEdit() {
 	};
 
 	return (
-		<Modal index={10}>
+		<Modal index={50}>
 			<form className="flex flex-col w-80" onSubmit={handleSubmit}>
 				<div className="flex flex-col">
 					<div className="flex px-4 pt-4">

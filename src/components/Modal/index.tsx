@@ -2,10 +2,7 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { setModal } from "../../stores/Modal";
 
-function Modal({
-	index,
-	children,
-}: { index: number; children: React.ReactNode }) {
+function Modal({ index, children }: { index: number; children: React.ReactNode }) {
 	const dispatch: Dispatch = useDispatch();
 
 	return (

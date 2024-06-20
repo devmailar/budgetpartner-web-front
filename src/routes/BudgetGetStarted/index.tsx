@@ -4,19 +4,16 @@ import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
-import { request } from "../../utils";
+import { Utils } from "../../utils";
 
 function BudgetGetStarted() {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
 	const [step, setStep] = React.useState<number>(0);
-	const [regularIncomeModal, setRegularIncomeModal] =
-		React.useState<boolean>(false);
+	const [regularIncomeModal, setRegularIncomeModal] = React.useState<boolean>(false);
 
-	const handleSubmit = async (
-		event: React.FormEvent<HTMLFormElement>,
-	): Promise<void> => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			setError("");
 
@@ -36,7 +33,7 @@ function BudgetGetStarted() {
 				return;
 			}
 
-			await request.post("budgets/create", {
+			await Utils.request.post("budgets/create", {
 				json: {
 					income_amount_monthly: income,
 				},
@@ -74,23 +71,15 @@ function BudgetGetStarted() {
 							height="160"
 						/>
 
-						<h1 className="text-2xl text-white font-medium font-rubik">
-							Setup budget
-						</h1>
+						<h1 className="text-2xl text-white font-medium font-rubik">Setup budget</h1>
 
 						<p className="text-sm text-white font-normal font-rubik text-center">
 							We’ll guide you through the steps of setting up your budget.
 						</p>
 					</div>
 
-					<button
-						type="button"
-						className="btn bg-[#895FF5] py-2 rounded-lg"
-						onClick={(): void => setStep(1)}
-					>
-						<span className="text-sm text-white font-medium font-rubik">
-							Get started
-						</span>
+					<button type="button" className="btn bg-[#895FF5] py-2 rounded-lg" onClick={(): void => setStep(1)}>
+						<span className="text-sm text-white font-medium font-rubik">Get started</span>
 					</button>
 				</div>
 			)}
@@ -105,13 +94,9 @@ function BudgetGetStarted() {
 							height="160"
 						/>
 
-						<h1 className="text-2xl text-white font-medium font-rubik">
-							{new Date().getFullYear()}
-						</h1>
+						<h1 className="text-2xl text-white font-medium font-rubik">{new Date().getFullYear()}</h1>
 
-						<p className="text-sm text-white font-normal font-rubik">
-							Set your regular income to start a budget.
-						</p>
+						<p className="text-sm text-white font-normal font-rubik">Set your regular income to start a budget.</p>
 					</div>
 
 					<div className="flex flex-col gap-y-2 mx-6">
@@ -121,20 +106,13 @@ function BudgetGetStarted() {
 							onClick={(): void => setRegularIncomeModal(true)}
 							disabled={regularIncomeModal}
 						>
-							<span className="text-sm text-white font-medium font-rubik">
-								Set regular income
-							</span>
+							<span className="text-sm text-white font-medium font-rubik">Set regular income</span>
 						</button>
 
 						{regularIncomeModal && (
-							<form
-								className="flex flex-col gap-y-6 px-4 py-6 bg-[#202020] rounded-lg"
-								onSubmit={handleSubmit}
-							>
+							<form className="flex flex-col gap-y-6 px-4 py-6 bg-[#202020] rounded-lg" onSubmit={handleSubmit}>
 								<div className="flex flex-col gap-y-6">
-									<span className="text-sm text-white font-medium font-rubik">
-										What is your regular income?
-									</span>
+									<span className="text-sm text-white font-medium font-rubik">What is your regular income?</span>
 
 									<div className="flex flex-col gap-y-3">
 										<div className="flex gap-x-4 items-center justify-between p-2 border-[1px] border-[#4B4B4B] rounded-lg">
@@ -147,20 +125,13 @@ function BudgetGetStarted() {
 												required
 											/>
 
-											<span className="text-xs text-white font-light font-rubik">
-												EUR/MONTH
-											</span>
+											<span className="text-xs text-white font-light font-rubik">EUR/MONTH</span>
 										</div>
 									</div>
 								</div>
 
-								<button
-									type="submit"
-									className="btn bg-[#895FF5] py-2 rounded-lg"
-								>
-									<span className="text-xs text-white font-medium font-rubik">
-										Save
-									</span>
+								<button type="submit" className="btn bg-[#895FF5] py-2 rounded-lg">
+									<span className="text-xs text-white font-medium font-rubik">Save</span>
 								</button>
 							</form>
 						)}

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import type { IRootState, TBudget } from "../../types";
-import { request } from "../../utils";
+import { Utils } from "../../utils";
 import Modal from "../Modal";
 
 function IncomeModalEdit() {
@@ -11,9 +11,7 @@ function IncomeModalEdit() {
 
 	const budget: TBudget = useSelector((state: IRootState) => state.budget);
 
-	const handleSubmit = async (
-		event: React.FormEvent<HTMLFormElement>,
-	): Promise<void> => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			dispatch(setError(""));
 
@@ -33,7 +31,7 @@ function IncomeModalEdit() {
 				return;
 			}
 
-			await request.post("budgets/update", {
+			await Utils.request.post("budgets/update", {
 				json: {
 					income_amount_monthly: income,
 				},
@@ -55,9 +53,7 @@ function IncomeModalEdit() {
 			<form className="flex flex-col w-80" onSubmit={handleSubmit}>
 				<div className="flex flex-col">
 					<div className="flex px-4 pt-4">
-						<h1 className="text-sm text-white font-normal font-rubik">
-							Set new Income ✍️
-						</h1>
+						<h1 className="text-sm text-white font-normal font-rubik">Set new Income ✍️</h1>
 					</div>
 
 					<div className="px-4 py-4">
@@ -71,20 +67,13 @@ function IncomeModalEdit() {
 								required
 							/>
 
-							<span className="text-sm text-white font-normal font-rubik">
-								€/MO
-							</span>
+							<span className="text-sm text-white font-normal font-rubik">€/MO</span>
 						</div>
 					</div>
 				</div>
 
-				<button
-					type="submit"
-					className="btn border-t border-t-[#242424] py-2.5"
-				>
-					<span className="text-sm text-[#895FF5] font-normal font-rubik">
-						Save
-					</span>
+				<button type="submit" className="btn border-t border-t-[#242424] py-2.5">
+					<span className="text-sm text-[#895FF5] font-normal font-rubik">Save</span>
 				</button>
 			</form>
 		</Modal>

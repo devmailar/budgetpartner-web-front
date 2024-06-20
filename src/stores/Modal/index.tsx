@@ -1,4 +1,4 @@
-import { createSlice, type Slice } from "@reduxjs/toolkit";
+import { type Slice, createSlice } from "@reduxjs/toolkit";
 import type { TModal } from "../../types";
 
 export const modalStore: Slice = createSlice({

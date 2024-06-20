@@ -6,9 +6,7 @@ function CreateAnAccount() {
 	const navigate: NavigateFunction = useNavigate();
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-	const handleCreate = async (
-		event: React.FormEvent<HTMLFormElement>,
-	): Promise<void> => {
+	const handleCreate = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			setIsLoading(true);
 
@@ -42,12 +40,8 @@ function CreateAnAccount() {
 			<form className="flex flex-col gap-y-4 w-[26rem]" onSubmit={handleCreate}>
 				<div className="flex flex-col gap-y-5">
 					<div className="flex flex-col gap-y-1 items-center">
-						<h1 className="text-2xl text-white font-medium font-rubik">
-							Create an account
-						</h1>
-						<p className="text-base text-white font-normal font-rubik">
-							Enter your email to sign up for this app
-						</p>
+						<h1 className="text-2xl text-white font-medium font-rubik">Create an account</h1>
+						<p className="text-base text-white font-normal font-rubik">Enter your email to sign up for this app</p>
 					</div>
 
 					<div className="flex flex-col gap-y-3">

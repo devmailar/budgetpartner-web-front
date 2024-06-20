@@ -5,22 +5,11 @@ function Sidebar() {
 	return (
 		<div className="absolute px-2 py-6 bg-[#000000] border-r-[1px] border-r-[#4B4B4B] h-screen">
 			<div className="flex flex-col items-center justify-between h-full">
-				<span className="text-4xl text-[#895FF5] font-black font-rubik">
-					BP
-				</span>
+				<span className="text-4xl text-[#895FF5] font-black font-rubik">BP</span>
 
 				<div className="flex flex-col gap-y-2">
-					<button
-						type="button"
-						className="flex items-center justify-center p-4"
-					>
-						<svg
-							width="30"
-							height="32"
-							viewBox="0 0 30 32"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-						>
+					<button type="button" className="flex items-center justify-center p-4">
+						<svg width="30" height="32" viewBox="0 0 30 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<title>Settings</title>
 							<g clipPath="url(#clip0_105_17)">
 								<path
@@ -30,12 +19,7 @@ function Sidebar() {
 							</g>
 							<defs>
 								<clipPath id="clip0_105_17">
-									<rect
-										width="29.5714"
-										height="30.4"
-										fill="white"
-										transform="translate(0.214294 0.799988)"
-									/>
+									<rect width="29.5714" height="30.4" fill="white" transform="translate(0.214294 0.799988)" />
 								</clipPath>
 							</defs>
 						</svg>
@@ -49,13 +33,7 @@ function Sidebar() {
 							router.navigate("/");
 						}}
 					>
-						<svg
-							width="30"
-							height="28"
-							viewBox="0 0 30 28"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-						>
+						<svg width="30" height="28" viewBox="0 0 30 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<title>Logout</title>
 							<g clipPath="url(#clip0_105_20)">
 								<path
@@ -65,12 +43,7 @@ function Sidebar() {
 							</g>
 							<defs>
 								<clipPath id="clip0_105_20">
-									<rect
-										width="29"
-										height="28"
-										fill="white"
-										transform="translate(0.5)"
-									/>
+									<rect width="29" height="28" fill="white" transform="translate(0.5)" />
 								</clipPath>
 							</defs>
 						</svg>

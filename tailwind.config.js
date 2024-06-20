@@ -4,8 +4,7 @@ export default {
 	theme: {
 		extend: {
 			backgroundImage: {
-				"radial-gradient":
-					"radial-gradient(50% 50% at 50% 50%, #1B1B1B 15%, #000000 100%)",
+				"radial-gradient": "radial-gradient(50% 50% at 50% 50%, #1B1B1B 15%, #000000 100%)",
 			},
 		},
 		fontFamily: {

@@ -12,9 +12,10 @@ import ExtraincomeModal from "../../components/ExtraincomeModal";
 import IncomeModalEdit from "../../components/IncomeModalEdit";
 import { setBudget } from "../../stores/Budget";
 import { setError } from "../../stores/Error";
+import { setExtraincomes } from "../../stores/Extraincomes";
 import { setModal } from "../../stores/Modal";
 import { setUser } from "../../stores/User";
-import type { IRootState, TBudget, TModal, TUser } from "../../types";
+import type { IRootState, IUserResponse, TExtraincome, TModal } from "../../types";
 import { request } from "../../utils";
 import "./index.css";
 
@@ -22,13 +23,18 @@ function Budget() {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const budget: TBudget = useSelector((state: IRootState) => state.budget);
-	const modal: TModal = useSelector((state: IRootState) => state.modal);
+	const [incomeAmountDaily, setIncomeAmountDaily] = React.useState<number>(0);
+	const [incomeAmountMonthly, setIncomeAmountMonthly] = React.useState<number>(0);
+	const [incomeAmountYearly, setIncomeAmountYearly] = React.useState<number>(0);
+
+	const modal: TModal = useSelector((state: IRootState) => {
+		return state.modal;
+	});
 
 	const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-	const handleGetUser = React.useCallback(
-		async (authorization: string): Promise<TUser> => {
+	const handleGetUserResponse = React.useCallback(
+		async (authorization: string): Promise<IUserResponse> => {
 			try {
 				const response: KyResponse = await request.get("users/get", {
 					headers: {
@@ -36,18 +42,46 @@ function Budget() {
 					},
 				});
 
-				const user: TUser = await response.json();
+				const userResponse: IUserResponse = await response.json();
 
-				if (Object.keys(user).length === 0) {
-					dispatch(setError("User not found! 🚫"));
-					return {} as TUser;
+				if (Object.keys(userResponse).length === 0) {
+					dispatch(setError("UserResponse not found!"));
 				}
 
-				dispatch(setUser(user));
+				if (userResponse.user.is_new) {
+					navigate("/budget/get-started");
+				}
 
-				if (user.is_new) navigate("/budget/get-started");
+				dispatch(setUser(userResponse.user));
+				dispatch(setBudget(userResponse.budget));
+				dispatch(setExtraincomes(userResponse.extraincomes));
 
-				return user;
+				const totalExtraincomes: number = userResponse.extraincomes.reduce(
+					(accumulator: number, extraincome: TExtraincome) => {
+						return accumulator + extraincome.extraincome_amount_monthly;
+					},
+					0,
+				);
+
+				const currentDaysInMonth: Date[] = eachDayOfInterval({
+					start: startOfMonth(new Date()),
+					end: endOfMonth(new Date()),
+				});
+
+				const dailyIncomeAmount: number =
+					(userResponse.budget.income_amount_monthly + totalExtraincomes) / currentDaysInMonth.length;
+				const dailyIncomeMonthly: number = userResponse.budget.income_amount_monthly + totalExtraincomes;
+				const dailyIncomeYearly: number = (userResponse.budget.income_amount_monthly + totalExtraincomes) * 12;
+
+				setIncomeAmountDaily(dailyIncomeAmount);
+				setIncomeAmountMonthly(dailyIncomeMonthly);
+				setIncomeAmountYearly(dailyIncomeYearly);
+
+				setTimeout((): void => {
+					setIsLoading(false);
+				}, 1000);
+
+				return userResponse;
 			} catch (error) {
 				if (error instanceof Error) {
 					dispatch(setError(error.name));
@@ -56,50 +90,9 @@ function Budget() {
 				}
 			}
 
-			return {} as TUser;
+			return {} as IUserResponse;
 		},
 		[dispatch, navigate],
-	);
-
-	const handleGetBudget = React.useCallback(
-		async (authorization: string): Promise<void> => {
-			try {
-				const response: KyResponse = await request.get("budgets/get", {
-					headers: {
-						Authorization: `Bearer ${authorization}`,
-					},
-				});
-
-				if (response.ok === false) {
-					return;
-				}
-
-				const budget: TBudget = await response.json();
-
-				if (Object.keys(budget).length === 0) {
-					dispatch(setError("budget not found! 🚫"));
-					return;
-				}
-
-				// TODO: Fetch extra income and recurring expenses and set them in the budget state as well
-				dispatch(
-					setBudget({
-						user_id: budget.user_id,
-						income_amount_total: budget.income_amount_monthly,
-						income_amount_monthly: budget.income_amount_monthly,
-						created_at: budget.created_at,
-						updated_at: budget.updated_at,
-					}),
-				);
-
-				setTimeout((): void => setIsLoading(false), 1000);
-			} catch (error) {
-				if (error instanceof Error) {
-					throw error;
-				}
-			}
-		},
-		[dispatch],
 	);
 
 	React.useEffect(() => {
@@ -110,31 +103,19 @@ function Budget() {
 				return navigate("/");
 			}
 
-			const user: TUser = await handleGetUser(authorization);
+			const userResponse: IUserResponse = await handleGetUserResponse(authorization);
 
-			if (Object.keys(user).length === 0) {
+			if (Object.keys(userResponse).length === 0) {
 				return;
 			}
 
-			if (user.is_new) {
+			if (userResponse.user.is_new) {
 				return;
 			}
-
-			handleGetBudget(authorization);
 		}
 
 		onLoad();
-	}, [navigate, handleGetUser, handleGetBudget]);
-
-	const currentDaysInMonth: Date[] = eachDayOfInterval({
-		start: startOfMonth(new Date()),
-		end: endOfMonth(new Date()),
-	});
-
-	const incomeAmountDaily: number =
-		budget.income_amount_monthly / currentDaysInMonth.length || 0;
-	const incomeAmountMonthly: number = budget.income_amount_monthly || 0;
-	const incomeAmountYearly: number = budget.income_amount_monthly * 12 || 0;
+	}, [navigate, handleGetUserResponse]);
 
 	return (
 		<div className="flex items-start justify-center bg-radial-gradient w-screen h-screen">
@@ -150,23 +131,14 @@ function Budget() {
 								type="button"
 								className="flex items-center justify-center bg-transparent px-10 py-2.5 rounded-full"
 								onClick={(): void => {
-									dispatch(
-										setError("Previous year budget cannot be accessed 🚫"),
-									);
+									dispatch(setError("Previous year budget cannot be accessed 🚫"));
 								}}
 							>
-								<span className="text-base text-[#4B4B4B] font-normal font-rubik">
-									{new Date().getFullYear() - 1}
-								</span>
+								<span className="text-base text-[#4B4B4B] font-normal font-rubik">{new Date().getFullYear() - 1}</span>
 							</button>
 
-							<button
-								type="button"
-								className="flex items-center justify-center primary px-10 py-2.5 rounded-full"
-							>
-								<span className="text-base text-[#FFFFFF] font-normal font-rubik">
-									{new Date().getFullYear()}
-								</span>
+							<button type="button" className="flex items-center justify-center primary px-10 py-2.5 rounded-full">
+								<span className="text-base text-[#FFFFFF] font-normal font-rubik">{new Date().getFullYear()}</span>
 							</button>
 						</nav>
 
@@ -195,9 +167,7 @@ function Budget() {
 										</h1>
 									</button>
 
-									<span className="text-lg text-[#895FF5] font-thin font-rubik">
-										/day
-									</span>
+									<span className="text-lg text-[#895FF5] font-thin font-rubik">/day</span>
 								</div>
 							</SwiperSlide>
 
@@ -220,9 +190,7 @@ function Budget() {
 										</h1>
 									</button>
 
-									<span className="text-lg text-[#895FF5] font-thin font-rubik">
-										/month
-									</span>
+									<span className="text-lg text-[#895FF5] font-thin font-rubik">/month</span>
 								</div>
 							</SwiperSlide>
 
@@ -245,9 +213,7 @@ function Budget() {
 										</h1>
 									</button>
 
-									<span className="text-lg text-[#895FF5] font-thin font-rubik">
-										/year
-									</span>
+									<span className="text-lg text-[#895FF5] font-thin font-rubik">/year</span>
 								</div>
 							</SwiperSlide>
 						</Swiper>
@@ -267,13 +233,9 @@ function Budget() {
 								);
 							}}
 						>
-							<span className="text-lg text-black font-medium font-rubik">
-								+
-							</span>
+							<span className="text-lg text-black font-medium font-rubik">+</span>
 
-							<span className="text-sm text-black font-medium font-rubik">
-								Extra income
-							</span>
+							<span className="text-sm text-black font-medium font-rubik">Extra income</span>
 						</button>
 
 						<button
@@ -289,13 +251,9 @@ function Budget() {
 								);
 							}}
 						>
-							<span className="text-lg text-black font-medium font-rubik">
-								+
-							</span>
+							<span className="text-lg text-black font-medium font-rubik">+</span>
 
-							<span className="text-sm text-black font-medium font-rubik">
-								Recurring expenses
-							</span>
+							<span className="text-sm text-black font-medium font-rubik">Recurring expenses</span>
 						</button>
 					</div>
 				</div>

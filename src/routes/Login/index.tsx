@@ -13,9 +13,7 @@ function Login() {
 
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-	const handleLogin = async (
-		event: React.FormEvent<HTMLFormElement>,
-	): Promise<void> => {
+	const handleLogin = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			setIsLoading(true);
 
@@ -79,12 +77,8 @@ function Login() {
 			<form className="flex flex-col w-[26rem]" onSubmit={handleLogin}>
 				<div className="flex flex-col gap-y-5">
 					<div className="flex flex-col gap-y-1 items-center">
-						<h1 className="text-2xl text-white font-medium font-rubik">
-							Login to existing account
-						</h1>
-						<p className="text-base text-white font-normal font-rubik">
-							Enter your email to login for this app
-						</p>
+						<h1 className="text-2xl text-white font-medium font-rubik">Login to existing account</h1>
+						<p className="text-base text-white font-normal font-rubik">Enter your email to login for this app</p>
 					</div>
 
 					<div className="flex flex-col gap-y-3 ">
@@ -130,9 +124,7 @@ function Login() {
 						onClick={() => navigate("/create-an-account")}
 						disabled={isLoading}
 					>
-						<span className="text-sm text-white font-medium font-rubik">
-							Create an account
-						</span>
+						<span className="text-sm text-white font-medium font-rubik">Create an account</span>
 					</button>
 				</div>
 			</form>

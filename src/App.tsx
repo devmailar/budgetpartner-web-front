@@ -31,7 +31,6 @@ export const router = createBrowserRouter([
 
 function App() {
 	const dispatch: Dispatch = useDispatch();
-
 	const error: string = useSelector((state: IRootState) => state.error);
 
 	return (

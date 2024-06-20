@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie, setCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
-import { request } from "../../utils";
+import { Utils } from "../../utils";
 
 function Login() {
 	const dispatch: Dispatch = useDispatch();
@@ -27,7 +27,7 @@ function Login() {
 				return;
 			}
 
-			const response: KyResponse = await request.post("users/login", {
+			const response: KyResponse = await Utils.request.post("users/login", {
 				json: {
 					email: email,
 					password: password,

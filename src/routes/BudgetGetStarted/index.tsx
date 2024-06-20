@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
-import { request } from "../../utils";
+import { Utils } from "../../utils";
 
 function BudgetGetStarted() {
 	const dispatch: Dispatch = useDispatch();
@@ -33,7 +33,7 @@ function BudgetGetStarted() {
 				return;
 			}
 
-			await request.post("budgets/create", {
+			await Utils.request.post("budgets/create", {
 				json: {
 					income_amount_monthly: income,
 				},

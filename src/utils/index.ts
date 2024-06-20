@@ -6,3 +6,7 @@ export const request = ky.create({
 		limit: 0,
 	},
 });
+
+export const Utils = {
+	request,
+};

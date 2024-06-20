@@ -1,6 +1,6 @@
 import React from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import { request } from "../../utils";
+import { Utils } from "../../utils";
 
 function CreateAnAccount() {
 	const navigate: NavigateFunction = useNavigate();
@@ -20,7 +20,7 @@ function CreateAnAccount() {
 				return;
 			}
 
-			await request.post("users/create-an-account", {
+			await Utils.request.post("users/create-an-account", {
 				json: {
 					email: email,
 					password: password,

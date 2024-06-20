@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import type { IRootState, TBudget } from "../../types";
-import { request } from "../../utils";
+import { Utils } from "../../utils";
 import Modal from "../Modal";
 
 function IncomeModalEdit() {
@@ -31,7 +31,7 @@ function IncomeModalEdit() {
 				return;
 			}
 
-			await request.post("budgets/update", {
+			await Utils.request.post("budgets/update", {
 				json: {
 					income_amount_monthly: income,
 				},

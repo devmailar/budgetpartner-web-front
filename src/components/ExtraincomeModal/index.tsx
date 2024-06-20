@@ -5,7 +5,7 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import type { IRootState, TExtraincome } from "../../types";
-import { request } from "../../utils";
+import { Utils } from "../../utils";
 import Modal from "../Modal";
 
 function ExtraincomeModal() {
@@ -43,7 +43,7 @@ function ExtraincomeModal() {
 				return;
 			}
 
-			await request.post("extraincomes/create", {
+			await Utils.request.post("extraincomes/create", {
 				json: {
 					extraincome_type: extraincomeType,
 					extraincome_amount_monthly: extraincomeAmountMonthly,

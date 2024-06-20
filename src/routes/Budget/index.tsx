@@ -16,7 +16,7 @@ import { setExtraincomes } from "../../stores/Extraincomes";
 import { setModal } from "../../stores/Modal";
 import { setUser } from "../../stores/User";
 import type { IRootState, IUserResponse, TExtraincome, TModal } from "../../types";
-import { request } from "../../utils";
+import { Utils } from "../../utils";
 import "./index.css";
 
 function Budget() {
@@ -36,7 +36,7 @@ function Budget() {
 	const handleGetUserResponse = React.useCallback(
 		async (authorization: string): Promise<IUserResponse> => {
 			try {
-				const response: KyResponse = await request.get("users/get", {
+				const response: KyResponse = await Utils.request.get("users/get", {
 					headers: {
 						Authorization: `Bearer ${authorization}`,
 					},

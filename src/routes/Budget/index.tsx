@@ -30,7 +30,7 @@ function Budget() {
 	const handleGetUser = React.useCallback(
 		async (authorization: string): Promise<TUser> => {
 			try {
-				const response: KyResponse = await request.get("users/get-one", {
+				const response: KyResponse = await request.get("users/get", {
 					headers: {
 						Authorization: `Bearer ${authorization}`,
 					},
@@ -64,7 +64,7 @@ function Budget() {
 	const handleGetBudget = React.useCallback(
 		async (authorization: string): Promise<void> => {
 			try {
-				const response: KyResponse = await request.get("budgets/get-one", {
+				const response: KyResponse = await request.get("budgets/get", {
 					headers: {
 						Authorization: `Bearer ${authorization}`,
 					},
@@ -171,7 +171,7 @@ function Budget() {
 						</nav>
 
 						<Swiper
-							className="w-[60rem] h-fit z-auto"
+							className="w-[60rem] h-fit z-0"
 							autoplay={{ delay: 5000, disableOnInteraction: false }}
 							pagination={{ clickable: true }}
 							modules={[Autoplay, Pagination]}

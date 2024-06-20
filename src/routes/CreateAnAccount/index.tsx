@@ -20,7 +20,7 @@ function CreateAnAccount() {
 				return;
 			}
 
-			await Utils.request.post("users/create-an-account", {
+			await Utils.request.post("users/create", {
 				json: {
 					email: email,
 					password: password,

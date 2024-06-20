@@ -43,10 +43,17 @@ export type TModal = {
 	incomeModalEdit: boolean;
 };
 
+export interface IUserResponse {
+	user: TUser;
+	budget: TBudget;
+	extraincomes: TExtraincome[];
+}
+
 export interface IRootState {
 	error: string;
 	user: TUser;
 	budget: TBudget;
+	extraincomes: TExtraincome[];
 	modal: TModal;
 }
 

@@ -27,9 +27,7 @@ function Budget() {
 	const [incomeAmountMonthly, setIncomeAmountMonthly] = React.useState<number>(0);
 	const [incomeAmountYearly, setIncomeAmountYearly] = React.useState<number>(0);
 
-	const modal: TModal = useSelector((state: IRootState) => {
-		return state.modal;
-	});
+	const modal: TModal = useSelector((state: IRootState) => state.modal);
 
 	const [isLoading, setIsLoading] = React.useState<boolean>(true);
 

@@ -12,9 +12,7 @@ function ExtraincomeModal() {
 	const navigate: NavigateFunction = useNavigate();
 	const dispatch: Dispatch = useDispatch();
 
-	const extraincomes: TExtraincome[] = useSelector((state: IRootState) => {
-		return state.extraincomes;
-	});
+	const extraincomes: TExtraincome[] = useSelector((state: IRootState) => state.extraincomes);
 
 	const totalExtraincomes: number = extraincomes.reduce((accumulator: number, extraincome: TExtraincome) => {
 		return accumulator + extraincome.extraincome_amount_monthly;

@@ -13,6 +13,7 @@ function Modal({ index, children }: { index: number; children: React.ReactNode }
 					setModal({
 						extraincomeModal: false,
 						recurringexpensesModal: false,
+						incomeModal: false,
 						incomeModalEdit: false,
 					}),
 				);

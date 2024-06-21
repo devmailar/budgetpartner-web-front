@@ -9,7 +9,6 @@ export type TUser = {
 
 export type TBudget = {
 	user_id: number;
-	income_amount_total: number;
 	income_amount_monthly: number;
 	created_at: Date;
 	updated_at: Date;
@@ -40,6 +39,7 @@ export type TMenu = {
 export type TModal = {
 	extraincomeModal: boolean;
 	recurringexpensesModal: boolean;
+	incomeModal: boolean;
 	incomeModalEdit: boolean;
 };
 
@@ -61,4 +61,10 @@ export interface IErrorResponse {
 	statusCode: number;
 	error: string;
 	message: string;
+}
+
+export enum Period {
+	DAY = "DAY",
+	MONTH = "MONTH",
+	YEAR = "YEAR",
 }

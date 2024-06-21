@@ -9,6 +9,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { getCookie, removeCookie } from "typescript-cookie";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
+import IncomeModal from "../../components/IncomeModal";
 import IncomeModalEdit from "../../components/IncomeModalEdit";
 import { setBudget } from "../../stores/Budget";
 import { setError } from "../../stores/Error";
@@ -155,7 +156,8 @@ function Budget() {
 												setModal({
 													extraincomeModal: false,
 													recurringexpensesModal: false,
-													incomeModalEdit: true,
+													incomeModal: true,
+													incomeModalEdit: false,
 												}),
 											);
 										}}
@@ -178,7 +180,8 @@ function Budget() {
 												setModal({
 													extraincomeModal: false,
 													recurringexpensesModal: false,
-													incomeModalEdit: true,
+													incomeModal: true,
+													incomeModalEdit: false,
 												}),
 											);
 										}}
@@ -201,7 +204,8 @@ function Budget() {
 												setModal({
 													extraincomeModal: false,
 													recurringexpensesModal: false,
-													incomeModalEdit: true,
+													incomeModal: true,
+													incomeModalEdit: false,
 												}),
 											);
 										}}
@@ -257,6 +261,7 @@ function Budget() {
 				</div>
 			)}
 
+			{modal.incomeModal && <IncomeModal />}
 			{modal.incomeModalEdit && <IncomeModalEdit />}
 			{modal.extraincomeModal && <ExtraincomeModal />}
 		</div>

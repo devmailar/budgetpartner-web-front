@@ -11,6 +11,7 @@ import { getCookie, removeCookie } from "typescript-cookie";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
 import IncomeModal from "../../components/IncomeModal";
 import IncomeModalEdit from "../../components/IncomeModalEdit";
+import RecurringexpenseModal from "../../components/RecurringexpenseModal";
 import { setBudget } from "../../stores/Budget";
 import { setError } from "../../stores/Error";
 import { setExtraincomes } from "../../stores/Extraincomes";
@@ -169,7 +170,7 @@ function Budget() {
 											dispatch(
 												setModal({
 													extraincomeModal: false,
-													recurringexpensesModal: false,
+													recurringexpenseModal: false,
 													incomeModal: true,
 													incomeModalEdit: false,
 												}),
@@ -193,7 +194,7 @@ function Budget() {
 											dispatch(
 												setModal({
 													extraincomeModal: false,
-													recurringexpensesModal: false,
+													recurringexpenseModal: false,
 													incomeModal: true,
 													incomeModalEdit: false,
 												}),
@@ -217,7 +218,7 @@ function Budget() {
 											dispatch(
 												setModal({
 													extraincomeModal: false,
-													recurringexpensesModal: false,
+													recurringexpenseModal: false,
 													incomeModal: true,
 													incomeModalEdit: false,
 												}),
@@ -243,7 +244,8 @@ function Budget() {
 								dispatch(
 									setModal({
 										extraincomeModal: true,
-										recurringexpensesModal: false,
+										recurringexpenseModal: false,
+										incomeModal: false,
 										incomeModalEdit: false,
 									}),
 								);
@@ -261,7 +263,8 @@ function Budget() {
 								dispatch(
 									setModal({
 										extraincomeModal: false,
-										recurringexpensesModal: true,
+										recurringexpenseModal: true,
+										incomeModal: false,
 										incomeModalEdit: false,
 									}),
 								);
@@ -278,6 +281,7 @@ function Budget() {
 			{modal.incomeModal && <IncomeModal />}
 			{modal.incomeModalEdit && <IncomeModalEdit />}
 			{modal.extraincomeModal && <ExtraincomeModal />}
+			{modal.recurringexpenseModal && <RecurringexpenseModal />}
 		</div>
 	);
 }

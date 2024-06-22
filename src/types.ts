@@ -38,7 +38,7 @@ export type TMenu = {
 
 export type TModal = {
 	extraincomeModal: boolean;
-	recurringexpensesModal: boolean;
+	recurringexpenseModal: boolean;
 	incomeModal: boolean;
 	incomeModalEdit: boolean;
 };

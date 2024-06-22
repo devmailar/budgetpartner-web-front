@@ -88,7 +88,6 @@ function ExtraincomeModal() {
 									type="text"
 									name="extraincome_type"
 									id="extraincome_type"
-									placeholder="Description"
 									required
 								/>
 							</div>

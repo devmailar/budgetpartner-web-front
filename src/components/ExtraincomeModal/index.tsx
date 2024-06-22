@@ -121,7 +121,7 @@ function ExtraincomeModal() {
 						<div className="flex flex-col px-4 pb-4">
 							{extraincomes.map((extraincome: TExtraincome) => (
 								<button key={extraincome.extraincome_type} type="button" className="flex items-center justify-between">
-									<span className="text-sm text-[#4B4B4B] font-normal font-rubik">{extraincome.extraincome_type}</span>
+									<span className="text-sm text-[#895FF5] font-normal font-rubik">{extraincome.extraincome_type}</span>
 									<span className="text-sm text-white font-medium font-rubik">
 										{extraincome.extraincome_amount_monthly.toFixed(2)} €
 									</span>

@@ -7,6 +7,7 @@ import { budgetStore } from "./stores/Budget/index.tsx";
 import { errorStore } from "./stores/Error";
 import { extraincomesStore } from "./stores/Extraincomes/index.tsx";
 import { modalStore } from "./stores/Modal/index.tsx";
+import { recurringexpensesStore } from "./stores/Recurringexpenses/index.tsx";
 import { userStore } from "./stores/User";
 
 const rootElement: HTMLElement | null = document.getElementById("root");
@@ -17,6 +18,7 @@ const store: Store = configureStore({
 		user: userStore.reducer,
 		budget: budgetStore.reducer,
 		extraincomes: extraincomesStore.reducer,
+		recurringexpenses: recurringexpensesStore.reducer,
 		modal: modalStore.reducer,
 	},
 });

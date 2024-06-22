@@ -22,10 +22,10 @@ export type TExtraincome = {
 	updated_at: Date;
 };
 
-export type TBudgetRecurringexpense = {
+export type TRecurringexpense = {
 	user_id: number;
-	expense_type: string;
-	expense_amount_monthly: number;
+	recurringexpense_type: string;
+	recurringexpense_amount_monthly: number;
 	created_at: Date;
 	updated_at: Date;
 };
@@ -47,6 +47,7 @@ export interface IUserResponse {
 	user: TUser;
 	budget: TBudget;
 	extraincomes: TExtraincome[];
+	recurringexpenses: TRecurringexpense[];
 }
 
 export interface IRootState {
@@ -54,6 +55,7 @@ export interface IRootState {
 	user: TUser;
 	budget: TBudget;
 	extraincomes: TExtraincome[];
+	recurringexpenses: TRecurringexpense[];
 	modal: TModal;
 }
 

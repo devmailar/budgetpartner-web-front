@@ -15,8 +15,9 @@ import { setBudget } from "../../stores/Budget";
 import { setError } from "../../stores/Error";
 import { setExtraincomes } from "../../stores/Extraincomes";
 import { setModal } from "../../stores/Modal";
+import { setRecurringexpenses } from "../../stores/Recurringexpenses";
 import { setUser } from "../../stores/User";
-import type { IRootState, IUserResponse, TExtraincome, TModal } from "../../types";
+import type { IRootState, IUserResponse, TExtraincome, TModal, TRecurringexpense } from "../../types";
 import { Utils } from "../../utils";
 import "./index.css";
 
@@ -54,10 +55,18 @@ function Budget() {
 				dispatch(setUser(userResponse.user));
 				dispatch(setBudget(userResponse.budget));
 				dispatch(setExtraincomes(userResponse.extraincomes));
+				dispatch(setRecurringexpenses(userResponse.recurringexpenses));
 
 				const totalExtraincomes: number = userResponse.extraincomes.reduce(
 					(accumulator: number, extraincome: TExtraincome) => {
 						return accumulator + extraincome.extraincome_amount_monthly;
+					},
+					0,
+				);
+
+				const totalRecurringexpenses: number = userResponse.recurringexpenses.reduce(
+					(accumulator: number, recurringexpense: TRecurringexpense) => {
+						return accumulator + recurringexpense.recurringexpense_amount_monthly;
 					},
 					0,
 				);
@@ -68,9 +77,14 @@ function Budget() {
 				});
 
 				const dailyIncomeAmount: number =
-					(userResponse.budget.income_amount_monthly + totalExtraincomes) / currentDaysInMonth.length;
-				const dailyIncomeMonthly: number = userResponse.budget.income_amount_monthly + totalExtraincomes;
-				const dailyIncomeYearly: number = (userResponse.budget.income_amount_monthly + totalExtraincomes) * 12;
+					(userResponse.budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses) /
+					currentDaysInMonth.length;
+
+				const dailyIncomeMonthly: number =
+					userResponse.budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses;
+
+				const dailyIncomeYearly: number =
+					(userResponse.budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses) * 12;
 
 				setIncomeAmountDaily(dailyIncomeAmount);
 				setIncomeAmountMonthly(dailyIncomeMonthly);

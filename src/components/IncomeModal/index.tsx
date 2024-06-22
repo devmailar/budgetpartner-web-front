@@ -3,7 +3,7 @@ import { eachDayOfInterval, endOfMonth, startOfMonth } from "date-fns";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "../../stores/Modal";
-import { type IRootState, Period, type TBudget, type TExtraincome } from "../../types";
+import { type IRootState, Period, type TBudget, type TExtraincome, type TRecurringexpense } from "../../types";
 import Modal from "../Modal";
 
 function IncomeModal() {
@@ -11,6 +11,7 @@ function IncomeModal() {
 
 	const budget: TBudget = useSelector((state: IRootState) => state.budget);
 	const extraincomes: TExtraincome[] = useSelector((state: IRootState) => state.extraincomes);
+	const recurringexpenses: TRecurringexpense[] = useSelector((state: IRootState) => state.recurringexpenses);
 
 	const [selectedPeriod, setSelectedPeriod] = useState<Period>(Period.DAY);
 
@@ -22,6 +23,13 @@ function IncomeModal() {
 	const totalExtraincomes: number = extraincomes.reduce((accumulator: number, extraincome: TExtraincome) => {
 		return accumulator + extraincome.extraincome_amount_monthly;
 	}, 0);
+
+	const totalRecurringexpenses: number = recurringexpenses.reduce(
+		(accumulator: number, recurringexpense: TRecurringexpense) => {
+			return accumulator + recurringexpense.recurringexpense_amount_monthly;
+		},
+		0,
+	);
 
 	const convertPeriodAmount = (amount: number, selectedPeriod: Period): number => {
 		switch (selectedPeriod) {
@@ -90,7 +98,11 @@ function IncomeModal() {
 						<div className="flex items-center justify-between ">
 							<h1 className="text-sm text-white font-normal font-rubik">Budget 📊</h1>
 							<span className="text-sm text-white font-medium font-rubik">
-								{convertPeriodAmount(budget.income_amount_monthly + totalExtraincomes, selectedPeriod).toFixed(2)} €
+								{convertPeriodAmount(
+									budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses,
+									selectedPeriod,
+								).toFixed(2)}{" "}
+								€
 							</span>
 						</div>
 					</div>
@@ -137,7 +149,9 @@ function IncomeModal() {
 						</div>
 						<div className="flex items-center justify-between">
 							<span className="text-sm text-[#9E553C] font-normal font-rubik">Recurring expenses</span>
-							<span className="text-sm text-white font-medium font-rubik">0.00 €</span>
+							<span className="text-sm text-white font-medium font-rubik">
+								{convertPeriodAmount(totalRecurringexpenses, selectedPeriod).toFixed(2)} €
+							</span>
 						</div>
 					</div>
 				</div>

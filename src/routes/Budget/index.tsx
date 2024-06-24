@@ -138,7 +138,7 @@ function Budget() {
 					<div className="loader" />
 				</div>
 			) : (
-				<div className="flex flex-col gap-y-10 items-center mt-16">
+				<div className="flex flex-col gap-y-10 items-center mt-20">
 					<div className="flex flex-col items-center">
 						<nav className="flex items-center p-1 bg-[#202020] rounded-full">
 							<button
@@ -177,7 +177,7 @@ function Budget() {
 											);
 										}}
 									>
-										<h1 className="text-[2.4rem] text-[#895FF5] font-black font-rubik">
+										<h1 className="text-[2.4rem] text-[#895FF5] font-medium font-rubik">
 											{incomeAmountDaily.toFixed(2)} €
 										</h1>
 									</button>
@@ -201,7 +201,7 @@ function Budget() {
 											);
 										}}
 									>
-										<h1 className="text-[2.4rem] text-[#895FF5] font-black font-rubik">
+										<h1 className="text-[2.4rem] text-[#895FF5] font-medium font-rubik">
 											{incomeAmountMonthly.toFixed(2)} €
 										</h1>
 									</button>
@@ -225,7 +225,7 @@ function Budget() {
 											);
 										}}
 									>
-										<h1 className="text-[2.4rem] text-[#895FF5] font-black font-rubik">
+										<h1 className="text-[2.4rem] text-[#895FF5] font-medium font-rubik">
 											{incomeAmountYearly.toFixed(2)} €
 										</h1>
 									</button>

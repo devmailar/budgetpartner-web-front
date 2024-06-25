@@ -13,7 +13,7 @@ function IncomeModal() {
 	const extraincomes: TExtraincome[] = useSelector((state: IRootState) => state.extraincomes);
 	const recurringexpenses: TRecurringexpense[] = useSelector((state: IRootState) => state.recurringexpenses);
 
-	const [selectedPeriod, setSelectedPeriod] = useState<Period>(Period.MONTH);
+	const [selectedPeriod, setSelectedPeriod] = useState<Period>(Period.DAY);
 
 	const currentDaysInMonth: Date[] = eachDayOfInterval({
 		start: startOfMonth(new Date()),
@@ -47,56 +47,54 @@ function IncomeModal() {
 	return (
 		<Modal index={50}>
 			<div className="flex flex-col w-80">
-				<div className="flex flex-col gap-y-2 px-4 pt-4">
-					<div className="flex justify-center">
-						<nav className="flex items-center gap-x-1 p-1 bg-[#202020] rounded-2xl">
-							<button
-								type="button"
-								className={`flex items-center ${selectedPeriod === Period.DAY && "bg-[#4B4B4B]"} p-[5px] rounded-full`}
-								onClick={(): void => {
-									setSelectedPeriod(Period.DAY);
-								}}
+				<div className="flex flex-col gap-y-4 px-4 pt-4">
+					<nav className="flex items-center gap-x-1 px-1 py-1 bg-[#202020] rounded-2xl w-fit">
+						<button
+							type="button"
+							className={`flex items-center ${selectedPeriod === Period.DAY && "bg-[#4B4B4B]"} p-[3px] rounded-full`}
+							onClick={(): void => {
+								setSelectedPeriod(Period.DAY);
+							}}
+						>
+							<span
+								className={`text-xs ${selectedPeriod === Period.DAY ? "text-white" : "text-[#4B4B4B]"} font-light font-rubik`}
 							>
-								<span
-									className={`text-sm ${selectedPeriod === Period.DAY ? "text-white" : "text-[#4B4B4B]"} font-normal font-rubik`}
-								>
-									DA
-								</span>
-							</button>
+								DA
+							</span>
+						</button>
 
-							<button
-								type="button"
-								className={`flex items-center ${selectedPeriod === Period.MONTH && "bg-[#4B4B4B]"} p-[5px] rounded-full`}
-								onClick={(): void => {
-									setSelectedPeriod(Period.MONTH);
-								}}
+						<button
+							type="button"
+							className={`flex items-center ${selectedPeriod === Period.MONTH && "bg-[#4B4B4B]"} p-[3px] rounded-full`}
+							onClick={(): void => {
+								setSelectedPeriod(Period.MONTH);
+							}}
+						>
+							<span
+								className={`text-xs ${selectedPeriod === Period.MONTH ? "text-white" : "text-[#4B4B4B]"} font-light font-rubik`}
 							>
-								<span
-									className={`text-sm ${selectedPeriod === Period.MONTH ? "text-white" : "text-[#4B4B4B]"} font-normal font-rubik`}
-								>
-									MO
-								</span>
-							</button>
+								MO
+							</span>
+						</button>
 
-							<button
-								type="button"
-								className={`flex items-center ${selectedPeriod === Period.YEAR && "bg-[#4B4B4B]"} p-[5px] rounded-full`}
-								onClick={(): void => {
-									setSelectedPeriod(Period.YEAR);
-								}}
+						<button
+							type="button"
+							className={`flex items-center ${selectedPeriod === Period.YEAR && "bg-[#4B4B4B]"} p-[3px] rounded-full`}
+							onClick={(): void => {
+								setSelectedPeriod(Period.YEAR);
+							}}
+						>
+							<span
+								className={`text-xs ${selectedPeriod === Period.YEAR ? "text-white" : "text-[#4B4B4B]"} font-light font-rubik`}
 							>
-								<span
-									className={`text-sm ${selectedPeriod === Period.YEAR ? "text-white" : "text-[#4B4B4B]"} font-normal font-rubik`}
-								>
-									YE
-								</span>
-							</button>
-						</nav>
-					</div>
+								YE
+							</span>
+						</button>
+					</nav>
 
 					<div className="flex items-center justify-between">
-						<h1 className="text-sm text-white font-normal font-rubik">Budget 📊</h1>
-						<span className="text-sm text-white font-normal font-rubik">
+						<h1 className="text-base text-white font-normal font-rubik">Budget</h1>
+						<span className="text-base text-white font-normal font-rubik">
 							{convertPeriodAmount(
 								budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses,
 								selectedPeriod,
@@ -106,22 +104,24 @@ function IncomeModal() {
 					</div>
 				</div>
 
-				<div className="flex flex-col gap-y-1 px-4 py-4">
-					<div className="flex items-center justify-between border-t border-t-[#202020] pt-1">
-						<span className="text-xs text-[#BADB6C] font-normal font-rubik">Income</span>
-						<span className="text-xs text-white font-normal font-rubik tracking-widest">
+				<div className="flex flex-col px-4 py-4">
+					<div className="flex items-center justify-between">
+						<span className="text-sm text-green-600 font-normal font-rubik">Income</span>
+						<span className="text-sm text-white font-medium font-rubik">
 							{convertPeriodAmount(budget.income_amount_monthly, selectedPeriod).toFixed(2)}
 						</span>
 					</div>
-					<div className="flex items-center justify-between border-t border-t-[#202020] pt-1">
-						<span className="text-xs text-[#895FF5] font-normal font-rubik">Extraincome</span>
-						<span className="text-xs text-white font-normal font-rubik tracking-widest">
+
+					<div className="flex items-center justify-between">
+						<span className="text-sm text-white font-normal font-rubik">Extraincome 💰</span>
+						<span className="text-sm text-white font-medium font-rubik">
 							{convertPeriodAmount(totalExtraincomes, selectedPeriod).toFixed(2)}
 						</span>
 					</div>
-					<div className="flex items-center justify-between border-t border-t-[#202020] pt-1">
-						<span className="text-xs text-[#9E553C] font-normal font-rubik">Recurring expenses</span>
-						<span className="text-xs text-white font-normal font-rubik tracking-widest">
+
+					<div className="flex items-center justify-between">
+						<span className="text-sm text-white font-normal font-rubik">Recurring expenses 💰</span>
+						<span className="text-sm text-white font-medium font-rubik">
 							{convertPeriodAmount(totalRecurringexpenses, selectedPeriod).toFixed(2)}
 						</span>
 					</div>

@@ -132,18 +132,18 @@ function Budget() {
 	}, [navigate, handleGetUserResponse]);
 
 	return (
-		<div className="flex items-start justify-center bg-radial-gradient w-screen h-screen">
+		<div className="flex justify-center bg-radial-gradient w-screen h-screen">
 			{isLoading ? (
 				<div className="flex items-center justify-center w-screen h-screen pb-40">
 					<div className="loader" />
 				</div>
 			) : (
-				<div className="flex flex-col gap-y-10 items-center mt-20">
+				<div className="flex flex-col gap-y-10 items-center mt-[4.4rem]">
 					<div className="flex flex-col items-center">
 						<nav className="flex items-center p-1 bg-[#202020] rounded-full">
 							<button
 								type="button"
-								className="flex items-center justify-center bg-transparent px-10 py-2.5 rounded-full"
+								className="flex items-center justify-center bg-transparent px-11 py-3 rounded-full"
 								onClick={(): void => {
 									dispatch(setError("Previous year budget cannot be accessed 🚫"));
 								}}
@@ -151,7 +151,7 @@ function Budget() {
 								<span className="text-base text-[#4B4B4B] font-normal font-rubik">{new Date().getFullYear() - 1}</span>
 							</button>
 
-							<button type="button" className="flex items-center justify-center primary px-10 py-2.5 rounded-full">
+							<button type="button" className="flex items-center justify-center primary px-11 py-3 rounded-full">
 								<span className="text-base text-[#FFFFFF] font-normal font-rubik">{new Date().getFullYear()}</span>
 							</button>
 						</nav>
@@ -177,12 +177,12 @@ function Budget() {
 											);
 										}}
 									>
-										<h1 className="text-[2.4rem] text-[#895FF5] font-medium font-rubik">
+										<h1 className="text-[2.4rem] text-[#895FF5] font-extrabold font-rubik">
 											{incomeAmountDaily.toFixed(2)} €
 										</h1>
 									</button>
 
-									<span className="text-lg text-[#895FF5] font-thin font-rubik">/day</span>
+									<span className="text-base text-[#895FF5] font-thin font-rubik">DA</span>
 								</div>
 							</SwiperSlide>
 
@@ -201,12 +201,12 @@ function Budget() {
 											);
 										}}
 									>
-										<h1 className="text-[2.4rem] text-[#895FF5] font-medium font-rubik">
+										<h1 className="text-[2.4rem] text-[#895FF5] font-extrabold font-rubik">
 											{incomeAmountMonthly.toFixed(2)} €
 										</h1>
 									</button>
 
-									<span className="text-lg text-[#895FF5] font-thin font-rubik">/month</span>
+									<span className="text-base text-[#895FF5] font-thin font-rubik">MO</span>
 								</div>
 							</SwiperSlide>
 
@@ -225,12 +225,12 @@ function Budget() {
 											);
 										}}
 									>
-										<h1 className="text-[2.4rem] text-[#895FF5] font-medium font-rubik">
+										<h1 className="text-[2.4rem] text-[#895FF5] font-extrabold font-rubik">
 											{incomeAmountYearly.toFixed(2)} €
 										</h1>
 									</button>
 
-									<span className="text-lg text-[#895FF5] font-thin font-rubik">/year</span>
+									<span className="text-base text-[#895FF5] font-thin font-rubik">YE</span>
 								</div>
 							</SwiperSlide>
 						</Swiper>

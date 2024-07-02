@@ -57,7 +57,7 @@ function IncomeModal() {
 							}}
 						>
 							<span
-								className={`text-xs ${selectedPeriod === Period.DAY ? "text-white" : "text-[#4B4B4B]"} font-light font-rubik`}
+								className={`text-xs ${selectedPeriod === Period.DAY ? "text-white" : "text-[#4B4B4B]"} font-bold font-rubik`}
 							>
 								DA
 							</span>
@@ -71,7 +71,7 @@ function IncomeModal() {
 							}}
 						>
 							<span
-								className={`text-xs ${selectedPeriod === Period.MONTH ? "text-white" : "text-[#4B4B4B]"} font-light font-rubik`}
+								className={`text-xs ${selectedPeriod === Period.MONTH ? "text-white" : "text-[#4B4B4B]"} font-bold font-rubik`}
 							>
 								MO
 							</span>
@@ -85,7 +85,7 @@ function IncomeModal() {
 							}}
 						>
 							<span
-								className={`text-xs ${selectedPeriod === Period.YEAR ? "text-white" : "text-[#4B4B4B]"} font-light font-rubik`}
+								className={`text-xs ${selectedPeriod === Period.YEAR ? "text-white" : "text-[#4B4B4B]"} font-bold font-rubik`}
 							>
 								YE
 							</span>

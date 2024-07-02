@@ -13,12 +13,11 @@ import IncomeModal from "../../components/IncomeModal";
 import IncomeModalEdit from "../../components/IncomeModalEdit";
 import RecurringexpenseModal from "../../components/RecurringexpenseModal";
 import { setBudget } from "../../stores/Budget";
+import { setBudgets } from "../../stores/Budgets";
 import { setError } from "../../stores/Error";
-import { setExtraincomes } from "../../stores/Extraincomes";
 import { setModal } from "../../stores/Modal";
-import { setRecurringexpenses } from "../../stores/Recurringexpenses";
 import { setUser } from "../../stores/User";
-import type { IRootState, IUserResponse, TExtraincome, TModal, TRecurringexpense } from "../../types";
+import type { IRootState, IUserResponse, TBudget, TExtraincome, TModal } from "../../types";
 import { Utils } from "../../utils";
 import "./index.css";
 
@@ -26,9 +25,8 @@ function Budget() {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const [incomeAmountDaily, setIncomeAmountDaily] = React.useState<number>(0);
-	const [incomeAmountMonthly, setIncomeAmountMonthly] = React.useState<number>(0);
-	const [incomeAmountYearly, setIncomeAmountYearly] = React.useState<number>(0);
+	const [dailyBudgetAmount, setDailyBudgetAmount] = React.useState<number>(0);
+	const [monthlyBudgetAmount, setMonthlyBudgetAmount] = React.useState<number>(0);
 
 	const modal: TModal = useSelector((state: IRootState) => state.modal);
 
@@ -43,53 +41,96 @@ function Budget() {
 					},
 				});
 
+				if (!response.ok) {
+					return {} as IUserResponse;
+				}
+
 				const userResponse: IUserResponse = await response.json();
+				// console.group(userResponse);
 
 				if (Object.keys(userResponse).length === 0) {
-					dispatch(setError("UserResponse not found!"));
+					throw new Error("User response is empty");
 				}
 
 				if (userResponse.user.is_new) {
 					navigate("/budget/get-started");
+
+					return {} as IUserResponse;
+				}
+
+				if (userResponse.budgets.length === 0) {
+					throw new Error("Budgets response is empty");
 				}
 
 				dispatch(setUser(userResponse.user));
-				dispatch(setBudget(userResponse.budget));
-				dispatch(setExtraincomes(userResponse.extraincomes));
-				dispatch(setRecurringexpenses(userResponse.recurringexpenses));
+				dispatch(setBudgets(userResponse.budgets));
 
-				const totalExtraincomes: number = userResponse.extraincomes.reduce(
+				const currentBudget: TBudget | undefined = userResponse.budgets.find((budget: TBudget): boolean => {
+					return new Date(budget.created_at).getMonth() === new Date().getMonth();
+				});
+
+				if (!currentBudget) {
+					throw new Error("Current budget is undefined");
+				}
+
+				dispatch(setBudget(currentBudget));
+
+				const totalExtraincomes: number = currentBudget.extraincomes.reduce(
 					(accumulator: number, extraincome: TExtraincome) => {
 						return accumulator + extraincome.extraincome_amount_monthly;
 					},
 					0,
 				);
 
-				const totalRecurringexpenses: number = userResponse.recurringexpenses.reduce(
-					(accumulator: number, recurringexpense: TRecurringexpense) => {
-						return accumulator + recurringexpense.recurringexpense_amount_monthly;
-					},
-					0,
-				);
+				console.info(totalExtraincomes);
 
 				const currentDaysInMonth: Date[] = eachDayOfInterval({
 					start: startOfMonth(new Date()),
 					end: endOfMonth(new Date()),
 				});
 
-				const dailyIncomeAmount: number =
-					(userResponse.budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses) /
-					currentDaysInMonth.length;
+				const dailyBudgetAmount: number = (totalExtraincomes - 0) / currentDaysInMonth.length;
+				const monthlyBudgetAmount: number = totalExtraincomes - 0;
 
-				const dailyIncomeMonthly: number =
-					userResponse.budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses;
+				setDailyBudgetAmount(dailyBudgetAmount);
+				setMonthlyBudgetAmount(monthlyBudgetAmount);
 
-				const dailyIncomeYearly: number =
-					(userResponse.budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses) * 12;
+				// dispatch(setBudget(userResponse.budget));
+				// dispatch(setExtraincomes(userResponse.extraincomes));
+				// dispatch(setRecurringexpenses(userResponse.recurringexpenses));
 
-				setIncomeAmountDaily(dailyIncomeAmount);
-				setIncomeAmountMonthly(dailyIncomeMonthly);
-				setIncomeAmountYearly(dailyIncomeYearly);
+				// const totalExtraincomes: number = userResponse.extraincomes.reduce(
+				// 	(accumulator: number, extraincome: TExtraincome) => {
+				// 		return accumulator + extraincome.extraincome_amount_monthly;
+				// 	},
+				// 	0,
+				// );
+
+				// const totalRecurringexpenses: number = userResponse.recurringexpenses.reduce(
+				// 	(accumulator: number, recurringexpense: TRecurringexpense) => {
+				// 		return accumulator + recurringexpense.recurringexpense_amount_monthly;
+				// 	},
+				// 	0,
+				// );
+
+				// const currentDaysInMonth: Date[] = eachDayOfInterval({
+				// 	start: startOfMonth(new Date()),
+				// 	end: endOfMonth(new Date()),
+				// });
+
+				// const dailyIncomeAmount: number =
+				// 	(userResponse.budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses) /
+				// 	currentDaysInMonth.length;
+
+				// const dailyIncomeMonthly: number =
+				// 	userResponse.budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses;
+
+				// const dailyIncomeYearly: number =
+				// 	(userResponse.budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses) * 12;
+
+				// setIncomeAmountDaily(dailyIncomeAmount);
+				// setIncomeAmountMonthly(dailyIncomeMonthly);
+				// setIncomeAmountYearly(dailyIncomeYearly);
 
 				setTimeout((): void => {
 					setIsLoading(false);
@@ -138,12 +179,12 @@ function Budget() {
 					<div className="loader" />
 				</div>
 			) : (
-				<div className="flex flex-col gap-y-10 items-center mt-[4.4rem]">
+				<div className="flex flex-col gap-y-10 items-center mt-14">
 					<div className="flex flex-col items-center">
 						<nav className="flex items-center p-1 bg-[#202020] rounded-full">
 							<button
 								type="button"
-								className="flex items-center justify-center bg-transparent px-11 py-3 rounded-full"
+								className="flex items-center justify-center bg-transparent px-10 py-3.5 rounded-full"
 								onClick={(): void => {
 									dispatch(setError("Previous year budget cannot be accessed 🚫"));
 								}}
@@ -151,8 +192,8 @@ function Budget() {
 								<span className="text-base text-[#4B4B4B] font-normal font-rubik">{new Date().getFullYear() - 1}</span>
 							</button>
 
-							<button type="button" className="flex items-center justify-center primary px-11 py-3 rounded-full">
-								<span className="text-base text-[#FFFFFF] font-normal font-rubik">{new Date().getFullYear()}</span>
+							<button type="button" className="flex items-center justify-center primary px-10 py-3.5 rounded-full">
+								<span className="text-base text-white font-normal font-rubik">{new Date().getFullYear()}</span>
 							</button>
 						</nav>
 
@@ -163,7 +204,7 @@ function Budget() {
 							modules={[Autoplay, Pagination]}
 						>
 							<SwiperSlide>
-								<div className="flex flex-col gap-y-1 items-center pt-10 pb-10">
+								<div className="flex flex-col gap-y-2 items-center pt-16 pb-8">
 									<button
 										type="button"
 										onClick={(): void => {
@@ -177,17 +218,15 @@ function Budget() {
 											);
 										}}
 									>
-										<h1 className="text-[2.4rem] text-[#895FF5] font-extrabold font-rubik">
-											{incomeAmountDaily.toFixed(2)} €
-										</h1>
+										<h1 className="text-5xl text-[#895FF5] font-bold font-rubik">{dailyBudgetAmount.toFixed(2)} €</h1>
 									</button>
 
-									<span className="text-base text-[#895FF5] font-thin font-rubik">DA</span>
+									<span className="text-xl text-[#4B4B4B] font-light font-rubik">/day</span>
 								</div>
 							</SwiperSlide>
 
 							<SwiperSlide>
-								<div className="flex flex-col gap-y-1 items-center pt-10 pb-10">
+								<div className="flex flex-col gap-y-2 items-center pt-16 pb-8">
 									<button
 										type="button"
 										onClick={(): void => {
@@ -201,36 +240,10 @@ function Budget() {
 											);
 										}}
 									>
-										<h1 className="text-[2.4rem] text-[#895FF5] font-extrabold font-rubik">
-											{incomeAmountMonthly.toFixed(2)} €
-										</h1>
+										<h1 className="text-5xl text-[#895FF5] font-bold font-rubik">{monthlyBudgetAmount.toFixed(2)} €</h1>
 									</button>
 
-									<span className="text-base text-[#895FF5] font-thin font-rubik">MO</span>
-								</div>
-							</SwiperSlide>
-
-							<SwiperSlide>
-								<div className="flex flex-col gap-y-1 items-center pt-10 pb-10">
-									<button
-										type="button"
-										onClick={(): void => {
-											dispatch(
-												setModal({
-													extraincomeModal: false,
-													recurringexpenseModal: false,
-													incomeModal: true,
-													incomeModalEdit: false,
-												}),
-											);
-										}}
-									>
-										<h1 className="text-[2.4rem] text-[#895FF5] font-extrabold font-rubik">
-											{incomeAmountYearly.toFixed(2)} €
-										</h1>
-									</button>
-
-									<span className="text-base text-[#895FF5] font-thin font-rubik">YE</span>
+									<span className="text-xl text-[#4B4B4B] font-light font-rubik">/month</span>
 								</div>
 							</SwiperSlide>
 						</Swiper>
@@ -239,7 +252,7 @@ function Budget() {
 					<div className="flex flex-col gap-y-4 items-center">
 						<button
 							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-[#895FF5] px-4 py-1.5 regular-income-glow rounded-full"
+							className="flex gap-x-2 items-center justify-center btn bg-[#895FF5] px-4 py-2 regular-income-glow rounded-full"
 							onClick={(): void => {
 								dispatch(
 									setModal({
@@ -251,14 +264,14 @@ function Budget() {
 								);
 							}}
 						>
-							<span className="text-lg text-black font-medium font-rubik">+</span>
+							<span className="text-xl text-[#202020] font-medium font-rubik">+</span>
 
-							<span className="text-sm text-black font-medium font-rubik">Extra income</span>
+							<span className="text-sm text-[#202020] font-medium font-rubik">Extra income</span>
 						</button>
 
 						<button
 							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-[#9E553C] px-4 py-1.5 recurring-expenses-glow rounded-full"
+							className="flex gap-x-2 items-center justify-center btn bg-[#9E553C] px-4 py-2 recurring-expenses-glow rounded-full"
 							onClick={(): void => {
 								dispatch(
 									setModal({
@@ -270,9 +283,9 @@ function Budget() {
 								);
 							}}
 						>
-							<span className="text-lg text-black font-medium font-rubik">+</span>
+							<span className="text-xl text-[#202020] font-medium font-rubik">+</span>
 
-							<span className="text-sm text-black font-medium font-rubik">Recurring expenses</span>
+							<span className="text-sm text-[#202020] font-medium font-rubik">Recurring expenses</span>
 						</button>
 					</div>
 				</div>

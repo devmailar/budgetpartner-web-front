@@ -25,6 +25,8 @@ function Budget() {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
+	const [dateSwitch, setDateSwitch] = React.useState<boolean>(false);
+
 	const [dailyBudgetAmount, setDailyBudgetAmount] = React.useState<number>(0);
 	const [monthlyBudgetAmount, setMonthlyBudgetAmount] = React.useState<number>(0);
 
@@ -201,24 +203,63 @@ function Budget() {
 			) : (
 				<div className="flex flex-col gap-y-10 items-center mt-[5.3rem]">
 					<div className="flex flex-col gap-y-2 items-center">
-						<button
-							type="button"
-							className="flex gap-x-2.5 items-center justify-center bg-[#1A1A1A] px-4 py-2 rounded-[6.25rem]"
-						>
-							<span className="text-base text-[#4B4B4B] font-normal font-rubik">
-								{months[new Date().getMonth()]} {"("}
-								<span className="font-semibold">{new Date().getFullYear()}</span>
-								{")"}
-							</span>
+						<div className="flex flex-col gap-y-2 items-center">
+							<button
+								type="button"
+								className="flex gap-x-2.5 items-center justify-center bg-[#1A1A1A] px-4 py-2 rounded-[6.25rem]"
+								onClick={(): void => setDateSwitch(!dateSwitch)}
+							>
+								<span className="text-base text-[#4B4B4B] font-normal font-rubik">
+									{months[new Date().getMonth()]} {"("}
+									<span className="font-semibold">{new Date().getFullYear()}</span>
+									{")"}
+								</span>
 
-							<svg xmlns="http://www.w3.org/2000/svg" width="28" height="27" viewBox="0 0 28 27" fill="none">
-								<title>Switch</title>
-								<path
-									d="M3.03125 13.5C3.03125 19.5592 7.94082 24.4688 14 24.4688C20.0592 24.4688 24.9688 19.5592 24.9688 13.5C24.9688 7.44082 20.0592 2.53125 14 2.53125C7.94082 2.53125 3.03125 7.44082 3.03125 13.5ZM18.2768 11.2113C18.6723 10.8158 19.3209 10.8158 19.7164 11.2113C19.9168 11.4117 20.0117 11.6701 20.0117 11.9285C20.0117 12.1869 19.9115 12.4506 19.7111 12.651L14.7383 17.608C14.3375 17.9719 13.7205 17.9613 13.3355 17.5764L8.28887 12.5455C7.89336 12.15 7.88809 11.5066 8.28887 11.1059C8.68437 10.7104 9.32773 10.7051 9.72852 11.1059L14.0053 15.4248L18.2768 11.2113Z"
-									fill="#895FF5"
-								/>
-							</svg>
-						</button>
+								<svg xmlns="http://www.w3.org/2000/svg" width="28" height="27" viewBox="0 0 28 27" fill="none">
+									<title>Switch</title>
+									<path
+										d="M3.03125 13.5C3.03125 19.5592 7.94082 24.4688 14 24.4688C20.0592 24.4688 24.9688 19.5592 24.9688 13.5C24.9688 7.44082 20.0592 2.53125 14 2.53125C7.94082 2.53125 3.03125 7.44082 3.03125 13.5ZM18.2768 11.2113C18.6723 10.8158 19.3209 10.8158 19.7164 11.2113C19.9168 11.4117 20.0117 11.6701 20.0117 11.9285C20.0117 12.1869 19.9115 12.4506 19.7111 12.651L14.7383 17.608C14.3375 17.9719 13.7205 17.9613 13.3355 17.5764L8.28887 12.5455C7.89336 12.15 7.88809 11.5066 8.28887 11.1059C8.68437 10.7104 9.32773 10.7051 9.72852 11.1059L14.0053 15.4248L18.2768 11.2113Z"
+										fill="#895FF5"
+									/>
+								</svg>
+							</button>
+
+							{dateSwitch && (
+								<div className="absolute z-50 mt-14 flex flex-col gap-y-2 items-center justify-center w-48 py-2 bg-[#1A1A1A] rounded-2xl">
+									<button type="button" className="px-5 py-0.5 bg-transparent rounded-lg">
+										<span className="text-base text-[#4B4B4B] font-normal font-rubik">
+											{months[new Date().getMonth() - 1]} {"("}
+											<span className="font-semibold">{new Date().getFullYear()}</span>
+											{")"}
+										</span>
+									</button>
+
+									<button type="button" className="px-5 py-0.5 bg-white rounded-lg">
+										<span className="text-base text-[#4B4B4B] font-normal font-rubik">
+											{months[new Date().getMonth()]} {"("}
+											<span className="font-semibold">{new Date().getFullYear()}</span>
+											{")"}
+										</span>
+									</button>
+
+									<button type="button" className="px-5 py-0.5 bg-transparent rounded-lg">
+										<span className="text-base text-[#4B4B4B] font-normal font-rubik">
+											{months[new Date().getMonth() + 1]} {"("}
+											<span className="font-semibold">{new Date().getFullYear()}</span>
+											{")"}
+										</span>
+									</button>
+
+									<button type="button" className="px-5 py-0.5 bg-transparent rounded-lg">
+										<span className="text-base text-[#4B4B4B] font-normal font-rubik">
+											{months[new Date().getMonth() + 2]} {"("}
+											<span className="font-semibold">{new Date().getFullYear()}</span>
+											{")"}
+										</span>
+									</button>
+								</div>
+							)}
+						</div>
 
 						<Swiper
 							className="w-[60rem] h-fit z-0"

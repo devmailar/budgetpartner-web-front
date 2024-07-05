@@ -25,7 +25,7 @@ function Budget() {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const [dateSwitch, setDateSwitch] = useState<boolean>(false);
+	const [budgetSwitch, setBudgetSwitch] = useState<boolean>(false);
 
 	const [dailyBudgetAmount, setDailyBudgetAmount] = useState<number>(0);
 	const [monthlyBudgetAmount, setMonthlyBudgetAmount] = useState<number>(0);
@@ -168,10 +168,10 @@ function Budget() {
 							<button
 								type="button"
 								className="flex gap-x-2.5 items-center justify-center bg-[#1A1A1A] px-4 py-2 rounded-[6.25rem]"
-								onClick={(): void => setDateSwitch(!dateSwitch)}
+								onClick={(): void => setBudgetSwitch(!budgetSwitch)}
 							>
 								<span className="text-base text-[#4B4B4B] font-normal font-rubik">
-									{months[new Date().getMonth()]} {"("}
+									{months[new Date(budget.created_at).getMonth()]} {"("}
 									<span className="font-semibold">{new Date().getFullYear()}</span>
 									{")"}
 								</span>
@@ -185,27 +185,26 @@ function Budget() {
 								</svg>
 							</button>
 
-							{dateSwitch && (
+							{budgetSwitch && (
 								<div className="absolute z-50 mt-14 flex flex-col gap-y-2 items-center justify-center w-48 py-2 bg-[#1A1A1A] rounded-2xl">
 									{budgets.length &&
-										budgets.map((budget: TBudget) => (
+										budgets.map((b: TBudget) => (
 											<button
-												key={budget.id}
+												key={b.id}
 												type="button"
 												className="px-5 py-0.5 rounded-lg"
 												onClick={() => {
-													console.table(budget);
-
-													// TODO:
-
-													dispatch(setBudget(budget));
+													setIsLoading(true);
+													setBudgetSwitch(false);
+													dispatch(setBudget(b));
+													setTimeout((): void => setIsLoading(false), 1000);
 												}}
 											>
 												<span
-													className={`text-base ${new Date().getMonth() === new Date(budget.created_at).getMonth() ? "text-white" : "text-[#4B4B4B]"} font-normal font-rubik`}
+													className={`text-base ${new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() ? "text-white" : "text-[#4B4B4B]"} font-normal font-rubik`}
 												>
-													{months[new Date(budget.created_at).getMonth()]} {"("}
-													<span className="font-semibold">{new Date(budget.created_at).getFullYear()}</span>
+													{months[new Date(b.created_at).getMonth()]} {"("}
+													<span className="font-semibold">{new Date(b.created_at).getFullYear()}</span>
 													{")"}
 												</span>
 											</button>

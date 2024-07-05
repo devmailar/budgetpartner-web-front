@@ -1,9 +1,11 @@
 import type { Dispatch } from "@reduxjs/toolkit";
+import type { KyResponse } from "ky";
 import { type FormEvent, type MouseEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
+import type { IUserResponse, TBudget } from "../../types";
 import { Utils, months } from "../../utils";
 
 function BudgetGetStarted() {
@@ -31,7 +33,7 @@ function BudgetGetStarted() {
 			return setStep(1);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				dispatch(setError(error.message));
+				dispatch(setError(error.name));
 			}
 		}
 	};
@@ -39,14 +41,45 @@ function BudgetGetStarted() {
 	const handleCreateExtraincome = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
+			dispatch(setError(""));
 
-			const authorization: string | undefined = getCookie("Authorization");
+			const form: FormData = new FormData(event.currentTarget);
+			const income: number = Number.parseInt(form.get("income") as string);
+
+			const authorization: string = getCookie("Authorization") ?? "";
 			if (!authorization) {
 				throw new Error("Please login to continue");
 			}
 
-			const form: FormData = new FormData(event.currentTarget);
-			const income: number = Number.parseInt(form.get("income") as string);
+			const response: KyResponse = await Utils.request.get("users/get", {
+				headers: {
+					Authorization: `Bearer ${authorization}`,
+				},
+			});
+
+			if (!response.ok) {
+				return;
+			}
+
+			const userResponse: IUserResponse = await response.json();
+
+			if (Object.keys(userResponse).length === 0) {
+				throw new Error("User response is empty");
+			}
+
+			if (userResponse.budgets.length === 0) {
+				throw new Error("Budgets response is empty");
+			}
+
+			const currentBudget: TBudget | undefined = userResponse.budgets.find((budget: TBudget): boolean => {
+				return new Date(budget.created_at).getMonth() === new Date().getMonth();
+			});
+
+			if (!currentBudget) {
+				throw new Error("Current budget is undefined");
+			}
+
+			console.table(currentBudget);
 
 			if (Number.isNaN(income) || income <= 0) {
 				throw new Error("Please enter valid amount");
@@ -57,13 +90,13 @@ function BudgetGetStarted() {
 					Authorization: `Bearer ${authorization}`,
 				},
 				json: {
-					budget_id: 19,
-					extraincome_type: "Hullu mies",
+					budget_id: currentBudget.id,
+					extraincome_type: "Salary",
 					extraincome_amount_monthly: income,
 				},
 			});
 
-			return setExtraincomeModal(false);
+			navigate("/budget");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));

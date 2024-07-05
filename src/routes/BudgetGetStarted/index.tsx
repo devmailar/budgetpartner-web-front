@@ -79,8 +79,6 @@ function BudgetGetStarted() {
 				throw new Error("Current budget is undefined");
 			}
 
-			console.table(currentBudget);
-
 			if (Number.isNaN(income) || income <= 0) {
 				throw new Error("Please enter valid amount");
 			}

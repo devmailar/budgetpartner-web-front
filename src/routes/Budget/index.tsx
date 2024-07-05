@@ -151,8 +151,6 @@ function Budget() {
 
 		setDailyBudgetAmount(dailyBudgetAmount);
 		setMonthlyBudgetAmount(monthlyBudgetAmount);
-
-		console.debug("Budget changed", budget);
 	}, [budget]);
 
 	return (

@@ -1,7 +1,7 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import { eachDayOfInterval, endOfMonth, startOfMonth } from "date-fns";
 import type { KyResponse } from "ky";
-import { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
@@ -21,23 +21,21 @@ import type { IRootState, IUserResponse, TBudget, TExtraexpense, TExtraincome, T
 import { Utils, months } from "../../utils";
 import "./index.css";
 
-function Budget() {
+function Budget(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const [budgetSwitch, setBudgetSwitch] = useState<boolean>(false);
+	const [budgetSwitch, setBudgetSwitch] = React.useState<boolean>(false);
+	const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-	const [dailyBudgetAmount, setDailyBudgetAmount] = useState<number>(0);
-	const [monthlyBudgetAmount, setMonthlyBudgetAmount] = useState<number>(0);
+	const [dailyBudgetAmount, setDailyBudgetAmount] = React.useState<number>(0);
+	const [monthlyBudgetAmount, setMonthlyBudgetAmount] = React.useState<number>(0);
 
 	const budgets: TBudget[] = useSelector((state: IRootState) => state.budgets);
+	const budget: TBudget = useSelector((state: IRootState) => state.budget);
 	const modal: TModal = useSelector((state: IRootState) => state.modal);
 
-	const budget: TBudget = useSelector((state: IRootState) => state.budget);
-
-	const [isLoading, setIsLoading] = useState<boolean>(true);
-
-	const handleGetUserResponse = useCallback(
+	const handleGetUserResponse = React.useCallback(
 		async (authorization: string): Promise<IUserResponse> => {
 			try {
 				const response: KyResponse = await Utils.request.get("users/get", {
@@ -95,7 +93,7 @@ function Budget() {
 		[dispatch, navigate],
 	);
 
-	useEffect(() => {
+	React.useEffect(() => {
 		async function onLoad(): Promise<void> {
 			const authorization: string | undefined = getCookie("Authorization");
 
@@ -117,7 +115,7 @@ function Budget() {
 		onLoad();
 	}, [navigate, handleGetUserResponse]);
 
-	useEffect(() => {
+	React.useEffect(() => {
 		if (Object.keys(budget).length === 0) {
 			return;
 		}
@@ -185,28 +183,27 @@ function Budget() {
 
 							{budgetSwitch && (
 								<div className="absolute z-50 mt-14 flex flex-col gap-y-2 items-center justify-center w-48 py-2 bg-[#1A1A1A] rounded-2xl">
-									{budgets.length &&
-										budgets.map((b: TBudget) => (
-											<button
-												key={b.id}
-												type="button"
-												className="px-5 py-0.5 rounded-lg"
-												onClick={() => {
-													setIsLoading(true);
-													setBudgetSwitch(false);
-													dispatch(setBudget(b));
-													setTimeout((): void => setIsLoading(false), 1000);
-												}}
+									{budgets.map((b: TBudget) => (
+										<button
+											key={b.id}
+											type="button"
+											className="px-5 py-0.5 rounded-lg"
+											onClick={() => {
+												setIsLoading(true);
+												setBudgetSwitch(false);
+												dispatch(setBudget(b));
+												setTimeout((): void => setIsLoading(false), 1000);
+											}}
+										>
+											<span
+												className={`text-base ${new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() ? "text-white" : "text-[#4B4B4B]"} font-normal font-rubik`}
 											>
-												<span
-													className={`text-base ${new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() ? "text-white" : "text-[#4B4B4B]"} font-normal font-rubik`}
-												>
-													{months[new Date(b.created_at).getMonth()]} {"("}
-													<span className="font-semibold">{new Date(b.created_at).getFullYear()}</span>
-													{")"}
-												</span>
-											</button>
-										))}
+												{months[new Date(b.created_at).getMonth()]} {"("}
+												<span className="font-semibold">{new Date(b.created_at).getFullYear()}</span>
+												{")"}
+											</span>
+										</button>
+									))}
 								</div>
 							)}
 						</div>
@@ -282,7 +279,6 @@ function Budget() {
 
 							<span className="text-sm text-[#202020] font-medium font-rubik">Extra income</span>
 						</button>
-
 						<button
 							type="button"
 							className="flex gap-x-2 items-center justify-center btn bg-[#9E553C] px-[18px] py-2.5 recurring-expenses-glow rounded-[6.25rem]"

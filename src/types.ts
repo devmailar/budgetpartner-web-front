@@ -54,8 +54,9 @@ export interface IRootState {
 	error: string;
 	user: TUser;
 	budget: TBudget;
+	budgets: TBudget[];
 	extraincomes: TExtraincome[];
-	recurringexpenses: TRecurringexpense[];
+	extraexpenses: TExtraexpense[];
 	modal: TModal;
 }
 

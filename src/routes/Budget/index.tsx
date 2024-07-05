@@ -1,7 +1,7 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import { eachDayOfInterval, endOfMonth, startOfMonth } from "date-fns";
 import type { KyResponse } from "ky";
-import React from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
@@ -18,37 +18,26 @@ import { setError } from "../../stores/Error";
 import { setModal } from "../../stores/Modal";
 import { setUser } from "../../stores/User";
 import type { IRootState, IUserResponse, TBudget, TExtraexpense, TExtraincome, TModal } from "../../types";
-import { Utils } from "../../utils";
+import { Utils, months } from "../../utils";
 import "./index.css";
 
 function Budget() {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const [dateSwitch, setDateSwitch] = React.useState<boolean>(false);
+	const [dateSwitch, setDateSwitch] = useState<boolean>(false);
 
-	const [dailyBudgetAmount, setDailyBudgetAmount] = React.useState<number>(0);
-	const [monthlyBudgetAmount, setMonthlyBudgetAmount] = React.useState<number>(0);
+	const [dailyBudgetAmount, setDailyBudgetAmount] = useState<number>(0);
+	const [monthlyBudgetAmount, setMonthlyBudgetAmount] = useState<number>(0);
 
+	const budgets: TBudget[] = useSelector((state: IRootState) => state.budgets);
 	const modal: TModal = useSelector((state: IRootState) => state.modal);
-	const months: string[] = [
-		"January",
-		"February",
-		"March",
-		"April",
-		"May",
-		"June",
-		"July",
-		"August",
-		"September",
-		"October",
-		"November",
-		"December",
-	];
 
-	const [isLoading, setIsLoading] = React.useState<boolean>(true);
+	const budget: TBudget = useSelector((state: IRootState) => state.budget);
 
-	const handleGetUserResponse = React.useCallback(
+	const [isLoading, setIsLoading] = useState<boolean>(true);
+
+	const handleGetUserResponse = useCallback(
 		async (authorization: string): Promise<IUserResponse> => {
 			try {
 				const response: KyResponse = await Utils.request.get("users/get", {
@@ -90,73 +79,7 @@ function Budget() {
 
 				dispatch(setBudget(currentBudget));
 
-				const totalExtraincomes: number = currentBudget.extraincomes.reduce(
-					(accumulator: number, extraincome: TExtraincome) => {
-						return accumulator + extraincome.extraincome_amount_monthly;
-					},
-					0,
-				);
-
-				const totalExtraexpenses: number = currentBudget.extraexpenses.reduce(
-					(accumulator: number, extraexpense: TExtraexpense) => {
-						return accumulator + extraexpense.extraexpense_amount_monthly;
-					},
-					0,
-				);
-
-				console.debug({ totalExtraincomes, totalExtraexpenses });
-
-				const currentDaysInMonth: Date[] = eachDayOfInterval({
-					start: startOfMonth(new Date()),
-					end: endOfMonth(new Date()),
-				});
-
-				const dailyBudgetAmount: number = (totalExtraincomes - totalExtraexpenses) / currentDaysInMonth.length;
-				const monthlyBudgetAmount: number = totalExtraincomes - totalExtraexpenses;
-
-				setDailyBudgetAmount(dailyBudgetAmount);
-				setMonthlyBudgetAmount(monthlyBudgetAmount);
-
-				// dispatch(setBudget(userResponse.budget));
-				// dispatch(setExtraincomes(userResponse.extraincomes));
-				// dispatch(setRecurringexpenses(userResponse.recurringexpenses));
-
-				// const totalExtraincomes: number = userResponse.extraincomes.reduce(
-				// 	(accumulator: number, extraincome: TExtraincome) => {
-				// 		return accumulator + extraincome.extraincome_amount_monthly;
-				// 	},
-				// 	0,
-				// );
-
-				// const totalRecurringexpenses: number = userResponse.recurringexpenses.reduce(
-				// 	(accumulator: number, recurringexpense: TRecurringexpense) => {
-				// 		return accumulator + recurringexpense.recurringexpense_amount_monthly;
-				// 	},
-				// 	0,
-				// );
-
-				// const currentDaysInMonth: Date[] = eachDayOfInterval({
-				// 	start: startOfMonth(new Date()),
-				// 	end: endOfMonth(new Date()),
-				// });
-
-				// const dailyIncomeAmount: number =
-				// 	(userResponse.budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses) /
-				// 	currentDaysInMonth.length;
-
-				// const dailyIncomeMonthly: number =
-				// 	userResponse.budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses;
-
-				// const dailyIncomeYearly: number =
-				// 	(userResponse.budget.income_amount_monthly + totalExtraincomes - totalRecurringexpenses) * 12;
-
-				// setIncomeAmountDaily(dailyIncomeAmount);
-				// setIncomeAmountMonthly(dailyIncomeMonthly);
-				// setIncomeAmountYearly(dailyIncomeYearly);
-
-				setTimeout((): void => {
-					setIsLoading(false);
-				}, 1000);
+				setTimeout((): void => setIsLoading(false), 1000);
 
 				return userResponse;
 			} catch (error) {
@@ -172,7 +95,7 @@ function Budget() {
 		[dispatch, navigate],
 	);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		async function onLoad(): Promise<void> {
 			const authorization: string | undefined = getCookie("Authorization");
 
@@ -193,6 +116,44 @@ function Budget() {
 
 		onLoad();
 	}, [navigate, handleGetUserResponse]);
+
+	useEffect(() => {
+		if (Object.keys(budget).length === 0) {
+			return;
+		}
+
+		const totalExtraincomes: number = budget.extraincomes.reduce((accumulator: number, extraincome: TExtraincome) => {
+			return accumulator + extraincome.extraincome_amount_monthly;
+		}, 0);
+
+		if (Number.isNaN(totalExtraincomes)) {
+			return;
+		}
+
+		const totalExtraexpenses: number = budget.extraexpenses.reduce(
+			(accumulator: number, extraexpense: TExtraexpense) => {
+				return accumulator + extraexpense.extraexpense_amount_monthly;
+			},
+			0,
+		);
+
+		if (Number.isNaN(totalExtraexpenses)) {
+			return;
+		}
+
+		const currentDaysInMonth: Date[] = eachDayOfInterval({
+			start: startOfMonth(new Date()),
+			end: endOfMonth(new Date()),
+		});
+
+		const dailyBudgetAmount: number = (totalExtraincomes - totalExtraexpenses) / currentDaysInMonth.length;
+		const monthlyBudgetAmount: number = totalExtraincomes - totalExtraexpenses;
+
+		setDailyBudgetAmount(dailyBudgetAmount);
+		setMonthlyBudgetAmount(monthlyBudgetAmount);
+
+		console.debug("Budget changed", budget);
+	}, [budget]);
 
 	return (
 		<div className="flex justify-center bg-radial-gradient w-screen h-screen">
@@ -226,37 +187,29 @@ function Budget() {
 
 							{dateSwitch && (
 								<div className="absolute z-50 mt-14 flex flex-col gap-y-2 items-center justify-center w-48 py-2 bg-[#1A1A1A] rounded-2xl">
-									<button type="button" className="px-5 py-0.5 bg-transparent rounded-lg">
-										<span className="text-base text-[#4B4B4B] font-normal font-rubik">
-											{months[new Date().getMonth() - 1]} {"("}
-											<span className="font-semibold">{new Date().getFullYear()}</span>
-											{")"}
-										</span>
-									</button>
+									{budgets.length &&
+										budgets.map((budget: TBudget) => (
+											<button
+												key={budget.id}
+												type="button"
+												className="px-5 py-0.5 rounded-lg"
+												onClick={() => {
+													console.table(budget);
 
-									<button type="button" className="px-5 py-0.5 bg-white rounded-lg">
-										<span className="text-base text-[#4B4B4B] font-normal font-rubik">
-											{months[new Date().getMonth()]} {"("}
-											<span className="font-semibold">{new Date().getFullYear()}</span>
-											{")"}
-										</span>
-									</button>
+													// TODO:
 
-									<button type="button" className="px-5 py-0.5 bg-transparent rounded-lg">
-										<span className="text-base text-[#4B4B4B] font-normal font-rubik">
-											{months[new Date().getMonth() + 1]} {"("}
-											<span className="font-semibold">{new Date().getFullYear()}</span>
-											{")"}
-										</span>
-									</button>
-
-									<button type="button" className="px-5 py-0.5 bg-transparent rounded-lg">
-										<span className="text-base text-[#4B4B4B] font-normal font-rubik">
-											{months[new Date().getMonth() + 2]} {"("}
-											<span className="font-semibold">{new Date().getFullYear()}</span>
-											{")"}
-										</span>
-									</button>
+													dispatch(setBudget(budget));
+												}}
+											>
+												<span
+													className={`text-base ${new Date().getMonth() === new Date(budget.created_at).getMonth() ? "text-white" : "text-[#4B4B4B]"} font-normal font-rubik`}
+												>
+													{months[new Date(budget.created_at).getMonth()]} {"("}
+													<span className="font-semibold">{new Date(budget.created_at).getFullYear()}</span>
+													{")"}
+												</span>
+											</button>
+										))}
 								</div>
 							)}
 						</div>

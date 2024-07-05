@@ -6,10 +6,7 @@ export const budgetsStore: Slice = createSlice({
 	initialState: [] as TBudget[],
 	reducers: {
 		setBudgets: (state, action) => {
-			return {
-				...state,
-				...action.payload,
-			};
+			return [...state, ...action.payload];
 		},
 	},
 });

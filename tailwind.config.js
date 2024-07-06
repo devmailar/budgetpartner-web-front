@@ -6,7 +6,18 @@ export default {
 			backgroundImage: {
 				"radial-gradient": "radial-gradient(66.5% 66.5% at 50% 33.5%, #1B1B1B 10%, #000000 80%)",
 			},
+
+			colors: {
+				white: "#FFFFFF",
+				purple: "#895FF5",
+				orange: "#B85C3D",
+				grey: "#4B4B4B",
+				dark: "#252525",
+				darker: "#1A1A1A",
+				light: "#818181",
+			},
 		},
+
 		fontFamily: {
 			rubik: ["Rubik"],
 		},

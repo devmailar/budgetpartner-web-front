@@ -7,15 +7,14 @@ button.regular-income-glow {
 }
 
 button.recurring-expenses-glow {
-  box-shadow: 0px 2px 8px #9e553c;
+  box-shadow: 0px 2px 8px #b85c3d;
 }
 
 .loader {
   width: 35px;
   height: 35px;
   --c: radial-gradient(farthest-side, #895ff5 92%, #00000000);
-  background: var(--c) 50% 0, var(--c) 50% 100%, var(--c) 100% 50%,
-    var(--c) 0 50%;
+  background: var(--c) 50% 0, var(--c) 50% 100%, var(--c) 100% 50%, var(--c) 0 50%;
   background-size: 8px 8px;
   background-repeat: no-repeat;
   animation: turn 1s infinite;

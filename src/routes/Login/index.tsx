@@ -83,7 +83,7 @@ function Login() {
 
 					<div className="flex flex-col gap-y-3 ">
 						<input
-							className="bg-[#202020] border-[#895FF5] border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
 							type="email"
 							id="email"
 							name="email"
@@ -93,7 +93,7 @@ function Login() {
 						/>
 
 						<input
-							className="bg-[#202020] border-[#895FF5] border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
 							type="password"
 							id="password"
 							name="password"
@@ -106,21 +106,21 @@ function Login() {
 
 				<div className="flex flex-col">
 					<input
-						className={`mt-4 btn ${isLoading ? "bg-[#4B4B4B]" : "bg-[#895FF5]"} text-sm text-white font-medium py-2.5 mb-5 rounded-lg`}
+						className={`mt-4 btn ${isLoading ? "bg-grey" : "bg-purple"} text-sm text-white font-medium py-2.5 mb-5 rounded-lg`}
 						type="submit"
 						value="Login with email"
 						disabled={isLoading}
 					/>
 
 					<div className="flex gap-x-2 items-center justify-center">
-						<div className="border-[0.1px] border-[#E6E6E6] w-1/3" />
+						<div className="border-[0.1px] border-light w-1/3" />
 						<p className="text-base text-white font-normal">or continue with</p>
-						<div className="border-[0.1px] border-[#E6E6E6] w-1/3" />
+						<div className="border-[0.1px] border-light w-1/3" />
 					</div>
 
 					<button
 						type="button"
-						className="btn bg-[#4B4B4B] py-2.5 mt-5 rounded-lg"
+						className="btn bg-grey py-2.5 mt-5 rounded-lg"
 						onClick={() => navigate("/create-an-account")}
 						disabled={isLoading}
 					>

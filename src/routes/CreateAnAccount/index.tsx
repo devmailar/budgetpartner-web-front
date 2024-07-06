@@ -46,7 +46,7 @@ function CreateAnAccount() {
 
 					<div className="flex flex-col gap-y-3">
 						<input
-							className="bg-[#202020] border-[#895FF5] border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
 							type="email"
 							id="email"
 							name="email"
@@ -56,7 +56,7 @@ function CreateAnAccount() {
 						/>
 
 						<input
-							className="bg-[#202020] border-[#895FF5] border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
 							type="password"
 							id="password"
 							name="password"
@@ -69,7 +69,7 @@ function CreateAnAccount() {
 
 				<div className="flex flex-col gap-y-3">
 					<input
-						className="btn bg-[#895FF5] text-sm text-white font-medium py-2.5 rounded-lg"
+						className="btn bg-purple text-sm text-white font-medium py-2.5 rounded-lg"
 						type="submit"
 						value="Sign up with email"
 						disabled={isLoading}
@@ -78,11 +78,11 @@ function CreateAnAccount() {
 					<div className="text-center px-4">
 						<p className="text-base text-white font-light font-rubik">
 							By clicking continue, you agree to our{" "}
-							<a href="terms-of-service" className="text-[#895FF5]">
+							<a href="terms-of-service" className="text-purple">
 								Terms of Service
 							</a>{" "}
 							and{" "}
-							<a href="privacy-policy" className="text-[#895FF5]">
+							<a href="privacy-policy" className="text-purple">
 								Privacy Policy
 							</a>
 						</p>

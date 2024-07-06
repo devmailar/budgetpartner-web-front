@@ -163,10 +163,10 @@ function Budget(): React.ReactNode {
 						<div className="flex flex-col gap-y-2 items-center">
 							<button
 								type="button"
-								className="flex gap-x-2.5 items-center justify-center bg-[#1A1A1A] px-4 py-2 rounded-[6.25rem]"
+								className="flex gap-x-2.5 items-center justify-center bg-darker px-4 py-2 rounded-[6.25rem]"
 								onClick={(): void => setBudgetSwitch(!budgetSwitch)}
 							>
-								<span className="text-base text-[#4B4B4B] font-normal font-rubik">
+								<span className="text-base text-grey font-normal font-rubik">
 									{months[new Date(budget.created_at).getMonth()]} {"("}
 									<span className="font-semibold">{new Date().getFullYear()}</span>
 									{")"}
@@ -182,13 +182,12 @@ function Budget(): React.ReactNode {
 							</button>
 
 							{budgetSwitch && (
-								<div className="flex flex-col justify-between absolute z-50 mt-14 w-60 bg-[#1A1A1A] border border-[#202020] rounded-2xl">
-									<div className="flex flex-col gap-y-2 items-center justify-center py-2">
+								<div className="absolute z-50 mt-14 flex flex-col gap-y-4 items-center justify-center w-52 py-4 bg-darker rounded-2xl">
+									<div className="flex flex-col gap-y-1.5 items-center justify-center">
 										{budgets.map((b: TBudget) => (
 											<button
 												key={b.id}
 												type="button"
-												className="px-5 py-0.5 rounded-lg"
 												onClick={() => {
 													setIsLoading(true);
 													setBudgetSwitch(false);
@@ -197,40 +196,18 @@ function Budget(): React.ReactNode {
 												}}
 											>
 												<span
-													className={`text-base ${new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() ? "text-white" : "text-[#4B4B4B]"} font-normal font-rubik`}
+													className={`text-sm ${new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() ? "text-white" : "text-grey"} font-normal font-rubik`}
 												>
 													{months[new Date(b.created_at).getMonth()]} {"("}
-													<span className="font-semibold">{new Date(b.created_at).getFullYear()}</span>
+													{new Date(b.created_at).getFullYear()}
 													{")"}
 												</span>
 											</button>
 										))}
 									</div>
 
-									<button
-										type="button"
-										className="flex gap-x-2 items-center justify-center border-t border-t-[#202020] py-2.5 rounded-b-2xl"
-									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="24"
-											height="24"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeWidth="2"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											className="text-[#895FF5] icon icon-tabler icons-tabler-outline icon-tabler-hand-grab"
-										>
-											<title>Hand</title>
-											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-											<path d="M8 11v-3.5a1.5 1.5 0 0 1 3 0v2.5" />
-											<path d="M11 9.5v-3a1.5 1.5 0 0 1 3 0v3.5" />
-											<path d="M14 7.5a1.5 1.5 0 0 1 3 0v2.5" />
-											<path d="M17 9.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7l-.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47" />
-										</svg>
-										<span className="text-base text-[#895FF5] font-normal font-rubik">New Budget</span>
+									<button type="button" className="flex items-center justify-center bg-dark px-3 py-2 rounded-xl">
+										<span className="text-sm text-light font-normal font-rubik">Create</span>
 									</button>
 								</div>
 							)}
@@ -257,10 +234,10 @@ function Budget(): React.ReactNode {
 											);
 										}}
 									>
-										<h1 className="text-5xl text-[#895FF5] font-bold font-rubik">{dailyBudgetAmount.toFixed(2)} €</h1>
+										<h1 className="text-5xl text-purple font-bold font-rubik">{dailyBudgetAmount.toFixed(2)} €</h1>
 									</button>
 
-									<span className="text-xl text-[#4B4B4B] font-light font-rubik">day</span>
+									<span className="text-xl text-grey font-light font-rubik">day</span>
 								</div>
 							</SwiperSlide>
 
@@ -279,10 +256,10 @@ function Budget(): React.ReactNode {
 											);
 										}}
 									>
-										<h1 className="text-5xl text-[#895FF5] font-bold font-rubik">{monthlyBudgetAmount.toFixed(2)} €</h1>
+										<h1 className="text-5xl text-purple font-bold font-rubik">{monthlyBudgetAmount.toFixed(2)} €</h1>
 									</button>
 
-									<span className="text-xl text-[#4B4B4B] font-light font-rubik">month</span>
+									<span className="text-xl text-grey font-light font-rubik">month</span>
 								</div>
 							</SwiperSlide>
 						</Swiper>
@@ -291,7 +268,7 @@ function Budget(): React.ReactNode {
 					<div className="flex flex-col gap-y-5 items-center">
 						<button
 							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-[#895FF5] px-[18px] py-2.5 regular-income-glow rounded-[6.25rem]"
+							className="flex gap-x-2 items-center justify-center btn bg-purple px-[18px] py-2.5 regular-income-glow rounded-[6.25rem]"
 							onClick={(): void => {
 								dispatch(
 									setModal({
@@ -303,13 +280,13 @@ function Budget(): React.ReactNode {
 								);
 							}}
 						>
-							<span className="text-xl text-[#202020] font-medium font-rubik">+</span>
+							<span className="text-xl text-dark font-medium font-rubik">+</span>
 
-							<span className="text-sm text-[#202020] font-medium font-rubik">Extra income</span>
+							<span className="text-sm text-dark font-medium font-rubik">Extra income</span>
 						</button>
 						<button
 							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-[#9E553C] px-[18px] py-2.5 recurring-expenses-glow rounded-[6.25rem]"
+							className="flex gap-x-2 items-center justify-center btn bg-orange px-[18px] py-2.5 recurring-expenses-glow rounded-[6.25rem]"
 							onClick={(): void => {
 								dispatch(
 									setModal({
@@ -321,9 +298,9 @@ function Budget(): React.ReactNode {
 								);
 							}}
 						>
-							<span className="text-xl text-[#202020] font-medium font-rubik">+</span>
+							<span className="text-xl text-dark font-medium font-rubik">+</span>
 
-							<span className="text-sm text-[#202020] font-medium font-rubik">Extra expenses</span>
+							<span className="text-sm text-dark font-medium font-rubik">Extra expenses</span>
 						</button>
 					</div>
 				</div>

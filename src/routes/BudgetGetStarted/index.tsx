@@ -129,7 +129,7 @@ function BudgetGetStarted() {
 						</p>
 					</div>
 
-					<button type="button" className="btn bg-[#895FF5] py-2 rounded-lg" onClick={handleCreateBudget}>
+					<button type="button" className="btn bg-purple py-2 rounded-lg" onClick={handleCreateBudget}>
 						<span className="text-sm text-white font-medium font-rubik">Get started</span>
 					</button>
 				</div>
@@ -157,7 +157,7 @@ function BudgetGetStarted() {
 					<div className="flex flex-col gap-y-2 mx-6">
 						<button
 							type="button"
-							className={`btn ${extraincomeModal ? "bg-[#4B4B4B]" : "bg-[#895FF5]"} py-2 rounded-lg`}
+							className={`btn ${extraincomeModal ? "bg-grey" : "bg-purple"} py-2 rounded-lg`}
 							onClick={(): void => setExtraincomeModal(true)}
 							disabled={extraincomeModal}
 						>
@@ -165,17 +165,14 @@ function BudgetGetStarted() {
 						</button>
 
 						{extraincomeModal && (
-							<form
-								className="flex flex-col gap-y-6 px-4 py-6 bg-[#202020] rounded-lg"
-								onSubmit={handleCreateExtraincome}
-							>
+							<form className="flex flex-col gap-y-6 px-4 py-6 bg-darker rounded-lg" onSubmit={handleCreateExtraincome}>
 								<div className="flex flex-col gap-y-6">
 									<span className="text-sm text-white font-medium font-rubik">
 										What is your income for {months[new Date().getMonth()]}?
 									</span>
 
 									<div className="flex flex-col gap-y-3">
-										<div className="flex gap-x-4 items-center justify-between p-2 border-[1px] border-[#4B4B4B] rounded-lg">
+										<div className="flex gap-x-4 items-center justify-between p-2 border-[1px] border-grey rounded-lg">
 											<input
 												className="bg-transparent w-full text-sm text-white placeholder:text-white font-light font-rubik focus:outline-none"
 												type="number"
@@ -190,7 +187,7 @@ function BudgetGetStarted() {
 									</div>
 								</div>
 
-								<button type="submit" className="btn bg-[#895FF5] py-2 rounded-lg">
+								<button type="submit" className="btn bg-purple py-2 rounded-lg">
 									<span className="text-xs text-white font-medium font-rubik">Save</span>
 								</button>
 							</form>

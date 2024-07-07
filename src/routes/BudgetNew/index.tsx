@@ -1,9 +1,11 @@
 import type { Dispatch } from "@reduxjs/toolkit";
+import type { KyResponse } from "ky";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
+import type { IUserResponse, TBudget } from "../../types";
 import { Utils, months } from "../../utils";
 
 function BudgetNew() {
@@ -18,15 +20,12 @@ function BudgetNew() {
 		try {
 			event.preventDefault();
 
+			const form: FormData = new FormData(event.currentTarget);
+			const income: number = Number.parseInt(form.get("income") as string);
+
 			const authorization: string = getCookie("Authorization") ?? "";
 			if (!authorization) {
 				throw new Error("Please login to continue");
-			}
-
-			const form: FormData = new FormData(event.currentTarget);
-			const income: number = Number.parseInt(form.get("income") as string);
-			if (Number.isNaN(income) || income <= 0) {
-				throw new Error("Please enter valid amount");
 			}
 
 			const year: number = selectedYear;
@@ -44,8 +43,46 @@ function BudgetNew() {
 				},
 			});
 
-			// For some reason it lets us create budgets that already has been created. Backend issue?
-			// navigate("/budget");
+			const response: KyResponse = await Utils.request.get("users/get", {
+				headers: {
+					Authorization: `Bearer ${authorization}`,
+				},
+			});
+
+			const userResponse: IUserResponse = await response.json();
+
+			if (Object.keys(userResponse).length === 0) {
+				throw new Error("User response is empty");
+			}
+
+			if (userResponse.budgets.length === 0) {
+				throw new Error("Budgets response is empty");
+			}
+
+			const currentBudget: TBudget | undefined = userResponse.budgets.find((budget: TBudget): boolean => {
+				return new Date(budget.created_at).getMonth() === new Date(date).getMonth();
+			});
+
+			if (!currentBudget) {
+				throw new Error("Current budget is undefined");
+			}
+
+			if (Number.isNaN(income) || income <= 0) {
+				throw new Error("Please enter valid amount");
+			}
+
+			await Utils.request.post("extraincomes/create", {
+				headers: {
+					Authorization: `Bearer ${authorization}`,
+				},
+				json: {
+					budget_id: currentBudget.id,
+					extraincome_type: "Salary",
+					extraincome_amount_monthly: income,
+				},
+			});
+
+			navigate("/budget");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(`Budget for ${selectedMonth} (${selectedYear}) already exists !`));

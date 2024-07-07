@@ -33,12 +33,7 @@ function BudgetNew() {
 			const month: string = selectedMonth;
 			const monthIndex: number = months.indexOf(month);
 
-			const date: Date = new Date(year, monthIndex);
-
-			console.log({
-				income,
-				date,
-			});
+			const date: Date = new Date(year, monthIndex, 2);
 
 			await Utils.request.post("budgets/create", {
 				headers: {
@@ -53,7 +48,7 @@ function BudgetNew() {
 			// navigate("/budget");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				dispatch(setError(error.message));
+				dispatch(setError(`Budget for ${selectedMonth} (${selectedYear}) already exists !`));
 			}
 		}
 	};

@@ -196,7 +196,12 @@ function Budget(): React.ReactNode {
 												}}
 											>
 												<span
-													className={`text-sm ${new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() ? "text-white" : "text-grey"} font-normal font-rubik`}
+													className={`text-sm ${
+														new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() &&
+														new Date(budget.created_at).getFullYear() === new Date(b.created_at).getFullYear()
+															? "text-white"
+															: "text-grey"
+													} font-normal font-rubik`}
 												>
 													{months[new Date(b.created_at).getMonth()]} {"("}
 													{new Date(b.created_at).getFullYear()}

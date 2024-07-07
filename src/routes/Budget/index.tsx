@@ -206,7 +206,13 @@ function Budget(): React.ReactNode {
 										))}
 									</div>
 
-									<button type="button" className="flex items-center justify-center bg-dark px-3 py-2 rounded-xl">
+									<button
+										type="button"
+										className="flex items-center justify-center bg-dark px-3 py-2 rounded-xl"
+										onClick={(): void => {
+											navigate("/budget/get-started");
+										}}
+									>
 										<span className="text-sm text-light font-normal font-rubik">Create</span>
 									</button>
 								</div>
@@ -280,9 +286,24 @@ function Budget(): React.ReactNode {
 								);
 							}}
 						>
-							<span className="text-xl text-dark font-medium font-rubik">+</span>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							>
+								<title>Trending Up</title>
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path d="M3 17l6 -6l4 4l8 -8" />
+								<path d="M14 7l7 0l0 7" />
+							</svg>
 
-							<span className="text-sm text-dark font-medium font-rubik">Extra income</span>
+							<span className="text-sm text-dark font-medium font-rubik">Income</span>
 						</button>
 						<button
 							type="button"
@@ -298,9 +319,24 @@ function Budget(): React.ReactNode {
 								);
 							}}
 						>
-							<span className="text-xl text-dark font-medium font-rubik">+</span>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								strokeWidth="2"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							>
+								<title>Trending Down</title>
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path d="M3 7l6 6l4 -4l8 8" />
+								<path d="M21 10l0 7l-7 0" />
+							</svg>
 
-							<span className="text-sm text-dark font-medium font-rubik">Extra expenses</span>
+							<span className="text-sm text-dark font-medium font-rubik">Expenses</span>
 						</button>
 					</div>
 				</div>

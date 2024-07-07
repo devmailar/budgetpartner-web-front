@@ -1,4 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit";
+import type React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Modal from "./components/Modal";
@@ -31,7 +32,16 @@ export const router = createBrowserRouter([
 
 function App() {
 	const dispatch: Dispatch = useDispatch();
+
 	const error: string = useSelector((state: IRootState) => state.error);
+
+	const handleClose = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
+		try {
+			dispatch(setError(""));
+
+			router.navigate("/budget");
+		} catch (error) {}
+	};
 
 	return (
 		<>
@@ -40,15 +50,11 @@ function App() {
 			{error && (
 				<Modal index={50}>
 					<div className="px-4 py-4">
-						<span className="text-sm text-[#FFFFFF] font-thin font-rubik">{error}</span>
+						<span className="text-sm text-white font-thin font-rubik">{error}</span>
 					</div>
 
-					<button
-						type="button"
-						className="btn border-t border-t-[#202020] py-2.5"
-						onClick={() => dispatch(setError(""))}
-					>
-						<span className="text-sm text-[#895FF5] font-normal font-rubik">Close</span>
+					<button type="button" className="btn border-t border-t-dark py-2.5" onClick={handleClose}>
+						<span className="text-sm text-purple font-normal font-rubik">Close</span>
 					</button>
 				</Modal>
 			)}

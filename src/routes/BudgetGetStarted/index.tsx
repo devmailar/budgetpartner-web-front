@@ -33,7 +33,7 @@ function BudgetGetStarted() {
 			return setStep(1);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				dispatch(setError(error.name));
+				dispatch(setError(`Budget for ${months[new Date().getMonth()]} already exists !`));
 			}
 		}
 	};

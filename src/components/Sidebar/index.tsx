@@ -1,9 +1,9 @@
 function Sidebar() {
 	return (
-		<div className="absolute px-4 py-4 bg-black border-r border-r-[#4B4B4B] h-screen">
+		<div className="absolute px-4 py-4 bg-black border-r border-r-grey h-screen">
 			<div className="flex flex-col items-center justify-between h-full">
 				<div className="flex flex-col gap-y-20 items-center">
-					<span className="text-3xl text-[#895FF5] font-black font-rubik">BP</span>
+					<span className="text-4xl text-purple font-black font-rubik">BP</span>
 
 					<div className="flex flex-col">
 						<button type="button" className="flex items-center justify-center p-3">

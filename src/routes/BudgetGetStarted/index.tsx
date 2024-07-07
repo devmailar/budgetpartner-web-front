@@ -28,6 +28,9 @@ function BudgetGetStarted() {
 				headers: {
 					Authorization: `Bearer ${authorization}`,
 				},
+				json: {
+					date: new Date(),
+				},
 			});
 
 			return setStep(1);

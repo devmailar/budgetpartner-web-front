@@ -6,6 +6,7 @@ import Modal from "./components/Modal";
 import Sidebar from "./components/Sidebar";
 import Budget from "./routes/Budget";
 import BudgetGetStarted from "./routes/BudgetGetStarted";
+import BudgetNew from "./routes/BudgetNew";
 import CreateAnAccount from "./routes/CreateAnAccount";
 import Login from "./routes/Login";
 import { setError } from "./stores/Error";
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
 	{
 		path: "/budget/get-started",
 		element: <BudgetGetStarted />,
+	},
+	{
+		path: "/budget/new",
+		element: <BudgetNew />,
 	},
 ]);
 

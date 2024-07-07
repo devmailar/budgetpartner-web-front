@@ -93,6 +93,16 @@ function Budget(): React.ReactNode {
 		[dispatch, navigate],
 	);
 
+	const handleSetNewBudget = (): void => {
+		try {
+			navigate("/budget/new");
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+	};
+
 	React.useEffect(() => {
 		async function onLoad(): Promise<void> {
 			const authorization: string | undefined = getCookie("Authorization");
@@ -214,9 +224,7 @@ function Budget(): React.ReactNode {
 									<button
 										type="button"
 										className="flex items-center justify-center bg-dark px-3 py-2 rounded-xl"
-										onClick={(): void => {
-											navigate("/budget/get-started");
-										}}
+										onClick={(): void => handleSetNewBudget()}
 									>
 										<span className="text-sm text-light font-normal font-rubik">Create</span>
 									</button>

@@ -50,7 +50,6 @@ function BudgetNew() {
 			});
 
 			// For some reason it lets us create budgets that already has been created. Backend issue?
-
 			// navigate("/budget");
 		} catch (error: unknown) {
 			if (error instanceof Error) {

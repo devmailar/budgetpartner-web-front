@@ -1,16 +1,14 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { type NavigateFunction, useNavigate } from "react-router-dom";
 import EnglishFlag from "../../icons/EnglishFlag";
 import FinnishFlag from "../../icons/FinnishFlag";
 import { setError } from "../../stores/Error";
-import Modal from "../Modal";
 import { setLanguage } from "../../stores/Language";
 import { setModal } from "../../stores/Modal";
+import Modal from "../Modal";
 
 function LanguageModal(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
-	const navigate: NavigateFunction = useNavigate();
 
 	const handleSetLanguage = (language: string): void => {
 		try {

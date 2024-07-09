@@ -50,7 +50,9 @@ function App() {
 
 	return (
 		<>
-			<Sidebar />
+			<div className="hidden lg:block">
+				<Sidebar />
+			</div>
 
 			{error && (
 				<Modal index={50}>

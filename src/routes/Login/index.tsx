@@ -120,7 +120,7 @@ function Login() {
 
 					<button
 						type="button"
-						className="btn bg-grey py-2.5 mt-5 rounded-lg"
+						className="btn bg-darker py-2.5 mt-5 rounded-lg"
 						onClick={() => navigate("/create-an-account")}
 						disabled={isLoading}
 					>

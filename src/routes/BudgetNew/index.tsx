@@ -101,6 +101,16 @@ function BudgetNew() {
 		}
 	};
 
+	const handleClose = (): void => {
+		try {
+			navigate("/budget");
+		} catch (error) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+	};
+
 	React.useEffect((): void => {
 		const authorization: string | undefined = getCookie("Authorization");
 
@@ -182,9 +192,15 @@ function BudgetNew() {
 						</div>
 					</div>
 
-					<button type="submit" className="btn bg-purple py-2 rounded-lg">
-						<span className="text-sm text-white font-medium font-rubik">Save</span>
-					</button>
+					<div className="flex flex-col gap-y-4">
+						<button type="submit" className="btn bg-purple py-2 rounded-lg">
+							<span className="text-sm text-white font-medium font-rubik">Save</span>
+						</button>
+
+						<button type="button" className="btn bg-darker py-2 rounded-lg" onClick={(): void => handleClose()}>
+							<span className="text-sm text-white font-medium font-rubik">Cancel</span>
+						</button>
+					</div>
 				</form>
 			</div>
 		</div>

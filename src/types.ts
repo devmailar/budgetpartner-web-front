@@ -43,6 +43,7 @@ export type TModal = {
 	recurringexpenseModal: boolean;
 	incomeModal: boolean;
 	incomeModalEdit: boolean;
+	languageModal: boolean;
 };
 
 export interface IUserResponse {
@@ -58,6 +59,7 @@ export interface IRootState {
 	extraincomes: TExtraincome[];
 	extraexpenses: TExtraexpense[];
 	modal: TModal;
+	language: string;
 }
 
 export interface IErrorResponse {

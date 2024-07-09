@@ -50,7 +50,7 @@ function App() {
 
 	return (
 		<>
-			<div className="hidden lg:block">
+			<div className="hidden sm:block">
 				<Sidebar />
 			</div>
 

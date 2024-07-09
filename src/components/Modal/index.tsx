@@ -15,6 +15,7 @@ function Modal({ index, children }: { index: number; children: React.ReactNode }
 						recurringexpenseModal: false,
 						incomeModal: false,
 						incomeModalEdit: false,
+						languageModal: false,
 					}),
 				);
 			}}

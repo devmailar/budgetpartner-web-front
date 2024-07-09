@@ -8,6 +8,7 @@ import { budgetsStore } from "./stores/Budgets/index.tsx";
 import { errorStore } from "./stores/Error";
 import { modalStore } from "./stores/Modal/index.tsx";
 import { userStore } from "./stores/User";
+import { languageStore } from "./stores/Language/index.tsx";
 
 const rootElement: HTMLElement | null = document.getElementById("root");
 
@@ -20,6 +21,7 @@ const store: Store = configureStore({
 		budgets: budgetsStore.reducer,
 
 		modal: modalStore.reducer,
+		language: languageStore.reducer,
 	},
 });
 

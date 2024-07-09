@@ -1,4 +1,35 @@
-function Sidebar() {
+import type { Dispatch } from "@reduxjs/toolkit";
+import type React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import EnglishFlag from "../../icons/EnglishFlag";
+import FinnishFlag from "../../icons/FinnishFlag";
+import { setError } from "../../stores/Error";
+import { setModal } from "../../stores/Modal";
+import type { IRootState } from "../../types";
+
+function Sidebar(): React.ReactNode {
+	const dispatch: Dispatch = useDispatch();
+
+	const language: string = useSelector((state: IRootState) => state.language);
+
+	const handleOpenLanguageModal = (): void => {
+		try {
+			dispatch(
+				setModal({
+					extraincomeModal: false,
+					recurringexpenseModal: false,
+					incomeModal: false,
+					incomeModalEdit: false,
+					languageModal: true,
+				}),
+			);
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+	};
+
 	return (
 		<div className="absolute px-4 py-4 bg-black border-r border-r-grey h-screen">
 			<div className="flex flex-col items-center justify-between h-full">
@@ -138,32 +169,15 @@ function Sidebar() {
 					</div>
 				</div>
 
-				<button type="button" className="flex items-center justify-center p-3">
-					<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 40 40" fill="none">
-						<title>Menu</title>
-						<g clipPath="url(#clip0_103_124)">
-							<path
-								d="M6.66663 13.3335H33.3333"
-								stroke="white"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-							<path
-								d="M6.66663 26.6665H33.3333"
-								stroke="white"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</g>
-						<defs>
-							<clipPath id="clip0_103_124">
-								<rect width="40" height="40" fill="white" />
-							</clipPath>
-						</defs>
-					</svg>
-				</button>
+				<div className="flex flex-col gap-y-4">
+					<button
+						type="button"
+						className="flex items-center justify-center p-3"
+						onClick={(): void => handleOpenLanguageModal()}
+					>
+						{language === "fi" ? <FinnishFlag className="w-10 h-10" /> : <EnglishFlag className="w-10 h-10" />}
+					</button>
+				</div>
 			</div>
 		</div>
 	);

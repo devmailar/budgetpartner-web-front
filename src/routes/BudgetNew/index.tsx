@@ -99,7 +99,6 @@ function BudgetNew(): React.ReactNode {
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));
-				navigate("/budget");
 			}
 		}
 	};

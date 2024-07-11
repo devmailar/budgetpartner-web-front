@@ -43,8 +43,6 @@ function App() {
 	const handleClose = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
 		try {
 			dispatch(setError(""));
-
-			router.navigate("/budget");
 		} catch (error) {}
 	};
 
@@ -57,7 +55,7 @@ function App() {
 			{error && (
 				<Modal index={50}>
 					<div className="px-4 py-4">
-						<span className="text-sm text-white font-thin font-rubik">{error}</span>
+						<span className="text-sm text-white font-normal font-rubik">{error}</span>
 					</div>
 
 					<button type="button" className="btn border-t border-t-dark py-2.5" onClick={handleClose}>

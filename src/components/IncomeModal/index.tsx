@@ -134,7 +134,7 @@ function IncomeModal() {
 						dispatch(
 							setModal({
 								extraincomeModal: false,
-								recurringexpenseModal: false,
+								extraexpenseModal: false,
 								incomeModal: false,
 								incomeModalEdit: false,
 							}),

@@ -12,7 +12,7 @@ function Modal({ index, children }: { index: number; children: React.ReactNode }
 				dispatch(
 					setModal({
 						extraincomeModal: false,
-						recurringexpenseModal: false,
+						extraexpenseModal: false,
 						incomeModal: false,
 						incomeModalEdit: false,
 						languageModal: false,

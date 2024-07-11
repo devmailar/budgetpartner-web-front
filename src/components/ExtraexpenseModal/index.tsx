@@ -1,29 +1,28 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import { type FormEvent, type ReactNode, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
-import type { IRootState, TRecurringexpense } from "../../types";
+import type { IRootState, TExtraexpense, TBudget } from "../../types";
 import { Utils } from "../../utils";
 import Modal from "../Modal";
+import React from "react";
 
-function RecurringexpenseModal(): ReactNode {
+function ExtraexpenseModal(): React.ReactNode {
 	const navigate: NavigateFunction = useNavigate();
 	const dispatch: Dispatch = useDispatch();
 
-	const recurringexpenses: TRecurringexpense[] = useSelector((state: IRootState) => state.recurringexpenses);
+	const budget: TBudget = useSelector((state: IRootState) => state.budget);
 
-	const totalRecurringexpenses: number = recurringexpenses.reduce(
-		(accumulator: number, recurringexpense: TRecurringexpense) => {
-			return accumulator + recurringexpense.recurringexpense_amount_monthly;
-		},
-		0,
-	);
+	// const totalExtraexpenses: number = budget.extraexpenses.reduce((accumulator: number, extraexpense: TExtraexpense) => {
+	// 	return accumulator + extraexpense.extraexpense_amount_monthly;
+	// }, 0);
 
-	const [addRecurringexpense, setAddRecurringexpense] = useState<boolean>(false);
+	const totalExtraexpenses: number = 0;
 
-	const handleAddRecurringexpense = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+	const [addRecurringexpense, setAddRecurringexpense] = React.useState<boolean>(false);
+
+	const handleAddRecurringexpense = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			dispatch(setError(""));
 
@@ -64,7 +63,7 @@ function RecurringexpenseModal(): ReactNode {
 		}
 	};
 
-	useEffect((): void => {
+	React.useEffect((): void => {
 		async function onLoad(): Promise<void> {
 			const authorization: string | undefined = getCookie("Authorization");
 
@@ -119,21 +118,21 @@ function RecurringexpenseModal(): ReactNode {
 					<div className="flex flex-col">
 						<div className="flex items-center justify-between px-4 py-4">
 							<span className="text-sm text-white font-normal font-rubik">Recurring expenses 💰</span>
-							<span className="text-sm text-white font-medium font-rubik">{totalRecurringexpenses.toFixed(2)} €</span>
+							<span className="text-sm text-white font-medium font-rubik">{totalExtraexpenses.toFixed(2)} €</span>
 						</div>
 
 						<div className="flex flex-col px-4 pb-4">
-							{recurringexpenses.map((recurringexpense: TRecurringexpense) => (
+							{extraexpenses.map((extraexpense: TExtraexpense) => (
 								<button
-									key={recurringexpense.recurringexpense_type}
+									key={extraexpense.extraexpense_type}
 									type="button"
 									className="flex items-center justify-between"
 								>
 									<span className="text-sm text-[#9E553C] font-normal font-rubik">
-										{recurringexpense.recurringexpense_type}
+										{extraexpense.extraexpense_type}
 									</span>
 									<span className="text-sm text-white font-medium font-rubik">
-										{recurringexpense.recurringexpense_amount_monthly.toFixed(2)} €
+										{extraexpense.extraexpense_amount_monthly.toFixed(2)} €
 									</span>
 								</button>
 							))}
@@ -153,4 +152,4 @@ function RecurringexpenseModal(): ReactNode {
 	);
 }
 
-export default RecurringexpenseModal;
+export default ExtraexpenseModal;

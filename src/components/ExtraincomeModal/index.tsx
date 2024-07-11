@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
-import type { IRootState, TExtraincome } from "../../types";
+import type { IRootState, TBudget, TExtraincome } from "../../types";
 import { Utils } from "../../utils";
 import Modal from "../Modal";
 
@@ -12,9 +12,9 @@ function ExtraincomeModal() {
 	const navigate: NavigateFunction = useNavigate();
 	const dispatch: Dispatch = useDispatch();
 
-	const extraincomes: TExtraincome[] = useSelector((state: IRootState) => state.extraincomes);
+	const budget: TBudget = useSelector((state: IRootState) => state.budget);
 
-	const totalExtraincomes: number = extraincomes.reduce((accumulator: number, extraincome: TExtraincome) => {
+	const totalExtraincomes: number = budget.extraincomes.reduce((accumulator: number, extraincome: TExtraincome) => {
 		return accumulator + extraincome.extraincome_amount_monthly;
 	}, 0);
 
@@ -107,18 +107,36 @@ function ExtraincomeModal() {
 						</div>
 
 						<button type="submit" className="btn border-t border-t-[#242424] py-2.5">
-							<span className="text-sm text-[#895FF5] font-normal font-rubik">Save</span>
+							<span className="text-sm text-purple font-normal font-rubik">Save</span>
 						</button>
 					</form>
 				) : (
 					<div className="flex flex-col">
 						<div className="flex items-center justify-between px-4 py-4">
-							<span className="text-sm text-white font-normal font-rubik">Extraincome 💰</span>
-							<span className="text-sm text-white font-medium font-rubik">{totalExtraincomes.toFixed(2)} €</span>
+							<div className="flex gap-x-2 items-center">
+								<span className="text-sm text-white font-normal font-rubik">Income</span>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="white"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
+									<title>Trending Up</title>
+									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+									<path d="M3 17l6 -6l4 4l8 -8" />
+									<path d="M14 7l7 0l0 7" />
+								</svg>
+							</div>
+							<span className="text-sm text-purple font-bold font-rubik">{totalExtraincomes.toFixed(2)} €</span>
 						</div>
 
 						<div className="flex flex-col px-4 pb-4">
-							{extraincomes.map((extraincome: TExtraincome) => (
+							{budget.extraincomes.map((extraincome: TExtraincome) => (
 								<button key={extraincome.extraincome_type} type="button" className="flex items-center justify-between">
 									<span className="text-sm text-[#895FF5] font-normal font-rubik">{extraincome.extraincome_type}</span>
 									<span className="text-sm text-white font-medium font-rubik">
@@ -128,13 +146,13 @@ function ExtraincomeModal() {
 							))}
 						</div>
 
-						<button
+						{/* <button
 							type="button"
 							className="btn border-t border-t-[#202020] py-2.5"
 							onClick={(): void => setAddExtraincome(true)}
 						>
 							<span className="text-sm text-[#895FF5] font-normal font-rubik">+ Add New</span>
-						</button>
+						</button> */}
 					</div>
 				)}
 			</div>

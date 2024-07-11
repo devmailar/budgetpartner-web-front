@@ -8,11 +8,11 @@ import "swiper/css";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { getCookie, removeCookie } from "typescript-cookie";
+import ExtraexpenseModal from "../../components/ExtraexpenseModal";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
 import IncomeModal from "../../components/IncomeModal";
 import IncomeModalEdit from "../../components/IncomeModalEdit";
 import LanguageModal from "../../components/LanguageModal";
-import RecurringexpenseModal from "../../components/RecurringexpenseModal";
 import { setBudget } from "../../stores/Budget";
 import { setBudgets } from "../../stores/Budgets";
 import { setError } from "../../stores/Error";
@@ -247,7 +247,7 @@ function Budget(): React.ReactNode {
 											dispatch(
 												setModal({
 													extraincomeModal: false,
-													recurringexpenseModal: false,
+													extraexpenseModal: false,
 													incomeModal: true,
 													incomeModalEdit: false,
 												}),
@@ -269,7 +269,7 @@ function Budget(): React.ReactNode {
 											dispatch(
 												setModal({
 													extraincomeModal: false,
-													recurringexpenseModal: false,
+													extraexpenseModal: false,
 													incomeModal: true,
 													incomeModalEdit: false,
 												}),
@@ -293,7 +293,7 @@ function Budget(): React.ReactNode {
 								dispatch(
 									setModal({
 										extraincomeModal: true,
-										recurringexpenseModal: false,
+										extraexpenseModal: false,
 										incomeModal: false,
 										incomeModalEdit: false,
 									}),
@@ -326,7 +326,7 @@ function Budget(): React.ReactNode {
 								dispatch(
 									setModal({
 										extraincomeModal: false,
-										recurringexpenseModal: true,
+										extraexpenseModal: true,
 										incomeModal: false,
 										incomeModalEdit: false,
 									}),
@@ -359,7 +359,7 @@ function Budget(): React.ReactNode {
 			{modal.incomeModal && <IncomeModal />}
 			{modal.incomeModalEdit && <IncomeModalEdit />}
 			{modal.extraincomeModal && <ExtraincomeModal />}
-			{modal.recurringexpenseModal && <RecurringexpenseModal />}
+			{modal.extraexpenseModal && <ExtraexpenseModal />}
 			{modal.languageModal && <LanguageModal />}
 		</div>
 	);

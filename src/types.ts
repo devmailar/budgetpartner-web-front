@@ -40,7 +40,7 @@ export type TMenu = {
 
 export type TModal = {
 	extraincomeModal: boolean;
-	recurringexpenseModal: boolean;
+	extraexpenseModal: boolean;
 	incomeModal: boolean;
 	incomeModalEdit: boolean;
 	languageModal: boolean;
@@ -56,8 +56,6 @@ export interface IRootState {
 	user: TUser;
 	budget: TBudget;
 	budgets: TBudget[];
-	extraincomes: TExtraincome[];
-	extraexpenses: TExtraexpense[];
 	modal: TModal;
 	language: string;
 }

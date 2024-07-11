@@ -89,6 +89,7 @@ function BudgetNew() {
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError("Budget of this month already exists 🚫"));
+				navigate("/budget");
 			}
 		}
 	};

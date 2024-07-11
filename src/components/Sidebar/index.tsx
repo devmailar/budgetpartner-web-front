@@ -17,7 +17,7 @@ function Sidebar(): React.ReactNode {
 			dispatch(
 				setModal({
 					extraincomeModal: false,
-					recurringexpenseModal: false,
+					extraexpenseModal: false,
 					incomeModal: false,
 					incomeModalEdit: false,
 					languageModal: true,

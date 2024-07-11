@@ -67,22 +67,25 @@ function BudgetNew() {
 				throw new Error("Current budget is undefined");
 			}
 
-			if (Number.isNaN(income) || income <= 0) {
-				throw new Error("Please enter valid amount");
+			if (income <= 0 || Number.isNaN(income)) {
+				dispatch(setError("Please enter valid amount"));
+				return;
 			}
 
-			await Utils.request.post("extraincomes/create", {
-				headers: {
-					Authorization: `Bearer ${authorization}`,
-				},
-				json: {
-					budget_id: currentBudget.id,
-					extraincome_type: "Salary",
-					extraincome_amount_monthly: income,
-				},
-			});
+			if (income > 0) {
+				await Utils.request.post("extraincomes/create", {
+					headers: {
+						Authorization: `Bearer ${authorization}`,
+					},
+					json: {
+						budget_id: currentBudget.id,
+						extraincome_type: "Salary",
+						extraincome_amount_monthly: income,
+					},
+				});
 
-			navigate("/budget");
+				navigate("/budget");
+			}
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError("Budget of this month already exists 🚫"));

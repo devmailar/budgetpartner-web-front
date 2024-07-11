@@ -1,13 +1,12 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { KyResponse } from "ky";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie, setCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
-import { Utils } from "../../utils";
+import type { IResponseError } from "../../types";
 
-function Login() {
+function Login(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
@@ -15,34 +14,29 @@ function Login() {
 
 	const handleLogin = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
-			setIsLoading(true);
-
 			event.preventDefault();
+			setIsLoading(true);
 
 			const form: FormData = new FormData(event.currentTarget);
 			const email: string = form.get("email") as string;
 			const password: string = form.get("password") as string;
 
-			if (!email || !password) {
-				return;
-			}
-
-			const response: KyResponse = await Utils.request.post("users/login", {
-				json: {
-					email: email,
-					password: password,
-				},
+			const loginUserResponse: Response = await fetch("http://localhost:8080/users/login", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ email: email, password: password }),
 			});
 
-			if (!response.ok) {
-				return;
+			if (!loginUserResponse.ok) {
+				const loginUserResponseError: IResponseError = await loginUserResponse.json();
+
+				throw new Error(loginUserResponseError.message);
 			}
 
-			// @ts-expect-error
-			const authorizationHeader: string = response.headers.get("Authorization");
-			const authorization: string = authorizationHeader?.split(" ")[1];
+			const authHeader: string = loginUserResponse.headers.get("Authorization") ?? "";
+			const auth: string = authHeader.split(" ")[1];
 
-			setCookie("Authorization", authorization, {
+			setCookie("Authorization", auth, {
 				path: "/",
 				domain: "localhost",
 				expires: 1,
@@ -53,21 +47,15 @@ function Login() {
 			navigate("/budget");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				dispatch(setError("Invalid email or password"));
-
-				setTimeout(() => {
-					setIsLoading(false);
-				}, 2000);
+				dispatch(setError(error.message));
+				setTimeout(() => setIsLoading(false), 1500);
 			}
 		}
 	};
 
 	React.useEffect((): void => {
-		const authorization: string | undefined = getCookie("Authorization");
-
-		if (!authorization) {
-			return;
-		}
+		const auth: string = getCookie("Authorization") ?? "";
+		if (!auth) return;
 
 		navigate("/budget");
 	}, [navigate]);

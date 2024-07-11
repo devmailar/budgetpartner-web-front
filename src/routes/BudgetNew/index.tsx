@@ -1,14 +1,13 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { KyResponse } from "ky";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
-import type { IUserResponse, TBudget } from "../../types";
-import { Utils, months } from "../../utils";
+import type { IResponseError, IUserResponse, TBudget } from "../../types";
+import { months } from "../../utils";
 
-function BudgetNew() {
+function BudgetNew(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
@@ -23,43 +22,50 @@ function BudgetNew() {
 			const form: FormData = new FormData(event.currentTarget);
 			const income: number = Number.parseInt(form.get("income") as string);
 
-			const authorization: string = getCookie("Authorization") ?? "";
-			if (!authorization) {
-				throw new Error("Please login to continue");
+			const auth: string = getCookie("Authorization") ?? "";
+			if (!auth) {
+				throw new Error("Please login to move forward");
 			}
 
 			const year: number = selectedYear;
 			const month: string = selectedMonth;
 			const monthIndex: number = months.indexOf(month);
-
 			const date: Date = new Date(year, monthIndex, 2);
 
-			await Utils.request.post("budgets/create", {
-				headers: {
-					Authorization: `Bearer ${authorization}`,
-				},
-				json: {
-					date: new Date(date),
-				},
+			const createBudgetResponse: Response = await fetch("http://localhost:8080/budgets/create", {
+				method: "POST",
+				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+				body: JSON.stringify({ date: new Date(date) }),
 			});
 
-			const response: KyResponse = await Utils.request.get("users/get", {
-				headers: {
-					Authorization: `Bearer ${authorization}`,
-				},
+			if (!createBudgetResponse.ok) {
+				const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
+
+				throw new Error(createBudgetResponseError.message);
+			}
+
+			const getUserResponse: Response = await fetch("http://localhost:8080/users/get", {
+				method: "GET",
+				headers: { Authorization: `Bearer ${auth}` },
 			});
 
-			const userResponse: IUserResponse = await response.json();
+			if (!getUserResponse.ok) {
+				const getUserResponseError: IResponseError = await getUserResponse.json();
 
-			if (Object.keys(userResponse).length === 0) {
+				throw new Error(getUserResponseError.message);
+			}
+
+			const getUserResponseBody: IUserResponse = await getUserResponse.json();
+
+			if (Object.keys(getUserResponseBody).length === 0) {
 				throw new Error("User response is empty");
 			}
 
-			if (userResponse.budgets.length === 0) {
+			if (getUserResponseBody.budgets.length === 0) {
 				throw new Error("Budgets response is empty");
 			}
 
-			const currentBudget: TBudget | undefined = userResponse.budgets.find((budget: TBudget): boolean => {
+			const currentBudget: TBudget | undefined = getUserResponseBody.budgets.find((budget: TBudget): boolean => {
 				return new Date(budget.created_at).getMonth() === new Date(date).getMonth();
 			});
 
@@ -67,28 +73,32 @@ function BudgetNew() {
 				throw new Error("Current budget is undefined");
 			}
 
-			if (income <= 0 || Number.isNaN(income)) {
-				dispatch(setError("Please enter valid amount"));
-				return;
+			if (Number.isNaN(income) || income <= 0) {
+				throw new Error("Please enter valid amount");
 			}
 
 			if (income > 0) {
-				await Utils.request.post("extraincomes/create", {
-					headers: {
-						Authorization: `Bearer ${authorization}`,
-					},
-					json: {
+				const createExtraincomeResponse: Response = await fetch("http://localhost:8080/extraincomes/create", {
+					method: "POST",
+					headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+					body: JSON.stringify({
 						budget_id: currentBudget.id,
 						extraincome_type: "Salary",
 						extraincome_amount_monthly: income,
-					},
+					}),
 				});
+
+				if (!createExtraincomeResponse.ok) {
+					const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();
+
+					throw new Error(createExtraincomeResponseError.message);
+				}
 
 				navigate("/budget");
 			}
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				dispatch(setError("Budget of this month already exists 🚫"));
+				dispatch(setError(error.message));
 				navigate("/budget");
 			}
 		}
@@ -116,12 +126,9 @@ function BudgetNew() {
 	};
 
 	React.useEffect((): void => {
-		const authorization: string | undefined = getCookie("Authorization");
-
-		if (!authorization) {
-			navigate("/");
-		}
-	}, [navigate]);
+		const auth: string = getCookie("Authorization") ?? "";
+		if (!auth) return;
+	}, []);
 
 	return (
 		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">

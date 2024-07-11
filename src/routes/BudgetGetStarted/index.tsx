@@ -1,80 +1,83 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { KyResponse } from "ky";
-import { type FormEvent, type MouseEvent, useEffect, useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
-import type { IUserResponse, TBudget } from "../../types";
-import { Utils, months } from "../../utils";
+import type { IResponseError, IUserResponse, TBudget } from "../../types";
+import { months } from "../../utils";
 
-function BudgetGetStarted() {
+function BudgetGetStarted(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const [step, setStep] = useState<number>(0);
-	const [extraincomeModal, setExtraincomeModal] = useState<boolean>(false);
+	const [step, setStep] = React.useState<number>(0);
+	const [extraincomeModal, setExtraincomeModal] = React.useState<boolean>(false);
 
-	const handleCreateBudget = async (event: MouseEvent<HTMLButtonElement>): Promise<void> => {
+	const handleCreateBudget = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
 		try {
 			event.preventDefault();
 
-			const authorization: string | undefined = getCookie("Authorization");
-			if (!authorization) {
-				throw new Error("Please login to continue");
+			const auth: string = getCookie("Authorization") ?? "";
+			if (!auth) {
+				throw new Error("Please login to move forward");
 			}
 
-			await Utils.request.post("budgets/create", {
-				headers: {
-					Authorization: `Bearer ${authorization}`,
-				},
-				json: {
-					date: new Date(),
-				},
+			const createBudgetResponse: Response = await fetch("http://localhost:8080/budgets/create", {
+				method: "POST",
+				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+				body: JSON.stringify({ date: new Date() }),
 			});
 
-			return setStep(1);
+			if (!createBudgetResponse.ok) {
+				const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
+
+				throw new Error(createBudgetResponseError.message);
+			}
+
+			setStep(1);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				dispatch(setError(`Budget for ${months[new Date().getMonth()]} already exists !`));
+				dispatch(setError(error.message));
+				navigate("/budget");
 			}
 		}
 	};
 
-	const handleCreateExtraincome = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+	const handleCreateExtraincome = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
-			dispatch(setError(""));
 
 			const form: FormData = new FormData(event.currentTarget);
 			const income: number = Number.parseInt(form.get("income") as string);
 
-			const authorization: string = getCookie("Authorization") ?? "";
-			if (!authorization) {
-				throw new Error("Please login to continue");
+			const auth: string = getCookie("Authorization") ?? "";
+			if (!auth) {
+				throw new Error("Please login to move forward");
 			}
 
-			const response: KyResponse = await Utils.request.get("users/get", {
-				headers: {
-					Authorization: `Bearer ${authorization}`,
-				},
+			const getUserResponse: Response = await fetch("http://localhost:8080/users/get", {
+				method: "GET",
+				headers: { Authorization: `Bearer ${auth}` },
 			});
 
-			if (!response.ok) {
-				return;
+			if (!getUserResponse.ok) {
+				const getUserResponseError: IResponseError = await getUserResponse.json();
+
+				throw new Error(getUserResponseError.message);
 			}
 
-			const userResponse: IUserResponse = await response.json();
+			const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
-			if (Object.keys(userResponse).length === 0) {
+			if (Object.keys(getUserResponseBody).length === 0) {
 				throw new Error("User response is empty");
 			}
 
-			if (userResponse.budgets.length === 0) {
+			if (getUserResponseBody.budgets.length === 0) {
 				throw new Error("Budgets response is empty");
 			}
 
-			const currentBudget: TBudget | undefined = userResponse.budgets.find((budget: TBudget): boolean => {
+			const currentBudget: TBudget | undefined = getUserResponseBody.budgets.find((budget: TBudget): boolean => {
 				return new Date(budget.created_at).getMonth() === new Date().getMonth();
 			});
 
@@ -86,16 +89,21 @@ function BudgetGetStarted() {
 				throw new Error("Please enter valid amount");
 			}
 
-			await Utils.request.post("extraincomes/create", {
-				headers: {
-					Authorization: `Bearer ${authorization}`,
-				},
-				json: {
+			const createExtraincomeResponse: Response = await fetch("http://localhost:8080/extraincomes/create", {
+				method: "POST",
+				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+				body: JSON.stringify({
 					budget_id: currentBudget.id,
 					extraincome_type: "Salary",
 					extraincome_amount_monthly: income,
-				},
+				}),
 			});
+
+			if (!createExtraincomeResponse.ok) {
+				const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();
+
+				throw new Error(createExtraincomeResponseError.message);
+			}
 
 			navigate("/budget");
 		} catch (error: unknown) {
@@ -105,13 +113,10 @@ function BudgetGetStarted() {
 		}
 	};
 
-	useEffect((): void => {
-		const authorization: string | undefined = getCookie("Authorization");
-
-		if (!authorization) {
-			navigate("/");
-		}
-	}, [navigate]);
+	React.useEffect((): void => {
+		const auth: string = getCookie("Authorization") ?? "";
+		if (!auth) return;
+	}, []);
 
 	return (
 		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">

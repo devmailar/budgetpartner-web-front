@@ -1,6 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import { eachDayOfInterval, endOfMonth, startOfMonth } from "date-fns";
-import type { KyResponse } from "ky";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
@@ -18,8 +17,16 @@ import { setBudgets } from "../../stores/Budgets";
 import { setError } from "../../stores/Error";
 import { setModal } from "../../stores/Modal";
 import { setUser } from "../../stores/User";
-import type { IRootState, IUserResponse, TBudget, TExtraexpense, TExtraincome, TModal } from "../../types";
-import { Utils, months } from "../../utils";
+import type {
+	IResponseError,
+	IRootState,
+	IUserResponse,
+	TBudget,
+	TExtraexpense,
+	TExtraincome,
+	TModal,
+} from "../../types";
+import { months } from "../../utils";
 import "./index.css";
 
 function Budget(): React.ReactNode {
@@ -37,38 +44,37 @@ function Budget(): React.ReactNode {
 	const modal: TModal = useSelector((state: IRootState) => state.modal);
 
 	const handleGetUserResponse = React.useCallback(
-		async (authorization: string): Promise<IUserResponse> => {
+		async (auth: string): Promise<void> => {
 			try {
-				const response: KyResponse = await Utils.request.get("users/get", {
-					headers: {
-						Authorization: `Bearer ${authorization}`,
-					},
+				const getUserResponse: Response = await fetch("http://localhost:8080/users/get", {
+					method: "GET",
+					headers: { Authorization: `Bearer ${auth}` },
 				});
 
-				if (!response.ok) {
-					return {} as IUserResponse;
+				if (!getUserResponse.ok) {
+					const getUserResponseError: IResponseError = await getUserResponse.json();
+
+					throw new Error(getUserResponseError.message);
 				}
 
-				const userResponse: IUserResponse = await response.json();
+				const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
-				if (Object.keys(userResponse).length === 0) {
+				if (Object.keys(getUserResponseBody).length === 0) {
 					throw new Error("User response is empty");
 				}
 
-				if (userResponse.user.is_new) {
-					navigate("/budget/get-started");
-
-					return {} as IUserResponse;
+				if (getUserResponseBody.user.is_new) {
+					return navigate("/budget/get-started");
 				}
 
-				if (userResponse.budgets.length === 0) {
+				if (getUserResponseBody.budgets.length === 0) {
 					throw new Error("Budgets response is empty");
 				}
 
-				dispatch(setUser(userResponse.user));
-				dispatch(setBudgets(userResponse.budgets));
+				dispatch(setUser(getUserResponseBody.user));
+				dispatch(setBudgets(getUserResponseBody.budgets));
 
-				const currentBudget: TBudget | undefined = userResponse.budgets.find((budget: TBudget): boolean => {
+				const currentBudget: TBudget | undefined = getUserResponseBody.budgets.find((budget: TBudget): boolean => {
 					return new Date(budget.created_at).getMonth() === new Date().getMonth();
 				});
 
@@ -77,19 +83,14 @@ function Budget(): React.ReactNode {
 				}
 
 				dispatch(setBudget(currentBudget));
-
 				setTimeout((): void => setIsLoading(false), 1000);
-
-				return userResponse;
 			} catch (error) {
 				if (error instanceof Error) {
-					dispatch(setError(error.name));
+					dispatch(setError(error.message));
 					removeCookie("Authorization");
 					window.location.reload();
 				}
 			}
-
-			return {} as IUserResponse;
 		},
 		[dispatch, navigate],
 	);
@@ -104,23 +105,14 @@ function Budget(): React.ReactNode {
 		}
 	};
 
-	React.useEffect(() => {
+	React.useEffect((): void => {
 		async function onLoad(): Promise<void> {
-			const authorization: string | undefined = getCookie("Authorization");
-
-			if (!authorization) {
+			const auth: string = getCookie("Authorization") ?? "";
+			if (!auth) {
 				return navigate("/");
 			}
 
-			const userResponse: IUserResponse = await handleGetUserResponse(authorization);
-
-			if (Object.keys(userResponse).length === 0) {
-				return;
-			}
-
-			if (userResponse.user.is_new) {
-				return;
-			}
+			await handleGetUserResponse(auth);
 		}
 
 		onLoad();

@@ -1,36 +1,42 @@
+import type { Dispatch } from "@reduxjs/toolkit";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import { Utils } from "../../utils";
+import { setError } from "../../stores/Error";
+import type { IResponseError } from "../../types";
 
-function CreateAnAccount() {
+function CreateAnAccount(): React.ReactNode {
+	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
+
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
 	const handleCreate = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
-			setIsLoading(true);
-
 			event.preventDefault();
+			setIsLoading(true);
 
 			const form: FormData = new FormData(event.currentTarget);
 			const email: string = form.get("email") as string;
 			const password: string = form.get("password") as string;
 
-			if (!email || !password) {
-				return;
-			}
-
-			await Utils.request.post("users/create", {
-				json: {
-					email: email,
-					password: password,
-				},
+			const createBudgetResponse: Response = await fetch("http://localhost:8080/users/create", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ email: email, password: password }),
 			});
 
-			navigate("/");
+			if (!createBudgetResponse.ok) {
+				const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
+
+				throw new Error(createBudgetResponseError.message);
+			}
+
+			navigate("/budget");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				throw error;
+				dispatch(setError(error.message));
+				setTimeout(() => setIsLoading(false), 2500);
 			}
 		}
 	};
@@ -60,7 +66,7 @@ function CreateAnAccount() {
 							type="password"
 							id="password"
 							name="password"
-							placeholder="******"
+							placeholder="**************"
 							autoComplete="password"
 							required
 						/>

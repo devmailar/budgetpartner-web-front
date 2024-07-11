@@ -17,9 +17,6 @@ importers:
       kutty:
         specifier: ^0.6.0
         version: 0.6.0(tailwindcss@3.4.4)
-      ky:
-        specifier: ^1.3.0
-        version: 1.3.0
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -695,10 +692,6 @@ packages:
     resolution: {integrity: sha512-QI4qt0aDMG05BH845B16u9Fun5tBfpNcD89Yky4suU5iwmu5P3xPEcoRSDl9E7/WU5kfjuzTK1XzStglkd3Msg==}
     peerDependencies:
       tailwindcss: ^3.0.7
-
-  ky@1.3.0:
-    resolution: {integrity: sha512-QUViPXlgP6NKA57IAPff/aZSmRA6qs9wKxlEpayBorwRZG+x2LG7jD4kXh8lnH3q/gkUr64NyZ7kwErUEZJmlw==}
-    engines: {node: '>=18'}
 
   lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
@@ -1526,8 +1519,6 @@ snapshots:
   kutty@0.6.0(tailwindcss@3.4.4):
     dependencies:
       tailwindcss: 3.4.4
-
-  ky@1.3.0: {}
 
   lilconfig@2.1.0: {}
 

@@ -43,7 +43,11 @@ function App() {
 	const handleClose = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
 		try {
 			dispatch(setError(""));
-		} catch (error) {}
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
 	};
 
 	return (

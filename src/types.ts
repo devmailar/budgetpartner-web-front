@@ -60,7 +60,7 @@ export interface IRootState {
 	language: string;
 }
 
-export interface IErrorResponse {
+export interface IResponseError {
 	statusCode: number;
 	error: string;
 	message: string;

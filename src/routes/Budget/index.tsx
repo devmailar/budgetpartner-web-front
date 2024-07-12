@@ -120,14 +120,14 @@ function Budget(): React.ReactNode {
 	};
 
 	React.useEffect((): void => {
-		async function onLoad(): Promise<void> {
+		const onLoad = async (): Promise<void> => {
 			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
 				return navigate("/");
 			}
 
 			await handleGetUserResponse(auth);
-		}
+		};
 
 		onLoad();
 	}, [navigate, handleGetUserResponse]);

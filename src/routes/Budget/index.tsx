@@ -28,6 +28,7 @@ import type {
 } from "../../types";
 import { months } from "../../utils";
 import "./index.css";
+import "animate.css";
 
 function Budget(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
@@ -105,6 +106,19 @@ function Budget(): React.ReactNode {
 		}
 	};
 
+	const handleSetBudget = (budget: TBudget): void => {
+		try {
+			setIsLoading(true);
+			dispatch(setBudget(budget));
+			setBudgetSwitch(false);
+			setTimeout((): void => setIsLoading(false), 250);
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+	};
+
 	React.useEffect((): void => {
 		async function onLoad(): Promise<void> {
 			const auth: string = getCookie("Authorization") ?? "";
@@ -166,10 +180,10 @@ function Budget(): React.ReactNode {
 						<div className="flex flex-col gap-y-2 items-center">
 							<button
 								type="button"
-								className="flex gap-x-2.5 items-center justify-center bg-darker px-4 py-2 rounded-[6.25rem]"
+								className="animate__animated animate__boudnce flex gap-x-2.5 items-center justify-center bg-dark px-4 py-2 rounded-[6.25rem]"
 								onClick={(): void => setBudgetSwitch(!budgetSwitch)}
 							>
-								<span className="text-base text-grey font-normal font-rubik">
+								<span className="text-base text-[#b7b7b7] font-normal font-rubik">
 									{months[new Date(budget.created_at).getMonth()]} {"("}
 									<span className="font-semibold">{new Date().getFullYear()}</span>
 									{")"}
@@ -185,26 +199,17 @@ function Budget(): React.ReactNode {
 							</button>
 
 							{budgetSwitch && (
-								<div className="absolute z-50 mt-14 flex flex-col gap-y-4 items-center justify-center w-52 py-4 bg-darker rounded-2xl">
-									<div className="flex flex-col gap-y-1.5 items-center justify-center">
+								<div className="animate__animated animate__fadeInDown animate__faster absolute z-50 mt-14 flex flex-col gap-y-4 items-center justify-center w-52 py-4 bg-dark rounded-2xl">
+									<div className="flex flex-col gap-y-1 items-center justify-center">
 										{budgets.map((b: TBudget) => (
-											<button
-												key={b.id}
-												type="button"
-												onClick={() => {
-													setIsLoading(true);
-													setBudgetSwitch(false);
-													dispatch(setBudget(b));
-													setTimeout((): void => setIsLoading(false), 1000);
-												}}
-											>
+											<button key={b.id} type="button" onClick={(): void => handleSetBudget(b)}>
 												<span
-													className={`text-sm ${
+													className={`text-base ${
 														new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() &&
 														new Date(budget.created_at).getFullYear() === new Date(b.created_at).getFullYear()
-															? "text-white"
-															: "text-grey"
-													} font-normal font-rubik`}
+															? "text-white font-medium"
+															: "text-light font-normal"
+													} font-rubik`}
 												>
 													{months[new Date(b.created_at).getMonth()]} {"("}
 													{new Date(b.created_at).getFullYear()}
@@ -216,7 +221,7 @@ function Budget(): React.ReactNode {
 
 									<button
 										type="button"
-										className="flex items-center justify-center bg-dark px-3 py-2 rounded-xl"
+										className="flex items-center justify-center bg-darker px-3 py-2 rounded-xl"
 										onClick={(): void => handleSetNewBudget()}
 									>
 										<span className="text-sm text-light font-normal font-rubik">Create</span>
@@ -227,7 +232,7 @@ function Budget(): React.ReactNode {
 
 						<Swiper
 							className="w-[60rem] h-fit z-0"
-							autoplay={{ delay: 5000, disableOnInteraction: false }}
+							autoplay={{ delay: 10000, disableOnInteraction: false }}
 							pagination={{ clickable: true }}
 							modules={[Autoplay, Pagination]}
 						>
@@ -246,10 +251,14 @@ function Budget(): React.ReactNode {
 											);
 										}}
 									>
-										<h1 className="text-5xl text-purple font-bold font-rubik">{dailyBudgetAmount.toFixed(2)} €</h1>
+										<h1 className="animate__animated animate__bounce text-5xl text-purple font-bold font-rubik">
+											{dailyBudgetAmount.toFixed(2)}€
+										</h1>
 									</button>
 
-									<span className="text-xl text-grey font-light font-rubik">day</span>
+									<div className="px-3 py-1 bg-dark rounded-xl">
+										<span className="text-xl text-grey font-light font-rubik">day</span>
+									</div>
 								</div>
 							</SwiperSlide>
 
@@ -268,10 +277,14 @@ function Budget(): React.ReactNode {
 											);
 										}}
 									>
-										<h1 className="text-5xl text-purple font-bold font-rubik">{monthlyBudgetAmount.toFixed(2)} €</h1>
+										<h1 className="animate__animated animate__bounce text-5xl text-purple font-bold font-rubik">
+											{monthlyBudgetAmount.toFixed(2)}€
+										</h1>
 									</button>
 
-									<span className="text-xl text-grey font-light font-rubik">month</span>
+									<div className="px-3 py-1 bg-dark rounded-xl">
+										<span className="text-xl text-grey font-light font-rubik">month</span>
+									</div>
 								</div>
 							</SwiperSlide>
 						</Swiper>

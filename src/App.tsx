@@ -10,7 +10,7 @@ import BudgetNew from "./routes/BudgetNew";
 import CreateAnAccount from "./routes/CreateAnAccount";
 import Login from "./routes/Login";
 import { setError } from "./stores/Error";
-import type { IRootState } from "./types";
+import type { IRootState, TUser } from "./types";
 
 export const router = createBrowserRouter([
 	{
@@ -39,6 +39,7 @@ function App() {
 	const dispatch: Dispatch = useDispatch();
 
 	const error: string = useSelector((state: IRootState) => state.error);
+	const user: TUser = useSelector((state: IRootState) => state.user);
 
 	const handleClose = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
 		try {
@@ -52,10 +53,11 @@ function App() {
 
 	return (
 		<>
-			<div className="hidden sm:block">
-				<Sidebar />
-			</div>
-
+			{Object.keys(user).length > 0 && (
+				<div className="hidden sm:block">
+					<Sidebar />
+				</div>
+			)}
 			{error && (
 				<Modal index={50}>
 					<div className="px-4 py-4">
@@ -67,7 +69,6 @@ function App() {
 					</button>
 				</Modal>
 			)}
-
 			<RouterProvider router={router} />
 		</>
 	);

@@ -132,7 +132,7 @@ function BudgetNew(): React.ReactNode {
 	return (
 		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">
 			<div className="flex flex-col gap-y-6 justify-center w-[25rem]">
-				<form className="flex flex-col gap-y-6 px-6 py-6 bg-darker rounded-lg" onSubmit={handleCreateIncome}>
+				<form className="flex flex-col gap-y-6 px-6 py-6 bg-dark rounded-lg" onSubmit={handleCreateIncome}>
 					<div>
 						<h1 className="text-2xl text-white font-medium font-rubik">New budget</h1>
 						<p className="text-sm text-white font-normal font-rubik">Fill few sections to start a budget.</p>

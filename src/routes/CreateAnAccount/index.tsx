@@ -52,21 +52,21 @@ function CreateAnAccount(): React.ReactNode {
 
 					<div className="flex flex-col gap-y-3">
 						<input
-							className="bg-transparent border-purple border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple border-2 px-2 py-2 text-lg text-white font-normal font-rubik rounded-lg"
 							type="email"
 							id="email"
 							name="email"
-							placeholder="support@budget-partner.com"
+							placeholder="Email"
 							autoComplete="email"
 							required
 						/>
 
 						<input
-							className="bg-transparent border-purple border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple border-2 px-2 py-2 text-lg text-white font-normal font-rubik rounded-lg"
 							type="password"
 							id="password"
 							name="password"
-							placeholder="**************"
+							placeholder="Password"
 							autoComplete="password"
 							required
 						/>

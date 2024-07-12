@@ -63,29 +63,29 @@ function Login(): React.ReactNode {
 	return (
 		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">
 			<form className="flex flex-col w-[26rem]" onSubmit={handleLogin}>
-				<div className="flex flex-col gap-y-5">
+				<div className="flex flex-col gap-y-6">
 					<div className="flex flex-col gap-y-1 items-center">
 						<h1 className="text-2xl text-white font-medium font-rubik">Login to existing account</h1>
-						<p className="text-base text-white font-normal font-rubik">Enter your email to login for this app</p>
+						<p className="text-base text-white font-normal font-rubik">Enter your login credentials</p>
 					</div>
 
 					<div className="flex flex-col gap-y-3 ">
 						<input
-							className="bg-transparent border-purple border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple border-2 px-2 py-2 text-lg text-white font-normal font-rubik rounded-lg"
 							type="email"
 							id="email"
 							name="email"
-							placeholder="support@budget-partner.com"
+							placeholder="Email"
 							autoComplete="email"
 							required
 						/>
 
 						<input
-							className="bg-transparent border-purple border-2 p-2 text-xl text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple border-2 px-2 py-2 text-lg text-white font-normal font-rubik rounded-lg"
 							type="password"
 							id="password"
 							name="password"
-							placeholder="********"
+							placeholder="Password"
 							autoComplete="current-password"
 							required
 						/>

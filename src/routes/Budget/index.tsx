@@ -1,4 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit";
+import "animate.css";
 import { eachDayOfInterval, endOfMonth, startOfMonth } from "date-fns";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +10,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { getCookie, removeCookie } from "typescript-cookie";
 import ExtraexpenseModal from "../../components/ExtraexpenseModal";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
-import IncomeModal from "../../components/IncomeModal";
-import IncomeModalEdit from "../../components/IncomeModalEdit";
 import LanguageModal from "../../components/LanguageModal";
 import { setBudget } from "../../stores/Budget";
 import { setBudgets } from "../../stores/Budgets";
@@ -28,7 +27,6 @@ import type {
 } from "../../types";
 import { months } from "../../utils";
 import "./index.css";
-import "animate.css";
 
 function Budget(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
@@ -361,8 +359,6 @@ function Budget(): React.ReactNode {
 				</div>
 			)}
 
-			{modal.incomeModal && <IncomeModal />}
-			{modal.incomeModalEdit && <IncomeModalEdit />}
 			{modal.extraincomeModal && <ExtraincomeModal />}
 			{modal.extraexpenseModal && <ExtraexpenseModal />}
 			{modal.languageModal && <LanguageModal />}

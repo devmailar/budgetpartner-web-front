@@ -83,7 +83,13 @@ function Budget(): React.ReactNode {
 					throw new Error("Current budget is undefined");
 				}
 
-				dispatch(setBudget(currentBudget));
+				const storedBudget: string = localStorage.getItem("budget") ?? "";
+				if (storedBudget) {
+					dispatch(setBudget(JSON.parse(storedBudget)));
+				} else {
+					dispatch(setBudget(currentBudget));
+				}
+
 				setTimeout((): void => setIsLoading(false), 1000);
 			} catch (error) {
 				if (error instanceof Error) {
@@ -141,6 +147,7 @@ function Budget(): React.ReactNode {
 				throw new Error(removeBudgetResponseError.message);
 			}
 
+			localStorage.removeItem("budget");
 			window.location.reload();
 		} catch (error: unknown) {
 			if (error instanceof Error) {

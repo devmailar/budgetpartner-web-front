@@ -54,7 +54,11 @@ function Sidebar(): React.ReactNode {
 							</svg>
 						</button>
 
-						<button type="button" className="flex items-center justify-center p-3">
+						<button
+							type="button"
+							className="flex items-center justify-center p-3"
+							onClick={() => dispatch(setError("Coming soon! ✨"))}
+						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 40 40" fill="none">
 								<title>Sticky</title>
 								<g clipPath="url(#clip0_103_84)">
@@ -81,7 +85,11 @@ function Sidebar(): React.ReactNode {
 							</svg>
 						</button>
 
-						<button type="button" className="flex items-center justify-center p-3">
+						<button
+							type="button"
+							className="flex items-center justify-center p-3"
+							onClick={() => dispatch(setError("Coming soon! ✨"))}
+						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 40 40" fill="none">
 								<title>Calculator</title>
 								<g clipPath="url(#clip0_103_88)">
@@ -150,7 +158,11 @@ function Sidebar(): React.ReactNode {
 							</svg>
 						</button>
 
-						<button type="button" className="flex items-center justify-center p-3">
+						<button
+							type="button"
+							className="flex items-center justify-center p-3"
+							onClick={() => dispatch(setError("Coming soon! ✨"))}
+						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 40 40" fill="none">
 								<title>Info</title>
 								<g clipPath="url(#clip0_116_8)">

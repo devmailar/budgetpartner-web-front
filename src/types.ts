@@ -43,8 +43,6 @@ export type TMenu = {
 export type TModal = {
 	extraincomeModal: boolean;
 	extraexpenseModal: boolean;
-	incomeModal: boolean;
-	incomeModalEdit: boolean;
 	languageModal: boolean;
 };
 

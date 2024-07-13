@@ -11,6 +11,7 @@ export default {
 				white: "#FFFFFF",
 				purple: "#895FF5",
 				orange: "#B85C3D",
+				red: "#B83D3D",
 				grey: "#4B4B4B",
 				dark: "#252525",
 				darker: "#1A1A1A",

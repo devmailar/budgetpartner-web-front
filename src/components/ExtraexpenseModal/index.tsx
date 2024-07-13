@@ -250,7 +250,7 @@ function ExtraexpenseModal(): React.ReactNode {
 										className="btn bg-transparent px-3 py-2 rounded-xl"
 										onClick={(): Promise<void> => handleRemoveExtraexpense(removeExtraexpense.id)}
 									>
-										<span className="text-base text-red-500 font-medium font-rubik">Delete</span>
+										<span className="text-base text-red font-medium font-rubik">Delete</span>
 									</button>
 
 									<button

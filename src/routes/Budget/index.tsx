@@ -38,6 +38,8 @@ function Budget(): React.ReactNode {
 	const [dailyBudgetAmount, setDailyBudgetAmount] = React.useState<number>(0);
 	const [monthlyBudgetAmount, setMonthlyBudgetAmount] = React.useState<number>(0);
 
+	const [resetBudgetModal, setResetBudgetModal] = React.useState<boolean>(false);
+
 	const budgets: TBudget[] = useSelector((state: IRootState) => state.budgets);
 	const budget: TBudget = useSelector((state: IRootState) => state.budget);
 	const modal: TModal = useSelector((state: IRootState) => state.modal);
@@ -110,6 +112,36 @@ function Budget(): React.ReactNode {
 			dispatch(setBudget(budget));
 			setBudgetSwitch(false);
 			setTimeout((): void => setIsLoading(false), 250);
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+	};
+
+	const handleRemoveBudget = async (budget: TBudget): Promise<void> => {
+		try {
+			const auth: string = getCookie("Authorization") ?? "";
+			if (!auth) {
+				throw new Error("Please login to move forward");
+			}
+
+			if (new Date(budget.created_at).getMonth() === new Date().getMonth()) {
+				throw new Error("You cant delete present budget");
+			}
+
+			const removeBudgetResponse: Response = await fetch(`http://localhost:8080/budgets/remove/${budget.id}`, {
+				method: "DELETE",
+				headers: { Authorization: `Bearer ${auth}` },
+			});
+
+			if (!removeBudgetResponse.ok) {
+				const removeBudgetResponseError: IResponseError = await removeBudgetResponse.json();
+
+				throw new Error(removeBudgetResponseError.message);
+			}
+
+			window.location.reload();
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));
@@ -322,6 +354,7 @@ function Budget(): React.ReactNode {
 
 							<span className="text-sm text-dark font-medium font-rubik">Income</span>
 						</button>
+
 						<button
 							type="button"
 							className="flex gap-x-2 items-center justify-center btn bg-orange px-[18px] py-2.5 recurring-expenses-glow rounded-[6.25rem]"
@@ -355,7 +388,86 @@ function Budget(): React.ReactNode {
 
 							<span className="text-sm text-dark font-medium font-rubik">Expenses</span>
 						</button>
+
+						<button
+							type="button"
+							className="flex gap-x-2 items-center justify-center btn bg-red px-[18px] py-2.5 reset-glow rounded-[6.25rem]"
+							onClick={(): void => {
+								dispatch(
+									setModal({
+										extraincomeModal: false,
+										extraexpenseModal: false,
+										languageModal: false,
+									}),
+
+									setResetBudgetModal(true),
+								);
+							}}
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+								<title>Reset</title>
+								<g clipPath="url(#clip0_253_109)">
+									<path d="M4 7H20" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+									<path d="M10 11V17" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+									<path d="M14 11V17" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+									<path
+										d="M5 7L6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19L19 7"
+										stroke="black"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									/>
+									<path
+										d="M9 7V4C9 3.73478 9.10536 3.48043 9.29289 3.29289C9.48043 3.10536 9.73478 3 10 3H14C14.2652 3 14.5196 3.10536 14.7071 3.29289C14.8946 3.48043 15 3.73478 15 4V7"
+										stroke="black"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									/>
+								</g>
+								<defs>
+									<clipPath id="clip0_253_109">
+										<rect width="24" height="24" fill="white" />
+									</clipPath>
+								</defs>
+							</svg>
+
+							<span className="text-sm text-dark font-medium font-rubik">Delete</span>
+						</button>
 					</div>
+
+					{resetBudgetModal && (
+						<div className="animate__animated animate__fadeInDown animate__faster min-w-80 px-2.5 py-2.5 bg-dark border border-darker rounded-2xl">
+							<div className="flex flex-col gap-y-4 px-4 items-center justify-center max-w-80">
+								<span className="text-base text-center text-white font-medium font-rubik">Warning</span>
+
+								<span className="text-sm text-center text-light font-light font-rubik">
+									This operation is permanent and will delete budget for{" "}
+									{months[new Date(budget.created_at).getMonth()]} {"("}
+									<span className="font-semibold">{new Date(budget.created_at).getFullYear()}</span>
+									{")"}
+								</span>
+
+								<div className="flex gap-2 items-center">
+									<button
+										type="submit"
+										className="btn bg-transparent px-3 py-2 rounded-xl"
+										onClick={(): Promise<void> => handleRemoveBudget(budget)}
+									>
+										<span className="text-base text-red font-medium font-rubik">Delete</span>
+									</button>
+
+									<button
+										type="submit"
+										className="btn bg-transparent px-3 py-2 rounded-xl"
+										onClick={(): void => setResetBudgetModal(false)}
+									>
+										<span className="text-base text-light font-medium font-rubik">Cancel</span>
+									</button>
+								</div>
+							</div>
+						</div>
+					)}
 				</div>
 			)}
 

@@ -131,22 +131,36 @@ function ExtraexpenseModal(): React.ReactNode {
 		<Modal index={40}>
 			<div className="animate__animated animate__fadeInDown animate__faster min-w-80 px-2.5 py-2.5 bg-dark border border-darker rounded-2xl">
 				<div className="flex flex-col">
-					<div className="flex items-center justify-end">
-						<button type="button" onClick={(): void => handleClose()}>
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-								<title>Close</title>
-								<g clipPath="url(#clip0_245_208)">
-									<path d="M15 5L5 15" stroke="#4B4B4B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-									<path d="M5 5L15 15" stroke="#4B4B4B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-								</g>
-								<defs>
-									<clipPath id="clip0_245_208">
-										<rect width="20" height="20" fill="white" />
-									</clipPath>
-								</defs>
-							</svg>
-						</button>
-					</div>
+					{!removeExtraexpenseModal && (
+						<div className="flex items-center justify-end">
+							<button type="button" onClick={(): void => handleClose()}>
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+									<title>Close</title>
+									<g clipPath="url(#clip0_245_208)">
+										<path
+											d="M15 5L5 15"
+											stroke="#4B4B4B"
+											strokeWidth="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										/>
+										<path
+											d="M5 5L15 15"
+											stroke="#4B4B4B"
+											strokeWidth="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										/>
+									</g>
+									<defs>
+										<clipPath id="clip0_245_208">
+											<rect width="20" height="20" fill="white" />
+										</clipPath>
+									</defs>
+								</svg>
+							</button>
+						</div>
+					)}
 
 					{!createExtraexpenseModal && !removeExtraexpenseModal ? (
 						<div className="flex flex-col gap-4 px-7 py-2">
@@ -235,13 +249,14 @@ function ExtraexpenseModal(): React.ReactNode {
 						</form>
 					) : (
 						removeExtraexpenseModal && (
-							<div className="flex flex-col gap-y-4 px-4 items-center justify-center max-w-80">
-								<span className="text-base text-center text-white font-medium font-rubik">
-									Are you sure you want to delete expense{" "}
+							<div className="animate__animated animate__fadeIn flex flex-col gap-y-4 px-4 items-center justify-center max-w-80">
+								<span className="text-base text-center text-white font-medium font-rubik">Warning</span>
+
+								<span className="text-sm text-center text-light font-light font-rubik">
+									This operation is permanent and will delete expense{" "}
 									<code>
 										{removeExtraexpense.extraexpense_type}: {removeExtraexpense.extraexpense_amount_monthly.toFixed(1)}€
-									</code>{" "}
-									?
+									</code>
 								</span>
 
 								<div className="flex gap-2 items-center">
@@ -258,7 +273,7 @@ function ExtraexpenseModal(): React.ReactNode {
 										className="btn bg-transparent px-3 py-2 rounded-xl"
 										onClick={(): void => setRemoveExtraexpenseModal(false)}
 									>
-										<span className="text-base text-orange font-medium font-rubik">Cancel</span>
+										<span className="text-base text-light font-medium font-rubik">Cancel</span>
 									</button>
 								</div>
 							</div>

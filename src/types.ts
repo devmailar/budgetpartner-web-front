@@ -17,6 +17,7 @@ export type TBudget = {
 };
 
 export type TExtraincome = {
+	id: number;
 	user_id: number;
 	extraincome_type: string;
 	extraincome_amount_monthly: number;

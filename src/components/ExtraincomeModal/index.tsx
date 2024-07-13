@@ -13,7 +13,16 @@ function ExtraincomeModal() {
 	const dispatch: Dispatch = useDispatch();
 
 	const budget: TBudget = useSelector((state: IRootState) => state.budget);
-	const [createExtraincome, setCreateExtraincome] = React.useState<boolean>(false);
+	const [createExtraincomeModal, setCreateExtraincomeModal] = React.useState<boolean>(false);
+	const [removeExtraincomeModal, setRemoveExtraincomeModal] = React.useState<boolean>(false);
+	const [removeExtraincome, setRemoveExtraincome] = React.useState<TExtraincome>({
+		id: 0,
+		user_id: 0,
+		extraincome_type: "",
+		extraincome_amount_monthly: 0,
+		created_at: new Date(),
+		updated_at: new Date(),
+	});
 
 	const totalExtraincomes: number = budget.extraincomes.reduce((accumulator: number, extraincome: TExtraincome) => {
 		return accumulator + extraincome.extraincome_amount_monthly;
@@ -53,7 +62,36 @@ function ExtraincomeModal() {
 			}
 
 			window.location.reload();
-		} catch (error) {
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+	};
+
+	const handleRemoveExtraincome = async (extraincome_id: number): Promise<void> => {
+		try {
+			const auth: string = getCookie("Authorization") ?? "";
+			if (!auth) {
+				throw new Error("Please login to move forward");
+			}
+
+			const removeExtraincomeResponse: Response = await fetch(
+				`http://localhost:8080/extraincomes/remove/${extraincome_id}`,
+				{
+					method: "DELETE",
+					headers: { Authorization: `Bearer ${auth}` },
+				},
+			);
+
+			if (!removeExtraincomeResponse.ok) {
+				const removeExtraincomeResponseError: IResponseError = await removeExtraincomeResponse.json();
+
+				throw new Error(removeExtraincomeResponseError.message);
+			}
+
+			window.location.reload();
+		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));
 			}
@@ -97,21 +135,9 @@ function ExtraincomeModal() {
 						<button type="button" onClick={(): void => handleClose()}>
 							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
 								<title>Close</title>
-								<g clip-path="url(#clip0_245_208)">
-									<path
-										d="M15 5L5 15"
-										stroke="#4B4B4B"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-									<path
-										d="M5 5L15 15"
-										stroke="#4B4B4B"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
+								<g clipPath="url(#clip0_245_208)">
+									<path d="M15 5L5 15" stroke="#4B4B4B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+									<path d="M5 5L15 15" stroke="#4B4B4B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 								</g>
 								<defs>
 									<clipPath id="clip0_245_208">
@@ -121,9 +147,43 @@ function ExtraincomeModal() {
 							</svg>
 						</button>
 					</div>
-					{createExtraincome ? (
+
+					{!createExtraincomeModal && !removeExtraincomeModal ? (
+						<div className="flex flex-col gap-y-3 items-center py-2.5">
+							<div className="flex gap-x-3 items-center">
+								<span className="text-base text-white font-medium font-rubik">Total Income 🌱</span>
+								<span className="text-base text-white font-medium font-rubik">{totalExtraincomes.toFixed(1)}€</span>
+							</div>
+
+							<div>
+								{budget.extraincomes.map((extraincome: TExtraincome) => (
+									<button
+										key={extraincome.extraincome_type}
+										type="button"
+										className="flex items-center"
+										onClick={(): void => {
+											setRemoveExtraincome(extraincome);
+											setRemoveExtraincomeModal(true);
+										}}
+									>
+										<span className="text-base text-white font-normal font-rubik">
+											{extraincome.extraincome_type}: {extraincome.extraincome_amount_monthly.toFixed(1)}€
+										</span>
+									</button>
+								))}
+							</div>
+
+							<button
+								type="button"
+								className="btn bg-transparent px-3 py-2 rounded-xl"
+								onClick={(): void => setCreateExtraincomeModal(true)}
+							>
+								<span className="text-base text-purple font-medium font-rubik">Create</span>
+							</button>
+						</div>
+					) : createExtraincomeModal ? (
 						<form className="flex flex-col gap-y-4 px-4" onSubmit={handleCreateExtraincome}>
-							<span className="text-sm text-white font-medium font-rubik">Create new Income 🚀</span>
+							<span className="text-base text-white font-medium font-rubik">Create new Income 🚀</span>
 
 							<div className="flex flex-col gap-y-3">
 								<div className="flex items-center justify-between p-2.5 border-[0.5px] border-[#4B4B4B] rounded-lg">
@@ -152,34 +212,39 @@ function ExtraincomeModal() {
 							</div>
 
 							<button type="submit" className="btn bg-transparent px-3 py-2 rounded-xl">
-								<span className="text-sm text-purple font-medium font-rubik">Save</span>
+								<span className="text-base text-purple font-medium font-rubik">Save</span>
 							</button>
 						</form>
 					) : (
-						<div className="flex flex-col gap-y-3 items-center py-2.5">
-							<div className="flex gap-x-3 items-center">
-								<span className="text-sm text-white font-medium font-rubik">Total Income 🌱</span>
-								<span className="text-sm text-white font-medium font-rubik">{totalExtraincomes.toFixed(1)}€</span>
-							</div>
+						removeExtraincomeModal && (
+							<div className="flex flex-col gap-y-4 px-4 items-center justify-center">
+								<span className="text-base text-center text-white font-medium font-rubik">
+									Are you sure you want to delete income{" "}
+									<code>
+										{removeExtraincome.extraincome_type}: {removeExtraincome.extraincome_amount_monthly.toFixed(1)}€
+									</code>{" "}
+									?
+								</span>
 
-							<div>
-								{budget.extraincomes.map((extraincome: TExtraincome) => (
-									<button key={extraincome.extraincome_type} type="button" className="flex items-center">
-										<span className="text-sm text-white font-normal font-rubik">
-											{extraincome.extraincome_type}: {extraincome.extraincome_amount_monthly.toFixed(1)}€
-										</span>
+								<div className="flex gap-2 items-center">
+									<button
+										type="submit"
+										className="btn bg-transparent px-3 py-2 rounded-xl"
+										onClick={(): Promise<void> => handleRemoveExtraincome(removeExtraincome.id)}
+									>
+										<span className="text-base text-red-500 font-medium font-rubik">Delete</span>
 									</button>
-								))}
-							</div>
 
-							<button
-								type="button"
-								className="btn bg-transparent px-3 py-2 rounded-xl"
-								onClick={(): void => setCreateExtraincome(true)}
-							>
-								<span className="text-sm text-purple font-medium font-rubik">Create</span>
-							</button>
-						</div>
+									<button
+										type="submit"
+										className="btn bg-transparent px-3 py-2 rounded-xl"
+										onClick={(): void => setRemoveExtraincomeModal(false)}
+									>
+										<span className="text-base text-purple font-medium font-rubik">Cancel</span>
+									</button>
+								</div>
+							</div>
+						)
 					)}
 				</div>
 			</div>

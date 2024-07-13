@@ -153,27 +153,27 @@ function Sidebar(): React.ReactNode {
 						<button type="button" className="flex items-center justify-center p-3">
 							<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 40 40" fill="none">
 								<title>Info</title>
-								<g clip-path="url(#clip0_116_8)">
+								<g clipPath="url(#clip0_116_8)">
 									<path
 										d="M5 20C5 21.9698 5.38799 23.9204 6.14181 25.7403C6.89563 27.5601 8.00052 29.2137 9.3934 30.6066C10.7863 31.9995 12.4399 33.1044 14.2597 33.8582C16.0796 34.612 18.0302 35 20 35C21.9698 35 23.9204 34.612 25.7403 33.8582C27.5601 33.1044 29.2137 31.9995 30.6066 30.6066C31.9995 29.2137 33.1044 27.5601 33.8582 25.7403C34.612 23.9204 35 21.9698 35 20C35 18.0302 34.612 16.0796 33.8582 14.2597C33.1044 12.4399 31.9995 10.7863 30.6066 9.3934C29.2137 8.00052 27.5601 6.89563 25.7403 6.14181C23.9204 5.38799 21.9698 5 20 5C18.0302 5 16.0796 5.38799 14.2597 6.14181C12.4399 6.89563 10.7863 8.00052 9.3934 9.3934C8.00052 10.7863 6.89563 12.4399 6.14181 14.2597C5.38799 16.0796 5 18.0302 5 20Z"
 										stroke="#FEFEFE"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									/>
 									<path
 										d="M20 28.3335V28.3502"
 										stroke="#FEFEFE"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									/>
 									<path
 										d="M20 22.5C19.9693 21.9589 20.1152 21.4225 20.4158 20.9716C20.7164 20.5207 21.1554 20.1797 21.6666 20C22.2931 19.7604 22.8554 19.3787 23.3092 18.8849C23.7631 18.3911 24.0962 17.7987 24.2822 17.1543C24.4682 16.5099 24.5021 15.8311 24.3812 15.1714C24.2603 14.5117 23.9879 13.889 23.5855 13.3525C23.1831 12.8159 22.6616 12.3801 22.0621 12.0793C21.4626 11.7785 20.8015 11.621 20.1308 11.6192C19.4601 11.6173 18.7982 11.7711 18.197 12.0686C17.5959 12.366 17.072 12.799 16.6666 13.3333"
 										stroke="#FEFEFE"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 									/>
 								</g>
 								<defs>

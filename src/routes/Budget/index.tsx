@@ -221,10 +221,10 @@ function Budget(): React.ReactNode {
 
 									<button
 										type="button"
-										className="flex items-center justify-center bg-darker px-3 py-2 rounded-xl"
+										className="btn bg-transparent px-3 py-2 rounded-xl"
 										onClick={(): void => handleSetNewBudget()}
 									>
-										<span className="text-sm text-light font-normal font-rubik">Create</span>
+										<span className="text-base text-purple font-medium font-rubik">Create</span>
 									</button>
 								</div>
 							)}

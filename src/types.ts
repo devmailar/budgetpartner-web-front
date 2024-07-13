@@ -26,6 +26,7 @@ export type TExtraincome = {
 };
 
 export type TExtraexpense = {
+	id: number;
 	user_id: number;
 	extraexpense_type: string;
 	extraexpense_amount_monthly: number;

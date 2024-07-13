@@ -8,7 +8,7 @@ import { setModal } from "../../stores/Modal";
 import type { IResponseError, IRootState, TBudget, TExtraincome } from "../../types";
 import Modal from "../Modal";
 
-function ExtraincomeModal() {
+function ExtraincomeModal(): React.ReactNode {
 	const navigate: NavigateFunction = useNavigate();
 	const dispatch: Dispatch = useDispatch();
 

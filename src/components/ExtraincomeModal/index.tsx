@@ -129,7 +129,7 @@ function ExtraincomeModal(): React.ReactNode {
 
 	return (
 		<Modal index={40}>
-			<div className="animate__animated animate__fadeInDown animate__faster w-80 px-2.5 py-2.5 bg-dark border border-darker rounded-2xl">
+			<div className="animate__animated animate__fadeInDown animate__faster min-w-80 px-2.5 py-2.5 bg-dark border border-darker rounded-2xl">
 				<div className="flex flex-col">
 					<div className="flex items-center justify-end">
 						<button type="button" onClick={(): void => handleClose()}>
@@ -149,18 +149,36 @@ function ExtraincomeModal(): React.ReactNode {
 					</div>
 
 					{!createExtraincomeModal && !removeExtraincomeModal ? (
-						<div className="flex flex-col gap-y-3 items-center py-2.5">
-							<div className="flex gap-x-3 items-center">
-								<span className="text-base text-white font-medium font-rubik">Total Income 🌱</span>
+						<div className="flex flex-col gap-4 px-7 py-2">
+							<div className="flex gap-x-3 items-center justify-between">
+								<div className="flex gap-x-1 items-center">
+									<span className="text-base text-white font-medium font-rubik">Total income</span>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="28"
+										height="28"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#895FF5"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									>
+										<title>Trending Up</title>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M3 17l6 -6l4 4l8 -8" />
+										<path d="M14 7l7 0l0 7" />
+									</svg>
+								</div>
+
 								<span className="text-base text-white font-medium font-rubik">{totalExtraincomes.toFixed(1)}€</span>
 							</div>
 
-							<div>
+							<div className="flex flex-col items-start">
 								{budget.extraincomes.map((extraincome: TExtraincome) => (
 									<button
 										key={extraincome.extraincome_type}
 										type="button"
-										className="flex items-center"
 										onClick={(): void => {
 											setRemoveExtraincome(extraincome);
 											setRemoveExtraincomeModal(true);
@@ -217,7 +235,7 @@ function ExtraincomeModal(): React.ReactNode {
 						</form>
 					) : (
 						removeExtraincomeModal && (
-							<div className="flex flex-col gap-y-4 px-4 items-center justify-center">
+							<div className="flex flex-col gap-y-4 px-4 items-center justify-center max-w-80">
 								<span className="text-base text-center text-white font-medium font-rubik">
 									Are you sure you want to delete income{" "}
 									<code>

@@ -129,7 +129,7 @@ function ExtraexpenseModal(): React.ReactNode {
 
 	return (
 		<Modal index={40}>
-			<div className="animate__animated animate__fadeInDown animate__faster w-80 px-2.5 py-2.5 bg-dark border border-darker rounded-2xl">
+			<div className="animate__animated animate__fadeInDown animate__faster min-w-80 px-2.5 py-2.5 bg-dark border border-darker rounded-2xl">
 				<div className="flex flex-col">
 					<div className="flex items-center justify-end">
 						<button type="button" onClick={(): void => handleClose()}>
@@ -149,18 +149,36 @@ function ExtraexpenseModal(): React.ReactNode {
 					</div>
 
 					{!createExtraexpenseModal && !removeExtraexpenseModal ? (
-						<div className="flex flex-col gap-y-3 items-center py-2.5">
-							<div className="flex gap-x-3 items-center">
-								<span className="text-base text-white font-medium font-rubik">Total expenses 🌱</span>
+						<div className="flex flex-col gap-4 px-7 py-2">
+							<div className="flex gap-x-3 items-center justify-between">
+								<div className="flex gap-x-1 items-center">
+									<span className="text-base text-white font-medium font-rubik">Total expenses</span>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="28"
+										height="28"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="#B85C3D"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									>
+										<title>Trending Down</title>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M3 7l6 6l4 -4l8 8" />
+										<path d="M21 10l0 7l-7 0" />
+									</svg>
+								</div>
+
 								<span className="text-base text-white font-medium font-rubik">{totalExtraexpenses.toFixed(1)}€</span>
 							</div>
 
-							<div>
+							<div className="flex flex-col items-start">
 								{budget.extraexpenses.map((extraexpense: TExtraexpense) => (
 									<button
 										key={extraexpense.extraexpense_type}
 										type="button"
-										className="flex items-center"
 										onClick={(): void => {
 											setRemoveExtraexpense(extraexpense);
 											setRemoveExtraexpenseModal(true);
@@ -178,7 +196,7 @@ function ExtraexpenseModal(): React.ReactNode {
 								className="btn bg-transparent px-3 py-2 rounded-xl"
 								onClick={(): void => setCreateExtraexpenseModal(true)}
 							>
-								<span className="text-base text-purple font-medium font-rubik">Create</span>
+								<span className="text-base text-orange font-medium font-rubik">Create</span>
 							</button>
 						</div>
 					) : createExtraexpenseModal ? (
@@ -212,12 +230,12 @@ function ExtraexpenseModal(): React.ReactNode {
 							</div>
 
 							<button type="submit" className="btn bg-transparent px-3 py-2 rounded-xl">
-								<span className="text-base text-purple font-medium font-rubik">Save</span>
+								<span className="text-base text-orange font-medium font-rubik">Save</span>
 							</button>
 						</form>
 					) : (
 						removeExtraexpenseModal && (
-							<div className="flex flex-col gap-y-4 px-4 items-center justify-center">
+							<div className="flex flex-col gap-y-4 px-4 items-center justify-center max-w-80">
 								<span className="text-base text-center text-white font-medium font-rubik">
 									Are you sure you want to delete expense{" "}
 									<code>
@@ -240,7 +258,7 @@ function ExtraexpenseModal(): React.ReactNode {
 										className="btn bg-transparent px-3 py-2 rounded-xl"
 										onClick={(): void => setRemoveExtraexpenseModal(false)}
 									>
-										<span className="text-base text-purple font-medium font-rubik">Cancel</span>
+										<span className="text-base text-orange font-medium font-rubik">Cancel</span>
 									</button>
 								</div>
 							</div>

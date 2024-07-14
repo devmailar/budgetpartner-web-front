@@ -43,7 +43,7 @@ function LanguageModal(): React.ReactNode {
 						<EnglishFlag className="w-10 h-10" />
 						<span className="text-lg text-white font-light font-rubik">English</span>
 					</button>
-
+					{/* 
 					<button
 						type="button"
 						className="flex gap-x-4 items-center border border-light px-4 py-4 rounded-2xl"
@@ -51,7 +51,7 @@ function LanguageModal(): React.ReactNode {
 					>
 						<FinnishFlag className="w-10 h-10" />
 						<span className="text-lg text-white font-light font-rubik">Finnish</span>
-					</button>
+					</button> */}
 				</div>
 			</div>
 		</Modal>

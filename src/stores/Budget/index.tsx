@@ -5,7 +5,7 @@ export const budgetStore: Slice = createSlice({
 	name: "budget",
 	initialState: {} as TBudget,
 	reducers: {
-		setBudget: (state, action) => {
+		setBudget: (_state, action) => {
 			const payload: string = JSON.stringify(action.payload);
 			const budget: TBudget = JSON.parse(payload);
 			const budgetDateISO: string = new Date(budget.created_at).toISOString();

@@ -5,7 +5,7 @@ export const modalStore: Slice = createSlice({
 	name: "modal",
 	initialState: {} as TModal,
 	reducers: {
-		setModal: (state, action) => {
+		setModal: (_state, action) => {
 			return action.payload;
 		},
 	},

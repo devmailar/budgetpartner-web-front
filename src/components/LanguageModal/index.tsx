@@ -1,7 +1,6 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import EnglishFlag from "../../icons/EnglishFlag";
-import FinnishFlag from "../../icons/FinnishFlag";
 import { setError } from "../../stores/Error";
 import { setLanguage } from "../../stores/Language";
 import { setModal } from "../../stores/Modal";

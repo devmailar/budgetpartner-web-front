@@ -5,7 +5,7 @@ export const userStore: Slice = createSlice({
 	name: "user",
 	initialState: {} as TUser,
 	reducers: {
-		setUser: (state, action) => {
+		setUser: (_state, action) => {
 			return action.payload;
 		},
 	},

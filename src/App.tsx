@@ -1,5 +1,4 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Modal from "./components/Modal";
@@ -41,7 +40,7 @@ function App() {
 	const error: string = useSelector((state: IRootState) => state.error);
 	const user: TUser = useSelector((state: IRootState) => state.user);
 
-	const handleClose = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
+	const handleClose = async (): Promise<void> => {
 		try {
 			dispatch(setError(""));
 		} catch (error: unknown) {
@@ -64,7 +63,11 @@ function App() {
 						<span className="text-sm text-white font-normal font-rubik">{error}</span>
 					</div>
 
-					<button type="button" className="btn border-t border-t-dark py-2.5" onClick={handleClose}>
+					<button
+						type="button"
+						className="btn border-t border-t-dark py-2.5"
+						onClick={(): Promise<void> => handleClose()}
+					>
 						<span className="text-sm text-purple font-normal font-rubik">Close</span>
 					</button>
 				</Modal>

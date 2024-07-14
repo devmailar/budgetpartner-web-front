@@ -303,12 +303,12 @@ function Budget(): React.ReactNode {
 										}}
 									>
 										<h1 className="animate__animated animate__bounce text-5xl text-purple font-bold font-rubik">
-											{dailyBudgetAmount.toFixed(2)}€
+											{monthlyBudgetAmount.toFixed(2)}€
 										</h1>
 									</button>
 
 									<div className="px-3 py-1 bg-dark rounded-xl">
-										<span className="text-xl text-grey font-light font-rubik">day</span>
+										<span className="text-xl text-grey font-light font-rubik">month</span>
 									</div>
 								</div>
 							</SwiperSlide>
@@ -329,12 +329,12 @@ function Budget(): React.ReactNode {
 										}}
 									>
 										<h1 className="animate__animated animate__bounce text-5xl text-purple font-bold font-rubik">
-											{monthlyBudgetAmount.toFixed(2)}€
+											{dailyBudgetAmount.toFixed(2)}€
 										</h1>
 									</button>
 
 									<div className="px-3 py-1 bg-dark rounded-xl">
-										<span className="text-xl text-grey font-light font-rubik">month</span>
+										<span className="text-xl text-grey font-light font-rubik">day</span>
 									</div>
 								</div>
 							</SwiperSlide>

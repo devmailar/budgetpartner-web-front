@@ -35,9 +35,8 @@ function Login(): React.ReactNode {
 
 			const authHeader: string = loginUserResponse.headers.get("Authorization") ?? "";
 			const auth: string = authHeader.split(" ")[1];
-			console.log("🚀 ~ handleLogin ~ auth:", auth);
 
-			setCookie("Authorization", auth, { expires: 1 });
+			setCookie("Authorization", auth, { expires: 1, sameSite: "strict", secure: true });
 
 			navigate("/budget");
 		} catch (error: unknown) {

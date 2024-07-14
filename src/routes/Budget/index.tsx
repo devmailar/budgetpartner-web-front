@@ -83,9 +83,23 @@ function Budget(): React.ReactNode {
 					throw new Error("Current budget is undefined");
 				}
 
-				const storedBudget: string = localStorage.getItem("budget") ?? "";
-				if (storedBudget) {
-					dispatch(setBudget(JSON.parse(storedBudget)));
+				const storedBudgetDate: string = localStorage.getItem("budget") ?? "";
+				if (storedBudgetDate) {
+					const matchingBudget: TBudget | undefined = getUserResponseBody.budgets.find((budget: TBudget): boolean => {
+						const budgetDate: Date = new Date(budget.created_at);
+						const match: boolean = budgetDate.toISOString() === storedBudgetDate;
+
+						return match;
+					});
+
+					if (!matchingBudget) {
+						dispatch(setBudget(currentBudget));
+						setTimeout((): void => setIsLoading(false), 1000);
+
+						return;
+					}
+
+					dispatch(setBudget(matchingBudget));
 				} else {
 					dispatch(setBudget(currentBudget));
 				}

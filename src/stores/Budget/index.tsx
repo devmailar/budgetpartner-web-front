@@ -6,7 +6,12 @@ export const budgetStore: Slice = createSlice({
 	initialState: {} as TBudget,
 	reducers: {
 		setBudget: (state, action) => {
-			localStorage.setItem("budget", JSON.stringify(action.payload));
+			const payload: string = JSON.stringify(action.payload);
+			const budget: TBudget = JSON.parse(payload);
+			const budgetDateISO: string = new Date(budget.created_at).toISOString();
+
+			localStorage.setItem("budget", budgetDateISO);
+
 			return action.payload;
 		},
 	},

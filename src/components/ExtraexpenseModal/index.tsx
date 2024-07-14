@@ -45,7 +45,7 @@ function ExtraexpenseModal(): React.ReactNode {
 				throw new Error("Please login to move forward");
 			}
 
-			const createExtraexpenseResponse: Response = await fetch("http://localhost:8080/extraexpenses/create", {
+			const createExtraexpenseResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/extraexpenses/create", {
 				method: "POST",
 				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 				body: JSON.stringify({
@@ -77,7 +77,7 @@ function ExtraexpenseModal(): React.ReactNode {
 			}
 
 			const removeExtraexpenseResponse: Response = await fetch(
-				`http://localhost:8080/extraexpenses/remove/${extraexpense_id}`,
+				`https://unique-legible-seagull.ngrok-free.app/extraexpenses/remove/${extraexpense_id}`,
 				{
 					method: "DELETE",
 					headers: { Authorization: `Bearer ${auth}` },

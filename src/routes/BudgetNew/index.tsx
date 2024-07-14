@@ -32,7 +32,7 @@ function BudgetNew(): React.ReactNode {
 			const monthIndex: number = months.indexOf(month);
 			const date: Date = new Date(year, monthIndex, 2);
 
-			const createBudgetResponse: Response = await fetch("http://localhost:8080/budgets/create", {
+			const createBudgetResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/budgets/create", {
 				method: "POST",
 				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 				body: JSON.stringify({ date: new Date(date) }),
@@ -44,7 +44,7 @@ function BudgetNew(): React.ReactNode {
 				throw new Error(createBudgetResponseError.message);
 			}
 
-			const getUserResponse: Response = await fetch("http://localhost:8080/users/get", {
+			const getUserResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/users/get", {
 				method: "GET",
 				headers: { Authorization: `Bearer ${auth}` },
 			});
@@ -78,7 +78,7 @@ function BudgetNew(): React.ReactNode {
 			}
 
 			if (income > 0) {
-				const createExtraincomeResponse: Response = await fetch("http://localhost:8080/extraincomes/create", {
+				const createExtraincomeResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/extraincomes/create", {
 					method: "POST",
 					headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 					body: JSON.stringify({

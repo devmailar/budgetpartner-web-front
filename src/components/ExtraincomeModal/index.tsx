@@ -45,7 +45,7 @@ function ExtraincomeModal(): React.ReactNode {
 				throw new Error("Please login to move forward");
 			}
 
-			const createExtraincomeResponse: Response = await fetch("http://localhost:8080/extraincomes/create", {
+			const createExtraincomeResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/extraincomes/create", {
 				method: "POST",
 				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 				body: JSON.stringify({
@@ -77,7 +77,7 @@ function ExtraincomeModal(): React.ReactNode {
 			}
 
 			const removeExtraincomeResponse: Response = await fetch(
-				`http://localhost:8080/extraincomes/remove/${extraincome_id}`,
+				`https://unique-legible-seagull.ngrok-free.app/extraincomes/remove/${extraincome_id}`,
 				{
 					method: "DELETE",
 					headers: { Authorization: `Bearer ${auth}` },

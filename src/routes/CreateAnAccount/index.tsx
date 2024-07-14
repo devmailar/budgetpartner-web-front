@@ -23,7 +23,7 @@ function CreateAnAccount(): React.ReactNode {
 			const ipResponse: Response = await fetch("https://freeipapi.com/api/json");
 			const ipResponseData: { countryCode: string } = await ipResponse.json();
 
-			const createBudgetResponse: Response = await fetch("http://localhost:8080/users/create", {
+			const createBudgetResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/users/create", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ email: email, password: password, country: ipResponseData.countryCode }),

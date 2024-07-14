@@ -47,7 +47,7 @@ function Budget(): React.ReactNode {
 	const handleGetUserResponse = React.useCallback(
 		async (auth: string): Promise<void> => {
 			try {
-				const getUserResponse: Response = await fetch("http://localhost:8080/users/get", {
+				const getUserResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/users/get", {
 					method: "GET",
 					headers: { Authorization: `Bearer ${auth}` },
 				});
@@ -150,7 +150,7 @@ function Budget(): React.ReactNode {
 				throw new Error("You cant delete present budget");
 			}
 
-			const removeBudgetResponse: Response = await fetch(`http://localhost:8080/budgets/remove/${budget.id}`, {
+			const removeBudgetResponse: Response = await fetch(`https://unique-legible-seagull.ngrok-free.app/budgets/remove/${budget.id}`, {
 				method: "DELETE",
 				headers: { Authorization: `Bearer ${auth}` },
 			});

@@ -6,9 +6,9 @@ import "./index.css";
 import { budgetStore } from "./stores/Budget/index.tsx";
 import { budgetsStore } from "./stores/Budgets/index.tsx";
 import { errorStore } from "./stores/Error";
+import { languageStore } from "./stores/Language/index.tsx";
 import { modalStore } from "./stores/Modal/index.tsx";
 import { userStore } from "./stores/User";
-import { languageStore } from "./stores/Language/index.tsx";
 
 const rootElement: HTMLElement | null = document.getElementById("root");
 

@@ -4,7 +4,7 @@ export const errorStore: Slice = createSlice({
 	name: "error",
 	initialState: "" as string,
 	reducers: {
-		setError: (_state, action: PayloadAction<string>) => {
+		setError: (state, action: PayloadAction<string>) => {
 			return action.payload;
 		},
 	},

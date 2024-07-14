@@ -6,10 +6,7 @@ export const userStore: Slice = createSlice({
 	initialState: {} as TUser,
 	reducers: {
 		setUser: (state, action) => {
-			return {
-				...state,
-				...action.payload,
-			};
+			return action.payload;
 		},
 	},
 });

@@ -4,7 +4,7 @@ export const languageStore: Slice = createSlice({
 	name: "language",
 	initialState: "" as string,
 	reducers: {
-		setLanguage: (_state, action: PayloadAction<string>) => {
+		setLanguage: (state, action: PayloadAction<string>) => {
 			return action.payload;
 		},
 	},

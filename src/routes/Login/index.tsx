@@ -38,7 +38,7 @@ function Login(): React.ReactNode {
 
 			setCookie("Authorization", auth, {
 				path: "/",
-				domain: "localhost",
+				domain: "https://budget-partner.com",
 				expires: 1,
 				sameSite: "strict",
 				secure: true,

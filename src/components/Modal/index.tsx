@@ -8,7 +8,7 @@ function Modal({ index, children }: { index: number; children: React.ReactNode }
 
 	return (
 		<div
-			className={`absolute z-${index} flex items-center justify-center w-screen h-screen bg-black bg-opacity-20`}
+			className={`absolute z-${index} flex items-center justify-center w-screen h-screen top-0 bg-black bg-opacity-20`}
 			onClick={(): void => {
 				dispatch(
 					setModal({

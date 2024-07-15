@@ -11,6 +11,7 @@ import { getCookie, removeCookie } from "typescript-cookie";
 import ExtraexpenseModal from "../../components/ExtraexpenseModal";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
 import LanguageModal from "../../components/LanguageModal";
+import Modal from "../../components/Modal";
 import { setBudget } from "../../stores/Budget";
 import { setBudgets } from "../../stores/Budgets";
 import { setError } from "../../stores/Error";
@@ -460,38 +461,40 @@ function Budget(): React.ReactNode {
 						</button>
 					</div>
 
-					{resetBudgetModal && (
-						<div className="animate__animated animate__fadeInDown animate__faster min-w-80 px-2.5 py-2.5 bg-dark border border-darker rounded-2xl">
-							<div className="flex flex-col gap-y-4 px-4 items-center justify-center max-w-80">
-								<span className="text-base text-center text-white font-medium font-rubik">Warning</span>
+					<Modal index={40}>
+						{resetBudgetModal && (
+							<div className="animate__animated animate__fadeInDown animate__faster min-w-80 px-2.5 py-2.5 bg-dark border border-darker rounded-2xl">
+								<div className="flex flex-col gap-y-4 px-4 items-center justify-center max-w-80">
+									<span className="text-base text-center text-white font-medium font-rubik">Warning</span>
 
-								<span className="text-sm text-center text-light font-light font-rubik">
-									This operation is permanent and will delete budget for{" "}
-									{months[new Date(budget.created_at).getMonth()]} {"("}
-									<span className="font-semibold">{new Date(budget.created_at).getFullYear()}</span>
-									{")"}
-								</span>
+									<span className="text-sm text-center text-light font-light font-rubik">
+										This operation is permanent and will delete budget for{" "}
+										{months[new Date(budget.created_at).getMonth()]} {"("}
+										<span className="font-semibold">{new Date(budget.created_at).getFullYear()}</span>
+										{")"}
+									</span>
 
-								<div className="flex gap-2 items-center">
-									<button
-										type="submit"
-										className="btn bg-transparent px-3 py-2 rounded-xl"
-										onClick={(): Promise<void> => handleRemoveBudget(budget)}
-									>
-										<span className="text-base text-red font-medium font-rubik">Delete</span>
-									</button>
+									<div className="flex gap-2 items-center">
+										<button
+											type="submit"
+											className="btn bg-transparent px-3 py-2 rounded-xl"
+											onClick={(): Promise<void> => handleRemoveBudget(budget)}
+										>
+											<span className="text-base text-red font-medium font-rubik">Delete</span>
+										</button>
 
-									<button
-										type="submit"
-										className="btn bg-transparent px-3 py-2 rounded-xl"
-										onClick={(): void => setResetBudgetModal(false)}
-									>
-										<span className="text-base text-light font-medium font-rubik">Cancel</span>
-									</button>
+										<button
+											type="submit"
+											className="btn bg-transparent px-3 py-2 rounded-xl"
+											onClick={(): void => setResetBudgetModal(false)}
+										>
+											<span className="text-base text-light font-medium font-rubik">Cancel</span>
+										</button>
+									</div>
 								</div>
 							</div>
-						</div>
-					)}
+						)}
+					</Modal>
 				</div>
 			)}
 

@@ -229,7 +229,7 @@ function Budget(): React.ReactNode {
 					<div className="loader" />
 				</div>
 			) : (
-				<div className="flex flex-col gap-y-10 items-center mt-[5.3rem] zoomed-in">
+				<div className="flex flex-col gap-y-10 items-center mt-[5.3rem] zoom">
 					<div className="flex flex-col gap-y-2 items-center">
 						<div className="flex flex-col gap-y-2 items-center">
 							<button

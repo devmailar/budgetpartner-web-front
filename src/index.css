@@ -11,3 +11,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.zoom {
+  zoom: 1.4;
+}

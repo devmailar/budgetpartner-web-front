@@ -150,10 +150,13 @@ function Budget(): React.ReactNode {
 				throw new Error("You cant delete present budget");
 			}
 
-			const removeBudgetResponse: Response = await fetch(`https://unique-legible-seagull.ngrok-free.app/budgets/remove/${budget.id}`, {
-				method: "DELETE",
-				headers: { Authorization: `Bearer ${auth}` },
-			});
+			const removeBudgetResponse: Response = await fetch(
+				`https://unique-legible-seagull.ngrok-free.app/budgets/remove/${budget.id}`,
+				{
+					method: "DELETE",
+					headers: { Authorization: `Bearer ${auth}` },
+				},
+			);
 
 			if (!removeBudgetResponse.ok) {
 				const removeBudgetResponseError: IResponseError = await removeBudgetResponse.json();
@@ -226,7 +229,7 @@ function Budget(): React.ReactNode {
 					<div className="loader" />
 				</div>
 			) : (
-				<div className="flex flex-col gap-y-10 items-center mt-[5.3rem]">
+				<div className="flex flex-col gap-y-10 items-center mt-[5.3rem] zoomed-in">
 					<div className="flex flex-col gap-y-2 items-center">
 						<div className="flex flex-col gap-y-2 items-center">
 							<button

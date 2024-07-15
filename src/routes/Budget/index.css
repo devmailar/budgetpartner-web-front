@@ -1,3 +1,7 @@
+div.zoomed-in {
+  zoom: 1.4;
+}
+
 button.primary {
   background: linear-gradient(180deg, #895ff5 50%, #3a3180 100%);
 }

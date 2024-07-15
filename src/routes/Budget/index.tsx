@@ -461,7 +461,7 @@ function Budget(): React.ReactNode {
 					</div>
 
 					{resetBudgetModal && (
-						<div className="absolute z-40 flex items-center justify-center w-screen h-full top-0 bg-black bg-opacity-60">
+						<div className="absolute z-40 flex items-center justify-center w-full h-full top-0 bg-black bg-opacity-60">
 							<div className="animate__animated animate__fadeInDown animate__faster min-w-80 px-2.5 py-2.5 bg-dark border border-darker rounded-2xl">
 								<div className="flex flex-col gap-y-4 px-4 items-center justify-center max-w-80">
 									<span className="text-base text-center text-white font-medium font-rubik">Warning</span>

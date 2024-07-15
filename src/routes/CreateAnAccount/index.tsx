@@ -46,7 +46,7 @@ function CreateAnAccount(): React.ReactNode {
 
 	return (
 		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">
-			<form className="flex flex-col gap-y-4 w-[26rem]" onSubmit={handleCreate}>
+			<form className="flex flex-col gap-y-4 w-[26rem] zoom" onSubmit={handleCreate}>
 				<div className="flex flex-col gap-y-5">
 					<div className="flex flex-col gap-y-1 items-center">
 						<h1 className="text-2xl text-white font-medium font-rubik">Create an account</h1>

@@ -461,8 +461,8 @@ function Budget(): React.ReactNode {
 						</button>
 					</div>
 
-					<Modal index={40}>
-						{resetBudgetModal && (
+					{resetBudgetModal && (
+						<Modal index={40}>
 							<div className="animate__animated animate__fadeInDown animate__faster min-w-80 px-2.5 py-2.5 bg-dark border border-darker rounded-2xl">
 								<div className="flex flex-col gap-y-4 px-4 items-center justify-center max-w-80">
 									<span className="text-base text-center text-white font-medium font-rubik">Warning</span>
@@ -493,8 +493,8 @@ function Budget(): React.ReactNode {
 									</div>
 								</div>
 							</div>
-						)}
-					</Modal>
+						</Modal>
+					)}
 				</div>
 			)}
 

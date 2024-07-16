@@ -10,8 +10,6 @@ import { languageStore } from "./stores/Language/index.tsx";
 import { modalStore } from "./stores/Modal/index.tsx";
 import { userStore } from "./stores/User";
 
-const rootElement: HTMLElement | null = document.getElementById("root");
-
 const store: Store = configureStore({
 	reducer: {
 		error: errorStore.reducer,
@@ -25,8 +23,9 @@ const store: Store = configureStore({
 	},
 });
 
-if (rootElement) {
-	ReactDOM.createRoot(rootElement).render(
+const root: HTMLElement | null = document.getElementById("root");
+if (root) {
+	ReactDOM.createRoot(root).render(
 		<Provider store={store}>
 			<App />
 		</Provider>,

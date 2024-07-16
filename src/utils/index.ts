@@ -1,4 +1,4 @@
-export const baseUrl: string = "https://unique-legible-seagull.ngrok-free.app";
+export const baseurl: string = "https://unique-legible-seagull.ngrok-free.app";
 
 export const months: string[] = [
 	"January",
@@ -16,5 +16,6 @@ export const months: string[] = [
 ];
 
 export const Utils = {
+	baseurl,
 	months,
 };

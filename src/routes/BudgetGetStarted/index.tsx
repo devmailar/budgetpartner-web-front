@@ -6,7 +6,7 @@ import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
 import type { IResponseError, IUserResponse, TBudget } from "../../types";
-import { baseUrl, months } from "../../utils";
+import { Utils } from "../../utils";
 
 function BudgetGetStarted(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
@@ -25,7 +25,7 @@ function BudgetGetStarted(): React.ReactNode {
 				return;
 			}
 
-			const createBudgetResponse: Response = await fetch(`${baseUrl}/budgets/create`, {
+			const createBudgetResponse: Response = await fetch(`${Utils.baseurl}/budgets/create`, {
 				method: "POST",
 				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 				body: JSON.stringify({ date: new Date() }),
@@ -59,7 +59,7 @@ function BudgetGetStarted(): React.ReactNode {
 				return;
 			}
 
-			const getUserResponse: Response = await fetch(`${baseUrl}/users/get`, {
+			const getUserResponse: Response = await fetch(`${Utils.baseurl}/users/get`, {
 				method: "GET",
 				headers: { Authorization: `Bearer ${auth}` },
 			});
@@ -92,7 +92,7 @@ function BudgetGetStarted(): React.ReactNode {
 				throw new Error("Please enter valid amount");
 			}
 
-			const createExtraincomeResponse: Response = await fetch(`${baseUrl}/extraincomes/create`, {
+			const createExtraincomeResponse: Response = await fetch(`${Utils.baseurl}/extraincomes/create`, {
 				method: "POST",
 				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 				body: JSON.stringify({
@@ -157,7 +157,7 @@ function BudgetGetStarted(): React.ReactNode {
 						/>
 
 						<h1 className="text-2xl text-white font-medium font-rubik">
-							{months[new Date().getMonth()]} {"("}
+							{Utils.months[new Date().getMonth()]} {"("}
 							<span className="font-semibold">{new Date().getFullYear()}</span>
 							{")"}
 						</h1>
@@ -179,7 +179,7 @@ function BudgetGetStarted(): React.ReactNode {
 							<form className="flex flex-col gap-y-6 px-4 py-6 bg-darker rounded-lg" onSubmit={handleCreateExtraincome}>
 								<div className="flex flex-col gap-y-6">
 									<span className="text-sm text-white font-medium font-rubik">
-										What is your income for {months[new Date().getMonth()]}?
+										What is your income for {Utils.months[new Date().getMonth()]}?
 									</span>
 
 									<div className="flex flex-col gap-y-3">

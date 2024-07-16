@@ -6,14 +6,14 @@ import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
 import type { IResponseError, IUserResponse, TBudget } from "../../types";
-import { baseUrl, months } from "../../utils";
+import { Utils } from "../../utils";
 
 function BudgetNew(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
 	const [selectMonth, setSelectMonth] = React.useState<boolean>(false);
-	const [selectedMonth, setSelectedMonth] = React.useState<string>(months[new Date().getMonth()]);
+	const [selectedMonth, setSelectedMonth] = React.useState<string>(Utils.months[new Date().getMonth()]);
 	const [selectedYear] = React.useState<number>(new Date().getFullYear());
 
 	const handleCreateIncome = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
@@ -31,10 +31,10 @@ function BudgetNew(): React.ReactNode {
 
 			const year: number = selectedYear;
 			const month: string = selectedMonth;
-			const monthIndex: number = months.indexOf(month);
+			const monthIndex: number = Utils.months.indexOf(month);
 			const date: Date = new Date(year, monthIndex, 2);
 
-			const createBudgetResponse: Response = await fetch(`${baseUrl}/budgets/create`, {
+			const createBudgetResponse: Response = await fetch(`${Utils.baseurl}/budgets/create`, {
 				method: "POST",
 				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 				body: JSON.stringify({ date: new Date(date) }),
@@ -46,7 +46,7 @@ function BudgetNew(): React.ReactNode {
 				throw new Error(createBudgetResponseError.message);
 			}
 
-			const getUserResponse: Response = await fetch(`${baseUrl}/users/get`, {
+			const getUserResponse: Response = await fetch(`${Utils.baseurl}/users/get`, {
 				method: "GET",
 				headers: { Authorization: `Bearer ${auth}` },
 			});
@@ -80,7 +80,7 @@ function BudgetNew(): React.ReactNode {
 			}
 
 			if (income > 0) {
-				const createExtraincomeResponse: Response = await fetch(`${baseUrl}/extraincomes/create`, {
+				const createExtraincomeResponse: Response = await fetch(`${Utils.baseurl}/extraincomes/create`, {
 					method: "POST",
 					headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 					body: JSON.stringify({
@@ -171,7 +171,7 @@ function BudgetNew(): React.ReactNode {
 
 						{selectMonth && (
 							<menu className="absolute z-50 mt-[4.6rem] px-4 py-2.5 bg-darker border border-grey rounded-lg">
-								{months.map((month: string) => (
+								{Utils.months.map((month: string) => (
 									<button
 										type="button"
 										key={month}

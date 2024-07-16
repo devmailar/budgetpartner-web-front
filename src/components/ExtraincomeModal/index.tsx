@@ -7,7 +7,7 @@ import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
 import { setModal } from "../../stores/Modal";
 import type { IResponseError, IRootState, TBudget, TExtraincome } from "../../types";
-import { baseUrl } from "../../utils";
+import { Utils } from "../../utils";
 import Modal from "../Modal";
 
 function ExtraincomeModal(): React.ReactNode {
@@ -48,7 +48,7 @@ function ExtraincomeModal(): React.ReactNode {
 				return;
 			}
 
-			const createExtraincomeResponse: Response = await fetch(`${baseUrl}/extraincomes/create`, {
+			const createExtraincomeResponse: Response = await fetch(`${Utils.baseurl}/extraincomes/create`, {
 				method: "POST",
 				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 				body: JSON.stringify({
@@ -80,10 +80,13 @@ function ExtraincomeModal(): React.ReactNode {
 				return;
 			}
 
-			const removeExtraincomeResponse: Response = await fetch(`${baseUrl}/extraincomes/remove/${extraincome_id}`, {
-				method: "DELETE",
-				headers: { Authorization: `Bearer ${auth}` },
-			});
+			const removeExtraincomeResponse: Response = await fetch(
+				`${Utils.baseurl}/extraincomes/remove/${extraincome_id}`,
+				{
+					method: "DELETE",
+					headers: { Authorization: `Bearer ${auth}` },
+				},
+			);
 
 			if (!removeExtraincomeResponse.ok) {
 				const removeExtraincomeResponseError: IResponseError = await removeExtraincomeResponse.json();

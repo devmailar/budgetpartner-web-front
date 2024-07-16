@@ -7,8 +7,8 @@ import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
 import { setModal } from "../../stores/Modal";
 import type { IResponseError, IRootState, TBudget, TExtraexpense } from "../../types";
-import { baseUrl } from "../../utils";
 import Modal from "../Modal";
+import { Utils } from "../../utils";
 
 function ExtraexpenseModal(): React.ReactNode {
 	const navigate: NavigateFunction = useNavigate();
@@ -48,7 +48,7 @@ function ExtraexpenseModal(): React.ReactNode {
 				return;
 			}
 
-			const createExtraexpenseResponse: Response = await fetch(`${baseUrl}/extraexpenses/create`, {
+			const createExtraexpenseResponse: Response = await fetch(`${Utils.baseurl}/extraexpenses/create`, {
 				method: "POST",
 				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 				body: JSON.stringify({
@@ -80,10 +80,13 @@ function ExtraexpenseModal(): React.ReactNode {
 				return;
 			}
 
-			const removeExtraexpenseResponse: Response = await fetch(`${baseUrl}/extraexpenses/remove/${extraexpense_id}`, {
-				method: "DELETE",
-				headers: { Authorization: `Bearer ${auth}` },
-			});
+			const removeExtraexpenseResponse: Response = await fetch(
+				`${Utils.baseurl}/extraexpenses/remove/${extraexpense_id}`,
+				{
+					method: "DELETE",
+					headers: { Authorization: `Bearer ${auth}` },
+				},
+			);
 
 			if (!removeExtraexpenseResponse.ok) {
 				const removeExtraexpenseResponseError: IResponseError = await removeExtraexpenseResponse.json();

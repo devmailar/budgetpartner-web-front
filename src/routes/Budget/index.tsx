@@ -27,7 +27,7 @@ import type {
 	TExtraincome,
 	TModal,
 } from "../../types";
-import { baseUrl, months } from "../../utils";
+import { Utils } from "../../utils";
 import "./index.css";
 
 function Budget(): React.ReactNode {
@@ -51,7 +51,7 @@ function Budget(): React.ReactNode {
 	const handleGetUserResponse = React.useCallback(
 		async (auth: string): Promise<void> => {
 			try {
-				const getUserResponse: Response = await fetch(`${baseUrl}/users/get`, {
+				const getUserResponse: Response = await fetch(`${Utils.baseurl}/users/get`, {
 					method: "GET",
 					headers: { Authorization: `Bearer ${auth}` },
 				});
@@ -163,7 +163,7 @@ function Budget(): React.ReactNode {
 				throw new Error("You cant delete present budget");
 			}
 
-			const removeBudgetResponse: Response = await fetch(`${baseUrl}/budgets/remove/${budget.id}`, {
+			const removeBudgetResponse: Response = await fetch(`${Utils.baseurl}/budgets/remove/${budget.id}`, {
 				method: "DELETE",
 				headers: { Authorization: `Bearer ${auth}` },
 			});
@@ -259,7 +259,7 @@ function Budget(): React.ReactNode {
 								onClick={(): void => setBudgetSwitch(!budgetSwitch)}
 							>
 								<span className="text-base text-[#b7b7b7] font-normal font-rubik">
-									{months[new Date(budget.created_at).getMonth()]} {"("}
+									{Utils.months[new Date(budget.created_at).getMonth()]} {"("}
 									<span className="font-semibold">{new Date().getFullYear()}</span>
 									{")"}
 								</span>
@@ -286,7 +286,7 @@ function Budget(): React.ReactNode {
 															: "text-light font-normal"
 													} font-rubik`}
 												>
-													{months[new Date(b.created_at).getMonth()]} {"("}
+													{Utils.months[new Date(b.created_at).getMonth()]} {"("}
 													{new Date(b.created_at).getFullYear()}
 													{")"}
 												</span>
@@ -489,7 +489,7 @@ function Budget(): React.ReactNode {
 
 									<span className="text-sm text-center text-light font-light font-rubik">
 										This operation is permanent and will delete budget for{" "}
-										{months[new Date(budget.created_at).getMonth()]} {"("}
+										{Utils.months[new Date(budget.created_at).getMonth()]} {"("}
 										<span className="font-semibold">{new Date(budget.created_at).getFullYear()}</span>
 										{")"}
 									</span>

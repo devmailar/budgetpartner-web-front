@@ -65,7 +65,7 @@ function Login(): React.ReactNode {
 
 					<div className="flex flex-col gap-y-3 ">
 						<input
-							className="bg-transparent border-purple border-2 px-2 py-2 text-lg text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple border-2 px-2 py-2 text-lg text-white placeholder:text-white font-normal font-rubik rounded-lg"
 							type="email"
 							id="email"
 							name="email"
@@ -75,7 +75,7 @@ function Login(): React.ReactNode {
 						/>
 
 						<input
-							className="bg-transparent border-purple border-2 px-2 py-2 text-lg text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple border-2 px-2 py-2 text-lg text-white placeholder:text-white font-normal font-rubik rounded-lg"
 							type="password"
 							id="password"
 							name="password"

@@ -14,15 +14,15 @@ import type { IRootState, TUser } from "./types";
 export const router = createBrowserRouter([
 	{
 		path: "/",
+		element: <Budget />,
+	},
+	{
+		path: "/login",
 		element: <Login />,
 	},
 	{
 		path: "/create-an-account",
 		element: <CreateAnAccount />,
-	},
-	{
-		path: "/budget",
-		element: <Budget />,
 	},
 	{
 		path: "/budget/get-started",

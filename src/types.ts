@@ -10,10 +10,10 @@ export type TUser = {
 export type TBudget = {
 	id: number;
 	user_id: number;
-	created_at: Date;
-	updated_at: Date;
 	extraincomes: TExtraincome[];
 	extraexpenses: TExtraexpense[];
+	created_at: Date;
+	updated_at: Date;
 };
 
 export type TExtraincome = {
@@ -58,6 +58,7 @@ export interface IRootState {
 	budgets: TBudget[];
 	modal: TModal;
 	language: string;
+	forceLogin: boolean;
 }
 
 export interface IResponseError {

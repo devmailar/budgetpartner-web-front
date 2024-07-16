@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
+import { setForceLogin } from "../../stores/ForceLogin";
 import { setModal } from "../../stores/Modal";
 import type { IResponseError, IRootState, TBudget, TExtraexpense } from "../../types";
 import Modal from "../Modal";
@@ -42,18 +43,22 @@ function ExtraexpenseModal(): React.ReactNode {
 
 			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
-				throw new Error("Please login to move forward");
+				dispatch(setForceLogin(true));
+				return;
 			}
 
-			const createExtraexpenseResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/extraexpenses/create", {
-				method: "POST",
-				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
-				body: JSON.stringify({
-					budget_id: budget.id,
-					extraexpense_type: extraexpenseType,
-					extraexpense_amount_monthly: extraexpenseAmountMonthly,
-				}),
-			});
+			const createExtraexpenseResponse: Response = await fetch(
+				"https://unique-legible-seagull.ngrok-free.app/extraexpenses/create",
+				{
+					method: "POST",
+					headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+					body: JSON.stringify({
+						budget_id: budget.id,
+						extraexpense_type: extraexpenseType,
+						extraexpense_amount_monthly: extraexpenseAmountMonthly,
+					}),
+				},
+			);
 
 			if (!createExtraexpenseResponse.ok) {
 				const createExtraexpenseResponseError: IResponseError = await createExtraexpenseResponse.json();
@@ -73,7 +78,8 @@ function ExtraexpenseModal(): React.ReactNode {
 		try {
 			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
-				throw new Error("Please login to move forward");
+				dispatch(setForceLogin(true));
+				return;
 			}
 
 			const removeExtraexpenseResponse: Response = await fetch(

@@ -11,9 +11,11 @@ import { getCookie, removeCookie } from "typescript-cookie";
 import ExtraexpenseModal from "../../components/ExtraexpenseModal";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
 import LanguageModal from "../../components/LanguageModal";
+import LoginPopup from "../../components/LoginPopup";
 import { setBudget } from "../../stores/Budget";
 import { setBudgets } from "../../stores/Budgets";
 import { setError } from "../../stores/Error";
+import { setForceLogin } from "../../stores/ForceLogin";
 import { setModal } from "../../stores/Modal";
 import { setUser } from "../../stores/User";
 import type {
@@ -43,6 +45,8 @@ function Budget(): React.ReactNode {
 	const budgets: TBudget[] = useSelector((state: IRootState) => state.budgets);
 	const budget: TBudget = useSelector((state: IRootState) => state.budget);
 	const modal: TModal = useSelector((state: IRootState) => state.modal);
+
+	const forceLogin: boolean = useSelector((state: IRootState) => state.forceLogin);
 
 	const handleGetUserResponse = React.useCallback(
 		async (auth: string): Promise<void> => {
@@ -118,6 +122,14 @@ function Budget(): React.ReactNode {
 
 	const handleSetNewBudget = (): void => {
 		try {
+			setBudgetSwitch(false);
+
+			const auth: string = getCookie("Authorization") ?? "";
+			if (!auth) {
+				dispatch(setForceLogin(true));
+				return;
+			}
+
 			navigate("/budget/new");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
@@ -143,7 +155,8 @@ function Budget(): React.ReactNode {
 		try {
 			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
-				throw new Error("Please login to move forward");
+				dispatch(setForceLogin(true));
+				return;
 			}
 
 			if (new Date(budget.created_at).getMonth() === new Date().getMonth()) {
@@ -177,14 +190,25 @@ function Budget(): React.ReactNode {
 		const onLoad = async (): Promise<void> => {
 			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
-				return navigate("/");
+				dispatch(
+					setBudget({
+						id: 0,
+						user_id: 0,
+						extraincomes: [] as TExtraincome[],
+						extraexpenses: [] as TExtraexpense[],
+						created_at: new Date().toISOString(),
+						updated_at: new Date().toISOString(),
+					}),
+				);
+
+				return setIsLoading(false);
 			}
 
-			await handleGetUserResponse(auth);
+			return await handleGetUserResponse(auth);
 		};
 
 		onLoad();
-	}, [navigate, handleGetUserResponse]);
+	}, [dispatch, handleGetUserResponse]);
 
 	React.useEffect(() => {
 		if (Object.keys(budget).length === 0) {
@@ -306,12 +330,12 @@ function Budget(): React.ReactNode {
 										}}
 									>
 										<h1 className="animate__animated animate__bounce text-5xl text-purple font-bold font-rubik">
-											{monthlyBudgetAmount.toFixed(2)}€
+											{dailyBudgetAmount.toFixed(2)}€
 										</h1>
 									</button>
 
 									<div className="px-3 py-1 bg-dark rounded-xl">
-										<span className="text-xl text-grey font-light font-rubik">month</span>
+										<span className="text-xl text-grey font-light font-rubik">day</span>
 									</div>
 								</div>
 							</SwiperSlide>
@@ -332,12 +356,12 @@ function Budget(): React.ReactNode {
 										}}
 									>
 										<h1 className="animate__animated animate__bounce text-5xl text-purple font-bold font-rubik">
-											{dailyBudgetAmount.toFixed(2)}€
+											{monthlyBudgetAmount.toFixed(2)}€
 										</h1>
 									</button>
 
 									<div className="px-3 py-1 bg-dark rounded-xl">
-										<span className="text-xl text-grey font-light font-rubik">day</span>
+										<span className="text-xl text-grey font-light font-rubik">month</span>
 									</div>
 								</div>
 							</SwiperSlide>
@@ -500,6 +524,7 @@ function Budget(): React.ReactNode {
 			{modal.extraincomeModal && <ExtraincomeModal />}
 			{modal.extraexpenseModal && <ExtraexpenseModal />}
 			{modal.languageModal && <LanguageModal />}
+			{forceLogin && <LoginPopup />}
 		</div>
 	);
 }

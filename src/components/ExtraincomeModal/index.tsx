@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
+import { setForceLogin } from "../../stores/ForceLogin";
 import { setModal } from "../../stores/Modal";
 import type { IResponseError, IRootState, TBudget, TExtraincome } from "../../types";
 import Modal from "../Modal";
@@ -42,18 +43,22 @@ function ExtraincomeModal(): React.ReactNode {
 
 			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
-				throw new Error("Please login to move forward");
+				dispatch(setForceLogin(true));
+				return;
 			}
 
-			const createExtraincomeResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/extraincomes/create", {
-				method: "POST",
-				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
-				body: JSON.stringify({
-					budget_id: budget.id,
-					extraincome_type: extraincomeType,
-					extraincome_amount_monthly: extraincomeAmountMonthly,
-				}),
-			});
+			const createExtraincomeResponse: Response = await fetch(
+				"https://unique-legible-seagull.ngrok-free.app/extraincomes/create",
+				{
+					method: "POST",
+					headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+					body: JSON.stringify({
+						budget_id: budget.id,
+						extraincome_type: extraincomeType,
+						extraincome_amount_monthly: extraincomeAmountMonthly,
+					}),
+				},
+			);
 
 			if (!createExtraincomeResponse.ok) {
 				const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();
@@ -73,7 +78,8 @@ function ExtraincomeModal(): React.ReactNode {
 		try {
 			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
-				throw new Error("Please login to move forward");
+				dispatch(setForceLogin(true));
+				return;
 			}
 
 			const removeExtraincomeResponse: Response = await fetch(

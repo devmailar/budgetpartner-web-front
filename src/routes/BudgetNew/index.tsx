@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
+import { setForceLogin } from "../../stores/ForceLogin";
 import type { IResponseError, IUserResponse, TBudget } from "../../types";
 import { months } from "../../utils";
 
@@ -24,7 +25,8 @@ function BudgetNew(): React.ReactNode {
 
 			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
-				throw new Error("Please login to move forward");
+				dispatch(setForceLogin(true));
+				return;
 			}
 
 			const year: number = selectedYear;
@@ -32,11 +34,14 @@ function BudgetNew(): React.ReactNode {
 			const monthIndex: number = months.indexOf(month);
 			const date: Date = new Date(year, monthIndex, 2);
 
-			const createBudgetResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/budgets/create", {
-				method: "POST",
-				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
-				body: JSON.stringify({ date: new Date(date) }),
-			});
+			const createBudgetResponse: Response = await fetch(
+				"https://unique-legible-seagull.ngrok-free.app/budgets/create",
+				{
+					method: "POST",
+					headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+					body: JSON.stringify({ date: new Date(date) }),
+				},
+			);
 
 			if (!createBudgetResponse.ok) {
 				const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
@@ -78,15 +83,18 @@ function BudgetNew(): React.ReactNode {
 			}
 
 			if (income > 0) {
-				const createExtraincomeResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/extraincomes/create", {
-					method: "POST",
-					headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
-					body: JSON.stringify({
-						budget_id: currentBudget.id,
-						extraincome_type: "Salary",
-						extraincome_amount_monthly: income,
-					}),
-				});
+				const createExtraincomeResponse: Response = await fetch(
+					"https://unique-legible-seagull.ngrok-free.app/extraincomes/create",
+					{
+						method: "POST",
+						headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+						body: JSON.stringify({
+							budget_id: currentBudget.id,
+							extraincome_type: "Salary",
+							extraincome_amount_monthly: income,
+						}),
+					},
+				);
 
 				if (!createExtraincomeResponse.ok) {
 					const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();
@@ -94,7 +102,7 @@ function BudgetNew(): React.ReactNode {
 					throw new Error(createExtraincomeResponseError.message);
 				}
 
-				navigate("/budget");
+				navigate("/");
 			}
 		} catch (error: unknown) {
 			if (error instanceof Error) {
@@ -116,7 +124,7 @@ function BudgetNew(): React.ReactNode {
 
 	const handleClose = (): void => {
 		try {
-			navigate("/budget");
+			navigate("/");
 		} catch (error) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));

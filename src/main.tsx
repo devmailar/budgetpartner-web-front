@@ -6,6 +6,7 @@ import "./index.css";
 import { budgetStore } from "./stores/Budget/index.tsx";
 import { budgetsStore } from "./stores/Budgets/index.tsx";
 import { errorStore } from "./stores/Error";
+import { forceLoginStore } from "./stores/ForceLogin/index.tsx";
 import { languageStore } from "./stores/Language/index.tsx";
 import { modalStore } from "./stores/Modal/index.tsx";
 import { userStore } from "./stores/User";
@@ -20,6 +21,8 @@ const store: Store = configureStore({
 
 		modal: modalStore.reducer,
 		language: languageStore.reducer,
+
+		forceLogin: forceLoginStore.reducer,
 	},
 });
 

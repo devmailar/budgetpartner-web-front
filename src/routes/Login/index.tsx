@@ -37,8 +37,7 @@ function Login(): React.ReactNode {
 			const auth: string = authHeader.split(" ")[1];
 
 			setCookie("Authorization", auth, { expires: 1, sameSite: "strict", secure: true });
-
-			navigate("/budget");
+			navigate("/");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));
@@ -51,12 +50,12 @@ function Login(): React.ReactNode {
 		const auth: string = getCookie("Authorization") ?? "";
 		if (!auth) return;
 
-		navigate("/budget");
+		navigate("/");
 	}, [navigate]);
 
 	return (
 		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">
-			<form className="flex flex-col w-[26rem] zoom" onSubmit={handleLogin}>
+			<form className="flex flex-col gap-y-4 w-[26rem] zoom" onSubmit={handleLogin}>
 				<div className="flex flex-col gap-y-6">
 					<div className="flex flex-col gap-y-1 items-center">
 						<h1 className="text-2xl text-white font-medium font-rubik">Login to existing account</h1>
@@ -86,9 +85,9 @@ function Login(): React.ReactNode {
 					</div>
 				</div>
 
-				<div className="flex flex-col">
+				<div className="flex flex-col gap-y-4">
 					<input
-						className={`mt-4 btn ${isLoading ? "bg-grey" : "bg-purple"} text-sm text-white font-medium py-2.5 mb-5 rounded-lg`}
+						className={`btn ${isLoading ? "bg-grey" : "bg-purple"} text-sm text-white font-medium py-2.5 rounded-lg`}
 						type="submit"
 						value="Login with email"
 						disabled={isLoading}
@@ -102,7 +101,7 @@ function Login(): React.ReactNode {
 
 					<button
 						type="button"
-						className="btn bg-darker py-2.5 mt-5 rounded-lg"
+						className="btn bg-darker py-2.5 rounded-lg"
 						onClick={() => navigate("/create-an-account")}
 						disabled={isLoading}
 					>

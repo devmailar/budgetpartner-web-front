@@ -10,6 +10,7 @@ export default {
 			colors: {
 				white: "#FFFFFF",
 				purple: "#895FF5",
+				purple2: "#6D28D9",
 				orange: "#B85C3D",
 				red: "#B83D3D",
 				grey: "#4B4B4B",

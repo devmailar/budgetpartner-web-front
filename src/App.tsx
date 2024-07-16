@@ -7,7 +7,7 @@ import BudgetGetStarted from "./routes/BudgetGetStarted";
 import BudgetNew from "./routes/BudgetNew";
 import CreateAnAccount from "./routes/CreateAnAccount";
 import Login from "./routes/Login";
-import type { IRootState, TUser } from "./types";
+import type { IRootState } from "./types";
 
 export const router = createBrowserRouter([
 	{
@@ -34,11 +34,11 @@ export const router = createBrowserRouter([
 
 function App() {
 	const error: string = useSelector((state: IRootState) => state.error);
-	const user: TUser = useSelector((state: IRootState) => state.user);
+	const location: string = window.location.pathname;
 
 	return (
 		<>
-			{Object.keys(user).length > 0 && (
+			{location === "/" && (
 				<div className="hidden sm:block">
 					<Sidebar />
 				</div>

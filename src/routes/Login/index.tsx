@@ -5,6 +5,7 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie, setCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import type { IResponseError } from "../../types";
+import { baseUrl } from "../../utils";
 
 function Login(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
@@ -21,7 +22,7 @@ function Login(): React.ReactNode {
 			const email: string = form.get("email") as string;
 			const password: string = form.get("password") as string;
 
-			const loginUserResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/users/login", {
+			const loginUserResponse: Response = await fetch(`${baseUrl}/users/login`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ email: email, password: password }),

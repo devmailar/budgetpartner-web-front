@@ -7,6 +7,7 @@ import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
 import { setModal } from "../../stores/Modal";
 import type { IResponseError, IRootState, TBudget, TExtraincome } from "../../types";
+import { baseUrl } from "../../utils";
 import Modal from "../Modal";
 
 function ExtraincomeModal(): React.ReactNode {
@@ -47,18 +48,15 @@ function ExtraincomeModal(): React.ReactNode {
 				return;
 			}
 
-			const createExtraincomeResponse: Response = await fetch(
-				"https://unique-legible-seagull.ngrok-free.app/extraincomes/create",
-				{
-					method: "POST",
-					headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
-					body: JSON.stringify({
-						budget_id: budget.id,
-						extraincome_type: extraincomeType,
-						extraincome_amount_monthly: extraincomeAmountMonthly,
-					}),
-				},
-			);
+			const createExtraincomeResponse: Response = await fetch(`${baseUrl}/extraincomes/create`, {
+				method: "POST",
+				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+				body: JSON.stringify({
+					budget_id: budget.id,
+					extraincome_type: extraincomeType,
+					extraincome_amount_monthly: extraincomeAmountMonthly,
+				}),
+			});
 
 			if (!createExtraincomeResponse.ok) {
 				const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();
@@ -82,13 +80,10 @@ function ExtraincomeModal(): React.ReactNode {
 				return;
 			}
 
-			const removeExtraincomeResponse: Response = await fetch(
-				`https://unique-legible-seagull.ngrok-free.app/extraincomes/remove/${extraincome_id}`,
-				{
-					method: "DELETE",
-					headers: { Authorization: `Bearer ${auth}` },
-				},
-			);
+			const removeExtraincomeResponse: Response = await fetch(`${baseUrl}/extraincomes/remove/${extraincome_id}`, {
+				method: "DELETE",
+				headers: { Authorization: `Bearer ${auth}` },
+			});
 
 			if (!removeExtraincomeResponse.ok) {
 				const removeExtraincomeResponseError: IResponseError = await removeExtraincomeResponse.json();

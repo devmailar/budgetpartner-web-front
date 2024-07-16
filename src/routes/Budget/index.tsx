@@ -27,7 +27,7 @@ import type {
 	TExtraincome,
 	TModal,
 } from "../../types";
-import { months } from "../../utils";
+import { baseUrl, months } from "../../utils";
 import "./index.css";
 
 function Budget(): React.ReactNode {
@@ -51,7 +51,7 @@ function Budget(): React.ReactNode {
 	const handleGetUserResponse = React.useCallback(
 		async (auth: string): Promise<void> => {
 			try {
-				const getUserResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/users/get", {
+				const getUserResponse: Response = await fetch(`${baseUrl}/users/get`, {
 					method: "GET",
 					headers: { Authorization: `Bearer ${auth}` },
 				});
@@ -163,13 +163,10 @@ function Budget(): React.ReactNode {
 				throw new Error("You cant delete present budget");
 			}
 
-			const removeBudgetResponse: Response = await fetch(
-				`https://unique-legible-seagull.ngrok-free.app/budgets/remove/${budget.id}`,
-				{
-					method: "DELETE",
-					headers: { Authorization: `Bearer ${auth}` },
-				},
-			);
+			const removeBudgetResponse: Response = await fetch(`${baseUrl}/budgets/remove/${budget.id}`, {
+				method: "DELETE",
+				headers: { Authorization: `Bearer ${auth}` },
+			});
 
 			if (!removeBudgetResponse.ok) {
 				const removeBudgetResponseError: IResponseError = await removeBudgetResponse.json();

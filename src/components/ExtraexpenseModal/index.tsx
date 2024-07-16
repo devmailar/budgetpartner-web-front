@@ -7,6 +7,7 @@ import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
 import { setModal } from "../../stores/Modal";
 import type { IResponseError, IRootState, TBudget, TExtraexpense } from "../../types";
+import { baseUrl } from "../../utils";
 import Modal from "../Modal";
 
 function ExtraexpenseModal(): React.ReactNode {
@@ -47,18 +48,15 @@ function ExtraexpenseModal(): React.ReactNode {
 				return;
 			}
 
-			const createExtraexpenseResponse: Response = await fetch(
-				"https://unique-legible-seagull.ngrok-free.app/extraexpenses/create",
-				{
-					method: "POST",
-					headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
-					body: JSON.stringify({
-						budget_id: budget.id,
-						extraexpense_type: extraexpenseType,
-						extraexpense_amount_monthly: extraexpenseAmountMonthly,
-					}),
-				},
-			);
+			const createExtraexpenseResponse: Response = await fetch(`${baseUrl}/extraexpenses/create`, {
+				method: "POST",
+				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+				body: JSON.stringify({
+					budget_id: budget.id,
+					extraexpense_type: extraexpenseType,
+					extraexpense_amount_monthly: extraexpenseAmountMonthly,
+				}),
+			});
 
 			if (!createExtraexpenseResponse.ok) {
 				const createExtraexpenseResponseError: IResponseError = await createExtraexpenseResponse.json();
@@ -82,13 +80,10 @@ function ExtraexpenseModal(): React.ReactNode {
 				return;
 			}
 
-			const removeExtraexpenseResponse: Response = await fetch(
-				`https://unique-legible-seagull.ngrok-free.app/extraexpenses/remove/${extraexpense_id}`,
-				{
-					method: "DELETE",
-					headers: { Authorization: `Bearer ${auth}` },
-				},
-			);
+			const removeExtraexpenseResponse: Response = await fetch(`${baseUrl}/extraexpenses/remove/${extraexpense_id}`, {
+				method: "DELETE",
+				headers: { Authorization: `Bearer ${auth}` },
+			});
 
 			if (!removeExtraexpenseResponse.ok) {
 				const removeExtraexpenseResponseError: IResponseError = await removeExtraexpenseResponse.json();

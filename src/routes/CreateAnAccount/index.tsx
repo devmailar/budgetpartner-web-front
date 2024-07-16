@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { setError } from "../../stores/Error";
 import type { IResponseError } from "../../types";
+import { baseUrl } from "../../utils";
 
 function CreateAnAccount(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
@@ -20,7 +21,7 @@ function CreateAnAccount(): React.ReactNode {
 			const email: string = form.get("email") as string;
 			const password: string = form.get("password") as string;
 
-			const createBudgetResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/users/create", {
+			const createBudgetResponse: Response = await fetch(`${baseUrl}/users/create`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ email: email, password: password, country: "" }),

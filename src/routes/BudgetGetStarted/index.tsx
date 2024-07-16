@@ -6,7 +6,7 @@ import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
 import type { IResponseError, IUserResponse, TBudget } from "../../types";
-import { months } from "../../utils";
+import { baseUrl, months } from "../../utils";
 
 function BudgetGetStarted(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
@@ -25,14 +25,11 @@ function BudgetGetStarted(): React.ReactNode {
 				return;
 			}
 
-			const createBudgetResponse: Response = await fetch(
-				"https://unique-legible-seagull.ngrok-free.app/budgets/create",
-				{
-					method: "POST",
-					headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
-					body: JSON.stringify({ date: new Date() }),
-				},
-			);
+			const createBudgetResponse: Response = await fetch(`${baseUrl}/budgets/create`, {
+				method: "POST",
+				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+				body: JSON.stringify({ date: new Date() }),
+			});
 
 			if (!createBudgetResponse.ok) {
 				const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
@@ -62,7 +59,7 @@ function BudgetGetStarted(): React.ReactNode {
 				return;
 			}
 
-			const getUserResponse: Response = await fetch("https://unique-legible-seagull.ngrok-free.app/users/get", {
+			const getUserResponse: Response = await fetch(`${baseUrl}/users/get`, {
 				method: "GET",
 				headers: { Authorization: `Bearer ${auth}` },
 			});
@@ -95,18 +92,15 @@ function BudgetGetStarted(): React.ReactNode {
 				throw new Error("Please enter valid amount");
 			}
 
-			const createExtraincomeResponse: Response = await fetch(
-				"https://unique-legible-seagull.ngrok-free.app/extraincomes/create",
-				{
-					method: "POST",
-					headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
-					body: JSON.stringify({
-						budget_id: currentBudget.id,
-						extraincome_type: "Salary",
-						extraincome_amount_monthly: income,
-					}),
-				},
-			);
+			const createExtraincomeResponse: Response = await fetch(`${baseUrl}/extraincomes/create`, {
+				method: "POST",
+				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+				body: JSON.stringify({
+					budget_id: currentBudget.id,
+					extraincome_type: "Salary",
+					extraincome_amount_monthly: income,
+				}),
+			});
 
 			if (!createExtraincomeResponse.ok) {
 				const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();

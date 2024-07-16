@@ -1,3 +1,5 @@
+export const baseUrl: string = "https://unique-legible-seagull.ngrok-free.app";
+
 export const months: string[] = [
 	"January",
 	"February",

@@ -1,3 +1,4 @@
+import type React from "react";
 import { useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ErrorPopup from "./components/ErrorPopup";
@@ -32,7 +33,7 @@ export const router = createBrowserRouter([
 	},
 ]);
 
-function App() {
+function App(): React.ReactNode {
 	const error: string = useSelector((state: IRootState) => state.error);
 	const location: string = window.location.pathname;
 

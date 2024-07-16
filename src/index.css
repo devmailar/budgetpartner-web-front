@@ -12,6 +12,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-div.zoom {
+.zoom {
   zoom: 1.4;
 }

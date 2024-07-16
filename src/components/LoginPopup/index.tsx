@@ -1,13 +1,23 @@
+import type { Dispatch } from "@reduxjs/toolkit";
 import type React from "react";
+import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ArtLogin from "../../assets/login.png";
+import { setError } from "../../stores/Error";
 import Modal from "../Modal";
 
 function LoginPopup(): React.ReactNode {
+	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
 	const handleLogin = (): void => {
-		navigate("/login");
+		try {
+			navigate("/login");
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
 	};
 
 	return (

@@ -1,9 +1,9 @@
 import { type Slice, createSlice } from "@reduxjs/toolkit";
-import type { TBudget } from "../../types";
+import type { IBudget } from "../../types";
 
 export const budgetsStore: Slice = createSlice({
 	name: "budgets",
-	initialState: [] as TBudget[],
+	initialState: [] as IBudget[],
 	reducers: {
 		setBudgets: (_state, action) => {
 			return action.payload;

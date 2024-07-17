@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import EnglishFlag from "../../icons/EnglishFlag";
 import { setError } from "../../stores/Error";
 import { setLanguage } from "../../stores/Language";
-import { setModal } from "../../stores/Modal";
+import { setModals } from "../../stores/Modals";
 import Modal from "../Modal";
 
 function LanguageModal(): React.ReactNode {
@@ -13,11 +13,11 @@ function LanguageModal(): React.ReactNode {
 		try {
 			dispatch(setLanguage(language));
 			dispatch(
-				setModal({
-					extraincomeModal: false,
-					extraexpenseModal: false,
-					languageModal: false,
-					settingsModal: false,
+				setModals({
+					extraincome: false,
+					extraexpense: false,
+					language: false,
+					settings: false,
 				}),
 			);
 

@@ -5,19 +5,19 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
-import { setModal } from "../../stores/Modal";
-import type { IResponseError, IRootState, TBudget, TExtraincome } from "../../types";
+import { setModals } from "../../stores/Modals";
+import type { IBudget, IExtraincome, IResponseError, IRootState } from "../../types";
 import { Utils } from "../../utils";
 import Modal from "../Modal";
 
 function ExtraincomeModal(): React.ReactNode {
-	const navigate: NavigateFunction = useNavigate();
 	const dispatch: Dispatch = useDispatch();
+	const navigate: NavigateFunction = useNavigate();
 
-	const budget: TBudget = useSelector((state: IRootState) => state.budget);
+	const budget: IBudget = useSelector((state: IRootState) => state.budget);
 	const [createExtraincomeModal, setCreateExtraincomeModal] = React.useState<boolean>(false);
 	const [removeExtraincomeModal, setRemoveExtraincomeModal] = React.useState<boolean>(false);
-	const [removeExtraincome, setRemoveExtraincome] = React.useState<TExtraincome>({
+	const [removeExtraincome, setRemoveExtraincome] = React.useState<IExtraincome>({
 		id: 0,
 		user_id: 0,
 		extraincome_type: "",
@@ -26,7 +26,7 @@ function ExtraincomeModal(): React.ReactNode {
 		updated_at: new Date(),
 	});
 
-	const totalExtraincomes: number = budget.extraincomes.reduce((accumulator: number, extraincome: TExtraincome) => {
+	const totalExtraincomes: number = budget.extraincomes.reduce((accumulator: number, extraincome: IExtraincome) => {
 		return accumulator + extraincome.extraincome_amount_monthly;
 	}, 0);
 
@@ -105,14 +105,14 @@ function ExtraincomeModal(): React.ReactNode {
 	const handleClose = (): void => {
 		try {
 			dispatch(
-				setModal({
-					extraincomeModal: false,
-					extraexpenseModal: false,
-					languageModal: false,
-					settingsModal: false,
+				setModals({
+					extraincome: false,
+					extraexpense: false,
+					language: false,
+					settings: false,
 				}),
 			);
-		} catch (error) {
+		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));
 			}
@@ -192,7 +192,7 @@ function ExtraincomeModal(): React.ReactNode {
 							</div>
 
 							<div className="flex flex-col items-start">
-								{budget.extraincomes.map((extraincome: TExtraincome) => (
+								{budget.extraincomes.map((extraincome: IExtraincome) => (
 									<button
 										key={extraincome.extraincome_type}
 										type="button"

@@ -1,6 +1,6 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { setModal } from "../../stores/Modal";
+import { setModals } from "../../stores/Modals";
 
 function Modal({ index, children }: { index: number; children: React.ReactNode }) {
 	const dispatch: Dispatch = useDispatch();
@@ -10,11 +10,11 @@ function Modal({ index, children }: { index: number; children: React.ReactNode }
 			className={`absolute z-${index} flex items-center justify-center w-screen h-screen top-0 bg-black bg-opacity-60`}
 			onClick={(): void => {
 				dispatch(
-					setModal({
-						extraincomeModal: false,
-						extraexpenseModal: false,
-						languageModal: false,
-						settingsModal: false,
+					setModals({
+						extraincome: false,
+						extraexpense: false,
+						language: false,
+						settings: false,
 					}),
 				);
 			}}

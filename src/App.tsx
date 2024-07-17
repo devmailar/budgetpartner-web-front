@@ -16,6 +16,14 @@ export const router = createBrowserRouter([
 		element: <Budget />,
 	},
 	{
+		path: "/budget/new",
+		element: <BudgetNew />,
+	},
+	{
+		path: "/budget/get-started",
+		element: <BudgetGetStarted />,
+	},
+	{
 		path: "/login",
 		element: <Login />,
 	},
@@ -23,27 +31,16 @@ export const router = createBrowserRouter([
 		path: "/create-an-account",
 		element: <CreateAnAccount />,
 	},
-	{
-		path: "/budget/get-started",
-		element: <BudgetGetStarted />,
-	},
-	{
-		path: "/budget/new",
-		element: <BudgetNew />,
-	},
 ]);
 
 function App(): React.ReactNode {
 	const error: string = useSelector((state: IRootState) => state.error);
-	const location: string = window.location.pathname;
 
 	return (
 		<>
-			{location === "/" && (
-				<div className="hidden sm:block">
-					<Sidebar />
-				</div>
-			)}
+			<div className="hidden sm:block">
+				<Sidebar />
+			</div>
 
 			{error && <ErrorPopup />}
 

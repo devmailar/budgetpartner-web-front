@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import EnglishFlag from "../../icons/EnglishFlag";
 import FinnishFlag from "../../icons/FinnishFlag";
 import { setError } from "../../stores/Error";
-import { setModal } from "../../stores/Modal";
+import { setModals } from "../../stores/Modals";
 import type { IRootState } from "../../types";
 
 function Sidebar(): React.ReactNode {
@@ -15,11 +15,11 @@ function Sidebar(): React.ReactNode {
 	const handleOpenLanguageModal = (): void => {
 		try {
 			dispatch(
-				setModal({
-					extraincomeModal: false,
-					extraexpenseModal: false,
-					languageModal: true,
-					settingsModal: false,
+				setModals({
+					extraincome: false,
+					extraexpense: false,
+					language: true,
+					settings: false,
 				}),
 			);
 		} catch (error: unknown) {
@@ -203,7 +203,7 @@ function Sidebar(): React.ReactNode {
 						className="flex items-center justify-center p-3"
 						onClick={(): void => handleOpenLanguageModal()}
 					>
-						{language === "fi" ? <FinnishFlag className="w-10 h-10" /> : <EnglishFlag className="w-10 h-10" />}
+						{language === "fi" ? <FinnishFlag className="w-9 h-9" /> : <EnglishFlag className="w-9 h-9" />}
 					</button>
 
 					<button
@@ -213,20 +213,20 @@ function Sidebar(): React.ReactNode {
 					>
 						<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 40 40" fill="none">
 							<title>Settings</title>
-							<g clip-path="url(#clip0_269_2195)">
+							<g clipPath="url(#clip0_269_2195)">
 								<path
 									d="M33.125 10.45C33.6978 10.7757 34.1735 11.2483 34.503 11.8189C34.8326 12.3895 35.0041 13.0377 35 13.6966V25.8366C35 27.185 34.2617 28.4283 33.07 29.0833L21.82 36.2C21.2623 36.5062 20.6363 36.6667 20 36.6667C19.3637 36.6667 18.7377 36.5062 18.18 36.2L6.93 29.0833C6.34694 28.7647 5.86021 28.2952 5.52069 27.7241C5.18117 27.1529 5.00134 26.5011 5 25.8366V13.695C5 12.3466 5.73833 11.105 6.93 10.45L18.18 3.81663C18.7542 3.50003 19.3993 3.33398 20.055 3.33398C20.7107 3.33398 21.3558 3.50003 21.93 3.81663L33.18 10.45H33.125Z"
 									stroke="#FEFEFE"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
 								/>
 								<path
 									d="M15 20C15 21.3261 15.5268 22.5979 16.4645 23.5355C17.4021 24.4732 18.6739 25 20 25C21.3261 25 22.5979 24.4732 23.5355 23.5355C24.4732 22.5979 25 21.3261 25 20C25 18.6739 24.4732 17.4021 23.5355 16.4645C22.5979 15.5268 21.3261 15 20 15C18.6739 15 17.4021 15.5268 16.4645 16.4645C15.5268 17.4021 15 18.6739 15 20Z"
 									stroke="#FEFEFE"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
 								/>
 							</g>
 							<defs>

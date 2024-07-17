@@ -5,19 +5,19 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
-import { setModal } from "../../stores/Modal";
-import type { IResponseError, IRootState, TBudget, TExtraexpense } from "../../types";
-import Modal from "../Modal";
+import { setModals } from "../../stores/Modals";
+import type { IBudget, IExtraexpense, IResponseError, IRootState } from "../../types";
 import { Utils } from "../../utils";
+import Modal from "../Modal";
 
 function ExtraexpenseModal(): React.ReactNode {
-	const navigate: NavigateFunction = useNavigate();
 	const dispatch: Dispatch = useDispatch();
+	const navigate: NavigateFunction = useNavigate();
 
-	const budget: TBudget = useSelector((state: IRootState) => state.budget);
+	const budget: IBudget = useSelector((state: IRootState) => state.budget);
 	const [createExtraexpenseModal, setCreateExtraexpenseModal] = React.useState<boolean>(false);
 	const [removeExtraexpenseModal, setRemoveExtraexpenseModal] = React.useState<boolean>(false);
-	const [removeExtraexpense, setRemoveExtraexpense] = React.useState<TExtraexpense>({
+	const [removeExtraexpense, setRemoveExtraexpense] = React.useState<IExtraexpense>({
 		id: 0,
 		user_id: 0,
 		extraexpense_type: "",
@@ -26,7 +26,7 @@ function ExtraexpenseModal(): React.ReactNode {
 		updated_at: new Date(),
 	});
 
-	const totalExtraexpenses: number = budget.extraexpenses.reduce((accumulator: number, extraexpense: TExtraexpense) => {
+	const totalExtraexpenses: number = budget.extraexpenses.reduce((accumulator: number, extraexpense: IExtraexpense) => {
 		return accumulator + extraexpense.extraexpense_amount_monthly;
 	}, 0);
 
@@ -105,14 +105,14 @@ function ExtraexpenseModal(): React.ReactNode {
 	const handleClose = (): void => {
 		try {
 			dispatch(
-				setModal({
-					extraincomeModal: false,
-					extraexpenseModal: false,
-					languageModal: false,
-					settingsModal: false,
+				setModals({
+					extraincome: false,
+					extraexpense: false,
+					language: false,
+					settings: false,
 				}),
 			);
-		} catch (error) {
+		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));
 			}
@@ -192,7 +192,7 @@ function ExtraexpenseModal(): React.ReactNode {
 							</div>
 
 							<div className="flex flex-col items-start">
-								{budget.extraexpenses.map((extraexpense: TExtraexpense) => (
+								{budget.extraexpenses.map((extraexpense: IExtraexpense) => (
 									<button
 										key={extraexpense.extraexpense_type}
 										type="button"

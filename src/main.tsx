@@ -8,20 +8,17 @@ import { budgetsStore } from "./stores/Budgets/index.tsx";
 import { errorStore } from "./stores/Error";
 import { forceLoginStore } from "./stores/ForceLogin/index.tsx";
 import { languageStore } from "./stores/Language/index.tsx";
-import { modalStore } from "./stores/Modal/index.tsx";
+import { modalsStore } from "./stores/Modals/index.tsx";
 import { userStore } from "./stores/User";
 
 const store: Store = configureStore({
 	reducer: {
-		error: errorStore.reducer,
 		user: userStore.reducer,
-
 		budget: budgetStore.reducer,
 		budgets: budgetsStore.reducer,
-
-		modal: modalStore.reducer,
+		modals: modalsStore.reducer,
+		error: errorStore.reducer,
 		language: languageStore.reducer,
-
 		forceLogin: forceLoginStore.reducer,
 	},
 });

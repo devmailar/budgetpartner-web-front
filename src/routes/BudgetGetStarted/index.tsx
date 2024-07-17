@@ -5,7 +5,7 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
-import type { IResponseError, IUserResponse, TBudget } from "../../types";
+import type { IBudget, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 function BudgetGetStarted(): React.ReactNode {
@@ -80,7 +80,7 @@ function BudgetGetStarted(): React.ReactNode {
 				throw new Error("Budgets response is empty");
 			}
 
-			const currentBudget: TBudget | undefined = getUserResponseBody.budgets.find((budget: TBudget): boolean => {
+			const currentBudget: IBudget | undefined = getUserResponseBody.budgets.find((budget: IBudget): boolean => {
 				return new Date(budget.created_at).getMonth() === new Date().getMonth();
 			});
 

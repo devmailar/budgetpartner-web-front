@@ -17,16 +17,16 @@ import { setBudget } from "../../stores/Budget";
 import { setBudgets } from "../../stores/Budgets";
 import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
-import { setModal } from "../../stores/Modal";
+import { setModals } from "../../stores/Modals";
 import { setUser } from "../../stores/User";
 import type {
+	IBudget,
+	IExtraexpense,
+	IExtraincome,
+	IModals,
 	IResponseError,
 	IRootState,
 	IUserResponse,
-	TBudget,
-	TExtraexpense,
-	TExtraincome,
-	TModal,
 } from "../../types";
 import { Utils } from "../../utils";
 import "./index.css";
@@ -35,19 +35,16 @@ function Budget(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
+	const budgets: IBudget[] = useSelector((state: IRootState) => state.budgets);
+	const budget: IBudget = useSelector((state: IRootState) => state.budget);
+	const modals: IModals = useSelector((state: IRootState) => state.modals);
+	const forceLogin: boolean = useSelector((state: IRootState) => state.forceLogin);
+
 	const [budgetSwitch, setBudgetSwitch] = React.useState<boolean>(false);
 	const [isLoading, setIsLoading] = React.useState<boolean>(true);
-
 	const [dailyBudgetAmount, setDailyBudgetAmount] = React.useState<number>(0);
 	const [monthlyBudgetAmount, setMonthlyBudgetAmount] = React.useState<number>(0);
-
 	const [resetBudgetModal, setResetBudgetModal] = React.useState<boolean>(false);
-
-	const budgets: TBudget[] = useSelector((state: IRootState) => state.budgets);
-	const budget: TBudget = useSelector((state: IRootState) => state.budget);
-	const modal: TModal = useSelector((state: IRootState) => state.modal);
-
-	const forceLogin: boolean = useSelector((state: IRootState) => state.forceLogin);
 
 	const handleGetUserResponse = React.useCallback(
 		async (auth: string): Promise<void> => {
@@ -80,7 +77,7 @@ function Budget(): React.ReactNode {
 				dispatch(setUser(getUserResponseBody.user));
 				dispatch(setBudgets(getUserResponseBody.budgets));
 
-				const currentBudget: TBudget | undefined = getUserResponseBody.budgets.find((budget: TBudget): boolean => {
+				const currentBudget: IBudget | undefined = getUserResponseBody.budgets.find((budget: IBudget): boolean => {
 					return new Date(budget.created_at).getMonth() === new Date().getMonth();
 				});
 
@@ -90,7 +87,7 @@ function Budget(): React.ReactNode {
 
 				const storedBudgetDate: string = localStorage.getItem("budget") ?? "";
 				if (storedBudgetDate) {
-					const matchingBudget: TBudget | undefined = getUserResponseBody.budgets.find((budget: TBudget): boolean => {
+					const matchingBudget: IBudget | undefined = getUserResponseBody.budgets.find((budget: IBudget): boolean => {
 						const budgetDate: Date = new Date(budget.created_at);
 						const match: boolean = budgetDate.toISOString() === storedBudgetDate;
 
@@ -139,7 +136,7 @@ function Budget(): React.ReactNode {
 		}
 	};
 
-	const handleSetBudget = (budget: TBudget): void => {
+	const handleSetBudget = (budget: IBudget): void => {
 		try {
 			setIsLoading(true);
 			dispatch(setBudget(budget));
@@ -152,7 +149,7 @@ function Budget(): React.ReactNode {
 		}
 	};
 
-	const handleRemoveBudget = async (budget: TBudget): Promise<void> => {
+	const handleRemoveBudget = async (budget: IBudget): Promise<void> => {
 		try {
 			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
@@ -192,8 +189,8 @@ function Budget(): React.ReactNode {
 					setBudget({
 						id: 0,
 						user_id: 0,
-						extraincomes: [] as TExtraincome[],
-						extraexpenses: [] as TExtraexpense[],
+						extraincomes: [] as IExtraincome[],
+						extraexpenses: [] as IExtraexpense[],
 						created_at: new Date().toISOString(),
 						updated_at: new Date().toISOString(),
 					}),
@@ -213,7 +210,7 @@ function Budget(): React.ReactNode {
 			return;
 		}
 
-		const totalExtraincomes: number = budget.extraincomes.reduce((accumulator: number, extraincome: TExtraincome) => {
+		const totalExtraincomes: number = budget.extraincomes.reduce((accumulator: number, extraincome: IExtraincome) => {
 			return accumulator + extraincome.extraincome_amount_monthly;
 		}, 0);
 
@@ -222,7 +219,7 @@ function Budget(): React.ReactNode {
 		}
 
 		const totalExtraexpenses: number = budget.extraexpenses.reduce(
-			(accumulator: number, extraexpense: TExtraexpense) => {
+			(accumulator: number, extraexpense: IExtraexpense) => {
 				return accumulator + extraexpense.extraexpense_amount_monthly;
 			},
 			0,
@@ -277,7 +274,7 @@ function Budget(): React.ReactNode {
 							{budgetSwitch && (
 								<div className="animate__animated animate__fadeInDown animate__faster absolute z-50 mt-14 flex flex-col gap-y-4 items-center justify-center w-52 py-4 bg-dark rounded-2xl">
 									<div className="flex flex-col gap-y-1 items-center justify-center">
-										{budgets.map((b: TBudget) => (
+										{budgets.map((b: IBudget) => (
 											<button key={b.id} type="button" onClick={(): void => handleSetBudget(b)}>
 												<span
 													className={`text-base ${
@@ -318,11 +315,11 @@ function Budget(): React.ReactNode {
 										type="button"
 										onClick={(): void => {
 											dispatch(
-												setModal({
-													extraincomeModal: false,
-													extraexpenseModal: false,
-													languageModal: false,
-													settingsModal: false,
+												setModals({
+													extraincome: false,
+													extraexpense: false,
+													language: false,
+													settings: false,
 												}),
 											);
 										}}
@@ -344,11 +341,11 @@ function Budget(): React.ReactNode {
 										type="button"
 										onClick={(): void => {
 											dispatch(
-												setModal({
-													extraincomeModal: false,
-													extraexpenseModal: false,
-													languageModal: false,
-													settingsModal: false,
+												setModals({
+													extraincome: false,
+													extraexpense: false,
+													language: false,
+													settings: false,
 												}),
 											);
 										}}
@@ -372,11 +369,11 @@ function Budget(): React.ReactNode {
 							className="flex gap-x-2 items-center justify-center btn bg-purple px-[18px] py-2.5 regular-income-glow rounded-[6.25rem]"
 							onClick={(): void => {
 								dispatch(
-									setModal({
-										extraincomeModal: true,
-										extraexpenseModal: false,
-										languageModal: false,
-										settingsModal: false,
+									setModals({
+										extraincome: true,
+										extraexpense: false,
+										language: false,
+										settings: false,
 									}),
 								);
 							}}
@@ -406,11 +403,11 @@ function Budget(): React.ReactNode {
 							className="flex gap-x-2 items-center justify-center btn bg-orange px-[18px] py-2.5 recurring-expenses-glow rounded-[6.25rem]"
 							onClick={(): void => {
 								dispatch(
-									setModal({
-										extraincomeModal: false,
-										extraexpenseModal: true,
-										languageModal: false,
-										settingsModal: false,
+									setModals({
+										extraincome: false,
+										extraexpense: true,
+										language: false,
+										settings: false,
 									}),
 								);
 							}}
@@ -440,11 +437,11 @@ function Budget(): React.ReactNode {
 							className="flex gap-x-2 items-center justify-center btn bg-red px-[18px] py-2.5 reset-glow rounded-[6.25rem]"
 							onClick={(): void => {
 								dispatch(
-									setModal({
-										extraincomeModal: false,
-										extraexpenseModal: false,
-										languageModal: false,
-										settingsModal: false,
+									setModals({
+										extraincome: false,
+										extraexpense: false,
+										language: false,
+										settings: false,
 									}),
 
 									setResetBudgetModal(true),
@@ -520,10 +517,10 @@ function Budget(): React.ReactNode {
 				</div>
 			)}
 
-			{modal.extraincomeModal && <ExtraincomeModal />}
-			{modal.extraexpenseModal && <ExtraexpenseModal />}
-			{modal.languageModal && <LanguageModal />}
-			{modal.settingsModal && <SettingsModal />}
+			{modals.extraincome && <ExtraincomeModal />}
+			{modals.extraexpense && <ExtraexpenseModal />}
+			{modals.language && <LanguageModal />}
+			{modals.settings && <SettingsModal />}
 
 			{forceLogin && <LoginPopup />}
 		</div>

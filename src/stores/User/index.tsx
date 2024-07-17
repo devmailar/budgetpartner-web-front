@@ -1,9 +1,9 @@
 import { type Slice, createSlice } from "@reduxjs/toolkit";
-import type { TUser } from "../../types";
+import type { IUser } from "../../types";
 
 export const userStore: Slice = createSlice({
 	name: "user",
-	initialState: {} as TUser,
+	initialState: {} as IUser,
 	reducers: {
 		setUser: (_state, action) => {
 			return action.payload;

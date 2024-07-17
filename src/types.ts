@@ -1,62 +1,57 @@
-export type TUser = {
+export interface IUser {
 	id: number;
 	email: string;
 	password_hash: string;
 	is_new: boolean;
 	created_at: Date;
-	update_at: Date;
-};
-
-export type TBudget = {
-	id: number;
-	user_id: number;
-	extraincomes: TExtraincome[];
-	extraexpenses: TExtraexpense[];
-	created_at: Date;
 	updated_at: Date;
-};
+}
 
-export type TExtraincome = {
+export interface IExtraincome {
 	id: number;
 	user_id: number;
 	extraincome_type: string;
 	extraincome_amount_monthly: number;
 	created_at: Date;
 	updated_at: Date;
-};
+}
 
-export type TExtraexpense = {
+export interface IExtraexpense {
 	id: number;
 	user_id: number;
 	extraexpense_type: string;
 	extraexpense_amount_monthly: number;
 	created_at: Date;
 	updated_at: Date;
-};
+}
 
-export type TMenu = {
-	addExtraincome: boolean;
-	addRecurringexpense: boolean;
-	addSavings: boolean;
-};
-
-export type TModal = {
-	extraincomeModal: boolean;
-	extraexpenseModal: boolean;
-	languageModal: boolean;
-};
+export interface IBudget {
+	id: number;
+	user_id: number;
+	extraincomes: IExtraincome[];
+	extraexpenses: IExtraexpense[];
+	created_at: Date;
+	updated_at: Date;
+}
 
 export interface IUserResponse {
-	user: TUser;
-	budgets: TBudget[];
+	user: IUser;
+	budgets: IBudget[];
+}
+
+export interface IModals {
+	extraincome: boolean;
+	extraexpense: boolean;
+	language: boolean;
+	settings: boolean;
 }
 
 export interface IRootState {
+	user: IUser;
+	budget: IBudget;
+	budgets: IBudget[];
+	modals: IModals;
 	error: string;
-	user: TUser;
-	budget: TBudget;
-	budgets: TBudget[];
-	modal: TModal;
 	language: string;
 	forceLogin: boolean;
 }
@@ -65,10 +60,4 @@ export interface IResponseError {
 	statusCode: number;
 	error: string;
 	message: string;
-}
-
-export enum Period {
-	DAY = "DAY",
-	MONTH = "MONTH",
-	YEAR = "YEAR",
 }

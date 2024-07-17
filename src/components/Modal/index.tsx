@@ -13,9 +13,8 @@ function Modal({ index, children }: { index: number; children: React.ReactNode }
 					setModal({
 						extraincomeModal: false,
 						extraexpenseModal: false,
-						incomeModal: false,
-						incomeModalEdit: false,
 						languageModal: false,
+						settingsModal: false,
 					}),
 				);
 			}}

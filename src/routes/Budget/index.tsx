@@ -12,6 +12,7 @@ import ExtraexpenseModal from "../../components/ExtraexpenseModal";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
 import LanguageModal from "../../components/LanguageModal";
 import LoginPopup from "../../components/LoginPopup";
+import SettingsModal from "../../components/SettingsModal";
 import { setBudget } from "../../stores/Budget";
 import { setBudgets } from "../../stores/Budgets";
 import { setError } from "../../stores/Error";
@@ -320,8 +321,8 @@ function Budget(): React.ReactNode {
 												setModal({
 													extraincomeModal: false,
 													extraexpenseModal: false,
-													incomeModal: true,
-													incomeModalEdit: false,
+													languageModal: false,
+													settingsModal: false,
 												}),
 											);
 										}}
@@ -346,8 +347,8 @@ function Budget(): React.ReactNode {
 												setModal({
 													extraincomeModal: false,
 													extraexpenseModal: false,
-													incomeModal: true,
-													incomeModalEdit: false,
+													languageModal: false,
+													settingsModal: false,
 												}),
 											);
 										}}
@@ -374,8 +375,8 @@ function Budget(): React.ReactNode {
 									setModal({
 										extraincomeModal: true,
 										extraexpenseModal: false,
-										incomeModal: false,
-										incomeModalEdit: false,
+										languageModal: false,
+										settingsModal: false,
 									}),
 								);
 							}}
@@ -408,8 +409,8 @@ function Budget(): React.ReactNode {
 									setModal({
 										extraincomeModal: false,
 										extraexpenseModal: true,
-										incomeModal: false,
-										incomeModalEdit: false,
+										languageModal: false,
+										settingsModal: false,
 									}),
 								);
 							}}
@@ -443,6 +444,7 @@ function Budget(): React.ReactNode {
 										extraincomeModal: false,
 										extraexpenseModal: false,
 										languageModal: false,
+										settingsModal: false,
 									}),
 
 									setResetBudgetModal(true),
@@ -521,6 +523,8 @@ function Budget(): React.ReactNode {
 			{modal.extraincomeModal && <ExtraincomeModal />}
 			{modal.extraexpenseModal && <ExtraexpenseModal />}
 			{modal.languageModal && <LanguageModal />}
+			{modal.settingsModal && <SettingsModal />}
+
 			{forceLogin && <LoginPopup />}
 		</div>
 	);

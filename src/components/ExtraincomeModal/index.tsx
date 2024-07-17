@@ -108,9 +108,8 @@ function ExtraincomeModal(): React.ReactNode {
 				setModal({
 					extraincomeModal: false,
 					extraexpenseModal: false,
-					incomeModal: false,
-					incomeModalEdit: false,
 					languageModal: false,
+					settingsModal: false,
 				}),
 			);
 		} catch (error) {

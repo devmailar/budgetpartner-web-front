@@ -196,7 +196,8 @@ function Budget(): React.ReactNode {
 					}),
 				);
 
-				return setIsLoading(false);
+				setTimeout(() => setIsLoading(false), 1000);
+				return;
 			}
 
 			return await handleGetUserResponse(auth);

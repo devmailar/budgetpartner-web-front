@@ -1,6 +1,6 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import "animate.css";
-import { eachDayOfInterval, endOfMonth, startOfMonth } from "date-fns";
+import { eachDayOfInterval, endOfMonth, isWeekend, startOfMonth } from "date-fns";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
@@ -235,7 +235,15 @@ function Budget(): React.ReactNode {
 			end: endOfMonth(new Date()),
 		});
 
-		const dailyBudgetAmount: number = (totalExtraincomes - totalExtraexpenses) / currentDaysInMonth.length;
+		const weekdaysInMonth: Date[] = currentDaysInMonth.filter((day: Date) => !isWeekend(day));
+
+		// Can we allow player to set if monthly budget income is from fullweek or like 5 days counted.
+
+		// As now everything is defined by the weekays in that month, so income happens only in weekdays.
+
+		// That doesn't make sense, as some people might have stocks that happen every weekend when counting dailyBudget
+
+		const dailyBudgetAmount: number = (totalExtraincomes - totalExtraexpenses) / weekdaysInMonth.length;
 		const monthlyBudgetAmount: number = totalExtraincomes - totalExtraexpenses;
 
 		setDailyBudgetAmount(dailyBudgetAmount);

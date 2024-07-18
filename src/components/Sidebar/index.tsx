@@ -30,6 +30,23 @@ function Sidebar(): React.ReactNode {
 		}
 	};
 
+	const handleOpenSettingsModal = (): void => {
+		try {
+			dispatch(
+				setModals({
+					extraincome: false,
+					extraexpense: false,
+					language: false,
+					settings: true,
+				}),
+			);
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+	};
+
 	return (
 		<div className="absolute px-4 py-4 bg-black border-r border-r-grey h-screen">
 			<div className="flex flex-col items-center justify-between h-full">
@@ -211,7 +228,7 @@ function Sidebar(): React.ReactNode {
 						<button
 							type="button"
 							className="flex items-center justify-center p-3"
-							onClick={() => dispatch(setError("Coming soon! ✨"))}
+							onClick={(): void => handleOpenSettingsModal()}
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 40 40" fill="none">
 								<title>Settings</title>

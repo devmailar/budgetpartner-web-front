@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ArtLogin from "../../assets/login.png";
 import { setError } from "../../stores/Error";
+import { setForceLogin } from "../../stores/ForceLogin";
 import Modal from "../Modal";
 
 function LoginPopup(): React.ReactNode {
@@ -12,6 +13,7 @@ function LoginPopup(): React.ReactNode {
 
 	const handleLogin = (): void => {
 		try {
+			dispatch(setForceLogin(false));
 			navigate("/login");
 		} catch (error: unknown) {
 			if (error instanceof Error) {

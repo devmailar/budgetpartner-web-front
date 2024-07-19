@@ -66,7 +66,7 @@ function SettingsModal(): React.ReactNode {
 				</button>
 			</div>
 
-			<div className="flex gap-x-4 items-center pt-2 border-t border-t-dark">
+			<div className="flex gap-x-4 pt-2 border-t border-t-dark">
 				<div className="flex flex-col gap-y-6 pr-4 border-r border-r-dark">
 					<div className="flex flex-col gap-y-3">
 						<button type="button" className="flex gap-x-2 items-center w-fit">
@@ -226,7 +226,7 @@ function SettingsModal(): React.ReactNode {
 				</div>
 
 				<div className="flex flex-col gap-y-8">
-					<div className="flex flex-col gap-y-2">
+					<div className="flex flex-col gap-y-4">
 						<div className="flex flex-col gap-y-1">
 							<span className="text-sm text-white font-normal font-rubik">Email</span>
 
@@ -270,6 +270,16 @@ function SettingsModal(): React.ReactNode {
 							<button type="button" className="btn bg-dark px-2 py-1 w-fit opacity-40">
 								<span className="text-xs text-light font-medium font-rubik">Change password</span>
 							</button>
+						</div>
+
+						<div className="flex flex-col gap-y-1">
+							<span className="text-sm text-white font-normal font-rubik">Login Activity</span>
+
+							<ol>
+								<li className="text-xs text-light font-normal font-rubik">
+									{new Date().toLocaleString()} - User logged in
+								</li>
+							</ol>
 						</div>
 					</div>
 

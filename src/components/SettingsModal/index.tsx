@@ -46,7 +46,7 @@ function SettingsModal(): React.ReactNode {
 	};
 
 	return (
-		<Modal index={40} classes="gap-y-2 px-6 py-6 w-[28rem] animate__animated animate__fadeInDown animate__faster">
+		<Modal index={40} classes="gap-y-2 px-6 py-6 animate__animated animate__fadeInDown animate__faster">
 			<div className="flex items-center justify-between">
 				<span className="text-base text-white font-medium font-rubik">Settings</span>
 

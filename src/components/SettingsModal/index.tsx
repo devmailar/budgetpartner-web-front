@@ -182,7 +182,7 @@ function SettingsModal(): React.ReactNode {
 								</defs>
 							</svg>
 
-							<span className="text-sm text-white font-normal font-rubik">§</span>
+							<span className="text-sm text-white font-normal font-rubik">Language</span>
 						</button>
 
 						<button type="button" className="flex gap-x-2 items-center w-fit">

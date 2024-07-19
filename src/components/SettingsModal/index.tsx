@@ -100,50 +100,6 @@ function SettingsModal(): React.ReactNode {
 
 						<button type="button" className="flex gap-x-2 items-center w-fit">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-								<title>Language</title>
-								<g clip-path="url(#clip0_280_249)">
-									<path d="M4 5H11" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-									<path
-										d="M9 3V5C9 9.418 6.761 13 4 13"
-										stroke="white"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-									<path
-										d="M5 9C5 11.144 7.952 12.908 11.7 13"
-										stroke="white"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-									<path
-										d="M12 20L16 11L20 20"
-										stroke="white"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-									<path
-										d="M19.1 18H12.9"
-										stroke="white"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-								</g>
-								<defs>
-									<clipPath id="clip0_280_249">
-										<rect width="24" height="24" fill="white" />
-									</clipPath>
-								</defs>
-							</svg>
-
-							<span className="text-sm text-white font-normal font-rubik">Language</span>
-						</button>
-
-						<button type="button" className="flex gap-x-2 items-center w-fit">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 								<title>Appearance</title>
 								<g clip-path="url(#clip0_282_256)">
 									<path
@@ -183,6 +139,50 @@ function SettingsModal(): React.ReactNode {
 							</svg>
 
 							<span className="text-sm text-white font-normal font-rubik">Appearance</span>
+						</button>
+
+						<button type="button" className="flex gap-x-2 items-center w-fit">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+								<title>Language</title>
+								<g clip-path="url(#clip0_280_249)">
+									<path d="M4 5H11" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+									<path
+										d="M9 3V5C9 9.418 6.761 13 4 13"
+										stroke="white"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+									<path
+										d="M5 9C5 11.144 7.952 12.908 11.7 13"
+										stroke="white"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+									<path
+										d="M12 20L16 11L20 20"
+										stroke="white"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+									<path
+										d="M19.1 18H12.9"
+										stroke="white"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</g>
+								<defs>
+									<clipPath id="clip0_280_249">
+										<rect width="24" height="24" fill="white" />
+									</clipPath>
+								</defs>
+							</svg>
+
+							<span className="text-sm text-white font-normal font-rubik">§</span>
 						</button>
 
 						<button type="button" className="flex gap-x-2 items-center w-fit">

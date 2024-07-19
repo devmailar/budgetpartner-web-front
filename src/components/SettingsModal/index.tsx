@@ -267,7 +267,7 @@ function SettingsModal(): React.ReactNode {
 						<div className="flex flex-col gap-y-1">
 							<span className="text-sm text-white font-normal font-rubik">Password</span>
 
-							<button type="button" className="btn bg-grey px-2 py-1 w-fit">
+							<button type="button" className="btn bg-dark px-2 py-1 w-fit opacity-40">
 								<span className="text-xs text-light font-medium font-rubik">Change password</span>
 							</button>
 						</div>

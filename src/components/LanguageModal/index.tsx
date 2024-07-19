@@ -30,20 +30,18 @@ function LanguageModal(): React.ReactNode {
 	};
 
 	return (
-		<Modal index={40}>
-			<div className="flex flex-col">
-				<div className="flex flex-col gap-y-6 w-80 px-6 py-6">
-					<span className="text-base text-white font-medium font-rubik">Language</span>
+		<Modal index={40} classes="gap-y-4 px-6 py-6 w-80 animate__animated animate__fadeInDown animate__faster">
+			<span className="text-base text-white font-medium font-rubik">Language</span>
 
-					<button
-						type="button"
-						className="flex gap-x-4 items-center border border-light px-4 py-4 rounded-2xl"
-						onClick={(): void => handleSetLanguage("en")}
-					>
-						<EnglishFlag className="w-10 h-10" />
-						<span className="text-lg text-white font-light font-rubik">English</span>
-					</button>
-					{/* 
+			<button
+				type="button"
+				className="flex gap-x-4 items-center border border-light px-4 py-4 rounded-2xl"
+				onClick={(): void => handleSetLanguage("en")}
+			>
+				<EnglishFlag className="w-10 h-10" />
+				<span className="text-lg text-white font-light font-rubik">English</span>
+			</button>
+			{/* 
 					<button
 						type="button"
 						className="flex gap-x-4 items-center border border-light px-4 py-4 rounded-2xl"
@@ -52,8 +50,6 @@ function LanguageModal(): React.ReactNode {
 						<FinnishFlag className="w-10 h-10" />
 						<span className="text-lg text-white font-light font-rubik">Finnish</span>
 					</button> */}
-				</div>
-			</div>
 		</Modal>
 	);
 }

@@ -12,6 +12,32 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.zoom {
-  zoom: 1.4;
+@media screen(sm) {
+  .zoom {
+    zoom: 1.1;
+  }
+}
+
+@media screen(md) {
+  .zoom {
+    zoom: 1.2;
+  }
+}
+
+@media screen(lg) {
+  .zoom {
+    zoom: 1.3;
+  }
+}
+
+@media screen(xl) {
+  .zoom {
+    zoom: 1.4;
+  }
+}
+
+@media screen(2xl) {
+  .zoom {
+    zoom: 1.5;
+  }
 }

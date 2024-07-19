@@ -1,6 +1,25 @@
+import type { Dispatch } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { removeCookie } from "typescript-cookie";
+import { setError } from "../../stores/Error";
 import Modal from "../Modal";
 
 function SettingsModal(): React.ReactNode {
+	const dispatch: Dispatch = useDispatch();
+	const navigate: NavigateFunction = useNavigate();
+
+	const handleLogout = (): void => {
+		try {
+			removeCookie("Authorization");
+			navigate("/login");
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+	};
+
 	return (
 		<Modal index={40}>
 			<div className="flex flex-col gap-y-6 w-80 px-6 py-6">
@@ -146,7 +165,7 @@ function SettingsModal(): React.ReactNode {
 						<span className="text-sm text-white font-normal font-rubik">Support</span>
 					</button>
 
-					<button type="button" className="flex gap-x-2 items-center w-fit">
+					<button type="button" className="flex gap-x-2 items-center w-fit" onClick={(): void => handleLogout()}>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 							<title>Logout</title>
 							<path

@@ -375,7 +375,7 @@ function Budget(): React.ReactNode {
 					<div className="flex flex-col gap-y-5 items-center">
 						<button
 							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-purple px-[18px] py-2.5 regular-income-glow rounded-[6.25rem]"
+							className="flex gap-x-2 items-center justify-center btn bg-purple px-[18px] py-2.5 rounded-[6.25rem]"
 							onClick={(): void => {
 								dispatch(
 									setModals({
@@ -409,7 +409,7 @@ function Budget(): React.ReactNode {
 
 						<button
 							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-orange px-[18px] py-2.5 recurring-expenses-glow rounded-[6.25rem]"
+							className="flex gap-x-2 items-center justify-center btn bg-orange px-[18px] py-2.5 rounded-[6.25rem]"
 							onClick={(): void => {
 								dispatch(
 									setModals({
@@ -443,7 +443,7 @@ function Budget(): React.ReactNode {
 
 						<button
 							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-red px-[18px] py-2.5 reset-glow rounded-[6.25rem]"
+							className="flex gap-x-2 items-center justify-center btn bg-red px-[18px] py-2.5 rounded-[6.25rem]"
 							onClick={(): void => {
 								dispatch(
 									setModals({

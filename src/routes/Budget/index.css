@@ -2,18 +2,6 @@ button.primary {
   background: linear-gradient(180deg, #895ff5 50%, #3a3180 100%);
 }
 
-button.regular-income-glow {
-  box-shadow: 0px 2px 8px #895ff5;
-}
-
-button.recurring-expenses-glow {
-  box-shadow: 0px 2px 8px #b85c3d;
-}
-
-button.reset-glow {
-  box-shadow: 0px 2px 8px #b83d3d;
-}
-
 .loader {
   width: 35px;
   height: 35px;

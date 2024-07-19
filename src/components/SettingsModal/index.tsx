@@ -8,12 +8,20 @@ import { setModals } from "../../stores/Modals";
 import type { IRootState, IUser } from "../../types";
 import Modal from "../Modal";
 
+enum Settings {
+	ACCOUNT = "ACCOUNT",
+	APPEARANCE = "APPEARANCE",
+	LANGUAGE = "LANGUAGE",
+	SUPPORT = "SUPPORT",
+}
+
 function SettingsModal(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
 	const user: IUser = useSelector((state: IRootState) => state.user);
 
+	const [setting, setSetting] = useState<Settings>(Settings.ACCOUNT);
 	const [hideEmail, setHideEmail] = useState<boolean>(false);
 
 	const handleClose = (): void => {
@@ -46,7 +54,10 @@ function SettingsModal(): React.ReactNode {
 	};
 
 	return (
-		<Modal index={40} classes="gap-y-2 px-6 py-6 animate__animated animate__fadeInDown animate__faster">
+		<Modal
+			index={40}
+			classes="gap-y-2 px-6 py-6 min-w-[26rem] min-h-[22rem] animate__animated animate__fadeInDown animate__faster"
+		>
 			<div className="flex items-center justify-between">
 				<span className="text-base text-white font-medium font-rubik">Settings</span>
 
@@ -68,8 +79,12 @@ function SettingsModal(): React.ReactNode {
 
 			<div className="flex gap-x-4 pt-2 border-t border-t-dark">
 				<div className="flex flex-col gap-y-6 pr-4 border-r border-r-dark">
-					<div className="flex flex-col gap-y-3">
-						<button type="button" className="flex gap-x-2 items-center w-fit">
+					<div className="flex flex-col gap-y-0.5">
+						<button
+							type="button"
+							className="flex gap-x-2 items-center w-fit py-1"
+							onClick={(): void => setSetting(Settings.ACCOUNT)}
+						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 40 40" fill="none">
 								<title>Settings</title>
 								<g clip-path="url(#clip0_279_157)">
@@ -98,7 +113,11 @@ function SettingsModal(): React.ReactNode {
 							<span className="text-sm text-white font-normal font-rubik">Account</span>
 						</button>
 
-						<button type="button" className="flex gap-x-2 items-center w-fit">
+						<button
+							type="button"
+							className="flex gap-x-2 items-center w-fit py-1"
+							onClick={(): void => setSetting(Settings.APPEARANCE)}
+						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 								<title>Appearance</title>
 								<g clip-path="url(#clip0_282_256)">
@@ -141,7 +160,11 @@ function SettingsModal(): React.ReactNode {
 							<span className="text-sm text-white font-normal font-rubik">Appearance</span>
 						</button>
 
-						<button type="button" className="flex gap-x-2 items-center w-fit">
+						<button
+							type="button"
+							className="flex gap-x-2 items-center w-fit py-1"
+							onClick={(): void => setSetting(Settings.LANGUAGE)}
+						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 								<title>Language</title>
 								<g clip-path="url(#clip0_280_249)">
@@ -185,7 +208,11 @@ function SettingsModal(): React.ReactNode {
 							<span className="text-sm text-white font-normal font-rubik">Language</span>
 						</button>
 
-						<button type="button" className="flex gap-x-2 items-center w-fit">
+						<button
+							type="button"
+							className="flex gap-x-2 items-center w-fit py-1"
+							onClick={(): void => setSetting(Settings.SUPPORT)}
+						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 								<title>Support</title>
 								<g clip-path="url(#clip0_283_273)">
@@ -208,7 +235,7 @@ function SettingsModal(): React.ReactNode {
 							<span className="text-sm text-white font-normal font-rubik">Support</span>
 						</button>
 
-						<button type="button" className="flex gap-x-2 items-center w-fit" onClick={(): void => handleLogout()}>
+						<button type="button" className="flex gap-x-2 items-center w-fit py-1" onClick={(): void => handleLogout()}>
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 								<title>Logout</title>
 								<path
@@ -225,70 +252,73 @@ function SettingsModal(): React.ReactNode {
 					</div>
 				</div>
 
-				<div className="flex flex-col gap-y-8">
-					<div className="flex flex-col gap-y-3">
-						<div className="flex flex-col gap-y-1">
-							<span className="text-sm text-white font-normal font-rubik">Email</span>
+				{setting === Settings.ACCOUNT && (
+					<div className="flex flex-col gap-y-8">
+						<div className="flex flex-col gap-y-3">
+							<div className="flex flex-col gap-y-1">
+								<span className="text-sm text-white font-normal font-rubik">Email</span>
 
-							<div className="flex items-center justify-between">
-								<span className="text-sm text-white font-normal font-rubik">
-									{hideEmail ? "··········" : `${user.email}`}
-								</span>
+								<div className="flex gap-x-2 items-center">
+									<span className="text-sm text-white font-normal font-rubik">
+										{hideEmail ? "··········" : `${user.email}`}
+									</span>
 
-								<button type="button" onClick={(): void => setHideEmail(!hideEmail)}>
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-										<title>Eye</title>
-										<g clip-path="url(#clip0_284_119)">
-											<path
-												d="M10 12C10 12.5304 10.2107 13.0391 10.5858 13.4142C10.9609 13.7893 11.4696 14 12 14C12.5304 14 13.0391 13.7893 13.4142 13.4142C13.7893 13.0391 14 12.5304 14 12C14 11.4696 13.7893 10.9609 13.4142 10.5858C13.0391 10.2107 12.5304 10 12 10C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12Z"
-												stroke="white"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-											/>
-											<path
-												d="M21 12C18.6 16 15.6 18 12 18C8.4 18 5.4 16 3 12C5.4 8 8.4 6 12 6C15.6 6 18.6 8 21 12Z"
-												stroke="white"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-											/>
-										</g>
-										<defs>
-											<clipPath id="clip0_284_119">
-												<rect width="24" height="24" fill="white" />
-											</clipPath>
-										</defs>
-									</svg>
+									<button type="button" onClick={(): void => setHideEmail(!hideEmail)}>
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<title>Eye</title>
+											<g clip-path="url(#clip0_284_119)">
+												<path
+													d="M10 12C10 12.5304 10.2107 13.0391 10.5858 13.4142C10.9609 13.7893 11.4696 14 12 14C12.5304 14 13.0391 13.7893 13.4142 13.4142C13.7893 13.0391 14 12.5304 14 12C14 11.4696 13.7893 10.9609 13.4142 10.5858C13.0391 10.2107 12.5304 10 12 10C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12Z"
+													stroke="white"
+													stroke-width="2"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+												/>
+												<path
+													d="M21 12C18.6 16 15.6 18 12 18C8.4 18 5.4 16 3 12C5.4 8 8.4 6 12 6C15.6 6 18.6 8 21 12Z"
+													stroke="white"
+													stroke-width="2"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+												/>
+											</g>
+											<defs>
+												<clipPath id="clip0_284_119">
+													<rect width="24" height="24" fill="white" />
+												</clipPath>
+											</defs>
+										</svg>
+									</button>
+								</div>
+							</div>
+
+							<div className="flex flex-col gap-y-1">
+								<span className="text-sm text-white font-normal font-rubik">Password</span>
+
+								<button type="button" className="btn bg-dark px-2 py-1 w-fit opacity-40">
+									<span className="text-xs text-light font-medium font-rubik">Change password</span>
 								</button>
 							</div>
 						</div>
 
-						<div className="flex flex-col gap-y-1">
-							<span className="text-sm text-white font-normal font-rubik">Password</span>
+						<div className="flex flex-col gap-y-3">
+							<div className="flex flex-col gap-y-1">
+								<span className="text-sm text-white font-normal font-rubik">Login Activity</span>
 
-							<button type="button" className="btn bg-dark px-2 py-1 w-fit opacity-40">
-								<span className="text-xs text-light font-medium font-rubik">Change password</span>
+								<ol>
+									<li className="text-xs text-light font-normal font-rubik">
+										{new Date().toDateString()} {`(${new Date().getHours()}:${new Date().getMinutes()})`} - User logged
+										in
+									</li>
+								</ol>
+							</div>
+
+							<button type="button" className="btn bg-red px-2 py-1 w-fit">
+								<span className="text-xs font-medium font-rubik">Delete account</span>
 							</button>
 						</div>
 					</div>
-
-					<div className="flex flex-col gap-y-3">
-						<div className="flex flex-col gap-y-1">
-							<span className="text-sm text-white font-normal font-rubik">Login Activity</span>
-
-							<ol>
-								<li className="text-xs text-light font-normal font-rubik">
-									{new Date().toDateString()} {`(${new Date().getHours()}:${new Date().getMinutes()})`} - User logged in
-								</li>
-							</ol>
-						</div>
-
-						<button type="button" className="btn bg-red px-2 py-1 w-fit">
-							<span className="text-xs font-medium font-rubik">Delete account</span>
-						</button>
-					</div>
-				</div>
+				)}
 			</div>
 		</Modal>
 	);

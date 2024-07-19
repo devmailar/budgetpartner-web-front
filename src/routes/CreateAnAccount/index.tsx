@@ -33,7 +33,7 @@ function CreateAnAccount(): React.ReactNode {
 				throw new Error(createBudgetResponseError.message);
 			}
 
-			navigate("/");
+			navigate("/login");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));

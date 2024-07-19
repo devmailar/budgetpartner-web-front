@@ -2,10 +2,12 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import { removeCookie } from "typescript-cookie";
+import { getCookie, removeCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
+import { setForceLogin } from "../../stores/ForceLogin";
 import { setModals } from "../../stores/Modals";
-import type { IRootState, IUser } from "../../types";
+import type { IResponseError, IRootState, IUser } from "../../types";
+import { Utils } from "../../utils";
 import Modal from "../Modal";
 
 enum Settings {
@@ -45,6 +47,33 @@ function SettingsModal(): React.ReactNode {
 		try {
 			removeCookie("Authorization");
 			navigate("/login");
+			window.location.reload();
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+	};
+
+	const handleRemove = async (): Promise<void> => {
+		try {
+			const auth: string = getCookie("Authorization") ?? "";
+			if (!auth) {
+				dispatch(setForceLogin(true));
+				return;
+			}
+
+			const removeUserResponse: Response = await fetch(`${Utils.baseurl}/users/remove`, {
+				method: "DELETE",
+				headers: { Authorization: `Bearer ${auth}` },
+			});
+
+			if (!removeUserResponse.ok) {
+				const removeUserResponseError: IResponseError = await removeUserResponse.json();
+
+				throw new Error(removeUserResponseError.message);
+			}
+
 			window.location.reload();
 		} catch (error: unknown) {
 			if (error instanceof Error) {
@@ -313,7 +342,11 @@ function SettingsModal(): React.ReactNode {
 								</ol>
 							</div>
 
-							<button type="button" className="btn bg-red px-2 py-1 w-fit">
+							<button
+								type="button"
+								className="btn bg-red px-2 py-1 w-fit"
+								onClick={(): Promise<void> => handleRemove()}
+							>
 								<span className="text-xs font-medium font-rubik">Delete account</span>
 							</button>
 						</div>

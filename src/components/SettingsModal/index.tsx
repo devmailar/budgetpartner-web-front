@@ -226,7 +226,7 @@ function SettingsModal(): React.ReactNode {
 				</div>
 
 				<div className="flex flex-col gap-y-8">
-					<div className="flex flex-col gap-y-4">
+					<div className="flex flex-col gap-y-3">
 						<div className="flex flex-col gap-y-1">
 							<span className="text-sm text-white font-normal font-rubik">Email</span>
 
@@ -271,21 +271,23 @@ function SettingsModal(): React.ReactNode {
 								<span className="text-xs text-light font-medium font-rubik">Change password</span>
 							</button>
 						</div>
+					</div>
 
+					<div className="flex flex-col gap-y-3">
 						<div className="flex flex-col gap-y-1">
 							<span className="text-sm text-white font-normal font-rubik">Login Activity</span>
 
 							<ol>
 								<li className="text-xs text-light font-normal font-rubik">
-									{new Date().toLocaleString()} - User logged in
+									{new Date().toDateString()} {`(${new Date().getHours()}:${new Date().getMinutes()})`} - User logged in
 								</li>
 							</ol>
 						</div>
-					</div>
 
-					<button type="button" className="btn bg-red px-2 py-1 w-fit">
-						<span className="text-xs font-medium font-rubik">Delete account</span>
-					</button>
+						<button type="button" className="btn bg-red px-2 py-1 w-fit">
+							<span className="text-xs font-medium font-rubik">Delete account</span>
+						</button>
+					</div>
 				</div>
 			</div>
 		</Modal>

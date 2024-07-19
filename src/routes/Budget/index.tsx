@@ -313,7 +313,7 @@ function Budget(): React.ReactNode {
 						</div>
 
 						<Swiper
-							className="w-[60rem] h-fit z-0"
+							className="w-[20rem] h-fit z-0"
 							autoplay={{ delay: 10000, disableOnInteraction: false }}
 							pagination={{ clickable: true }}
 							modules={[Autoplay, Pagination]}

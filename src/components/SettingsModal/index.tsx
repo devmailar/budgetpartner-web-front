@@ -13,6 +13,7 @@ function SettingsModal(): React.ReactNode {
 		try {
 			removeCookie("Authorization");
 			navigate("/login");
+			window.location.reload();
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));

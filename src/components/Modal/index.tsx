@@ -1,8 +1,15 @@
 import type { Dispatch } from "@reduxjs/toolkit";
+import type React from "react";
 import { useDispatch } from "react-redux";
 import { setModals } from "../../stores/Modals";
 
-function Modal({ index, children }: { index: number; children: React.ReactNode }) {
+interface IModalProps {
+	index: number;
+	classes?: string;
+	children: React.ReactNode;
+}
+
+function Modal({ index, classes, children }: IModalProps): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 
 	return (
@@ -22,7 +29,7 @@ function Modal({ index, children }: { index: number; children: React.ReactNode }
 			onKeyDown={(): void => {}}
 		>
 			<div
-				className="flex flex-col bg-darker rounded-2xl zoom"
+				className={`flex flex-col bg-darker rounded-2xl zoom ${classes}`}
 				onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 					e.stopPropagation();
 				}}

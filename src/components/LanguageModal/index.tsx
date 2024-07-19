@@ -32,7 +32,9 @@ function LanguageModal(): React.ReactNode {
 	return (
 		<Modal index={40}>
 			<div className="flex flex-col">
-				<div className="flex flex-col gap-y-4 px-20 py-8">
+				<div className="flex flex-col gap-y-6 w-80 px-6 py-6">
+					<span className="text-base text-white font-medium font-rubik">Language</span>
+
 					<button
 						type="button"
 						className="flex gap-x-4 items-center border border-light px-4 py-4 rounded-2xl"

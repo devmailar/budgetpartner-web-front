@@ -45,18 +45,6 @@ function SettingsModal(): React.ReactNode {
 		}
 	};
 
-	const handleLogout = (): void => {
-		try {
-			removeCookie("Authorization");
-			navigate("/login");
-			window.location.reload();
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				dispatch(setError(error.message));
-			}
-		}
-	};
-
 	const handleRemove = async (): Promise<void> => {
 		try {
 			const auth: string = getCookie("Authorization") ?? "";
@@ -280,25 +268,6 @@ function SettingsModal(): React.ReactNode {
 									<span className="text-sm text-white font-normal font-rubik">Support</span>
 								</button>
 							</div>
-
-							<button
-								type="button"
-								className="flex gap-x-2 items-center w-fit py-1"
-								onClick={(): void => handleLogout()}
-							>
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-									<title>Logout</title>
-									<path
-										d="M7.02301 5.5C5.4122 6.56898 4.18841 8.12823 3.53281 9.94691C2.87722 11.7656 2.82467 13.7471 3.38294 15.5979C3.94121 17.4488 5.08063 19.0707 6.63252 20.2236C8.18441 21.3765 10.0663 21.999 11.9995 21.999C13.9328 21.999 15.8146 21.3765 17.3665 20.2236C18.9184 19.0707 20.0578 17.4488 20.6161 15.5979C21.1744 13.7471 21.1218 11.7656 20.4662 9.94691C19.8106 8.12823 18.5868 6.56898 16.976 5.5M12 2V10"
-										stroke="white"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-								</svg>
-
-								<span className="text-sm text-white font-normal font-rubik">Logout</span>
-							</button>
 						</div>
 
 						{setting === Settings.ACCOUNT && (

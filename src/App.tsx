@@ -39,7 +39,7 @@ function App(): React.ReactNode {
 	return (
 		<>
 			<div className="hidden sm:block">
-				<Sidebar />
+				<Sidebar router={router} />
 			</div>
 
 			{error && <ErrorPopup />}

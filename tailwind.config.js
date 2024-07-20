@@ -4,9 +4,8 @@ export default {
 	theme: {
 		extend: {
 			backgroundImage: {
-				"radial-gradient": "radial-gradient(66.5% 66.5% at 50% 33.5%, #1B1B1B 10%, #000000 80%)",
+				"radial-gradient": "radial-gradient(circle at 50% 0%, #170526f2, #000000)",
 			},
-
 			colors: {
 				white: "#FFFFFF",
 				purple: "#895FF5",

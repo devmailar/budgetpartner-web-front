@@ -1,34 +1,24 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import type React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import EnglishFlag from "../../icons/EnglishFlag";
-import FinnishFlag from "../../icons/FinnishFlag";
+import type { NavigateFunction } from "react-router-dom";
+import { removeCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import { setModals } from "../../stores/Modals";
 import type { IRootState, IUser } from "../../types";
 
-function Sidebar(): React.ReactNode {
+interface IRouter {
+	navigate: NavigateFunction;
+}
+
+interface ISidebarProps {
+	router: IRouter;
+}
+
+function Sidebar({ router }: ISidebarProps): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 
 	const user: IUser = useSelector((state: IRootState) => state.user);
-	const language: string = useSelector((state: IRootState) => state.language);
-
-	const handleOpenLanguageModal = (): void => {
-		try {
-			dispatch(
-				setModals({
-					extraincome: false,
-					extraexpense: false,
-					language: true,
-					settings: false,
-				}),
-			);
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				dispatch(setError(error.message));
-			}
-		}
-	};
 
 	const handleOpenSettingsModal = (): void => {
 		try {
@@ -47,11 +37,23 @@ function Sidebar(): React.ReactNode {
 		}
 	};
 
+	const handleLogout = (): void => {
+		try {
+			removeCookie("Authorization");
+			router.navigate("/login");
+			window.location.reload();
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+	};
+
 	return (
 		<div className="absolute px-4 py-4 bg-black border-r border-r-grey h-screen">
-			<div className="flex flex-col items-center justify-between h-full">
+			<div className="flex flex-col items-center justify-between h-full zoom">
 				<div className="flex flex-col gap-y-20 items-center">
-					<span className="text-4xl text-purple font-black font-rubik">BP</span>
+					<span className="text-4xl text-white font-black font-rubik">BP</span>
 
 					<div className="flex flex-col">
 						<button type="button" className="flex items-center justify-center p-3">
@@ -216,45 +218,58 @@ function Sidebar(): React.ReactNode {
 				</div>
 
 				<div className="flex flex-col">
-					<button
-						type="button"
-						className="flex items-center justify-center p-3"
-						onClick={(): void => handleOpenLanguageModal()}
-					>
-						{language === "fi" ? <FinnishFlag className="w-9 h-9" /> : <EnglishFlag className="w-9 h-9" />}
-					</button>
-
 					{Object.keys(user).length > 0 && (
-						<button
-							type="button"
-							className="flex items-center justify-center p-3"
-							onClick={(): void => handleOpenSettingsModal()}
-						>
-							<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 40 40" fill="none">
-								<title>Settings</title>
-								<g clip-path="url(#clip0_279_157)">
+						<div className="flex flex-col">
+							<button
+								type="button"
+								className="flex items-center justify-center p-3"
+								onClick={(): void => handleOpenSettingsModal()}
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 40 40" fill="none">
+									<title>Settings</title>
+									<g clip-path="url(#clip0_279_157)">
+										<path
+											d="M17.2083 7.195C17.9183 4.26833 22.0817 4.26833 22.7917 7.195C22.8982 7.63467 23.107 8.04296 23.4012 8.38667C23.6953 8.73037 24.0665 8.99976 24.4844 9.17291C24.9024 9.34606 25.3553 9.41808 25.8063 9.38311C26.2573 9.34814 26.6937 9.20717 27.08 8.97167C29.6517 7.405 32.5967 10.3483 31.03 12.9217C30.7948 13.3078 30.6541 13.7439 30.6192 14.1946C30.5843 14.6453 30.6563 15.0979 30.8292 15.5156C31.0022 15.9333 31.2712 16.3043 31.6145 16.5984C31.9579 16.8925 32.3657 17.1015 32.805 17.2083C35.7317 17.9183 35.7317 22.0817 32.805 22.7917C32.3653 22.8982 31.957 23.107 31.6133 23.4012C31.2696 23.6953 31.0002 24.0665 30.8271 24.4844C30.6539 24.9024 30.5819 25.3553 30.6169 25.8063C30.6519 26.2573 30.7928 26.6937 31.0283 27.08C32.595 29.6517 29.6517 32.5967 27.0783 31.03C26.6922 30.7948 26.2561 30.6541 25.8054 30.6192C25.3547 30.5843 24.9021 30.6563 24.4844 30.8292C24.0667 31.0022 23.6957 31.2712 23.4016 31.6145C23.1075 31.9579 22.8985 32.3657 22.7917 32.805C22.0817 35.7317 17.9183 35.7317 17.2083 32.805C17.1018 32.3653 16.893 31.957 16.5988 31.6133C16.3047 31.2696 15.9335 31.0002 15.5156 30.8271C15.0976 30.6539 14.6447 30.5819 14.1937 30.6169C13.7427 30.6519 13.3063 30.7928 12.92 31.0283C10.3483 32.595 7.40333 29.6517 8.97 27.0783C9.20517 26.6922 9.34592 26.2561 9.38081 25.8054C9.41569 25.3547 9.34374 24.9021 9.17079 24.4844C8.99783 24.0667 8.72877 23.6957 8.38545 23.4016C8.04214 23.1075 7.63427 22.8985 7.195 22.7917C4.26833 22.0817 4.26833 17.9183 7.195 17.2083C7.63467 17.1018 8.04296 16.893 8.38667 16.5988C8.73037 16.3047 8.99976 15.9335 9.17291 15.5156C9.34606 15.0976 9.41808 14.6447 9.38311 14.1937C9.34814 13.7427 9.20717 13.3063 8.97167 12.92C7.405 10.3483 10.3483 7.40333 12.9217 8.97C14.5883 9.98333 16.7483 9.08667 17.2083 7.195Z"
+											stroke="#FEFEFE"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+										<path
+											d="M15 20C15 21.3261 15.5268 22.5979 16.4645 23.5355C17.4021 24.4732 18.6739 25 20 25C21.3261 25 22.5979 24.4732 23.5355 23.5355C24.4732 22.5979 25 21.3261 25 20C25 18.6739 24.4732 17.4021 23.5355 16.4645C22.5979 15.5268 21.3261 15 20 15C18.6739 15 17.4021 15.5268 16.4645 16.4645C15.5268 17.4021 15 18.6739 15 20Z"
+											stroke="#FEFEFE"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</g>
+									<defs>
+										<clipPath id="clip0_279_157">
+											<rect width="40" height="40" fill="white" />
+										</clipPath>
+									</defs>
+								</svg>
+							</button>
+
+							<button
+								type="button"
+								className="flex items-center justify-center p-3"
+								onClick={(): void => handleLogout()}
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 24 24" fill="none">
+									<title>Logout</title>
 									<path
-										d="M17.2083 7.195C17.9183 4.26833 22.0817 4.26833 22.7917 7.195C22.8982 7.63467 23.107 8.04296 23.4012 8.38667C23.6953 8.73037 24.0665 8.99976 24.4844 9.17291C24.9024 9.34606 25.3553 9.41808 25.8063 9.38311C26.2573 9.34814 26.6937 9.20717 27.08 8.97167C29.6517 7.405 32.5967 10.3483 31.03 12.9217C30.7948 13.3078 30.6541 13.7439 30.6192 14.1946C30.5843 14.6453 30.6563 15.0979 30.8292 15.5156C31.0022 15.9333 31.2712 16.3043 31.6145 16.5984C31.9579 16.8925 32.3657 17.1015 32.805 17.2083C35.7317 17.9183 35.7317 22.0817 32.805 22.7917C32.3653 22.8982 31.957 23.107 31.6133 23.4012C31.2696 23.6953 31.0002 24.0665 30.8271 24.4844C30.6539 24.9024 30.5819 25.3553 30.6169 25.8063C30.6519 26.2573 30.7928 26.6937 31.0283 27.08C32.595 29.6517 29.6517 32.5967 27.0783 31.03C26.6922 30.7948 26.2561 30.6541 25.8054 30.6192C25.3547 30.5843 24.9021 30.6563 24.4844 30.8292C24.0667 31.0022 23.6957 31.2712 23.4016 31.6145C23.1075 31.9579 22.8985 32.3657 22.7917 32.805C22.0817 35.7317 17.9183 35.7317 17.2083 32.805C17.1018 32.3653 16.893 31.957 16.5988 31.6133C16.3047 31.2696 15.9335 31.0002 15.5156 30.8271C15.0976 30.6539 14.6447 30.5819 14.1937 30.6169C13.7427 30.6519 13.3063 30.7928 12.92 31.0283C10.3483 32.595 7.40333 29.6517 8.97 27.0783C9.20517 26.6922 9.34592 26.2561 9.38081 25.8054C9.41569 25.3547 9.34374 24.9021 9.17079 24.4844C8.99783 24.0667 8.72877 23.6957 8.38545 23.4016C8.04214 23.1075 7.63427 22.8985 7.195 22.7917C4.26833 22.0817 4.26833 17.9183 7.195 17.2083C7.63467 17.1018 8.04296 16.893 8.38667 16.5988C8.73037 16.3047 8.99976 15.9335 9.17291 15.5156C9.34606 15.0976 9.41808 14.6447 9.38311 14.1937C9.34814 13.7427 9.20717 13.3063 8.97167 12.92C7.405 10.3483 10.3483 7.40333 12.9217 8.97C14.5883 9.98333 16.7483 9.08667 17.2083 7.195Z"
-										stroke="#FEFEFE"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										opacity="0.2"
+										d="M21 5.25V18.75C21 19.1478 20.842 19.5294 20.5607 19.8107C20.2794 20.092 19.8978 20.25 19.5 20.25H4.5V3.75H19.5C19.8978 3.75 20.2794 3.90804 20.5607 4.18934C20.842 4.47064 21 4.85218 21 5.25Z"
+										fill="white"
 									/>
 									<path
-										d="M15 20C15 21.3261 15.5268 22.5979 16.4645 23.5355C17.4021 24.4732 18.6739 25 20 25C21.3261 25 22.5979 24.4732 23.5355 23.5355C24.4732 22.5979 25 21.3261 25 20C25 18.6739 24.4732 17.4021 23.5355 16.4645C22.5979 15.5268 21.3261 15 20 15C18.6739 15 17.4021 15.5268 16.4645 16.4645C15.5268 17.4021 15 18.6739 15 20Z"
-										stroke="#FEFEFE"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										d="M11.25 20.25C11.25 20.4489 11.171 20.6397 11.0303 20.7803C10.8897 20.921 10.6989 21 10.5 21H4.5C4.30109 21 4.11032 20.921 3.96967 20.7803C3.82902 20.6397 3.75 20.4489 3.75 20.25V3.75C3.75 3.55109 3.82902 3.36032 3.96967 3.21967C4.11032 3.07902 4.30109 3 4.5 3H10.5C10.6989 3 10.8897 3.07902 11.0303 3.21967C11.171 3.36032 11.25 3.55109 11.25 3.75C11.25 3.94891 11.171 4.13968 11.0303 4.28033C10.8897 4.42098 10.6989 4.5 10.5 4.5H5.25V19.5H10.5C10.6989 19.5 10.8897 19.579 11.0303 19.7197C11.171 19.8603 11.25 20.0511 11.25 20.25ZM21.5306 11.4694L17.7806 7.71937C17.6399 7.57864 17.449 7.49958 17.25 7.49958C17.051 7.49958 16.8601 7.57864 16.7194 7.71937C16.5786 7.86011 16.4996 8.05098 16.4996 8.25C16.4996 8.44902 16.5786 8.63989 16.7194 8.78063L19.1897 11.25H10.5C10.3011 11.25 10.1103 11.329 9.96967 11.4697C9.82902 11.6103 9.75 11.8011 9.75 12C9.75 12.1989 9.82902 12.3897 9.96967 12.5303C10.1103 12.671 10.3011 12.75 10.5 12.75H19.1897L16.7194 15.2194C16.5786 15.3601 16.4996 15.551 16.4996 15.75C16.4996 15.949 16.5786 16.1399 16.7194 16.2806C16.8601 16.4214 17.051 16.5004 17.25 16.5004C17.449 16.5004 17.6399 16.4214 17.7806 16.2806L21.5306 12.5306C21.6004 12.461 21.6557 12.3783 21.6934 12.2872C21.7312 12.1962 21.7506 12.0986 21.7506 12C21.7506 11.9014 21.7312 11.8038 21.6934 11.7128C21.6557 11.6217 21.6004 11.539 21.5306 11.4694Z"
+										fill="white"
 									/>
-								</g>
-								<defs>
-									<clipPath id="clip0_279_157">
-										<rect width="40" height="40" fill="white" />
-									</clipPath>
-								</defs>
-							</svg>
-						</button>
+								</svg>
+							</button>
+						</div>
 					)}
 				</div>
 			</div>

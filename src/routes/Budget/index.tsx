@@ -262,7 +262,7 @@ function Budget(): React.ReactNode {
 						<div className="flex flex-col gap-y-2 items-center">
 							<button
 								type="button"
-								className="flex gap-x-2.5 items-center justify-center bg-dark px-4 py-2 rounded-3xl"
+								className="flex gap-x-2.5 items-center justify-center bg-dark border border-grey px-4 py-2 rounded-3xl"
 								onClick={(): void => setBudgetSwitch(!budgetSwitch)}
 							>
 								<span className="text-base text-light font-normal font-rubik">
@@ -275,7 +275,7 @@ function Budget(): React.ReactNode {
 									<title>Switch</title>
 									<path
 										d="M3.03125 13.5C3.03125 19.5592 7.94082 24.4688 14 24.4688C20.0592 24.4688 24.9688 19.5592 24.9688 13.5C24.9688 7.44082 20.0592 2.53125 14 2.53125C7.94082 2.53125 3.03125 7.44082 3.03125 13.5ZM18.2768 11.2113C18.6723 10.8158 19.3209 10.8158 19.7164 11.2113C19.9168 11.4117 20.0117 11.6701 20.0117 11.9285C20.0117 12.1869 19.9115 12.4506 19.7111 12.651L14.7383 17.608C14.3375 17.9719 13.7205 17.9613 13.3355 17.5764L8.28887 12.5455C7.89336 12.15 7.88809 11.5066 8.28887 11.1059C8.68437 10.7104 9.32773 10.7051 9.72852 11.1059L14.0053 15.4248L18.2768 11.2113Z"
-										fill="white"
+										fill="#B7B7B7"
 									/>
 								</svg>
 							</button>
@@ -319,7 +319,7 @@ function Budget(): React.ReactNode {
 							modules={[Autoplay, Pagination]}
 						>
 							<SwiperSlide>
-								<div className="flex flex-col gap-y-2 items-center pt-14 pb-7">
+								<div className="flex flex-col gap-y-4 items-center pt-14 pb-7">
 									<button
 										type="button"
 										onClick={(): void => {
@@ -338,14 +338,14 @@ function Budget(): React.ReactNode {
 										</h1>
 									</button>
 
-									<div className="px-3 py-1 bg-dark rounded-xl">
-										<span className="text-xl text-grey font-light font-rubik">day</span>
+									<div className="px-3 py-1 bg-dark border border-grey rounded-xl">
+										<span className="text-base text-light font-normal font-rubik">DA</span>
 									</div>
 								</div>
 							</SwiperSlide>
 
 							<SwiperSlide>
-								<div className="flex flex-col gap-y-2 items-center pt-14 pb-7">
+								<div className="flex flex-col gap-y-4 items-center pt-14 pb-7">
 									<button
 										type="button"
 										onClick={(): void => {
@@ -364,8 +364,8 @@ function Budget(): React.ReactNode {
 										</h1>
 									</button>
 
-									<div className="px-3 py-1 bg-dark rounded-xl">
-										<span className="text-xl text-grey font-light font-rubik">month</span>
+									<div className="px-3 py-1 bg-dark border border-grey rounded-xl">
+										<span className="text-base text-light font-normal font-rubik">MO</span>
 									</div>
 								</div>
 							</SwiperSlide>

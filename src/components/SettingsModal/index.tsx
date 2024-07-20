@@ -2,7 +2,7 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import { getCookie, removeCookie } from "typescript-cookie";
+import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
 import { setModals } from "../../stores/Modals";

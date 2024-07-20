@@ -375,31 +375,32 @@ function SettingsModal(): React.ReactNode {
 					</div>
 				</Modal>
 			) : (
-				<Modal index={40} classes="gap-y-2 px-6 py-6 animate__animated animate__fadeInDown animate__faster">
-					<div className="animate__animated animate__fadeIn flex flex-col gap-y-4 px-4 items-center justify-center max-w-80">
-						<span className="text-base text-center text-white font-medium font-rubik">Warning</span>
+				<Modal
+					index={40}
+					classes="gap-y-2 items-center justify-center px-6 py-6 max-w-80 animate__animated animate__fadeInDown animate__faster"
+				>
+					<span className="text-base text-center text-white font-medium font-rubik">Warning</span>
 
-						<span className="text-sm text-center text-light font-light font-rubik">
-							This operation is permanent and will delete your account
-						</span>
+					<span className="text-sm text-center text-light font-light font-rubik">
+						This operation is permanent and will delete your account
+					</span>
 
-						<div className="flex gap-2 items-center">
-							<button
-								type="submit"
-								className="btn bg-transparent px-3 py-2 rounded-xl"
-								onClick={(): Promise<void> => handleRemove()}
-							>
-								<span className="text-base text-red font-medium font-rubik">Delete</span>
-							</button>
+					<div className="flex gap-2 items-center">
+						<button
+							type="submit"
+							className="btn bg-transparent px-3 py-2 rounded-xl"
+							onClick={(): Promise<void> => handleRemove()}
+						>
+							<span className="text-base text-red font-medium font-rubik">Delete</span>
+						</button>
 
-							<button
-								type="submit"
-								className="btn bg-transparent px-3 py-2 rounded-xl"
-								onClick={(): void => setRemoveUserConfirmModal(false)}
-							>
-								<span className="text-base text-light font-medium font-rubik">Cancel</span>
-							</button>
-						</div>
+						<button
+							type="submit"
+							className="btn bg-transparent px-3 py-2 rounded-xl"
+							onClick={(): void => setRemoveUserConfirmModal(false)}
+						>
+							<span className="text-base text-light font-medium font-rubik">Cancel</span>
+						</button>
 					</div>
 				</Modal>
 			)}

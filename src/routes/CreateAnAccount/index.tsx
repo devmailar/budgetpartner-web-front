@@ -62,10 +62,10 @@ function CreateAnAccount(): React.ReactNode {
 					</button>
 				</div>
 
-				<div className="flex flex-col gap-y-5">
+				<div className="flex flex-col gap-y-6">
 					<div className="flex flex-col gap-y-1 items-center">
 						<h1 className="text-2xl text-white font-medium font-rubik">Create an account</h1>
-						<p className="text-base text-white font-normal font-rubik">Enter your email to sign up for this app</p>
+						<p className="text-base text-white font-normal font-rubik">Enter your email to sign up</p>
 					</div>
 
 					<div className="flex flex-col gap-y-3">
@@ -91,7 +91,7 @@ function CreateAnAccount(): React.ReactNode {
 					</div>
 				</div>
 
-				<div className="flex flex-col gap-y-3">
+				<div className="flex flex-col gap-y-4">
 					<input
 						className="btn bg-purple2 text-sm text-white font-medium py-2.5 rounded-lg"
 						type="submit"

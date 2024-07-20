@@ -56,7 +56,7 @@ function Login(): React.ReactNode {
 
 	return (
 		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">
-			<form className="flex flex-col gap-y-4 w-[26rem] zoom" onSubmit={handleLogin}>
+			<form className="flex flex-col gap-y-6 w-[26rem] zoom" onSubmit={handleLogin}>
 				<div className="flex flex-col gap-y-6">
 					<div className="flex flex-col gap-y-1 items-center">
 						<h1 className="text-2xl text-white font-medium font-rubik">Login to existing account</h1>

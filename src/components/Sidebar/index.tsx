@@ -56,7 +56,11 @@ function Sidebar({ router }: ISidebarProps): React.ReactNode {
 					<span className="text-4xl text-white font-black font-rubik">BP</span>
 
 					<div className="flex flex-col">
-						<button type="button" className="flex items-center justify-center p-3">
+						<button
+							type="button"
+							className="flex items-center justify-center p-3"
+							onClick={(): void => router.navigate("/")}
+						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 40 40" fill="none">
 								<title>Home</title>
 								<g clipPath="url(#clip0_103_77)">

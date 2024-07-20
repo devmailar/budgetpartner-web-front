@@ -45,6 +45,23 @@ function CreateAnAccount(): React.ReactNode {
 	return (
 		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">
 			<form className="flex flex-col gap-y-4 w-[26rem] zoom" onSubmit={handleCreate}>
+				<div className="flex items-center justify-end">
+					<button type="button" onClick={(): void => navigate("/login")}>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+							<title>Close</title>
+							<g clip-path="url(#clip0_283_267)">
+								<path d="M18 6L6 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+								<path d="M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+							</g>
+							<defs>
+								<clipPath id="clip0_283_267">
+									<rect width="24" height="24" fill="white" />
+								</clipPath>
+							</defs>
+						</svg>
+					</button>
+				</div>
+
 				<div className="flex flex-col gap-y-5">
 					<div className="flex flex-col gap-y-1 items-center">
 						<h1 className="text-2xl text-white font-medium font-rubik">Create an account</h1>
@@ -53,7 +70,7 @@ function CreateAnAccount(): React.ReactNode {
 
 					<div className="flex flex-col gap-y-3">
 						<input
-							className="bg-transparent border-purple border-2 px-2 py-2 text-lg text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple2 border px-2 py-2 text-lg text-white placeholder:text-white font-normal font-rubik rounded-lg"
 							type="email"
 							id="email"
 							name="email"
@@ -63,7 +80,7 @@ function CreateAnAccount(): React.ReactNode {
 						/>
 
 						<input
-							className="bg-transparent border-purple border-2 px-2 py-2 text-lg text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple2 border px-2 py-2 text-lg text-white placeholder:text-white font-normal font-rubik rounded-lg"
 							type="password"
 							id="password"
 							name="password"
@@ -76,7 +93,7 @@ function CreateAnAccount(): React.ReactNode {
 
 				<div className="flex flex-col gap-y-3">
 					<input
-						className="btn bg-purple text-sm text-white font-medium py-2.5 rounded-lg"
+						className="btn bg-purple2 text-sm text-white font-medium py-2.5 rounded-lg"
 						type="submit"
 						value="Sign up with email"
 						disabled={isLoading}

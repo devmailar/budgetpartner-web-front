@@ -65,7 +65,7 @@ function Login(): React.ReactNode {
 
 					<div className="flex flex-col gap-y-3 ">
 						<input
-							className="bg-transparent border-purple border-2 px-2 py-2 text-lg text-white placeholder:text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple2 border px-2 py-2 text-lg text-white placeholder:text-white font-normal font-rubik rounded-lg"
 							type="email"
 							id="email"
 							name="email"
@@ -75,7 +75,7 @@ function Login(): React.ReactNode {
 						/>
 
 						<input
-							className="bg-transparent border-purple border-2 px-2 py-2 text-lg text-white placeholder:text-white font-normal font-rubik rounded-lg"
+							className="bg-transparent border-purple2 border px-2 py-2 text-lg text-white placeholder:text-white font-normal font-rubik rounded-lg"
 							type="password"
 							id="password"
 							name="password"
@@ -88,7 +88,7 @@ function Login(): React.ReactNode {
 
 				<div className="flex flex-col gap-y-4">
 					<input
-						className={`btn ${isLoading ? "bg-grey" : "bg-purple"} text-sm text-white font-medium py-2.5 rounded-lg`}
+						className={`btn ${isLoading ? "bg-grey" : "bg-purple2"} text-sm text-white font-medium py-2.5 rounded-lg`}
 						type="submit"
 						value="Login with email"
 						disabled={isLoading}

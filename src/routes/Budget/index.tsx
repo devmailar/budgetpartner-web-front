@@ -333,7 +333,7 @@ function Budget(): React.ReactNode {
 											);
 										}}
 									>
-										<h1 className="animate__animated animate__bounce text-5xl text-purple font-bold font-rubik">
+										<h1 className="animate__animated animate__bounce text-5xl text-white font-bold font-rubik">
 											{dailyBudgetAmount.toFixed(2)}€
 										</h1>
 									</button>
@@ -359,7 +359,7 @@ function Budget(): React.ReactNode {
 											);
 										}}
 									>
-										<h1 className="animate__animated animate__bounce text-5xl text-purple font-bold font-rubik">
+										<h1 className="animate__animated animate__bounce text-5xl text-white font-bold font-rubik">
 											{monthlyBudgetAmount.toFixed(2)}€
 										</h1>
 									</button>

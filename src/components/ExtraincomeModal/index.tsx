@@ -131,19 +131,19 @@ function ExtraincomeModal(): React.ReactNode {
 	}, [navigate]);
 
 	return (
-		<Modal index={40} classes="gap-y-2 px-2.5 py-2.5 min-w-80 animate__animated animate__fadeInDown animate__faster">
+		<Modal index={40} classes="gap-y-2 px-3 py-3 min-w-[26rem] animate__animated animate__fadeInDown animate__faster">
 			{!removeExtraincomeModal && (
 				<div className="flex items-center justify-end">
 					<button type="button" onClick={(): void => handleClose()}>
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 							<title>Close</title>
-							<g clipPath="url(#clip0_245_208)">
-								<path d="M15 5L5 15" stroke="#4B4B4B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-								<path d="M5 5L15 15" stroke="#4B4B4B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+							<g clip-path="url(#clip0_283_267)">
+								<path d="M18 6L6 18" stroke="#4B4B4B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+								<path d="M6 6L18 18" stroke="#4B4B4B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 							</g>
 							<defs>
-								<clipPath id="clip0_245_208">
-									<rect width="20" height="20" fill="white" />
+								<clipPath id="clip0_283_267">
+									<rect width="24" height="24" fill="white" />
 								</clipPath>
 							</defs>
 						</svg>
@@ -152,10 +152,11 @@ function ExtraincomeModal(): React.ReactNode {
 			)}
 
 			{!createExtraincomeModal && !removeExtraincomeModal ? (
-				<div className="flex flex-col gap-4 px-7 py-2">
-					<div className="flex gap-x-3 items-center justify-between">
-						<div className="flex gap-x-1 items-center">
-							<span className="text-base text-white font-medium font-rubik">Total income</span>
+				<div className="flex flex-col gap-y-4 px-2">
+					<div className="flex items-center justify-between">
+						<div className="flex gap-x-1 items-center px-0 py-2">
+							<span className="text-lg text-white font-light font-rubik">Total income</span>
+
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="28"
@@ -174,42 +175,46 @@ function ExtraincomeModal(): React.ReactNode {
 							</svg>
 						</div>
 
-						<span className="text-base text-white font-medium font-rubik">{totalExtraincomes.toFixed(1)}€</span>
+						<span className="text-lg text-white font-light font-rubik">{totalExtraincomes.toFixed(1)}€</span>
 					</div>
 
-					<div className="flex flex-col items-start">
+					<div className="flex flex-col">
 						{budget.extraincomes.map((extraincome: IExtraincome) => (
 							<button
 								key={extraincome.extraincome_type}
 								type="button"
+								className="flex items-center justify-between"
 								onClick={(): void => {
 									setRemoveExtraincome(extraincome);
 									setRemoveExtraincomeModal(true);
 								}}
 							>
-								<span className="text-base text-white font-normal font-rubik">
-									{extraincome.extraincome_type}: {extraincome.extraincome_amount_monthly.toFixed(1)}€
+								<span className="text-lg text-white font-light font-rubik">{extraincome.extraincome_type}</span>
+								<span className="text-lg text-white font-light font-rubik">
+									{extraincome.extraincome_amount_monthly.toFixed(1)}€
 								</span>
 							</button>
 						))}
 					</div>
 
-					<button
-						type="button"
-						className="btn bg-transparent px-3 py-2 rounded-xl"
-						onClick={(): void => setCreateExtraincomeModal(true)}
-					>
-						<span className="text-base text-purple font-medium font-rubik">Create</span>
-					</button>
+					<div className="flex items-center justify-center px-0 py-1 border-t border-t-dark">
+						<button
+							type="button"
+							className="btn bg-dark px-3 py-3 w-full border border-dark rounded-xl"
+							onClick={(): void => setCreateExtraincomeModal(true)}
+						>
+							<span className="text-lg text-purple font-medium font-rubik">Create</span>
+						</button>
+					</div>
 				</div>
 			) : createExtraincomeModal ? (
-				<form className="flex flex-col gap-y-4 px-4" onSubmit={handleCreateExtraincome}>
-					<span className="text-base text-white font-medium font-rubik">Create new Income 🚀</span>
+				<form className="flex flex-col gap-y-4 px-2" onSubmit={handleCreateExtraincome}>
+					<span className="text-lg text-white font-light font-rubik">Create new Income 🚀</span>
 
 					<div className="flex flex-col gap-y-3">
 						<div className="flex items-center justify-between p-2.5 border-[0.5px] border-[#4B4B4B] rounded-lg">
 							<input
-								className="bg-transparent text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
+								className="bg-transparent w-full text-base text-white placeholder:text-light font-normal font-rubik focus:outline-none"
 								type="text"
 								name="extraincome_type"
 								id="extraincome_type"
@@ -220,7 +225,7 @@ function ExtraincomeModal(): React.ReactNode {
 
 						<div className="flex items-center justify-between p-2.5 border-[0.5px] border-[#4B4B4B] rounded-lg">
 							<input
-								className="bg-transparent text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
+								className="bg-transparent w-full text-base text-white placeholder:text-light font-normal font-rubik focus:outline-none"
 								type="number"
 								name="extraincome_amount_monthly"
 								id="extraincome_amount_monthly"
@@ -228,13 +233,15 @@ function ExtraincomeModal(): React.ReactNode {
 								required
 							/>
 
-							<span className="text-sm text-light font-normal font-rubik">€/MO</span>
+							<span className="text-base text-light font-normal font-rubik">€/MO</span>
 						</div>
 					</div>
 
-					<button type="submit" className="btn bg-transparent px-3 py-2 rounded-xl">
-						<span className="text-base text-purple font-medium font-rubik">Save</span>
-					</button>
+					<div className="flex items-center justify-center px-0 py-1 border-t border-t-dark">
+						<button type="submit" className="btn bg-dark px-3 py-3 w-full border border-dark rounded-xl">
+							<span className="text-lg text-purple font-medium font-rubik">Save</span>
+						</button>
+					</div>
 				</form>
 			) : (
 				removeExtraincomeModal && (

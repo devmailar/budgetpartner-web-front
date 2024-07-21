@@ -3,6 +3,7 @@ import type React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { NavigateFunction } from "react-router-dom";
 import { removeCookie } from "typescript-cookie";
+import ArtLogo from "../../assets/logo.png";
 import { setError } from "../../stores/Error";
 import { setModals } from "../../stores/Modals";
 import type { IRootState, IUser } from "../../types";
@@ -50,10 +51,10 @@ function Sidebar({ router }: ISidebarProps): React.ReactNode {
 	};
 
 	return (
-		<div className="absolute px-4 py-4 bg-black border-r border-r-grey h-screen">
-			<div className="flex flex-col items-center justify-between h-full zoom">
+		<div className="absolute px-2 py-6 bg-black border-r border-r-grey h-screen">
+			<div className="flex flex-col items-center justify-between h-full">
 				<div className="flex flex-col gap-y-20 items-center">
-					<span className="text-4xl text-white font-black font-rubik">BP</span>
+					<img src={ArtLogo} alt={ArtLogo} width={42} />
 
 					<div className="flex flex-col">
 						<button

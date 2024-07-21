@@ -12,6 +12,7 @@ import ExtraexpenseModal from "../../components/ExtraexpenseModal";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
 import LanguageModal from "../../components/LanguageModal";
 import LoginPopup from "../../components/LoginPopup";
+import Modal from "../../components/Modal";
 import SettingsModal from "../../components/SettingsModal";
 import { setBudget } from "../../stores/Budget";
 import { setBudgets } from "../../stores/Budgets";
@@ -257,36 +258,49 @@ function Budget(): React.ReactNode {
 					<div className="loader" />
 				</div>
 			) : (
-				<div className="flex flex-col gap-y-10 items-center mt-[5.3rem] zoom">
+				<div className="flex flex-col gap-y-12 items-center mt-28">
 					<div className="flex flex-col gap-y-2 items-center">
 						<div className="flex flex-col gap-y-2 items-center">
 							<button
 								type="button"
-								className="flex gap-x-2.5 items-center justify-center bg-dark border border-grey px-4 py-2 rounded-3xl"
+								className="flex gap-x-1 items-center justify-center bg-darker border border-grey px-4 py-2 rounded-3xl"
 								onClick={(): void => setBudgetSwitch(!budgetSwitch)}
 							>
-								<span className="text-base text-light font-normal font-rubik">
+								<span className="text-xl text-light font-normal font-rubik">
 									{Utils.months[new Date(budget.created_at).getMonth()]} {"("}
-									<span className="font-semibold">{new Date().getFullYear()}</span>
+									<span className="font-medium">{new Date().getFullYear()}</span>
 									{")"}
 								</span>
 
-								<svg xmlns="http://www.w3.org/2000/svg" width="28" height="27" viewBox="0 0 28 27" fill="none">
-									<title>Switch</title>
-									<path
-										d="M3.03125 13.5C3.03125 19.5592 7.94082 24.4688 14 24.4688C20.0592 24.4688 24.9688 19.5592 24.9688 13.5C24.9688 7.44082 20.0592 2.53125 14 2.53125C7.94082 2.53125 3.03125 7.44082 3.03125 13.5ZM18.2768 11.2113C18.6723 10.8158 19.3209 10.8158 19.7164 11.2113C19.9168 11.4117 20.0117 11.6701 20.0117 11.9285C20.0117 12.1869 19.9115 12.4506 19.7111 12.651L14.7383 17.608C14.3375 17.9719 13.7205 17.9613 13.3355 17.5764L8.28887 12.5455C7.89336 12.15 7.88809 11.5066 8.28887 11.1059C8.68437 10.7104 9.32773 10.7051 9.72852 11.1059L14.0053 15.4248L18.2768 11.2113Z"
-										fill="#B7B7B7"
-									/>
+								<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+									<title>Arrow Down</title>
+									<g clip-path="url(#clip0_316_158)">
+										<path
+											d="M8.75 14.583L17.5 23.333L26.25 14.583H8.75Z"
+											stroke="#B7B7B7"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</g>
+									<defs>
+										<clipPath id="clip0_316_158">
+											<rect width="35" height="35" fill="#B7B7B7" />
+										</clipPath>
+									</defs>
 								</svg>
 							</button>
 
 							{budgetSwitch && (
-								<div className="animate__animated animate__fadeInDown animate__faster absolute z-50 mt-14 flex flex-col gap-y-4 items-center justify-center w-52 py-4 bg-dark rounded-2xl">
+								<Modal
+									index={40}
+									classes="animate__animated animate__fadeInDown animate__faster gap-y-4 absolute top-48 z-50 w-64 px-0 py-6 rounded-2xl"
+								>
 									<div className="flex flex-col gap-y-1 items-center justify-center">
 										{budgets.map((b: IBudget) => (
 											<button key={b.id} type="button" onClick={(): void => handleSetBudget(b)}>
 												<span
-													className={`text-base ${
+													className={`text-xl ${
 														new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() &&
 														new Date(budget.created_at).getFullYear() === new Date(b.created_at).getFullYear()
 															? "text-white font-medium"
@@ -301,25 +315,25 @@ function Budget(): React.ReactNode {
 										))}
 									</div>
 
-									<button
-										type="button"
-										className="btn bg-transparent px-3 py-2 rounded-xl"
-										onClick={(): void => handleSetNewBudget()}
-									>
-										<span className="text-base text-purple font-medium font-rubik">Create</span>
+									<button type="button" className="btn px-3 py-2 rounded-xl" onClick={(): void => handleSetNewBudget()}>
+										<span className="text-xl text-purple2 font-medium font-rubik">Create</span>
 									</button>
-								</div>
+								</Modal>
 							)}
 						</div>
 
 						<Swiper
 							className="w-[20rem] h-fit z-0"
-							autoplay={{ delay: 10000, disableOnInteraction: false }}
+							autoplay={{ delay: 20000, disableOnInteraction: false }}
 							pagination={{ clickable: true }}
 							modules={[Autoplay, Pagination]}
 						>
 							<SwiperSlide>
-								<div className="flex flex-col gap-y-4 items-center pt-14 pb-7">
+								<div className="flex flex-col gap-y-2 items-center pt-14 pb-7">
+									<span className="text-xl text-light font-normal font-rubik">
+										📌 We saved in {Utils.months[new Date(budget.created_at).getMonth()]}
+									</span>
+
 									<button
 										type="button"
 										onClick={(): void => {
@@ -333,19 +347,17 @@ function Budget(): React.ReactNode {
 											);
 										}}
 									>
-										<h1 className="animate__animated animate__bounce text-5xl text-white font-bold font-rubik">
-											{dailyBudgetAmount.toFixed(2)}€
+										<h1 className="animate__animated animate__fadeInUp text-6xl text-white font-bold font-rubik">
+											{monthlyBudgetAmount.toFixed(1)}€
 										</h1>
 									</button>
-
-									<div className="px-3 py-1 bg-dark border border-grey rounded-xl">
-										<span className="text-base text-light font-normal font-rubik">DA</span>
-									</div>
 								</div>
 							</SwiperSlide>
 
 							<SwiperSlide>
-								<div className="flex flex-col gap-y-4 items-center pt-14 pb-7">
+								<div className="flex flex-col gap-y-2 items-center pt-14 pb-7">
+									<span className="text-xl text-light font-normal font-rubik">📌 We saved daily</span>
+
 									<button
 										type="button"
 										onClick={(): void => {
@@ -359,14 +371,10 @@ function Budget(): React.ReactNode {
 											);
 										}}
 									>
-										<h1 className="animate__animated animate__bounce text-5xl text-white font-bold font-rubik">
-											{monthlyBudgetAmount.toFixed(2)}€
+										<h1 className="animate__animated animate__fadeInUp text-6xl text-white font-bold font-rubik">
+											{dailyBudgetAmount.toFixed(2)}€
 										</h1>
 									</button>
-
-									<div className="px-3 py-1 bg-dark border border-grey rounded-xl">
-										<span className="text-base text-light font-normal font-rubik">MO</span>
-									</div>
 								</div>
 							</SwiperSlide>
 						</Swiper>
@@ -375,7 +383,7 @@ function Budget(): React.ReactNode {
 					<div className="flex flex-col gap-y-3 items-center">
 						<button
 							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-purple px-[18px] py-2.5 rounded-[6.25rem]"
+							className="flex gap-x-2 items-center justify-center btn bg-purple px-6 py-3 rounded-3xl"
 							onClick={(): void => {
 								dispatch(
 									setModals({
@@ -404,12 +412,12 @@ function Budget(): React.ReactNode {
 								<path d="M14 7l7 0l0 7" />
 							</svg>
 
-							<span className="text-sm text-dark font-medium font-rubik">Income</span>
+							<span className="text-base text-dark font-medium font-rubik">Income</span>
 						</button>
 
 						<button
 							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-orange px-[18px] py-2.5 rounded-[6.25rem]"
+							className="flex gap-x-2 items-center justify-center btn bg-orange px-6 py-3 rounded-3xl"
 							onClick={(): void => {
 								dispatch(
 									setModals({
@@ -438,12 +446,12 @@ function Budget(): React.ReactNode {
 								<path d="M21 10l0 7l-7 0" />
 							</svg>
 
-							<span className="text-sm text-dark font-medium font-rubik">Expenses</span>
+							<span className="text-base text-dark font-medium font-rubik">Expenses</span>
 						</button>
 
 						<button
 							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-red px-[18px] py-2.5 rounded-[6.25rem]"
+							className="flex gap-x-2 items-center justify-center btn bg-red px-6 py-3 rounded-3xl"
 							onClick={(): void => {
 								dispatch(
 									setModals({
@@ -485,7 +493,7 @@ function Budget(): React.ReactNode {
 								</defs>
 							</svg>
 
-							<span className="text-sm text-dark font-medium font-rubik">Delete</span>
+							<span className="text-base text-dark font-medium font-rubik">Delete</span>
 						</button>
 					</div>
 

@@ -131,11 +131,14 @@ function ExtraincomeModal(): React.ReactNode {
 	}, [navigate]);
 
 	return (
-		<Modal index={40} classes="gap-y-2 px-3 py-3 min-w-[24rem] animate__animated animate__fadeInDown animate__faster">
-			{!removeExtraincomeModal && (
+		<Modal
+			index={40}
+			classes="gap-y-4 px-6 py-5 min-w-[22rem] bg-[#11100F] border border-dark animate__animated animate__fadeInDown animate__faster"
+		>
+			{!createExtraincomeModal && !removeExtraincomeModal && (
 				<div className="flex items-center justify-end">
 					<button type="button" onClick={(): void => handleClose()}>
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
 							<title>Close</title>
 							<g clip-path="url(#clip0_283_267)">
 								<path d="M18 6L6 18" stroke="#4B4B4B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -152,10 +155,10 @@ function ExtraincomeModal(): React.ReactNode {
 			)}
 
 			{!createExtraincomeModal && !removeExtraincomeModal ? (
-				<div className="flex flex-col gap-y-4 px-2">
-					<div className="flex items-center justify-between">
-						<div className="flex gap-x-1 items-center px-0 py-2">
-							<span className="text-base text-white font-normal font-rubik">Total income</span>
+				<div className="flex flex-col gap-y-4">
+					<div className="flex items-center justify-between px-0 pb-2 border-b border-b-white">
+						<div className="flex gap-x-1 items-center">
+							<span className="text-base text-white font-medium font-rubik">Total income</span>
 
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -175,7 +178,7 @@ function ExtraincomeModal(): React.ReactNode {
 							</svg>
 						</div>
 
-						<span className="text-base text-white font-normal font-rubik">{totalExtraincomes.toFixed(1)}€</span>
+						<span className="text-base text-white font-medium font-rubik">{totalExtraincomes.toFixed(1)}€</span>
 					</div>
 
 					<div className="flex flex-col">
@@ -197,39 +200,39 @@ function ExtraincomeModal(): React.ReactNode {
 						))}
 					</div>
 
-					<div className="flex items-center justify-center px-0 py-1 border-t border-t-dark">
+					<div className="flex items-center justify-center">
 						<button
 							type="button"
-							className="btn bg-transparent px-3 py-3 w-full border border-dark rounded-xl"
+							className="btn border border-dark rounded-xl"
 							onClick={(): void => setCreateExtraincomeModal(true)}
 						>
-							<span className="text-sm text-purple font-medium font-rubik">Create</span>
+							<span className="text-base text-white font-normal font-rubik">Create</span>
 						</button>
 					</div>
 				</div>
 			) : createExtraincomeModal ? (
-				<form className="flex flex-col gap-y-4 px-2" onSubmit={handleCreateExtraincome}>
+				<form className="flex flex-col gap-y-4" onSubmit={handleCreateExtraincome}>
 					<span className="text-base text-white font-normal font-rubik">Create new Income 🚀</span>
 
 					<div className="flex flex-col gap-y-3">
-						<div className="flex items-center justify-between p-2.5 border-[0.5px] border-[#4B4B4B] rounded-lg">
+						<div className="flex items-center justify-between px-0 py-2 border-b border-b-white">
 							<input
 								className="bg-transparent w-full text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
 								type="text"
 								name="extraincome_type"
 								id="extraincome_type"
-								placeholder="Source"
+								placeholder="Investing"
 								required
 							/>
 						</div>
 
-						<div className="flex items-center justify-between p-2.5 border-[0.5px] border-[#4B4B4B] rounded-lg">
+						<div className="flex items-center justify-between px-0 py-2 border-b border-b-white">
 							<input
 								className="bg-transparent w-full text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
 								type="number"
 								name="extraincome_amount_monthly"
 								id="extraincome_amount_monthly"
-								placeholder="0.00"
+								placeholder="0.00€"
 								required
 							/>
 
@@ -237,9 +240,9 @@ function ExtraincomeModal(): React.ReactNode {
 						</div>
 					</div>
 
-					<div className="flex items-center justify-center px-0 py-1 border-t border-t-dark">
-						<button type="submit" className="btn bg-transparent px-3 py-3 w-full border border-dark rounded-xl">
-							<span className="text-sm text-purple font-medium font-rubik">Save</span>
+					<div className="flex items-center justify-center">
+						<button type="submit" className="btn border border-dark rounded-xl">
+							<span className="text-base text-white font-normal font-rubik">Save</span>
 						</button>
 					</div>
 				</form>

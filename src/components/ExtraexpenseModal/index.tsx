@@ -268,7 +268,7 @@ function ExtraexpenseModal(): React.ReactNode {
 						<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>
 
 						<span className="text-base text-center text-light font-medium font-rubik">
-							This operation is permanent and will delete expense{" "}
+							This operation is permanent and will delete expense <br />
 							<code>
 								{removeExtraexpense.extraexpense_type}: {removeExtraexpense.extraexpense_amount_monthly.toFixed(1)}€
 							</code>

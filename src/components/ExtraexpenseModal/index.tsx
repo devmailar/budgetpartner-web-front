@@ -26,10 +26,6 @@ function ExtraexpenseModal(): React.ReactNode {
 		updated_at: new Date(),
 	});
 
-	const totalExtraexpenses: number = budget.extraexpenses.reduce((accumulator: number, extraexpense: IExtraexpense) => {
-		return accumulator + extraexpense.extraexpense_amount_monthly;
-	}, 0);
-
 	const handleCreateExtraexpense = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
@@ -131,35 +127,20 @@ function ExtraexpenseModal(): React.ReactNode {
 	}, [navigate]);
 
 	return (
-		<Modal index={40} classes="gap-y-2 px-2.5 py-2.5 min-w-80 animate__animated animate__fadeInDown animate__faster">
-			{!removeExtraexpenseModal && (
-				<div className="flex items-center justify-end">
-					<button type="button" onClick={(): void => handleClose()}>
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-							<title>Close</title>
-							<g clipPath="url(#clip0_245_208)">
-								<path d="M15 5L5 15" stroke="#4B4B4B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-								<path d="M5 5L15 15" stroke="#4B4B4B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-							</g>
-							<defs>
-								<clipPath id="clip0_245_208">
-									<rect width="20" height="20" fill="white" />
-								</clipPath>
-							</defs>
-						</svg>
-					</button>
-				</div>
-			)}
-
+		<Modal
+			index={40}
+			classes="gap-y-4 px-4 pt-4 pb-4 min-w-[25rem] border border-dark animate__animated animate__fadeInDown animate__faster"
+		>
 			{!createExtraexpenseModal && !removeExtraexpenseModal ? (
-				<div className="flex flex-col gap-4 px-7 py-2">
-					<div className="flex gap-x-3 items-center justify-between">
+				<div className="flex flex-col gap-y-4">
+					<div className="flex items-center justify-between">
 						<div className="flex gap-x-1 items-center">
-							<span className="text-base text-white font-medium font-rubik">Total expenses</span>
+							<span className="text-base text-white font-medium font-rubik">expenses</span>
+
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								width="28"
-								height="28"
+								width="24"
+								height="24"
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="#B85C3D"
@@ -174,42 +155,85 @@ function ExtraexpenseModal(): React.ReactNode {
 							</svg>
 						</div>
 
-						<span className="text-base text-white font-medium font-rubik">{totalExtraexpenses.toFixed(1)}€</span>
+						<button className="mr-[-0.25rem]" type="button" onClick={(): void => handleClose()}>
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+								<title>Close</title>
+								<g clip-path="url(#clip0_283_267)">
+									<path d="M18 6L6 18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+									<path d="M6 6L18 18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+								</g>
+								<defs>
+									<clipPath id="clip0_283_267">
+										<rect width="24" height="24" fill="white" />
+									</clipPath>
+								</defs>
+							</svg>
+						</button>
 					</div>
 
-					<div className="flex flex-col items-start">
-						{budget.extraexpenses.map((extraexpense: IExtraexpense) => (
-							<button
-								key={extraexpense.extraexpense_type}
-								type="button"
-								onClick={(): void => {
-									setRemoveExtraexpense(extraexpense);
-									setRemoveExtraexpenseModal(true);
-								}}
-							>
-								<span className="text-base text-white font-normal font-rubik">
-									{extraexpense.extraexpense_type}: {extraexpense.extraexpense_amount_monthly.toFixed(1)}€
-								</span>
-							</button>
-						))}
+					<div className="overflow-auto">
+						<table className="w-full">
+							<thead className="border-b border-b-grey">
+								<tr>
+									<th className="-bg-yellow-600 px-0 py-1 text-left text-sm text-white font-medium font-rubik">ID</th>
+									<th className="-bg-violet-600 px-3 py-1 text-left text-sm text-white font-medium font-rubik">
+										Title
+									</th>
+									<th className="-bg-pink-600 px-3 py-1 text-left text-sm text-white font-medium font-rubik">Amount</th>
+									<th className="-bg-cyan-600 px-0 py-1 text-right text-sm text-white font-medium font-rubik">
+										Created
+									</th>
+								</tr>
+							</thead>
+
+							<tbody className="overflow-y-auto table-fixed">
+								{budget.extraexpenses.map((extraexpense: IExtraexpense, index: number) => (
+									<tr
+										className="border-b border-b-grey cursor-pointer transition-all duration-300 ease-in-out"
+										key={extraexpense.id}
+										onClick={(): void => {
+											setRemoveExtraexpense(extraexpense);
+											setRemoveExtraexpenseModal(true);
+										}}
+										onKeyUp={(): void => {
+											setRemoveExtraexpense(extraexpense);
+											setRemoveExtraexpenseModal(true);
+										}}
+									>
+										<td className="px-0 py-2 text-left text-sm text-light font-medium font-rubik truncate">
+											<span>{index + 1}</span>
+										</td>
+										<td className="px-3 py-2 text-left text-sm text-light font-medium font-rubik truncate">
+											<span>{extraexpense.extraexpense_type}</span>
+										</td>
+										<td className="px-3 py-2 text-left text-sm text-light font-medium font-rubik truncate">
+											<span>{extraexpense.extraexpense_amount_monthly.toFixed(1)}€</span>
+										</td>
+										<td className="px-0 py-2 text-right text-sm text-light font-medium font-rubik truncate">
+											<span>{new Date(extraexpense.created_at).toLocaleDateString()}</span>
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
 					</div>
 
 					<button
 						type="button"
-						className="btn bg-transparent px-3 py-2 rounded-xl"
+						className="btn border border-grey rounded-xl"
 						onClick={(): void => setCreateExtraexpenseModal(true)}
 					>
-						<span className="text-base text-orange font-medium font-rubik">Create</span>
+						<span className="text-base text-light font-normal font-rubik">Create</span>
 					</button>
 				</div>
 			) : createExtraexpenseModal ? (
-				<form className="flex flex-col gap-y-4 px-4" onSubmit={handleCreateExtraexpense}>
-					<span className="text-base text-white font-medium font-rubik">Create new expense 🚀</span>
+				<form className="flex flex-col gap-y-4" onSubmit={handleCreateExtraexpense}>
+					<span className="text-base text-white font-normal font-rubik">Create new Expense 🚀</span>
 
 					<div className="flex flex-col gap-y-3">
-						<div className="flex items-center justify-between p-2.5 border-[0.5px] border-[#4B4B4B] rounded-lg">
+						<div className="flex items-center justify-between px-0 py-2 border-b border-b-white">
 							<input
-								className="bg-transparent text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
+								className="bg-transparent w-full text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
 								type="text"
 								name="extraexpense_type"
 								id="extraexpense_type"
@@ -218,9 +242,9 @@ function ExtraexpenseModal(): React.ReactNode {
 							/>
 						</div>
 
-						<div className="flex items-center justify-between p-2.5 border-[0.5px] border-[#4B4B4B] rounded-lg">
+						<div className="flex items-center justify-between px-0 py-2 border-b border-b-white">
 							<input
-								className="bg-transparent text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
+								className="bg-transparent w-full text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
 								type="number"
 								name="extraexpense_amount_monthly"
 								id="extraexpense_amount_monthly"
@@ -232,16 +256,18 @@ function ExtraexpenseModal(): React.ReactNode {
 						</div>
 					</div>
 
-					<button type="submit" className="btn bg-transparent px-3 py-2 rounded-xl">
-						<span className="text-base text-orange font-medium font-rubik">Save</span>
-					</button>
+					<div className="flex items-center justify-center">
+						<button type="submit" className="btn border border-dark rounded-xl">
+							<span className="text-base text-white font-normal font-rubik">Save</span>
+						</button>
+					</div>
 				</form>
 			) : (
 				removeExtraexpenseModal && (
-					<div className="animate__animated animate__fadeIn flex flex-col gap-y-4 px-4 items-center justify-center max-w-80">
-						<span className="text-base text-center text-white font-medium font-rubik">Warning</span>
+					<div className="flex flex-col gap-y-4 items-center justify-center px-2 py-2">
+						<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>
 
-						<span className="text-sm text-center text-light font-light font-rubik">
+						<span className="text-base text-center text-light font-medium font-rubik">
 							This operation is permanent and will delete expense{" "}
 							<code>
 								{removeExtraexpense.extraexpense_type}: {removeExtraexpense.extraexpense_amount_monthly.toFixed(1)}€

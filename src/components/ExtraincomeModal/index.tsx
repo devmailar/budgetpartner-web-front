@@ -26,10 +26,6 @@ function ExtraincomeModal(): React.ReactNode {
 		updated_at: new Date(),
 	});
 
-	const totalExtraincomes: number = budget.extraincomes.reduce((accumulator: number, extraincome: IExtraincome) => {
-		return accumulator + extraincome.extraincome_amount_monthly;
-	}, 0);
-
 	const handleCreateExtraincome = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();

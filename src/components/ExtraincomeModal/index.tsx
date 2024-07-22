@@ -133,37 +133,18 @@ function ExtraincomeModal(): React.ReactNode {
 	return (
 		<Modal
 			index={40}
-			classes="gap-y-4 px-6 py-5 min-w-[22rem] bg-[#11100F] border border-dark animate__animated animate__fadeInDown animate__faster"
+			classes="gap-y-4 px-4 pt-4 pb-4 min-w-[25rem] border border-dark animate__animated animate__fadeInDown animate__faster"
 		>
-			{!createExtraincomeModal && !removeExtraincomeModal && (
-				<div className="flex items-center justify-end">
-					<button type="button" onClick={(): void => handleClose()}>
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
-							<title>Close</title>
-							<g clip-path="url(#clip0_283_267)">
-								<path d="M18 6L6 18" stroke="#4B4B4B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-								<path d="M6 6L18 18" stroke="#4B4B4B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-							</g>
-							<defs>
-								<clipPath id="clip0_283_267">
-									<rect width="24" height="24" fill="white" />
-								</clipPath>
-							</defs>
-						</svg>
-					</button>
-				</div>
-			)}
-
 			{!createExtraincomeModal && !removeExtraincomeModal ? (
 				<div className="flex flex-col gap-y-4">
-					<div className="flex items-center justify-between px-0 pb-2 border-b border-b-white">
+					<div className="flex items-center justify-between">
 						<div className="flex gap-x-1 items-center">
-							<span className="text-base text-white font-medium font-rubik">Total income</span>
+							<span className="text-base text-white font-medium font-rubik">income</span>
 
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								width="28"
-								height="28"
+								width="24"
+								height="24"
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="#895FF5"
@@ -178,37 +159,76 @@ function ExtraincomeModal(): React.ReactNode {
 							</svg>
 						</div>
 
-						<span className="text-base text-white font-medium font-rubik">{totalExtraincomes.toFixed(1)}€</span>
-					</div>
-
-					<div className="flex flex-col">
-						{budget.extraincomes.map((extraincome: IExtraincome) => (
-							<button
-								key={extraincome.extraincome_type}
-								type="button"
-								className="flex items-center justify-between"
-								onClick={(): void => {
-									setRemoveExtraincome(extraincome);
-									setRemoveExtraincomeModal(true);
-								}}
-							>
-								<span className="text-base text-white font-normal font-rubik">{extraincome.extraincome_type}</span>
-								<span className="text-base text-white font-normal font-rubik">
-									{extraincome.extraincome_amount_monthly.toFixed(1)}€
-								</span>
-							</button>
-						))}
-					</div>
-
-					<div className="flex items-center justify-center">
-						<button
-							type="button"
-							className="btn border border-dark rounded-xl"
-							onClick={(): void => setCreateExtraincomeModal(true)}
-						>
-							<span className="text-base text-white font-normal font-rubik">Create</span>
+						<button className="mr-[-0.25rem]" type="button" onClick={(): void => handleClose()}>
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+								<title>Close</title>
+								<g clip-path="url(#clip0_283_267)">
+									<path d="M18 6L6 18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+									<path d="M6 6L18 18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+								</g>
+								<defs>
+									<clipPath id="clip0_283_267">
+										<rect width="24" height="24" fill="white" />
+									</clipPath>
+								</defs>
+							</svg>
 						</button>
 					</div>
+
+					<div className="overflow-auto">
+						<table className="w-full">
+							<thead className="border-b border-b-grey">
+								<tr>
+									<th className="-bg-yellow-600 px-0 py-1 text-left text-sm text-white font-medium font-rubik">ID</th>
+									<th className="-bg-violet-600 px-3 py-1 text-left text-sm text-white font-medium font-rubik">
+										Title
+									</th>
+									<th className="-bg-pink-600 px-3 py-1 text-left text-sm text-white font-medium font-rubik">Amount</th>
+									<th className="-bg-cyan-600 px-0 py-1 text-right text-sm text-white font-medium font-rubik">
+										Created
+									</th>
+								</tr>
+							</thead>
+
+							<tbody className="overflow-y-auto table-fixed">
+								{budget.extraincomes.map((extraincome: IExtraincome, index: number) => (
+									<tr
+										className="border-b border-b-grey cursor-pointer transition-all duration-300 ease-in-out"
+										key={extraincome.id}
+										onClick={(): void => {
+											setRemoveExtraincome(extraincome);
+											setRemoveExtraincomeModal(true);
+										}}
+										onKeyUp={(): void => {
+											setRemoveExtraincome(extraincome);
+											setRemoveExtraincomeModal(true);
+										}}
+									>
+										<td className="px-0 py-2 text-left text-sm text-light font-medium font-rubik truncate">
+											<span>{index + 1}</span>
+										</td>
+										<td className="px-3 py-2 text-left text-sm text-light font-medium font-rubik truncate">
+											<span>{extraincome.extraincome_type}</span>
+										</td>
+										<td className="px-3 py-2 text-left text-sm text-light font-medium font-rubik truncate">
+											<span>{extraincome.extraincome_amount_monthly.toFixed(1)}€</span>
+										</td>
+										<td className="px-0 py-2 text-right text-sm text-light font-medium font-rubik truncate">
+											<span>{new Date(extraincome.created_at).toLocaleDateString()}</span>
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+
+					<button
+						type="button"
+						className="btn border border-grey rounded-xl"
+						onClick={(): void => setCreateExtraincomeModal(true)}
+					>
+						<span className="text-base text-light font-normal font-rubik">Create</span>
+					</button>
 				</div>
 			) : createExtraincomeModal ? (
 				<form className="flex flex-col gap-y-4" onSubmit={handleCreateExtraincome}>

@@ -316,7 +316,7 @@ function Budget(): React.ReactNode {
 									</div>
 
 									<button type="button" className="btn px-3 py-2 rounded-xl" onClick={(): void => handleSetNewBudget()}>
-										<span className="text-xl text-purple2 font-medium font-rubik">Create</span>
+										<span className="text-xl text-white font-medium font-rubik">Create</span>
 									</button>
 								</Modal>
 							)}

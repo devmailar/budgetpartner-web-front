@@ -39,7 +39,6 @@ function BudgetNew(): React.ReactNode {
 				headers: {
 					Authorization: `Bearer ${auth}`,
 					"Content-Type": "application/json",
-					"ngrok-skip-browser-warning": "69420",
 				},
 				body: JSON.stringify({ date: new Date(date) }),
 			});
@@ -52,7 +51,7 @@ function BudgetNew(): React.ReactNode {
 
 			const getUserResponse: Response = await fetch(`${Utils.baseurl}/users/get`, {
 				method: "GET",
-				headers: { Authorization: `Bearer ${auth}`, "ngrok-skip-browser-warning": "69420" },
+				headers: { Authorization: `Bearer ${auth}` },
 			});
 
 			if (!getUserResponse.ok) {
@@ -89,7 +88,6 @@ function BudgetNew(): React.ReactNode {
 					headers: {
 						Authorization: `Bearer ${auth}`,
 						"Content-Type": "application/json",
-						"ngrok-skip-browser-warning": "69420",
 					},
 					body: JSON.stringify({
 						budget_id: currentBudget.id,

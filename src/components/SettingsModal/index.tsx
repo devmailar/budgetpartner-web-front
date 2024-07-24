@@ -55,7 +55,7 @@ function SettingsModal(): React.ReactNode {
 
 			const removeUserResponse: Response = await fetch(`${Utils.baseurl}/users/remove`, {
 				method: "DELETE",
-				headers: { Authorization: `Bearer ${auth}`, "ngrok-skip-browser-warning": "69420" },
+				headers: { Authorization: `Bearer ${auth}` },
 			});
 
 			if (!removeUserResponse.ok) {

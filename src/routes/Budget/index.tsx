@@ -52,7 +52,7 @@ function Budget(): React.ReactNode {
 			try {
 				const getUserResponse: Response = await fetch(`${Utils.baseurl}/users/get`, {
 					method: "GET",
-					headers: { Authorization: `Bearer ${auth}`, "ngrok-skip-browser-warning": "69420" },
+					headers: { Authorization: `Bearer ${auth}` },
 				});
 
 				if (!getUserResponse.ok) {
@@ -164,7 +164,7 @@ function Budget(): React.ReactNode {
 
 			const removeBudgetResponse: Response = await fetch(`${Utils.baseurl}/budgets/remove/${budget.id}`, {
 				method: "DELETE",
-				headers: { Authorization: `Bearer ${auth}`, "ngrok-skip-browser-warning": "69420" },
+				headers: { Authorization: `Bearer ${auth}` },
 			});
 
 			if (!removeBudgetResponse.ok) {

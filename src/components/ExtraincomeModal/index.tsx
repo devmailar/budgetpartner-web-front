@@ -49,7 +49,6 @@ function ExtraincomeModal(): React.ReactNode {
 				headers: {
 					Authorization: `Bearer ${auth}`,
 					"Content-Type": "application/json",
-					"ngrok-skip-browser-warning": "69420",
 				},
 				body: JSON.stringify({
 					budget_id: budget.id,
@@ -84,7 +83,7 @@ function ExtraincomeModal(): React.ReactNode {
 				`${Utils.baseurl}/extraincomes/remove/${extraincome_id}`,
 				{
 					method: "DELETE",
-					headers: { Authorization: `Bearer ${auth}`, "ngrok-skip-browser-warning": "69420" },
+					headers: { Authorization: `Bearer ${auth}` },
 				},
 			);
 

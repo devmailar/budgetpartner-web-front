@@ -27,7 +27,11 @@ function BudgetGetStarted(): React.ReactNode {
 
 			const createBudgetResponse: Response = await fetch(`${Utils.baseurl}/budgets/create`, {
 				method: "POST",
-				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+				headers: {
+					Authorization: `Bearer ${auth}`,
+					"Content-Type": "application/json",
+					"ngrok-skip-browser-warning": "69420",
+				},
 				body: JSON.stringify({ date: new Date() }),
 			});
 
@@ -61,7 +65,7 @@ function BudgetGetStarted(): React.ReactNode {
 
 			const getUserResponse: Response = await fetch(`${Utils.baseurl}/users/get`, {
 				method: "GET",
-				headers: { Authorization: `Bearer ${auth}` },
+				headers: { Authorization: `Bearer ${auth}`, "ngrok-skip-browser-warning": "69420" },
 			});
 
 			if (!getUserResponse.ok) {
@@ -94,7 +98,11 @@ function BudgetGetStarted(): React.ReactNode {
 
 			const createExtraincomeResponse: Response = await fetch(`${Utils.baseurl}/extraincomes/create`, {
 				method: "POST",
-				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+				headers: {
+					Authorization: `Bearer ${auth}`,
+					"Content-Type": "application/json",
+					"ngrok-skip-browser-warning": "69420",
+				},
 				body: JSON.stringify({
 					budget_id: currentBudget.id,
 					extraincome_type: "Salary",

@@ -46,7 +46,11 @@ function ExtraincomeModal(): React.ReactNode {
 
 			const createExtraincomeResponse: Response = await fetch(`${Utils.baseurl}/extraincomes/create`, {
 				method: "POST",
-				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+				headers: {
+					Authorization: `Bearer ${auth}`,
+					"Content-Type": "application/json",
+					"ngrok-skip-browser-warning": "69420",
+				},
 				body: JSON.stringify({
 					budget_id: budget.id,
 					extraincome_type: extraincomeType,
@@ -80,7 +84,7 @@ function ExtraincomeModal(): React.ReactNode {
 				`${Utils.baseurl}/extraincomes/remove/${extraincome_id}`,
 				{
 					method: "DELETE",
-					headers: { Authorization: `Bearer ${auth}` },
+					headers: { Authorization: `Bearer ${auth}`, "ngrok-skip-browser-warning": "69420" },
 				},
 			);
 

@@ -46,7 +46,11 @@ function ExtraexpenseModal(): React.ReactNode {
 
 			const createExtraexpenseResponse: Response = await fetch(`${Utils.baseurl}/extraexpenses/create`, {
 				method: "POST",
-				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+				headers: {
+					Authorization: `Bearer ${auth}`,
+					"Content-Type": "application/json",
+					"ngrok-skip-browser-warning": "69420",
+				},
 				body: JSON.stringify({
 					budget_id: budget.id,
 					extraexpense_type: extraexpenseType,
@@ -80,7 +84,7 @@ function ExtraexpenseModal(): React.ReactNode {
 				`${Utils.baseurl}/extraexpenses/remove/${extraexpense_id}`,
 				{
 					method: "DELETE",
-					headers: { Authorization: `Bearer ${auth}` },
+					headers: { Authorization: `Bearer ${auth}`, "ngrok-skip-browser-warning": "69420" },
 				},
 			);
 

@@ -23,7 +23,7 @@ function CreateAnAccount(): React.ReactNode {
 
 			const createBudgetResponse: Response = await fetch(`${Utils.baseurl}/users/create`, {
 				method: "POST",
-				headers: { "Content-Type": "application/json" },
+				headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "69420" },
 				body: JSON.stringify({ email: email, password: password, country: "" }),
 			});
 

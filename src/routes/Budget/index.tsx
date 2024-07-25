@@ -111,8 +111,8 @@ function Budget(): React.ReactNode {
 			} catch (error) {
 				if (error instanceof Error) {
 					dispatch(setError(error.message));
-					// removeCookie("Authorization");
-					// window.location.reload();
+					removeCookie("Authorization");
+					window.location.reload();
 				}
 			}
 		},

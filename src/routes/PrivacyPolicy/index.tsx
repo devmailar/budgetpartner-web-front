@@ -2,7 +2,7 @@ import type React from "react";
 
 function PrivacyPolicy(): React.ReactNode {
 	return (
-		<div className="flex justify-center bg-black h-max">
+		<div className="flex justify-center bg-black w-screen h-screen">
 			<div className="flex flex-col mx-28 my-6 text-base text-white font-light font-rubik leading-tight">
 				<h1>Welcome to Budget Partner</h1>
 				<p>Effective Date: July 26, 2024</p>

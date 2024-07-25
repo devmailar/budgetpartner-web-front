@@ -26,7 +26,10 @@ function PrivacyPolicy(): React.ReactNode {
 					and geolocation metrics. This information aids in optimizing and improving the performance of Budget Partner.
 					Importantly, Cloudflare does not store any personally identifiable data from our users. For more in-depth
 					information on how Cloudflare uses Browser Insights, you can visit their blog post{" "}
-					<a href="https://blog.cloudflare.com/browser-insights/">here</a>.
+					<a className="text-purple underline" href="https://blog.cloudflare.com/browser-insights/">
+						here
+					</a>
+					.
 				</p>
 				<br />
 				<h2>2. Use of Your Information</h2>
@@ -72,7 +75,10 @@ function PrivacyPolicy(): React.ReactNode {
 				<h2>8. Contact Us</h2>
 				<p>
 					If you have any questions about this Privacy Policy or our data handling practices, please contact us at{" "}
-					<a href="mailto:support@budgetpartner.app">support@budgetpartner.app</a>.
+					<a className="text-purple underline" href="mailto:support@budgetpartner.app">
+						support@budgetpartner.app
+					</a>
+					.
 				</p>
 				<br />
 				<p>Thank you for choosing Budget Partner, where we value your privacy and data security.</p>

@@ -8,6 +8,7 @@ import BudgetGetStarted from "./routes/BudgetGetStarted";
 import BudgetNew from "./routes/BudgetNew";
 import CreateAnAccount from "./routes/CreateAnAccount";
 import Login from "./routes/Login";
+import PrivacyPolicy from "./routes/PrivacyPolicy";
 import type { IRootState } from "./types";
 
 export const router = createBrowserRouter([
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
 	{
 		path: "/create-an-account",
 		element: <CreateAnAccount />,
+	},
+	{
+		path: "/privacy-policy",
+		element: <PrivacyPolicy />,
 	},
 ]);
 

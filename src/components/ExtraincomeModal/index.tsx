@@ -134,7 +134,7 @@ function ExtraincomeModal(): React.ReactNode {
 			{removeExtraincomeModal ? (
 				<Modal
 					index={40}
-					classes="gap-y-5 items-center justify-center px-5 py-5 w-[18rem] md:min-w-[25rem] border border-dark animate__animated animate__slideInDown animate__faster"
+					classes="gap-y-5 items-center justify-center px-5 py-5 w-[18rem] md:min-w-[25rem] !bg-dark animate__animated animate__slideInDown animate__faster"
 				>
 					<div className="flex flex-col gap-y-2">
 						<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>

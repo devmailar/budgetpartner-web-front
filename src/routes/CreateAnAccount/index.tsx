@@ -43,7 +43,7 @@ function CreateAnAccount(): React.ReactNode {
 	};
 
 	return (
-		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">
+		<div className="flex items-center justify-center w-screen h-screen">
 			<form className="flex flex-col gap-y-4 w-[26rem] zoom" onSubmit={handleCreate}>
 				<div className="flex items-center justify-end">
 					<button type="button" onClick={(): void => navigate("/login")}>

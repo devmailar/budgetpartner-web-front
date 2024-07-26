@@ -12,7 +12,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media screen(sm) {
+body {
+  background-image: radial-gradient(circle at 50% 0%, #170526f2, #000000);
+}
+
+/* @media screen(sm) {
   .zoom {
     zoom: 1.1;
   }
@@ -40,4 +44,4 @@
   .zoom {
     zoom: 1.3;
   }
-}
+} */

@@ -252,7 +252,7 @@ function Budget(): React.ReactNode {
 	}, [budget]);
 
 	return (
-		<div className="flex justify-center bg-radial-gradient w-screen h-screen">
+		<div className="flex justify-center w-screen h-screen">
 			{isLoading ? (
 				<div className="flex items-center justify-center w-screen h-screen pb-40">
 					<div className="loader" />

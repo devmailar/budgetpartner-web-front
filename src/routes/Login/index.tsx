@@ -55,7 +55,7 @@ function Login(): React.ReactNode {
 	}, [navigate]);
 
 	return (
-		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">
+		<div className="flex items-center justify-center w-screen h-screen">
 			<form className="flex flex-col gap-y-6 w-[26rem] zoom" onSubmit={handleLogin}>
 				<div className="flex flex-col gap-y-6">
 					<div className="flex flex-col gap-y-1 items-center">

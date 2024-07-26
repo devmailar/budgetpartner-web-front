@@ -138,7 +138,7 @@ function BudgetNew(): React.ReactNode {
 	}, []);
 
 	return (
-		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">
+		<div className="flex items-center justify-center w-screen h-screen">
 			<div className="flex flex-col gap-y-6 justify-center w-[25rem]">
 				<form className="flex flex-col gap-y-6 px-6 py-6 bg-dark rounded-lg" onSubmit={handleCreateIncome}>
 					<div>

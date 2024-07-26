@@ -128,7 +128,7 @@ function BudgetGetStarted(): React.ReactNode {
 	}, []);
 
 	return (
-		<div className="flex items-center justify-center bg-radial-gradient w-screen h-screen">
+		<div className="flex items-center justify-center w-screen h-screen">
 			{step === 0 && (
 				<div className="flex flex-col gap-y-6 justify-center w-[400px]">
 					<div className="flex flex-col gap-y-1 items-center">

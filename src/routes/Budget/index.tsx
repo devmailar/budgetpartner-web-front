@@ -294,16 +294,21 @@ function Budget(): React.ReactNode {
 							{budgetSwitch && (
 								<Modal
 									index={40}
-									classes="animate__animated animate__fadeInDown animate__faster gap-y-4 absolute top-48 z-50 w-64 px-0 py-6 rounded-2xl"
+									classes="gap-y-6 px-2 py-5 absolute top-44 z-50 w-60 rounded-2xl !bg-black border border-dark animate__animated animate__fadeInDown animate__faster"
 								>
-									<div className="flex flex-col gap-y-1 items-center justify-center">
+									<div className="flex flex-col gap-y-2.5 items-center justify-center">
 										{budgets.map((b: IBudget) => (
-											<button key={b.id} type="button" onClick={(): void => handleSetBudget(b)}>
+											<button
+												className="px-3 py-2 border border-light rounded-xl"
+												key={b.id}
+												type="button"
+												onClick={(): void => handleSetBudget(b)}
+											>
 												<span
-													className={`text-xl ${
+													className={`text-base ${
 														new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() &&
 														new Date(budget.created_at).getFullYear() === new Date(b.created_at).getFullYear()
-															? "text-white font-medium"
+															? "text-white font-normal"
 															: "text-light font-normal"
 													} font-rubik`}
 												>
@@ -315,8 +320,8 @@ function Budget(): React.ReactNode {
 										))}
 									</div>
 
-									<button type="button" className="btn px-3 py-2 rounded-xl" onClick={(): void => handleSetNewBudget()}>
-										<span className="text-xl text-white font-medium font-rubik">Create</span>
+									<button type="button" onClick={(): void => handleSetNewBudget()}>
+										<span className="text-base text-light font-medium font-rubik">Create</span>
 									</button>
 								</Modal>
 							)}

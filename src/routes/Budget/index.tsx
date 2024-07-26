@@ -503,38 +503,61 @@ function Budget(): React.ReactNode {
 					</div>
 
 					{resetBudgetModal && (
-						<div className="absolute z-40 flex items-center justify-center w-full h-full top-0 bg-black bg-opacity-60">
-							<div className="animate__animated animate__fadeInDown animate__faster min-w-80 px-2.5 py-2.5 bg-dark border border-darker rounded-2xl">
-								<div className="flex flex-col gap-y-4 px-4 items-center justify-center max-w-80">
-									<span className="text-base text-center text-white font-medium font-rubik">Warning</span>
+						<Modal
+							index={40}
+							classes="gap-y-5 items-center justify-center px-5 py-5 w-[20rem] md:min-w-[25rem] !bg-dark animate__animated animate__fadeInUp animate__faster"
+						>
+							<div className="flex flex-col gap-y-2">
+								<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>
 
-									<span className="text-sm text-center text-light font-light font-rubik">
-										This operation is permanent and will delete budget for{" "}
+								<span className="text-base text-center text-light font-light font-rubik">
+									This operation is permanent and will delete{" "}
+									<b>
 										{Utils.months[new Date(budget.created_at).getMonth()]} {"("}
-										<span className="font-semibold">{new Date(budget.created_at).getFullYear()}</span>
-										{")"}
-									</span>
-
-									<div className="flex gap-2 items-center">
-										<button
-											type="submit"
-											className="btn bg-transparent px-3 py-2 rounded-xl"
-											onClick={(): Promise<void> => handleRemoveBudget(budget)}
-										>
-											<span className="text-base text-red font-medium font-rubik">Delete</span>
-										</button>
-
-										<button
-											type="submit"
-											className="btn bg-transparent px-3 py-2 rounded-xl"
-											onClick={(): void => setResetBudgetModal(false)}
-										>
-											<span className="text-base text-light font-medium font-rubik">Cancel</span>
-										</button>
-									</div>
-								</div>
+										{new Date(budget.created_at).getFullYear()}
+									</b>
+									{")"} budget.
+								</span>
 							</div>
-						</div>
+
+							<div className="flex gap-x-3 items-center">
+								<button
+									className="btn px-2.5 py-1.5 border border-red hover:bg-red text-red hover:text-light stroke-red hover:stroke-light"
+									type="submit"
+									onClick={(): Promise<void> => handleRemoveBudget(budget)}
+								>
+									<div className="flex gap-x-0 items-center">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<title>Flame</title>
+											<g clip-path="url(#clip0_307_158)">
+												<path
+													d="M12 12C14 9.04 12 5 11 4C11 7.038 9.227 8.741 8 10C6.774 11.26 6 13.24 6 15C6 16.5913 6.63214 18.1174 7.75736 19.2426C8.88258 20.3679 10.4087 21 12 21C13.5913 21 15.1174 20.3679 16.2426 19.2426C17.3679 18.1174 18 16.5913 18 15C18 13.468 16.944 11.06 16 10C14.214 13 13.209 13 12 12Z"
+													stroke=""
+													stroke-width="1.5"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+												/>
+											</g>
+											<defs>
+												<clipPath id="clip0_307_158">
+													<rect width="24" height="24" fill="" />
+												</clipPath>
+											</defs>
+										</svg>
+
+										<span className="text-base font-normal font-rubik">Delete</span>
+									</div>
+								</button>
+
+								<button
+									type="submit"
+									className="btn px-2.5 py-1.5 border border-light"
+									onClick={(): void => setResetBudgetModal(false)}
+								>
+									<span className="text-base text-light font-normal font-rubik">Cancel</span>
+								</button>
+							</div>
+						</Modal>
 					)}
 				</div>
 			)}

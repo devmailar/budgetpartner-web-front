@@ -1,9 +1,7 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setError } from "../../stores/Error";
 import type { IRootState } from "../../types";
-import Modal from "../Modal";
 
 function ErrorPopup(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
@@ -19,16 +17,20 @@ function ErrorPopup(): React.ReactNode {
 		}
 	};
 
-	return (
-		<Modal index={50}>
-			<div className="px-4 py-4">
-				<span className="text-sm text-white font-normal font-rubik">{error}</span>
-			</div>
+	setTimeout(async (): Promise<void> => await handleClose(), 3000);
 
-			<button type="button" className="btn border-t border-t-dark py-2.5" onClick={(): Promise<void> => handleClose()}>
-				<span className="text-sm text-purple font-normal font-rubik">Close</span>
+	return (
+		<div className="z-50 absolute top-8 flex items-center justify-center w-screen">
+			<button
+				className="btn px-3.5 py-2.5 border border-red animate__animated animate__fadeInDown animate__faster"
+				type="button"
+				onClick={(): Promise<void> => handleClose()}
+			>
+				<div className="flex gap-x-1 items-center">
+					<span className="text-sm text-white font-normal font-rubik uppercase">{error}</span>
+				</div>
 			</button>
-		</Modal>
+		</div>
 	);
 }
 

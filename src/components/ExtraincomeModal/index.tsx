@@ -132,7 +132,7 @@ function ExtraincomeModal(): React.ReactNode {
 	return (
 		<Modal
 			index={40}
-			classes="gap-y-4 px-4 pt-4 pb-4 min-w-[20rem] md:min-w-[25rem] border border-dark animate__animated animate__fadeInDown animate__faster"
+			classes="gap-y-4 px-4 pt-4 pb-4 w-[20rem] md:min-w-[25rem] border border-dark animate__animated animate__fadeInDown animate__faster"
 		>
 			{!createExtraincomeModal && !removeExtraincomeModal ? (
 				<div className="flex flex-col gap-y-4">

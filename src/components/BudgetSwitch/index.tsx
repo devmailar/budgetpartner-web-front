@@ -9,6 +9,7 @@ import { setForceLogin } from "../../stores/ForceLogin";
 import type { IBudget, IRootState } from "../../types";
 import { Utils } from "../../utils";
 import Modal from "../Modal";
+import { setLoader } from "../../stores/Loader";
 
 function BudgetSwitch(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
@@ -39,10 +40,13 @@ function BudgetSwitch(): React.ReactNode {
 
 	const handleSetBudget = (budget: IBudget): void => {
 		try {
-			// setIsLoading(true);
+			dispatch(setLoader(true));
 			dispatch(setBudget(budget));
+
 			setBudgetSwitch(false);
-			// setTimeout((): void => setIsLoading(false), 250);
+			setTimeout((): void => {
+				dispatch(setLoader(false));
+			}, 250);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));

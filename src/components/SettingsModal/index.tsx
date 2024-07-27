@@ -74,7 +74,58 @@ function SettingsModal(): React.ReactNode {
 
 	return (
 		<>
-			{!removeUserConfirmModal ? (
+			{removeUserConfirmModal ? (
+				<Modal
+					index={40}
+					classes="gap-y-3 items-center justify-center px-6 py-6 w-[20rem] md:min-w-[26rem] animate__animated animate__fadeInUp animate__faster"
+				>
+					<div className="flex flex-col gap-y-2">
+						<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>
+
+						<span className="text-sm text-center text-light font-light font-rubik">
+							This operation is permanent and will delete your account
+						</span>
+					</div>
+
+					<div className="flex gap-x-3 items-center">
+						<button
+							className="btn px-2.5 py-1.5 border border-red hover:bg-red text-red hover:text-light stroke-red hover:stroke-light"
+							type="submit"
+							onClick={(): Promise<void> => handleRemove()}
+						>
+							<div className="flex gap-x-0 items-center">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<title>Flame</title>
+									<g clip-path="url(#clip0_307_158)">
+										<path
+											d="M12 12C14 9.04 12 5 11 4C11 7.038 9.227 8.741 8 10C6.774 11.26 6 13.24 6 15C6 16.5913 6.63214 18.1174 7.75736 19.2426C8.88258 20.3679 10.4087 21 12 21C13.5913 21 15.1174 20.3679 16.2426 19.2426C17.3679 18.1174 18 16.5913 18 15C18 13.468 16.944 11.06 16 10C14.214 13 13.209 13 12 12Z"
+											stroke=""
+											stroke-width="1.5"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</g>
+									<defs>
+										<clipPath id="clip0_307_158">
+											<rect width="24" height="24" fill="" />
+										</clipPath>
+									</defs>
+								</svg>
+
+								<span className="text-base font-normal font-rubik">Delete</span>
+							</div>
+						</button>
+
+						<button
+							type="submit"
+							className="btn px-2.5 py-1.5 border border-light"
+							onClick={(): void => setRemoveUserConfirmModal(false)}
+						>
+							<span className="text-base text-light font-normal font-rubik">Cancel</span>
+						</button>
+					</div>
+				</Modal>
+			) : (
 				<Modal
 					index={40}
 					classes="gap-y-2 px-6 py-6 min-w-[26rem] min-h-80 animate__animated animate__fadeInDown animate__faster"
@@ -341,35 +392,6 @@ function SettingsModal(): React.ReactNode {
 								</div>
 							</div>
 						)}
-					</div>
-				</Modal>
-			) : (
-				<Modal
-					index={40}
-					classes="gap-y-2 items-center justify-center px-6 py-6 max-w-80 animate__animated animate__fadeInDown animate__faster"
-				>
-					<span className="text-base text-center text-white font-medium font-rubik">Warning</span>
-
-					<span className="text-sm text-center text-light font-light font-rubik">
-						This operation is permanent and will delete your account
-					</span>
-
-					<div className="flex gap-2 items-center">
-						<button
-							type="submit"
-							className="btn bg-transparent px-3 py-2 rounded-xl"
-							onClick={(): Promise<void> => handleRemove()}
-						>
-							<span className="text-base text-red font-medium font-rubik">Delete</span>
-						</button>
-
-						<button
-							type="submit"
-							className="btn bg-transparent px-3 py-2 rounded-xl"
-							onClick={(): void => setRemoveUserConfirmModal(false)}
-						>
-							<span className="text-base text-light font-medium font-rubik">Cancel</span>
-						</button>
 					</div>
 				</Modal>
 			)}

@@ -139,7 +139,7 @@ function ExtraexpenseModal(): React.ReactNode {
 			{removeExtraexpenseModal ? (
 				<Modal
 					index={40}
-					classes="gap-y-5 items-center justify-center px-5 py-5 w-[20rem] md:min-w-[20rem] !bg-dark animate__animated animate__fadeInUp animate__faster"
+					classes="gap-y-3 items-center justify-center px-6 py-6 w-[20rem] md:min-w-[20rem] animate__animated animate__fadeInUp animate__faster"
 				>
 					<div className="flex flex-col gap-y-2">
 						<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>

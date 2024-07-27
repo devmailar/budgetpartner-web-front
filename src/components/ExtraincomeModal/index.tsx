@@ -26,6 +26,8 @@ function ExtraincomeModal(): React.ReactNode {
 		updated_at: new Date(),
 	});
 
+	const [removeExtraincomeButtonDisabled, setRemoveExtraincomeButtonDisabled] = React.useState<boolean>(false);
+
 	const handleCreateExtraincome = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
@@ -73,6 +75,8 @@ function ExtraincomeModal(): React.ReactNode {
 
 	const handleRemoveExtraincome = async (extraincome_id: number): Promise<void> => {
 		try {
+			setRemoveExtraincomeButtonDisabled(true);
+
 			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
 				dispatch(setForceLogin(true));
@@ -97,6 +101,7 @@ function ExtraincomeModal(): React.ReactNode {
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));
+				setTimeout((): void => setRemoveExtraincomeButtonDisabled(false), 2000);
 			}
 		}
 	};
@@ -132,14 +137,17 @@ function ExtraincomeModal(): React.ReactNode {
 	return (
 		<>
 			{removeExtraincomeModal ? (
-				<Modal index={40} classes="gap-y-5 items-center justify-center px-5 py-5 w-[18rem] md:min-w-[25rem] !bg-dark">
+				<Modal
+					index={40}
+					classes="gap-y-5 items-center justify-center px-5 py-5 w-[20rem] md:min-w-[20rem] !bg-dark animate__animated animate__fadeInUp animate__faster"
+				>
 					<div className="flex flex-col gap-y-2">
 						<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>
 
 						<span className="text-base text-center text-light font-light font-rubik">
-							This operation will delete{" "}
+							This operation is permanent will delete{" "}
 							<b>
-								{removeExtraincome.extraincome_type}: {removeExtraincome.extraincome_amount_monthly.toFixed(1)}€
+								{removeExtraincome.extraincome_type} {removeExtraincome.extraincome_amount_monthly.toFixed(1)}€
 							</b>{" "}
 							income.
 						</span>
@@ -150,6 +158,7 @@ function ExtraincomeModal(): React.ReactNode {
 							className="btn px-2.5 py-1.5 border border-red hover:bg-red text-red hover:text-light stroke-red hover:stroke-light"
 							type="submit"
 							onClick={(): Promise<void> => handleRemoveExtraincome(removeExtraincome.id)}
+							disabled={removeExtraincomeButtonDisabled}
 						>
 							<div className="flex gap-x-0 items-center">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

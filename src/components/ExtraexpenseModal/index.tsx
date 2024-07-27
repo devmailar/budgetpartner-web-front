@@ -337,7 +337,7 @@ function ExtraexpenseModal(): React.ReactNode {
 										type="text"
 										name="extraexpense_type"
 										id="extraexpense_type"
-										placeholder="Source"
+										placeholder="eg. New Microphone"
 										required
 									/>
 								</div>
@@ -348,7 +348,7 @@ function ExtraexpenseModal(): React.ReactNode {
 										type="number"
 										name="extraexpense_amount_monthly"
 										id="extraexpense_amount_monthly"
-										placeholder="0.00"
+										placeholder="0.00€"
 										required
 									/>
 

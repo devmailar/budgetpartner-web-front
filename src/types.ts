@@ -53,6 +53,7 @@ export interface IRootState {
 	modals: IModals;
 	error: string;
 	language: string;
+	loader: boolean;
 	forceLogin: boolean;
 }
 

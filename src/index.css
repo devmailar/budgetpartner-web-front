@@ -16,32 +16,18 @@ body {
   background-image: radial-gradient(circle at 50% 0%, #170526f2, #000000);
 }
 
-/* @media screen(sm) {
-  .zoom {
-    zoom: 1.1;
-  }
+.loader {
+  width: 35px;
+  height: 35px;
+  --c: radial-gradient(farthest-side, #895ff5 92%, #00000000);
+  background: var(--c) 50% 0, var(--c) 50% 100%, var(--c) 100% 50%, var(--c) 0 50%;
+  background-size: 8px 8px;
+  background-repeat: no-repeat;
+  animation: turn 1s infinite;
 }
 
-@media screen(md) {
-  .zoom {
-    zoom: 1.1;
+@keyframes turn {
+  to {
+    transform: rotate(0.5turn);
   }
 }
-
-@media screen(lg) {
-  .zoom {
-    zoom: 1.2;
-  }
-}
-
-@media screen(xl) {
-  .zoom {
-    zoom: 1.2;
-  }
-}
-
-@media screen(2xl) {
-  .zoom {
-    zoom: 1.3;
-  }
-} */

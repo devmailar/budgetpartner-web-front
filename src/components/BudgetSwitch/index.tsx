@@ -58,7 +58,7 @@ function BudgetSwitch(): React.ReactNode {
 		<div className="flex flex-col gap-y-2 items-center">
 			<button
 				type="button"
-				className="flex gap-x-1 items-center justify-center bg-darker border border-grey px-4 py-2 rounded-3xl"
+				className="z-50 flex gap-x-1 items-center justify-center bg-darker border border-grey px-4 py-2 rounded-3xl"
 				onClick={(): void => setBudgetSwitch(!budgetSwitch)}
 			>
 				<span className="text-xl text-light font-normal font-rubik">

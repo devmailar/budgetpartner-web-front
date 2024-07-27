@@ -8,6 +8,7 @@ import "swiper/css";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { getCookie, removeCookie } from "typescript-cookie";
+import BudgetSwitch from "../../components/BudgetSwitch";
 import ExtraexpenseModal from "../../components/ExtraexpenseModal";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
 import LanguageModal from "../../components/LanguageModal";
@@ -36,12 +37,10 @@ function Budget(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const budgets: IBudget[] = useSelector((state: IRootState) => state.budgets);
 	const budget: IBudget = useSelector((state: IRootState) => state.budget);
 	const modals: IModals = useSelector((state: IRootState) => state.modals);
 	const forceLogin: boolean = useSelector((state: IRootState) => state.forceLogin);
 
-	const [budgetSwitch, setBudgetSwitch] = React.useState<boolean>(false);
 	const [isLoading, setIsLoading] = React.useState<boolean>(true);
 	const [dailyBudgetAmount, setDailyBudgetAmount] = React.useState<number>(0);
 	const [monthlyBudgetAmount, setMonthlyBudgetAmount] = React.useState<number>(0);
@@ -120,37 +119,6 @@ function Budget(): React.ReactNode {
 		},
 		[dispatch, navigate],
 	);
-
-	const handleSetNewBudget = (): void => {
-		try {
-			setBudgetSwitch(false);
-
-			const auth: string = getCookie("Authorization") ?? "";
-			if (!auth) {
-				dispatch(setForceLogin(true));
-				return;
-			}
-
-			navigate("/budget/new");
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				dispatch(setError(error.message));
-			}
-		}
-	};
-
-	const handleSetBudget = (budget: IBudget): void => {
-		try {
-			setIsLoading(true);
-			dispatch(setBudget(budget));
-			setBudgetSwitch(false);
-			setTimeout((): void => setIsLoading(false), 250);
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				dispatch(setError(error.message));
-			}
-		}
-	};
 
 	const handleRemoveBudget = async (budget: IBudget): Promise<void> => {
 		try {
@@ -275,72 +243,7 @@ function Budget(): React.ReactNode {
 			) : (
 				<div className="flex flex-col gap-y-12 items-center mt-28">
 					<div className="flex flex-col gap-y-2 items-center">
-						<div className="flex flex-col gap-y-2 items-center">
-							<button
-								type="button"
-								className="flex gap-x-1 items-center justify-center bg-darker border border-grey px-4 py-2 rounded-3xl"
-								onClick={(): void => setBudgetSwitch(!budgetSwitch)}
-							>
-								<span className="text-xl text-light font-normal font-rubik">
-									{Utils.months[new Date(budget.created_at).getMonth()]} {"("}
-									<span className="font-medium">{new Date().getFullYear()}</span>
-									{")"}
-								</span>
-
-								<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
-									<title>Arrow Down</title>
-									<g clip-path="url(#clip0_316_158)">
-										<path
-											d="M8.75 14.583L17.5 23.333L26.25 14.583H8.75Z"
-											stroke="#B7B7B7"
-											stroke-width="2"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-										/>
-									</g>
-									<defs>
-										<clipPath id="clip0_316_158">
-											<rect width="35" height="35" fill="#B7B7B7" />
-										</clipPath>
-									</defs>
-								</svg>
-							</button>
-
-							{budgetSwitch && (
-								<Modal
-									index={40}
-									classes="gap-y-6 px-2 py-5 absolute top-44 z-50 w-60 rounded-2xl border border-dark animate__animated animate__fadeInDown animate__faster"
-								>
-									<div className="flex flex-col gap-y-2.5 items-center justify-center">
-										{budgets.map((b: IBudget) => (
-											<button
-												className="px-3 py-2 border border-light rounded-xl"
-												key={b.id}
-												type="button"
-												onClick={(): void => handleSetBudget(b)}
-											>
-												<span
-													className={`text-base ${
-														new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() &&
-														new Date(budget.created_at).getFullYear() === new Date(b.created_at).getFullYear()
-															? "text-white font-normal"
-															: "text-light font-normal"
-													} font-rubik`}
-												>
-													{Utils.months[new Date(b.created_at).getMonth()]} {"("}
-													{new Date(b.created_at).getFullYear()}
-													{")"}
-												</span>
-											</button>
-										))}
-									</div>
-
-									<button type="button" onClick={(): void => handleSetNewBudget()}>
-										<span className="text-base text-light font-medium font-rubik">Create</span>
-									</button>
-								</Modal>
-							)}
-						</div>
+						<BudgetSwitch />
 
 						<Swiper
 							className="w-[20rem] h-fit z-0"

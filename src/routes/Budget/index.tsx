@@ -47,6 +47,8 @@ function Budget(): React.ReactNode {
 	const [monthlyBudgetAmount, setMonthlyBudgetAmount] = React.useState<number>(0);
 	const [resetBudgetModal, setResetBudgetModal] = React.useState<boolean>(false);
 
+	const [removeBudgetButtonDisabled, setRemoveBudgetButtonDisabled] = React.useState<boolean>(false);
+
 	const handleGetUserResponse = React.useCallback(
 		async (auth: string): Promise<void> => {
 			try {
@@ -152,6 +154,8 @@ function Budget(): React.ReactNode {
 
 	const handleRemoveBudget = async (budget: IBudget): Promise<void> => {
 		try {
+			setRemoveBudgetButtonDisabled(true);
+
 			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
 				dispatch(setForceLogin(true));
@@ -178,6 +182,7 @@ function Budget(): React.ReactNode {
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));
+				setTimeout((): void => setRemoveBudgetButtonDisabled(false), 2000);
 			}
 		}
 	};
@@ -557,7 +562,7 @@ function Budget(): React.ReactNode {
 					{resetBudgetModal && (
 						<Modal
 							index={40}
-							classes="gap-y-5 items-center justify-center px-5 py-5 w-[20rem] md:min-w-[25rem] !bg-dark animate__animated animate__fadeInUp animate__faster"
+							classes="gap-y-5 items-center justify-center px-5 py-5 w-[20rem] md:min-w-[20rem] !bg-dark animate__animated animate__fadeInUp animate__faster"
 						>
 							<div className="flex flex-col gap-y-2">
 								<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>
@@ -565,10 +570,10 @@ function Budget(): React.ReactNode {
 								<span className="text-base text-center text-light font-light font-rubik">
 									This operation is permanent and will delete{" "}
 									<b>
-										{Utils.months[new Date(budget.created_at).getMonth()]} {"("}
+										{Utils.months[new Date(budget.created_at).getMonth()]}
 										{new Date(budget.created_at).getFullYear()}
-									</b>
-									{")"} budget.
+									</b>{" "}
+									budget.
 								</span>
 							</div>
 
@@ -577,6 +582,7 @@ function Budget(): React.ReactNode {
 									className="btn px-2.5 py-1.5 border border-red hover:bg-red text-red hover:text-light stroke-red hover:stroke-light"
 									type="submit"
 									onClick={(): Promise<void> => handleRemoveBudget(budget)}
+									disabled={removeBudgetButtonDisabled}
 								>
 									<div className="flex gap-x-0 items-center">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

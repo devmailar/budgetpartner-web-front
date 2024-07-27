@@ -145,7 +145,7 @@ function ExtraincomeModal(): React.ReactNode {
 						<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>
 
 						<span className="text-base text-center text-light font-light font-rubik">
-							This operation is permanent will delete{" "}
+							This operation is permanent and will delete{" "}
 							<b>
 								{removeExtraincome.extraincome_type} {removeExtraincome.extraincome_amount_monthly.toFixed(1)}€
 							</b>{" "}

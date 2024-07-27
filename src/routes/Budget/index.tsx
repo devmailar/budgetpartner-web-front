@@ -182,6 +182,16 @@ function Budget(): React.ReactNode {
 		}
 	};
 
+	const handleRedirectLogin = (): void => {
+		try {
+			navigate("/login");
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+	};
+
 	React.useEffect((): void => {
 		const onLoad = async (): Promise<void> => {
 			const auth: string = getCookie("Authorization") ?? "";
@@ -385,122 +395,164 @@ function Budget(): React.ReactNode {
 						</Swiper>
 					</div>
 
-					<div className="flex flex-col gap-y-3 items-center">
+					{!getCookie("Authorization") ? (
 						<button
 							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-purple px-6 py-3 rounded-3xl"
-							onClick={(): void => {
-								dispatch(
-									setModals({
-										extraincome: true,
-										extraexpense: false,
-										language: false,
-										settings: false,
-									}),
-								);
-							}}
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							>
-								<title>Trending Up</title>
-								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-								<path d="M3 17l6 -6l4 4l8 -8" />
-								<path d="M14 7l7 0l0 7" />
-							</svg>
-
-							<span className="text-base text-dark font-medium font-rubik">Income</span>
-						</button>
-
-						<button
-							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-orange px-6 py-3 rounded-3xl"
-							onClick={(): void => {
-								dispatch(
-									setModals({
-										extraincome: false,
-										extraexpense: true,
-										language: false,
-										settings: false,
-									}),
-								);
-							}}
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							>
-								<title>Trending Down</title>
-								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-								<path d="M3 7l6 6l4 -4l8 8" />
-								<path d="M21 10l0 7l-7 0" />
-							</svg>
-
-							<span className="text-base text-dark font-medium font-rubik">Expenses</span>
-						</button>
-
-						<button
-							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-red px-6 py-3 rounded-3xl"
-							onClick={(): void => {
-								dispatch(
-									setModals({
-										extraincome: false,
-										extraexpense: false,
-										language: false,
-										settings: false,
-									}),
-
-									setResetBudgetModal(true),
-								);
-							}}
+							className="flex gap-x-2 items-center justify-center btn bg-dark px-4 py-3 rounded-3xl"
+							onClick={(): void => handleRedirectLogin()}
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-								<title>Reset</title>
-								<g clipPath="url(#clip0_253_109)">
-									<path d="M4 7H20" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-									<path d="M10 11V17" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-									<path d="M14 11V17" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+								<title>Login</title>
+								<g clip-path="url(#clip0_349_173)">
 									<path
-										d="M5 7L6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19L19 7"
-										stroke="black"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
+										d="M9 8V6C9 5.46957 9.21071 4.96086 9.58579 4.58579C9.96086 4.21071 10.4696 4 11 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V18C20 18.5304 19.7893 19.0391 19.4142 19.4142C19.0391 19.7893 18.5304 20 18 20H11C10.4696 20 9.96086 19.7893 9.58579 19.4142C9.21071 19.0391 9 18.5304 9 18V16"
+										stroke="#B7B7B7"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
 									/>
 									<path
-										d="M9 7V4C9 3.73478 9.10536 3.48043 9.29289 3.29289C9.48043 3.10536 9.73478 3 10 3H14C14.2652 3 14.5196 3.10536 14.7071 3.29289C14.8946 3.48043 15 3.73478 15 4V7"
-										stroke="black"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
+										d="M3 12H16L13 9"
+										stroke="#B7B7B7"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+									<path
+										d="M13 15L16 12"
+										stroke="#B7B7B7"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
 									/>
 								</g>
 								<defs>
-									<clipPath id="clip0_253_109">
-										<rect width="24" height="24" fill="white" />
+									<clipPath id="clip0_349_173">
+										<rect width="24" height="24" fill="#B7B7B7" />
 									</clipPath>
 								</defs>
 							</svg>
 
-							<span className="text-base text-dark font-medium font-rubik">Delete</span>
+							<span className="text-base text-light font-medium font-rubik">Login/Signup</span>
 						</button>
-					</div>
+					) : (
+						<div className="flex flex-col gap-y-3 items-center">
+							<button
+								type="button"
+								className="flex gap-x-2 items-center justify-center btn bg-purple px-6 py-3 rounded-3xl"
+								onClick={(): void => {
+									dispatch(
+										setModals({
+											extraincome: true,
+											extraexpense: false,
+											language: false,
+											settings: false,
+										}),
+									);
+								}}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
+									<title>Trending Up</title>
+									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+									<path d="M3 17l6 -6l4 4l8 -8" />
+									<path d="M14 7l7 0l0 7" />
+								</svg>
+
+								<span className="text-base text-dark font-medium font-rubik">Income</span>
+							</button>
+
+							<button
+								type="button"
+								className="flex gap-x-2 items-center justify-center btn bg-orange px-6 py-3 rounded-3xl"
+								onClick={(): void => {
+									dispatch(
+										setModals({
+											extraincome: false,
+											extraexpense: true,
+											language: false,
+											settings: false,
+										}),
+									);
+								}}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
+									<title>Trending Down</title>
+									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+									<path d="M3 7l6 6l4 -4l8 8" />
+									<path d="M21 10l0 7l-7 0" />
+								</svg>
+
+								<span className="text-base text-dark font-medium font-rubik">Expenses</span>
+							</button>
+
+							<button
+								type="button"
+								className="flex gap-x-2 items-center justify-center btn bg-red px-6 py-3 rounded-3xl"
+								onClick={(): void => {
+									dispatch(
+										setModals({
+											extraincome: false,
+											extraexpense: false,
+											language: false,
+											settings: false,
+										}),
+
+										setResetBudgetModal(true),
+									);
+								}}
+							>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<title>Reset</title>
+									<g clipPath="url(#clip0_253_109)">
+										<path d="M4 7H20" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+										<path d="M10 11V17" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+										<path d="M14 11V17" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+										<path
+											d="M5 7L6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19L19 7"
+											stroke="black"
+											strokeWidth="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										/>
+										<path
+											d="M9 7V4C9 3.73478 9.10536 3.48043 9.29289 3.29289C9.48043 3.10536 9.73478 3 10 3H14C14.2652 3 14.5196 3.10536 14.7071 3.29289C14.8946 3.48043 15 3.73478 15 4V7"
+											stroke="black"
+											strokeWidth="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										/>
+									</g>
+									<defs>
+										<clipPath id="clip0_253_109">
+											<rect width="24" height="24" fill="white" />
+										</clipPath>
+									</defs>
+								</svg>
+
+								<span className="text-base text-dark font-medium font-rubik">Delete</span>
+							</button>
+						</div>
+					)}
 
 					{resetBudgetModal && (
 						<Modal

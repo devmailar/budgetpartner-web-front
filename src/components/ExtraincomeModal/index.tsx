@@ -137,10 +137,7 @@ function ExtraincomeModal(): React.ReactNode {
 	return (
 		<>
 			{removeExtraincomeModal ? (
-				<Modal
-					index={40}
-					classes="gap-y-3 items-center justify-center px-6 py-6 w-[20rem] md:min-w-[20rem] animate__animated animate__fadeInUp animate__faster"
-				>
+				<Modal index={40} classes="gap-y-3 items-center justify-center px-6 py-6 w-[20rem] md:min-w-[20rem]">
 					<div className="flex flex-col gap-y-2">
 						<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>
 
@@ -310,7 +307,25 @@ function ExtraincomeModal(): React.ReactNode {
 						</div>
 					) : (
 						<form className="flex flex-col gap-y-4" onSubmit={handleCreateExtraincome}>
-							<span className="text-base text-white font-normal font-rubik">Create new Income 🚀</span>
+							<div className="flex gap-x-1 items-center">
+								<span className="text-base text-white font-medium font-rubik">Create new Income</span>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="#895FF5"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
+									<title>Trending Up</title>
+									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+									<path d="M3 17l6 -6l4 4l8 -8" />
+									<path d="M14 7l7 0l0 7" />
+								</svg>
+							</div>
 
 							<div className="flex flex-col gap-y-3">
 								<div className="flex items-center justify-between px-0 py-2 border-b border-b-white">
@@ -319,7 +334,7 @@ function ExtraincomeModal(): React.ReactNode {
 										type="text"
 										name="extraincome_type"
 										id="extraincome_type"
-										placeholder="Investing"
+										placeholder="eg. Salary"
 										required
 									/>
 								</div>

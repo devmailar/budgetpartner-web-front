@@ -44,7 +44,7 @@ function App(): React.ReactNode {
 	const error: string = useSelector((state: IRootState) => state.error);
 	const loader: boolean = useSelector((state: IRootState) => state.loader);
 
-	const [locale] = React.useState("fi");
+	const [locale] = React.useState(navigator?.language || "en");
 	const [localeMessages, setLocaleMessages] = React.useState({});
 
 	React.useEffect(() => {

@@ -138,9 +138,9 @@ function BudgetNew(): React.ReactNode {
 	}, []);
 
 	return (
-		<div className="flex items-center justify-center w-screen h-screen">
-			<div className="flex flex-col gap-y-6 justify-center w-[25rem]">
-				<form className="flex flex-col gap-y-6 px-6 py-6 bg-dark rounded-lg" onSubmit={handleCreateIncome}>
+		<div className="flex items-center justify-center w-screen h-screen px-6 py-6">
+			<div className="flex flex-col gap-y-6 w-full md:w-[26rem]">
+				<form className="flex flex-col gap-y-6 px-4 py-4 bg-darker rounded-lg" onSubmit={handleCreateIncome}>
 					<div>
 						<h1 className="text-2xl text-white font-medium font-rubik">New budget</h1>
 						<p className="text-sm text-white font-normal font-rubik">Fill few sections to start a budget.</p>
@@ -161,7 +161,7 @@ function BudgetNew(): React.ReactNode {
 										<title>Switch</title>
 										<path
 											d="M2.59827 11.9998C2.59827 16.9857 6.80647 21.0256 12.0001 21.0256C17.1937 21.0256 21.4019 16.9857 21.4019 11.9998C21.4019 7.014 17.1937 2.97412 12.0001 2.97412C6.80647 2.97412 2.59827 7.014 2.59827 11.9998ZM15.6659 10.1166C16.0049 9.79112 16.5608 9.79112 16.8998 10.1166C17.0716 10.2815 17.1529 10.4941 17.1529 10.7067C17.1529 10.9193 17.0671 11.1363 16.8953 11.3012L12.6329 15.3801C12.2893 15.6796 11.7605 15.6708 11.4305 15.3541L7.1048 11.2144C6.76579 10.889 6.76127 10.3596 7.1048 10.0298C7.4438 9.70439 7.99525 9.70003 8.33878 10.0298L12.0046 13.5837L15.6659 10.1166Z"
-											fill="#895FF5"
+											fill="#4B4B4B"
 										/>
 									</svg>
 								</button>
@@ -202,20 +202,20 @@ function BudgetNew(): React.ReactNode {
 								type="number"
 								name="income"
 								id="income"
-								placeholder="0.00"
+								placeholder="0.00€"
 								required
 							/>
 
-							<span className="text-xs text-white font-normal font-rubik">EUR/MONTH</span>
+							<span className="text-xs text-white font-normal font-rubik">€/MONTH</span>
 						</div>
 					</div>
 
-					<div className="flex flex-col gap-y-4">
-						<button type="submit" className="btn bg-purple py-2 rounded-lg">
+					<div className="flex gap-x-2 items-center">
+						<button type="submit" className="btn bg-purple2 py-2.5 rounded-lg">
 							<span className="text-sm text-white font-medium font-rubik">Save</span>
 						</button>
 
-						<button type="button" className="btn bg-darker py-2 rounded-lg" onClick={(): void => handleClose()}>
+						<button type="button" className="btn bg-dark py-2.5 rounded-lg" onClick={(): void => handleClose()}>
 							<span className="text-sm text-white font-medium font-rubik">Cancel</span>
 						</button>
 					</div>

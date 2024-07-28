@@ -139,14 +139,13 @@ function ExtraincomeModal(): React.ReactNode {
 			{removeExtraincomeModal ? (
 				<Modal index={40} classes="gap-y-3 items-center justify-center px-6 py-6 w-[20rem] md:min-w-[20rem]">
 					<div className="flex flex-col gap-y-2">
-						<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>
+						<span className="text-lg text-center text-purple font-medium font-rubik">Warning</span>
 
 						<span className="text-base text-center text-light font-light font-rubik">
 							This operation is permanent and will delete{" "}
 							<b>
 								{removeExtraincome.extraincome_type} {removeExtraincome.extraincome_amount_monthly.toFixed(1)}€
-							</b>{" "}
-							income.
+							</b>
 						</span>
 					</div>
 

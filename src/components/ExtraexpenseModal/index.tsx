@@ -139,14 +139,13 @@ function ExtraexpenseModal(): React.ReactNode {
 			{removeExtraexpenseModal ? (
 				<Modal index={40} classes="gap-y-3 items-center justify-center px-6 py-6 w-[20rem] md:min-w-[20rem]">
 					<div className="flex flex-col gap-y-2">
-						<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>
+						<span className="text-lg text-center text-orange font-medium font-rubik">Warning</span>
 
 						<span className="text-base text-center text-light font-light font-rubik">
 							This operation is permanent and will delete{" "}
 							<b>
 								{removeExtraexpense.extraexpense_type} {removeExtraexpense.extraexpense_amount_monthly.toFixed(1)}€
-							</b>{" "}
-							expense.
+							</b>
 						</span>
 					</div>
 

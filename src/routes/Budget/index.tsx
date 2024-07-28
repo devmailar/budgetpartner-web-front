@@ -248,7 +248,7 @@ function Budget(): React.ReactNode {
 					<BudgetSwitch />
 
 					<Swiper
-						className="w-fit md:w-[30rem] h-fit z-0"
+						className="w-[20rem] md:w-[30rem] h-fit z-0"
 						autoplay={{ delay: 20000, disableOnInteraction: false }}
 						pagination={{ clickable: true }}
 						modules={[Autoplay, Pagination]}

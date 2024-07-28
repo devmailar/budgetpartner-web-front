@@ -253,7 +253,7 @@ function ExtraexpenseModal(): React.ReactNode {
 												ID
 											</th>
 											<th className="-bg-violet-600 px-3 py-1 text-left text-sm text-white font-medium font-rubik">
-												Title
+												Expense
 											</th>
 											<th className="-bg-pink-600 px-3 py-1 text-left text-sm text-white font-medium font-rubik">
 												Amount

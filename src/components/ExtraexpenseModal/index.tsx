@@ -123,6 +123,22 @@ function ExtraexpenseModal(): React.ReactNode {
 		}
 	};
 
+	const handleGetTotalExtraexpense = (extraexpenses: IExtraexpense[]): number => {
+		try {
+			const totalExtraexpense: number = extraexpenses.reduce((accumulator: number, extraexpense: IExtraexpense) => {
+				return accumulator + extraexpense.extraexpense_amount_monthly;
+			}, 0);
+
+			return totalExtraexpense;
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+
+		return 0;
+	};
+
 	React.useEffect((): void => {
 		const onLoad = async (): Promise<void> => {
 			const auth: string = getCookie("Authorization") ?? "";
@@ -294,6 +310,12 @@ function ExtraexpenseModal(): React.ReactNode {
 										))}
 									</tbody>
 								</table>
+							</div>
+
+							<div className="flex items-center justify-end">
+								<span className="text-sm text-orange font-bold font-rubik truncate">
+									-{handleGetTotalExtraexpense(budget.extraexpenses).toFixed(1)}€
+								</span>
 							</div>
 
 							<button

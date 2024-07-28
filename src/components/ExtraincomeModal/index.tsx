@@ -123,6 +123,22 @@ function ExtraincomeModal(): React.ReactNode {
 		}
 	};
 
+	const handleGetTotalExtraincome = (extraincomes: IExtraincome[]): number => {
+		try {
+			const totalExtraincome: number = extraincomes.reduce((accumulator: number, extraincome: IExtraincome) => {
+				return accumulator + extraincome.extraincome_amount_monthly;
+			}, 0);
+
+			return totalExtraincome;
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				dispatch(setError(error.message));
+			}
+		}
+
+		return 0;
+	};
+
 	React.useEffect((): void => {
 		const onLoad = async (): Promise<void> => {
 			const auth: string = getCookie("Authorization") ?? "";
@@ -294,6 +310,12 @@ function ExtraincomeModal(): React.ReactNode {
 										))}
 									</tbody>
 								</table>
+							</div>
+
+							<div className="flex items-center justify-end">
+								<span className="text-sm text-purple font-bold font-rubik truncate">
+									+{handleGetTotalExtraincome(budget.extraincomes).toFixed(1)}€
+								</span>
 							</div>
 
 							<button

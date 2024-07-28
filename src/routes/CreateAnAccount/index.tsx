@@ -49,9 +49,9 @@ function CreateAnAccount(): React.ReactNode {
 					<button type="button" onClick={(): void => navigate("/login")}>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 							<title>Close</title>
-							<g clip-path="url(#clip0_283_267)">
-								<path d="M18 6L6 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-								<path d="M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+							<g clipPath="url(#clip0_283_267)">
+								<path d="M18 6L6 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+								<path d="M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 							</g>
 							<defs>
 								<clipPath id="clip0_283_267">

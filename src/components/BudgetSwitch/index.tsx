@@ -69,13 +69,13 @@ function BudgetSwitch(): React.ReactNode {
 
 				<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
 					<title>Arrow Down</title>
-					<g clip-path="url(#clip0_316_158)">
+					<g clipPath="url(#clip0_316_158)">
 						<path
 							d="M8.75 14.583L17.5 23.333L26.25 14.583H8.75Z"
 							stroke="#B7B7B7"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
 						/>
 					</g>
 					<defs>

@@ -313,28 +313,16 @@ function Budget(): React.ReactNode {
 					>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 							<title>Login</title>
-							<g clip-path="url(#clip0_349_173)">
+							<g clipPath="url(#clip0_349_173)">
 								<path
 									d="M9 8V6C9 5.46957 9.21071 4.96086 9.58579 4.58579C9.96086 4.21071 10.4696 4 11 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V18C20 18.5304 19.7893 19.0391 19.4142 19.4142C19.0391 19.7893 18.5304 20 18 20H11C10.4696 20 9.96086 19.7893 9.58579 19.4142C9.21071 19.0391 9 18.5304 9 18V16"
 									stroke="#B7B7B7"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
 								/>
-								<path
-									d="M3 12H16L13 9"
-									stroke="#B7B7B7"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M13 15L16 12"
-									stroke="#B7B7B7"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
+								<path d="M3 12H16L13 9" stroke="#B7B7B7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+								<path d="M13 15L16 12" stroke="#B7B7B7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 							</g>
 							<defs>
 								<clipPath id="clip0_349_173">
@@ -492,13 +480,13 @@ function Budget(): React.ReactNode {
 								<div className="flex gap-x-0 items-center">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
 										<title>Flame</title>
-										<g clip-path="url(#clip0_307_158)">
+										<g clipPath="url(#clip0_307_158)">
 											<path
 												d="M12 12C14 9.04 12 5 11 4C11 7.038 9.227 8.741 8 10C6.774 11.26 6 13.24 6 15C6 16.5913 6.63214 18.1174 7.75736 19.2426C8.88258 20.3679 10.4087 21 12 21C13.5913 21 15.1174 20.3679 16.2426 19.2426C17.3679 18.1174 18 16.5913 18 15C18 13.468 16.944 11.06 16 10C14.214 13 13.209 13 12 12Z"
 												stroke=""
-												stroke-width="1.5"
-												stroke-linecap="round"
-												stroke-linejoin="round"
+												strokeWidth="1.5"
+												strokeLinecap="round"
+												strokeLinejoin="round"
 											/>
 										</g>
 										<defs>

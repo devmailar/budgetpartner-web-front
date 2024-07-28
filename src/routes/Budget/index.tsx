@@ -2,6 +2,7 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import "animate.css";
 import { eachDayOfInterval, endOfMonth, isWeekend, startOfMonth } from "date-fns";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
@@ -256,7 +257,8 @@ function Budget(): React.ReactNode {
 						<SwiperSlide>
 							<div className="flex flex-col gap-y-2 items-center pt-14 pb-7">
 								<span className="text-xl text-light font-normal font-rubik">
-									📌 We saved in {Utils.months[new Date(budget.created_at).getMonth()]}
+									<FormattedMessage id="HOME_SWIPER_SPAN_TEXT1" />{" "}
+									{Utils.months[new Date(budget.created_at).getMonth()]}
 								</span>
 
 								<button
@@ -281,7 +283,9 @@ function Budget(): React.ReactNode {
 
 						<SwiperSlide>
 							<div className="flex flex-col gap-y-2 items-center pt-14 pb-7">
-								<span className="text-xl text-light font-normal font-rubik">📌 We saved daily</span>
+								<span className="text-xl text-light font-normal font-rubik">
+									<FormattedMessage id="HOME_SWIPER_SPAN_TEXT2" />
+								</span>
 
 								<button
 									type="button"
@@ -331,7 +335,9 @@ function Budget(): React.ReactNode {
 							</defs>
 						</svg>
 
-						<span className="text-base text-light font-medium font-rubik">Login/Signup</span>
+						<span className="text-base text-light font-medium font-rubik">
+							<FormattedMessage id="HOME_BUTTON_LOGIN_TEXT1" />
+						</span>
 					</button>
 				) : (
 					<div className="flex flex-col gap-y-3 items-center">

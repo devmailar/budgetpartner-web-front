@@ -1,4 +1,5 @@
-import type React from "react";
+import React from "react";
+import { IntlProvider } from "react-intl";
 import { useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ErrorPopup from "./components/ErrorPopup";
@@ -10,6 +11,7 @@ import CreateAnAccount from "./routes/CreateAnAccount";
 import Login from "./routes/Login";
 import PrivacyPolicy from "./routes/PrivacyPolicy";
 import type { IRootState } from "./types";
+import { Utils } from "./utils";
 
 export const router = createBrowserRouter([
 	{
@@ -42,6 +44,18 @@ function App(): React.ReactNode {
 	const error: string = useSelector((state: IRootState) => state.error);
 	const loader: boolean = useSelector((state: IRootState) => state.loader);
 
+	const [locale] = React.useState("fi");
+	const [localeMessages, setLocaleMessages] = React.useState({});
+
+	React.useEffect(() => {
+		const handleLoadLocaleMessages = async (locale: string): Promise<void> => {
+			const localeMessages = await Utils.Methods.handleLoadLocales(locale);
+			setLocaleMessages(localeMessages.default);
+		};
+
+		handleLoadLocaleMessages(locale);
+	}, [locale]);
+
 	return (
 		<>
 			{loader && (
@@ -50,15 +64,17 @@ function App(): React.ReactNode {
 				</div>
 			)}
 
-			<div className={`${loader && "opacity-0"}`}>
-				<div className="hidden sm:block">
-					<Sidebar router={router} />
+			<IntlProvider locale={locale} messages={localeMessages}>
+				<div className={`${loader && "opacity-0"}`}>
+					<div className="hidden sm:block">
+						<Sidebar router={router} />
+					</div>
+
+					{error && <ErrorPopup />}
+
+					<RouterProvider router={router} />
 				</div>
-
-				{error && <ErrorPopup />}
-
-				<RouterProvider router={router} />
-			</div>
+			</IntlProvider>
 		</>
 	);
 }

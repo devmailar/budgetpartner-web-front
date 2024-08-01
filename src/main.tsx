@@ -1,4 +1,5 @@
 import { type Store, configureStore } from "@reduxjs/toolkit";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import App from "./App.tsx";
@@ -11,6 +12,8 @@ import { languageStore } from "./stores/Language/index.tsx";
 import { loaderStore } from "./stores/Loader/index.tsx";
 import { modalsStore } from "./stores/Modals/index.tsx";
 import { userStore } from "./stores/User";
+
+const root: HTMLElement | null = document.getElementById("root");
 
 const store: Store = configureStore({
 	reducer: {
@@ -25,11 +28,12 @@ const store: Store = configureStore({
 	},
 });
 
-const root: HTMLElement | null = document.getElementById("root");
 if (root) {
 	ReactDOM.createRoot(root).render(
-		<Provider store={store}>
-			<App />
-		</Provider>,
+		<React.StrictMode>
+			<Provider store={store}>
+				<App />
+			</Provider>
+		</React.StrictMode>,
 	);
 }

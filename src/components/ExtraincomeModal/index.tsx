@@ -28,6 +28,8 @@ function ExtraincomeModal(): React.ReactNode {
 
 	const [removeExtraincomeButtonDisabled, setRemoveExtraincomeButtonDisabled] = React.useState<boolean>(false);
 
+	const [includeWeekends, setIncludeWeekends] = React.useState<boolean>(false);
+
 	const handleCreateExtraincome = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
@@ -348,29 +350,56 @@ function ExtraincomeModal(): React.ReactNode {
 								</svg>
 							</div>
 
-							<div className="flex flex-col gap-y-3">
-								<div className="flex items-center justify-between px-0 py-2 border-b border-b-white">
-									<input
-										className="bg-transparent w-full text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
-										type="text"
-										name="extraincome_type"
-										id="extraincome_type"
-										placeholder="eg. Salary"
-										required
-									/>
+							<div className="flex items-center justify-between px-0 py-2 border-b border-b-grey">
+								<input
+									className="bg-transparent w-full text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
+									type="text"
+									name="extraincome_type"
+									id="extraincome_type"
+									placeholder="Salary"
+									required
+								/>
+							</div>
+
+							<div className="flex items-center justify-between px-0 py-2 border-b border-b-grey">
+								<input
+									className="bg-transparent w-full text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
+									type="number"
+									name="extraincome_amount_monthly"
+									id="extraincome_amount_monthly"
+									placeholder="0.00€"
+									required
+								/>
+
+								<span className="text-sm text-light font-normal font-rubik">€/MO</span>
+							</div>
+
+							<div className="flex flex-col gap-y-2">
+								<div className="w-full md:w-80">
+									<p className="text-xs text-grey font-normal font-rubik leading-tight">
+										If ‘Include Weekends’ is enabled, then the income is calculated for all days in the month, including
+										weekends.
+									</p>
 								</div>
 
-								<div className="flex items-center justify-between px-0 py-2 border-b border-b-white">
-									<input
-										className="bg-transparent w-full text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
-										type="number"
-										name="extraincome_amount_monthly"
-										id="extraincome_amount_monthly"
-										placeholder="0.00€"
-										required
-									/>
+								<div className="flex gap-x-1 items-center justify-between">
+									<span className="text-sm text-light font-normal font-rubik">Include Weekends</span>
 
-									<span className="text-sm text-light font-normal font-rubik">€/MO</span>
+									<button type="button" onClick={() => setIncludeWeekends(!includeWeekends)}>
+										{includeWeekends ? (
+											<svg width="48" height="28" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<title>Checkbox Not Checked</title>
+												<rect width="48" height="28" rx="14" fill="#252525" />
+												<circle cx="34" cy="14" r="10" fill="#895FF5" />
+											</svg>
+										) : (
+											<svg width="48" height="28" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<title>Checkbox Checked</title>
+												<rect width="48" height="28" rx="14" fill="#252525" />
+												<circle cx="14" cy="14" r="10" fill="#b7b7b7" />
+											</svg>
+										)}
+									</button>
 								</div>
 							</div>
 

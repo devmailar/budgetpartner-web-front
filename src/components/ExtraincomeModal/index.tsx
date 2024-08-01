@@ -404,7 +404,7 @@ function ExtraincomeModal(): React.ReactNode {
 							</div>
 
 							<div className="flex items-center justify-center">
-								<button type="submit" className="btn border border-dark rounded-xl">
+								<button type="submit" className="btn w-full border border-dark rounded-xl">
 									<span className="text-base text-white font-normal font-rubik">Save</span>
 								</button>
 							</div>

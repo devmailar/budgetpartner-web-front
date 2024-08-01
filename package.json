@@ -5,9 +5,9 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
+		"build": "tsc -b && vite build",
 		"lint": "pnpm biome check --write",
-		"preview": "vite preview",
-		"build": "tsc && vite build"
+		"preview": "vite preview"
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^2.2.6",

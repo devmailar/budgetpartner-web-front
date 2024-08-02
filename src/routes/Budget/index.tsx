@@ -85,7 +85,7 @@ function Budget(): React.ReactNode {
 				});
 
 				if (!currentBudget) {
-					throw new Error("Current budget is undefined");
+					return navigate("/budget/get-started");
 				}
 
 				const storedBudgetDate: string = localStorage.getItem("budget") ?? "";

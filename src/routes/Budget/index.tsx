@@ -244,7 +244,7 @@ function Budget(): React.ReactNode {
 
 	return (
 		<div className="flex justify-center w-screen h-screen">
-			<div className="flex flex-col gap-y-12 items-center mt-28">
+			<div className="flex flex-col gap-y-12 items-center mt-20 md:mt-28">
 				<div className="flex flex-col gap-y-2 items-center">
 					<BudgetSwitch />
 
@@ -409,7 +409,7 @@ function Budget(): React.ReactNode {
 							<span className="text-base text-dark font-medium font-rubik">Expenses</span>
 						</button>
 
-						<button
+						{/* <button
 							type="button"
 							className="flex gap-x-2 items-center justify-center btn bg-red px-6 py-3 rounded-3xl"
 							onClick={(): void => {
@@ -454,7 +454,7 @@ function Budget(): React.ReactNode {
 							</svg>
 
 							<span className="text-base text-dark font-medium font-rubik">Delete</span>
-						</button>
+						</button> */}
 					</div>
 				)}
 

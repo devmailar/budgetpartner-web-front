@@ -5,6 +5,7 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
+import { setLoader } from "../../stores/Loader";
 import type { IBudget, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
@@ -124,8 +125,13 @@ function BudgetGetStarted(): React.ReactNode {
 
 	React.useEffect((): void => {
 		const auth: string = getCookie("Authorization") ?? "";
-		if (!auth) return;
-	}, []);
+		if (!auth) {
+			navigate("/login");
+			return;
+		}
+
+		dispatch(setLoader(false));
+	}, [dispatch, navigate]);
 
 	return (
 		<div className="flex items-center justify-center w-screen h-screen">

@@ -13,8 +13,6 @@
 }
 
 body {
-  /* background: radial-gradient(100.38% 100.38% at 50% 0%, #221130 15%, #000000 100%); */
-
   background-image: radial-gradient(circle at 50% 0%, #221130 15%, #000000);
 }
 

@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import App from "./App.tsx";
-import "./index.css";
+import "./main.css";
 import { budgetStore } from "./stores/Budget/index.tsx";
 import { budgetsStore } from "./stores/Budgets/index.tsx";
 import { errorStore } from "./stores/Error";

@@ -265,7 +265,7 @@ function ExtraincomeModal(): React.ReactNode {
 
 							<div className="overflow-auto">
 								<table className="w-full">
-									<thead className="border-b border-b-grey">
+									<thead>
 										<tr>
 											<th className="-bg-yellow-600 px-0 py-1 text-left text-sm text-white font-medium font-rubik">
 												ID
@@ -285,7 +285,7 @@ function ExtraincomeModal(): React.ReactNode {
 									<tbody className="overflow-y-auto table-fixed">
 										{budget.extraincomes.map((extraincome: IExtraincome, index: number) => (
 											<tr
-												className="border-b border-b-grey cursor-pointer transition-all duration-300 ease-in-out"
+												className="border-t border-t-dark cursor-pointer"
 												key={extraincome.id}
 												onClick={(): void => {
 													setRemoveExtraincome(extraincome);
@@ -299,13 +299,13 @@ function ExtraincomeModal(): React.ReactNode {
 												<td className="px-0 py-2 text-left text-sm text-light font-medium font-rubik truncate">
 													<span>{index + 1}</span>
 												</td>
-												<td className="px-3 py-2 text-left text-sm text-light font-medium font-rubik truncate">
+												<td className="px-0 py-2 text-left text-sm text-light font-medium font-rubik truncate">
 													<span>{extraincome.extraincome_type}</span>
 												</td>
-												<td className="px-3 py-2 text-left text-sm text-light font-medium font-rubik truncate">
+												<td className="px-0 py-2 text-left text-sm text-light font-medium font-rubik truncate">
 													<span>{extraincome.extraincome_amount_monthly.toFixed(1)}€</span>
 												</td>
-												<td className="px-0 py-2 text-right text-sm text-light font-medium font-rubik truncate">
+												<td className="px-0 py-2 text-left text-sm text-light font-medium font-rubik truncate">
 													<span>{new Date(extraincome.created_at).toLocaleDateString()}</span>
 												</td>
 											</tr>
@@ -322,10 +322,10 @@ function ExtraincomeModal(): React.ReactNode {
 
 							<button
 								type="button"
-								className="btn bg-gradient-to-r from-purple2 to-purple border border-grey rounded-xl"
+								className="btn bg-purple2 border border-grey rounded-xl"
 								onClick={(): void => setCreateExtraincomeModal(true)}
 							>
-								<span className="text-sm text-white font-normal font-rubik">Create</span>
+								<span className="text-sm text-white font-medium font-rubik">Create</span>
 							</button>
 						</div>
 					) : (
@@ -440,11 +440,8 @@ function ExtraincomeModal(): React.ReactNode {
 								</div>
 							</div>
 
-							<button
-								type="submit"
-								className="btn bg-gradient-to-r from-purple2 to-purple border border-grey rounded-xl"
-							>
-								<span className="text-sm text-white font-normal font-rubik">Save</span>
+							<button type="submit" className="btn bg-purple2 border border-grey rounded-xl">
+								<span className="text-sm text-white font-medium font-rubik">Save</span>
 							</button>
 						</form>
 					)}

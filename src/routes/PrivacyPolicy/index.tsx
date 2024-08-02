@@ -1,6 +1,24 @@
-import type React from "react";
+import type { Dispatch } from "@reduxjs/toolkit";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { getCookie } from "typescript-cookie";
+import { setLoader } from "../../stores/Loader";
 
 function PrivacyPolicy(): React.ReactNode {
+	const dispatch: Dispatch = useDispatch();
+	const navigate: NavigateFunction = useNavigate();
+
+	React.useEffect((): void => {
+		const auth: string = getCookie("Authorization") ?? "";
+		if (!auth) {
+			navigate("/login");
+			return;
+		}
+
+		dispatch(setLoader(false));
+	}, [dispatch, navigate]);
+
 	return (
 		<div className="flex justify-center bg-black">
 			<div className="flex flex-col mx-28 my-6 text-base text-white font-light font-rubik leading-tight">

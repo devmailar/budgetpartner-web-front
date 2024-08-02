@@ -255,8 +255,8 @@ function Budget(): React.ReactNode {
 						modules={[Autoplay, Pagination]}
 					>
 						<SwiperSlide>
-							<div className="flex flex-col gap-y-2 items-center pt-14 pb-7">
-								<span className="text-xl text-light font-normal font-rubik">
+							<div className="flex flex-col gap-y-1 items-center pt-14 pb-7">
+								<span className="text-base text-[#57456F] font-medium font-rubik">
 									<FormattedMessage id="HOME_SWIPER_SPAN_TEXT1" />{" "}
 									{Utils.months[new Date(budget.created_at).getMonth()]}
 								</span>
@@ -274,7 +274,7 @@ function Budget(): React.ReactNode {
 										);
 									}}
 								>
-									<h1 className="animate__animated animate__fadeInUp text-6xl text-white font-bold font-rubik">
+									<h1 className="animate__animated animate__fadeInUp text-5xl text-white font-bold font-rubik">
 										{monthlyBudgetAmount.toFixed(2)}€
 									</h1>
 								</button>
@@ -300,7 +300,7 @@ function Budget(): React.ReactNode {
 										);
 									}}
 								>
-									<h1 className="animate__animated animate__fadeInUp text-6xl text-white font-bold font-rubik">
+									<h1 className="animate__animated animate__fadeInUp text-5xl text-white font-bold font-rubik">
 										{dailyBudgetAmount.toFixed(2)}€
 									</h1>
 								</button>

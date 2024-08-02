@@ -24,7 +24,7 @@ function CreateAnAccount(): React.ReactNode {
 			const createBudgetResponse: Response = await fetch(`${Utils.baseurl}/users/create`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ email: email, password: password, country: "" }),
+				body: JSON.stringify({ email: email, password: password }),
 			});
 
 			if (!createBudgetResponse.ok) {

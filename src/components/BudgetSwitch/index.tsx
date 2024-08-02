@@ -61,28 +61,15 @@ function BudgetSwitch(): React.ReactNode {
 				className={`${budgetSwitch ? "z-50" : "z-40"} flex gap-x-1 items-center justify-center bg-darker border border-grey px-4 py-2 rounded-3xl`}
 				onClick={(): void => setBudgetSwitch(!budgetSwitch)}
 			>
-				<span className="text-xl text-light font-normal font-rubik">
+				<span className="text-lg text-light font-normal font-rubik">
 					{Utils.months[new Date(budget.created_at).getMonth()]} {"("}
 					<span className="font-medium">{new Date().getFullYear()}</span>
 					{")"}
 				</span>
 
-				<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+				<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<title>Arrow Down</title>
-					<g clipPath="url(#clip0_316_158)">
-						<path
-							d="M8.75 14.583L17.5 23.333L26.25 14.583H8.75Z"
-							stroke="#B7B7B7"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						/>
-					</g>
-					<defs>
-						<clipPath id="clip0_316_158">
-							<rect width="35" height="35" fill="#B7B7B7" />
-						</clipPath>
-					</defs>
+					<path d="M7.5 12.5L15 20L22.5 12.5H7.5Z" stroke="#B7B7B7" stroke-width="1.5" />
 				</svg>
 			</button>
 

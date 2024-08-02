@@ -244,7 +244,7 @@ function Budget(): React.ReactNode {
 
 	return (
 		<div className="flex justify-center w-screen h-screen">
-			<div className="flex flex-col gap-y-12 items-center mt-20 md:mt-28">
+			<div className="flex flex-col gap-y-12 items-center mt-20">
 				<div className="flex flex-col gap-y-2 items-center">
 					<BudgetSwitch />
 

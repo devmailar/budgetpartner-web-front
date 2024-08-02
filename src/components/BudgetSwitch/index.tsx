@@ -69,7 +69,7 @@ function BudgetSwitch(): React.ReactNode {
 
 				<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<title>Arrow Down</title>
-					<path d="M7.5 12.5L15 20L22.5 12.5H7.5Z" stroke="#B7B7B7" stroke-width="1.5" />
+					<path d="M7.5 12.5L15 20L22.5 12.5H7.5Z" stroke="#B7B7B7" strokeWidth="1.5" />
 				</svg>
 			</button>
 

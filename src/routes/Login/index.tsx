@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie, setCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
+import { setLoader } from "../../stores/Loader";
 import type { IResponseError } from "../../types";
 import { Utils } from "../../utils";
 
@@ -49,10 +50,13 @@ function Login(): React.ReactNode {
 
 	React.useEffect((): void => {
 		const auth: string = getCookie("Authorization") ?? "";
-		if (!auth) return;
+		if (!auth) {
+			dispatch(setLoader(false));
+			return;
+		}
 
 		navigate("/");
-	}, [navigate]);
+	}, [dispatch, navigate]);
 
 	return (
 		<div className="flex items-center justify-center w-screen h-screen px-6 py-6">

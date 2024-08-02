@@ -275,7 +275,7 @@ function Budget(): React.ReactNode {
 									}}
 								>
 									<h1 className="animate__animated animate__fadeInUp text-6xl text-white font-bold font-rubik">
-										{monthlyBudgetAmount.toFixed(1)}€
+										{monthlyBudgetAmount.toFixed(2)}€
 									</h1>
 								</button>
 							</div>
@@ -312,7 +312,7 @@ function Budget(): React.ReactNode {
 				{!getCookie("Authorization") ? (
 					<button
 						type="button"
-						className="flex gap-x-2 items-center justify-center btn bg-dark shadow-md shadow-darker px-4 py-3 rounded-3xl"
+						className="flex gap-x-1 items-center justify-center btn bg-dark px-4 py-3 shadow-sm shadow-darker rounded-3xl"
 						onClick={(): void => handleRedirectLogin()}
 					>
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

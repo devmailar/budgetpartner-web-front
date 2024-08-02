@@ -209,13 +209,13 @@ function ExtraincomeModal(): React.ReactNode {
 			) : (
 				<Modal
 					index={40}
-					classes="gap-y-4 px-4 pt-4 pb-4 w-[20rem] md:w-fit md:min-w-[25rem] border border-dark animate__animated animate__fadeInDown animate__faster"
+					classes="gap-y-4 px-4 pt-4 pb-4 w-[20rem] md:w-fit md:min-w-[25rem] border border-dark shadow-sm shadow-dark animate__animated animate__fadeInDown animate__faster"
 				>
 					{!createExtraincomeModal && !removeExtraincomeModal ? (
 						<div className="flex flex-col gap-y-4">
 							<div className="flex items-center justify-between">
 								<div className="flex gap-x-1 items-center">
-									<span className="text-base text-white font-medium font-rubik">income</span>
+									<span className="text-sm text-light font-medium font-rubik">INCOME</span>
 
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -241,22 +241,22 @@ function ExtraincomeModal(): React.ReactNode {
 										<g clipPath="url(#clip0_283_267)">
 											<path
 												d="M18 6L6 18"
-												stroke="white"
-												strokeWidth="3"
+												stroke="#B7B7B7"
+												strokeWidth="2"
 												strokeLinecap="round"
 												strokeLinejoin="round"
 											/>
 											<path
 												d="M6 6L18 18"
-												stroke="white"
-												strokeWidth="3"
+												stroke="#B7B7B7"
+												strokeWidth="2"
 												strokeLinecap="round"
 												strokeLinejoin="round"
 											/>
 										</g>
 										<defs>
 											<clipPath id="clip0_283_267">
-												<rect width="24" height="24" fill="white" />
+												<rect width="24" height="24" fill="#B7B7B7" />
 											</clipPath>
 										</defs>
 									</svg>
@@ -322,32 +322,69 @@ function ExtraincomeModal(): React.ReactNode {
 
 							<button
 								type="button"
-								className="btn border border-grey rounded-xl"
+								className="btn bg-gradient-to-r from-purple2 to-purple border border-grey rounded-xl"
 								onClick={(): void => setCreateExtraincomeModal(true)}
 							>
-								<span className="text-base text-light font-normal font-rubik">Create</span>
+								<span className="text-sm text-white font-normal font-rubik">Create</span>
 							</button>
 						</div>
 					) : (
 						<form className="flex flex-col gap-y-4" onSubmit={handleCreateExtraincome}>
-							<div className="flex gap-x-1 items-center">
-								<span className="text-base text-white font-medium font-rubik">Create new Income</span>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="24"
-									height="24"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="#895FF5"
-									strokeWidth="2"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								>
-									<title>Trending Up</title>
-									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-									<path d="M3 17l6 -6l4 4l8 -8" />
-									<path d="M14 7l7 0l0 7" />
-								</svg>
+							<div className="flex items-center justify-between">
+								<div className="flex gap-x-1 items-center">
+									<span className="text-sm text-light font-medium font-rubik">NEW INCOME</span>
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<title>Pie</title>
+										<g clip-path="url(#clip0_512_241)">
+											<path
+												d="M12 3V12H21"
+												stroke="#895FF5"
+												stroke-width="2"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+											<path
+												d="M3 12C3 13.1819 3.23279 14.3522 3.68508 15.4442C4.13738 16.5361 4.80031 17.5282 5.63604 18.364C6.47177 19.1997 7.46392 19.8626 8.55585 20.3149C9.64778 20.7672 10.8181 21 12 21C13.1819 21 14.3522 20.7672 15.4442 20.3149C16.5361 19.8626 17.5282 19.1997 18.364 18.364C19.1997 17.5282 19.8626 16.5361 20.3149 15.4442C20.7672 14.3522 21 13.1819 21 12C21 10.8181 20.7672 9.64778 20.3149 8.55585C19.8626 7.46392 19.1997 6.47177 18.364 5.63604C17.5282 4.80031 16.5361 4.13738 15.4442 3.68508C14.3522 3.23279 13.1819 3 12 3C10.8181 3 9.64778 3.23279 8.55585 3.68508C7.46392 4.13738 6.47177 4.80031 5.63604 5.63604C4.80031 6.47177 4.13738 7.46392 3.68508 8.55585C3.23279 9.64778 3 10.8181 3 12Z"
+												stroke="#895FF5"
+												stroke-width="2"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+											/>
+										</g>
+										<defs>
+											<clipPath id="clip0_512_241">
+												<rect width="24" height="24" fill="white" />
+											</clipPath>
+										</defs>
+									</svg>
+								</div>
+
+								<button className="mr-[-0.25rem]" type="button" onClick={(): void => setCreateExtraincomeModal(false)}>
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+										<title>Close</title>
+										<g clipPath="url(#clip0_283_267)">
+											<path
+												d="M18 6L6 18"
+												stroke="#B7B7B7"
+												strokeWidth="2"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+											/>
+											<path
+												d="M6 6L18 18"
+												stroke="#B7B7B7"
+												strokeWidth="2"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+											/>
+										</g>
+										<defs>
+											<clipPath id="clip0_283_267">
+												<rect width="24" height="24" fill="#B7B7B7" />
+											</clipPath>
+										</defs>
+									</svg>
+								</button>
 							</div>
 
 							<div className="flex items-center justify-between px-0 py-2 border-b border-b-grey">
@@ -403,11 +440,12 @@ function ExtraincomeModal(): React.ReactNode {
 								</div>
 							</div>
 
-							<div className="flex items-center justify-center">
-								<button type="submit" className="btn w-full border border-dark rounded-xl">
-									<span className="text-base text-white font-normal font-rubik">Save</span>
-								</button>
-							</div>
+							<button
+								type="submit"
+								className="btn bg-gradient-to-r from-purple2 to-purple border border-grey rounded-xl"
+							>
+								<span className="text-sm text-white font-normal font-rubik">Save</span>
+							</button>
 						</form>
 					)}
 				</Modal>

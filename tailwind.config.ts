@@ -4,7 +4,6 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				white: "#FFFFFF",
 				purple: "#895FF5",
 				purple2: "#6D28D9",
 				orange: "#B85C3D",

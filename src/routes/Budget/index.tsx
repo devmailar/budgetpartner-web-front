@@ -283,7 +283,7 @@ function Budget(): React.ReactNode {
 
 						<SwiperSlide>
 							<div className="flex flex-col gap-y-2 items-center pt-14 pb-7">
-								<span className="text-xl text-light font-normal font-rubik">
+								<span className="text-base text-[#57456F] font-medium font-rubik">
 									<FormattedMessage id="HOME_SWIPER_SPAN_TEXT2" />
 								</span>
 

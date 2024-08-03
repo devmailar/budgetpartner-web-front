@@ -61,7 +61,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 	};
 
 	return (
-		<div className="hidden sm:flex items-center justify-center bg-[#1A0D24] w-full px-3 py-3 animate__animated animate__fadeInDown animate__faster">
+		<div className="flex items-center justify-center bg-[#1A0D24] w-full px-3 py-3 animate__animated animate__fadeInDown animate__faster">
 			<div className="flex flex-wrap items-center justify-between w-full md:w-[800px]">
 				<a href="/" className="flex gap-x-2 items-center">
 					<img src={ArtLogo} alt={ArtLogo} width={28} height={28} />
@@ -69,7 +69,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 					<h2 className="text-lg text-white font-normal lower font-rubik">budgetpartner.app</h2>
 				</a>
 
-				<div className="flex gap-x-6 items-center">
+				<div className="hidden md:flex gap-x-6 items-center">
 					<button type="button" className="flex items-center justify-center" onClick={(): void => router.navigate("/")}>
 						<span className="text-base text-white font-normal font-rubik">Home</span>
 					</button>

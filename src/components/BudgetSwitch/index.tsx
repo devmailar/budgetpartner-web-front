@@ -55,28 +55,30 @@ function BudgetSwitch(): React.ReactNode {
 	};
 
 	return (
-		<div className="flex flex-col gap-y-2 items-center">
-			<button
-				type="button"
-				className={`${budgetSwitch ? "z-50" : "z-40"} flex gap-x-1 items-center justify-center bg-darker border border-grey px-4 py-2 rounded-3xl`}
-				onClick={(): void => setBudgetSwitch(!budgetSwitch)}
-			>
-				<span className="text-lg text-light font-normal font-rubik">
-					{Utils.months[new Date(budget.created_at).getMonth()]} {"("}
-					<span className="font-medium">{new Date().getFullYear()}</span>
-					{")"}
-				</span>
+		<>
+			<div className="flex flex-col gap-y-2 items-center">
+				<button
+					type="button"
+					className={`${budgetSwitch ? "z-50" : "z-40"} flex gap-x-1 items-center justify-center bg-darker border border-grey px-4 py-2 rounded-3xl`}
+					onClick={(): void => setBudgetSwitch(!budgetSwitch)}
+				>
+					<span className="text-lg text-light font-normal font-rubik">
+						{Utils.months[new Date(budget.created_at).getMonth()]} {"("}
+						<span className="font-medium">{new Date().getFullYear()}</span>
+						{")"}
+					</span>
 
-				<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<title>Arrow Down</title>
-					<path d="M7.5 12.5L15 20L22.5 12.5H7.5Z" stroke="#B7B7B7" strokeWidth="1.5" />
-				</svg>
-			</button>
+					<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<title>Arrow Down</title>
+						<path d="M7.5 12.5L15 20L22.5 12.5H7.5Z" stroke="#B7B7B7" strokeWidth="1.5" />
+					</svg>
+				</button>
+			</div>
 
 			{budgetSwitch && (
 				<Modal
 					index={40}
-					classes="gap-y-6 px-2 py-5 absolute top-44 z-50 w-60 rounded-2xl border border-dark animate__animated animate__fadeInDown animate__faster"
+					classes="gap-y-6 px-2 py-5 absolute top-52 z-50 w-60 rounded-2xl border border-dark animate__animated animate__fadeInDown animate__faster"
 				>
 					<div className="flex flex-col gap-y-2.5 items-center justify-center">
 						{budgets.map((b: IBudget) => (
@@ -107,7 +109,7 @@ function BudgetSwitch(): React.ReactNode {
 					</button>
 				</Modal>
 			)}
-		</div>
+		</>
 	);
 }
 

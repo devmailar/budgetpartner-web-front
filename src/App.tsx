@@ -3,7 +3,7 @@ import { IntlProvider } from "react-intl";
 import { useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ErrorPopup from "./components/ErrorPopup";
-import Sidebar from "./components/Sidebar";
+import Navbar from "./components/Navbar";
 import Budget from "./routes/Budget";
 import BudgetGetStarted from "./routes/BudgetGetStarted";
 import BudgetNew from "./routes/BudgetNew";
@@ -65,14 +65,16 @@ function App(): React.ReactNode {
 			)}
 
 			<IntlProvider locale={locale} messages={localeMessages}>
-				<div className={`${loader && "opacity-0"}`}>
-					<div className="hidden sm:block">
-						<Sidebar router={router} />
-					</div>
+				<div className={`flex flex-col gap-y-20 ${loader && "opacity-0"}`}>
+					<Navbar router={router} />
 
 					{error && <ErrorPopup />}
 
-					<RouterProvider router={router} />
+					<div className="flex justify-center w-screen h-screen">
+						<div className="flex justify-center md:w-[800px]">
+							<RouterProvider router={router} />
+						</div>
+					</div>
 				</div>
 			</IntlProvider>
 		</>

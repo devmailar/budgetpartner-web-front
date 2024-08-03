@@ -2,7 +2,8 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import { getCookie, setCookie } from "typescript-cookie";
+import { getCookie } from "typescript-cookie";
+import { setAuth } from "../../stores/Auth";
 import { setError } from "../../stores/Error";
 import { setLoader } from "../../stores/Loader";
 import type { IResponseError } from "../../types";
@@ -38,7 +39,7 @@ function Login(): React.ReactNode {
 			const authHeader: string = loginUserResponse.headers.get("Authorization") ?? "";
 			const auth: string = authHeader.split(" ")[1];
 
-			setCookie("Authorization", auth, { expires: 1, sameSite: "strict", secure: true });
+			dispatch(setAuth(auth));
 			navigate("/");
 		} catch (error: unknown) {
 			if (error instanceof Error) {

@@ -134,9 +134,9 @@ function BudgetGetStarted(): React.ReactNode {
 	}, [dispatch, navigate]);
 
 	return (
-		<div className="flex items-center justify-center w-screen h-screen">
+		<div className="flex flex-col gap-y-6 w-[400px]">
 			{step === 0 && (
-				<div className="flex flex-col gap-y-6 justify-center w-[400px]">
+				<>
 					<div className="flex flex-col gap-y-1 items-center">
 						<img
 							src="https://ucarecdn.com/5be54da1-0bf6-4d18-8209-07fe1c228ddc/-/preview/512x512/"
@@ -155,11 +155,11 @@ function BudgetGetStarted(): React.ReactNode {
 					<button type="button" className="btn bg-purple py-2 rounded-lg" onClick={handleCreateBudget}>
 						<span className="text-sm text-white font-medium font-rubik">Get started</span>
 					</button>
-				</div>
+				</>
 			)}
 
 			{step === 1 && (
-				<div className="flex flex-col gap-y-6 justify-center w-[400px]">
+				<>
 					<div className="flex flex-col gap-y-1 items-center">
 						<img
 							src="https://ucarecdn.com/683b3c65-2bfe-4667-bc9d-998ff4d11f36/-/preview/174x173/"
@@ -216,7 +216,7 @@ function BudgetGetStarted(): React.ReactNode {
 							</form>
 						)}
 					</div>
-				</div>
+				</>
 			)}
 		</div>
 	);

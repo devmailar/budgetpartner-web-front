@@ -8,7 +8,7 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { getCookie, removeCookie } from "typescript-cookie";
+import { getCookie } from "typescript-cookie";
 import BudgetSwitch from "../../components/BudgetSwitch";
 import ExtraexpenseModal from "../../components/ExtraexpenseModal";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
@@ -16,6 +16,7 @@ import LanguageModal from "../../components/LanguageModal";
 import LoginPopup from "../../components/LoginPopup";
 import Modal from "../../components/Modal";
 import SettingsModal from "../../components/SettingsModal";
+import { setAuth } from "../../stores/Auth";
 import { setBudget } from "../../stores/Budget";
 import { setBudgets } from "../../stores/Budgets";
 import { setError } from "../../stores/Error";
@@ -118,7 +119,7 @@ function Budget(): React.ReactNode {
 			} catch (error) {
 				if (error instanceof Error) {
 					dispatch(setError(error.message));
-					removeCookie("Authorization");
+					dispatch(setAuth(""));
 					window.location.reload();
 				}
 			}

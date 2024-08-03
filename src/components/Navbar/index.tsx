@@ -2,7 +2,7 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import type React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { NavigateFunction } from "react-router-dom";
-import { getCookie, removeCookie } from "typescript-cookie";
+import { getCookie } from "typescript-cookie";
 import ArtLogo from "../../assets/logo.png";
 import { setAuth } from "../../stores/Auth";
 import { setError } from "../../stores/Error";
@@ -52,7 +52,6 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 	const handleLogoutAndRedirectToLogin = (): void => {
 		try {
 			dispatch(setAuth(""));
-			removeCookie("Authorization");
 			router.navigate("/login");
 		} catch (error: unknown) {
 			if (error instanceof Error) {

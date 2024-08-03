@@ -6,7 +6,7 @@ import { getCookie, removeCookie } from "typescript-cookie";
 import ArtLogo from "../../assets/logo.png";
 import { setError } from "../../stores/Error";
 import { setModals } from "../../stores/Modals";
-import type { IRootState, IUser } from "../../types";
+import type { IRootState } from "../../types";
 
 interface IRouter {
 	navigate: NavigateFunction;
@@ -19,7 +19,7 @@ interface INavbarProps {
 function Navbar({ router }: INavbarProps): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 
-	const user: IUser = useSelector((state: IRootState) => state.user);
+	const auth: string = useSelector((state: IRootState) => state.auth);
 
 	const handleOpenSettingsModal = (): void => {
 		try {
@@ -38,7 +38,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 		}
 	};
 
-	const handleLogin = (): void => {
+	const handleRedirectToLogin = (): void => {
 		try {
 			router.navigate("/login");
 		} catch (error: unknown) {
@@ -48,7 +48,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 		}
 	};
 
-	const handleLogout = (): void => {
+	const handleLogoutAndRedirectToLogin = (): void => {
 		try {
 			removeCookie("Authorization");
 			router.navigate("/login");
@@ -109,11 +109,11 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 				</div>
 
 				<div className="flex gap-x-6 items-center">
-					{getCookie("Authorization") ? (
+					{auth ? (
 						<button
 							type="button"
 							className="btn bg-darker flex items-center justify-center"
-							onClick={(): void => handleLogout()}
+							onClick={(): void => handleLogoutAndRedirectToLogin()}
 						>
 							<span className="text-base text-white font-normal font-rubik">Logout</span>
 						</button>
@@ -121,7 +121,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 						<button
 							type="button"
 							className="btn bg-dark flex items-center justify-center"
-							onClick={(): void => handleLogin()}
+							onClick={(): void => handleRedirectToLogin()}
 						>
 							<span className="text-base text-white font-normal font-rubik">Login</span>
 						</button>

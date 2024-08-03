@@ -55,6 +55,7 @@ export interface IRootState {
 	language: string;
 	loader: boolean;
 	forceLogin: boolean;
+	auth: string;
 }
 
 export interface IResponseError {

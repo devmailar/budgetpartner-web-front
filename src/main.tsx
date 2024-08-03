@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import App from "./App.tsx";
 import "./main.css";
+import { authStore } from "./stores/Auth/index.tsx";
 import { budgetStore } from "./stores/Budget/index.tsx";
 import { budgetsStore } from "./stores/Budgets/index.tsx";
 import { errorStore } from "./stores/Error";
@@ -25,6 +26,7 @@ const store: Store = configureStore({
 		language: languageStore.reducer,
 		loader: loaderStore.reducer,
 		forceLogin: forceLoginStore.reducer,
+		auth: authStore.reducer,
 	},
 });
 

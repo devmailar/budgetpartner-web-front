@@ -8,7 +8,6 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { getCookie } from "typescript-cookie";
 import BudgetSwitch from "../../components/BudgetSwitch";
 import ExtraexpenseModal from "../../components/ExtraexpenseModal";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
@@ -20,7 +19,6 @@ import { setAuth } from "../../stores/Auth";
 import { setBudget } from "../../stores/Budget";
 import { setBudgets } from "../../stores/Budgets";
 import { setError } from "../../stores/Error";
-import { setForceLogin } from "../../stores/ForceLogin";
 import { setLoader } from "../../stores/Loader";
 import { setModals } from "../../stores/Modals";
 import { setUser } from "../../stores/User";
@@ -39,6 +37,8 @@ import "./index.css";
 function Budget(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
+
+	const auth: string = useSelector((state: IRootState) => state.auth);
 
 	const budget: IBudget = useSelector((state: IRootState) => state.budget);
 	const modals: IModals = useSelector((state: IRootState) => state.modals);
@@ -131,12 +131,6 @@ function Budget(): React.ReactNode {
 		try {
 			setRemoveBudgetButtonDisabled(true);
 
-			const auth: string = getCookie("Authorization") ?? "";
-			if (!auth) {
-				dispatch(setForceLogin(true));
-				return;
-			}
-
 			if (new Date(budget.created_at).getMonth() === new Date().getMonth()) {
 				throw new Error("You cant delete present budget");
 			}
@@ -164,7 +158,6 @@ function Budget(): React.ReactNode {
 
 	React.useEffect((): void => {
 		const onLoad = async (): Promise<void> => {
-			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
 				dispatch(
 					setBudget({
@@ -187,7 +180,7 @@ function Budget(): React.ReactNode {
 		};
 
 		onLoad();
-	}, [dispatch, handleGetUserResponse]);
+	}, [auth, dispatch, handleGetUserResponse]);
 
 	React.useEffect(() => {
 		if (Object.keys(budget).length === 0) {

@@ -8,7 +8,6 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { getCookie, removeCookie } from "typescript-cookie";
 import BudgetSwitch from "../../components/BudgetSwitch";
 import ExtraexpenseModal from "../../components/ExtraexpenseModal";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
@@ -16,10 +15,10 @@ import LanguageModal from "../../components/LanguageModal";
 import LoginPopup from "../../components/LoginPopup";
 import Modal from "../../components/Modal";
 import SettingsModal from "../../components/SettingsModal";
+import { setAuth } from "../../stores/Auth";
 import { setBudget } from "../../stores/Budget";
 import { setBudgets } from "../../stores/Budgets";
 import { setError } from "../../stores/Error";
-import { setForceLogin } from "../../stores/ForceLogin";
 import { setLoader } from "../../stores/Loader";
 import { setModals } from "../../stores/Modals";
 import { setUser } from "../../stores/User";
@@ -38,6 +37,8 @@ import "./index.css";
 function Budget(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
+
+	const auth: string = useSelector((state: IRootState) => state.auth);
 
 	const budget: IBudget = useSelector((state: IRootState) => state.budget);
 	const modals: IModals = useSelector((state: IRootState) => state.modals);
@@ -118,7 +119,7 @@ function Budget(): React.ReactNode {
 			} catch (error) {
 				if (error instanceof Error) {
 					dispatch(setError(error.message));
-					removeCookie("Authorization");
+					dispatch(setAuth(""));
 					window.location.reload();
 				}
 			}
@@ -129,12 +130,6 @@ function Budget(): React.ReactNode {
 	const handleRemoveBudget = async (budget: IBudget): Promise<void> => {
 		try {
 			setRemoveBudgetButtonDisabled(true);
-
-			const auth: string = getCookie("Authorization") ?? "";
-			if (!auth) {
-				dispatch(setForceLogin(true));
-				return;
-			}
 
 			if (new Date(budget.created_at).getMonth() === new Date().getMonth()) {
 				throw new Error("You cant delete present budget");
@@ -161,19 +156,8 @@ function Budget(): React.ReactNode {
 		}
 	};
 
-	const handleRedirectLogin = (): void => {
-		try {
-			navigate("/login");
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				dispatch(setError(error.message));
-			}
-		}
-	};
-
 	React.useEffect((): void => {
 		const onLoad = async (): Promise<void> => {
-			const auth: string = getCookie("Authorization") ?? "";
 			if (!auth) {
 				dispatch(
 					setBudget({
@@ -196,7 +180,7 @@ function Budget(): React.ReactNode {
 		};
 
 		onLoad();
-	}, [dispatch, handleGetUserResponse]);
+	}, [auth, dispatch, handleGetUserResponse]);
 
 	React.useEffect(() => {
 		if (Object.keys(budget).length === 0) {
@@ -243,8 +227,8 @@ function Budget(): React.ReactNode {
 	}, [budget]);
 
 	return (
-		<div className="flex justify-center w-screen h-screen">
-			<div className="flex flex-col gap-y-12 items-center mt-20">
+		<>
+			<div className="flex flex-col gap-y-12 items-center">
 				<div className="flex flex-col gap-y-2 items-center">
 					<BudgetSwitch />
 
@@ -309,107 +293,76 @@ function Budget(): React.ReactNode {
 					</Swiper>
 				</div>
 
-				{!getCookie("Authorization") ? (
+				<div className="flex flex-col gap-y-3 items-center">
 					<button
 						type="button"
-						className="flex gap-x-1 items-center justify-center btn bg-black px-5 py-3.5 shadow-lg shadow-black rounded-3xl"
-						onClick={(): void => handleRedirectLogin()}
+						className="flex gap-x-2 items-center justify-center btn bg-purple px-6 py-3 rounded-3xl"
+						onClick={(): void => {
+							dispatch(
+								setModals({
+									extraincome: true,
+									extraexpense: false,
+									language: false,
+									settings: false,
+								}),
+							);
+						}}
 					>
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-							<title>Login</title>
-							<g clipPath="url(#clip0_349_173)">
-								<path
-									d="M9 8V6C9 5.46957 9.21071 4.96086 9.58579 4.58579C9.96086 4.21071 10.4696 4 11 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V18C20 18.5304 19.7893 19.0391 19.4142 19.4142C19.0391 19.7893 18.5304 20 18 20H11C10.4696 20 9.96086 19.7893 9.58579 19.4142C9.21071 19.0391 9 18.5304 9 18V16"
-									stroke="white"
-									strokeWidth="2"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-								<path d="M3 12H16L13 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-								<path d="M13 15L16 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-							</g>
-							<defs>
-								<clipPath id="clip0_349_173">
-									<rect width="24" height="24" fill="white" />
-								</clipPath>
-							</defs>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						>
+							<title>Trending Up</title>
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M3 17l6 -6l4 4l8 -8" />
+							<path d="M14 7l7 0l0 7" />
 						</svg>
 
-						<span className="text-base text-white font-medium font-rubik">
-							<FormattedMessage id="HOME_BUTTON_LOGIN_TEXT1" />
-						</span>
+						<span className="text-base text-dark font-medium font-rubik">Income</span>
 					</button>
-				) : (
-					<div className="flex flex-col gap-y-3 items-center">
-						<button
-							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-purple px-6 py-3 rounded-3xl"
-							onClick={(): void => {
-								dispatch(
-									setModals({
-										extraincome: true,
-										extraexpense: false,
-										language: false,
-										settings: false,
-									}),
-								);
-							}}
+
+					<button
+						type="button"
+						className="flex gap-x-2 items-center justify-center btn bg-orange px-6 py-3 rounded-3xl"
+						onClick={(): void => {
+							dispatch(
+								setModals({
+									extraincome: false,
+									extraexpense: true,
+									language: false,
+									settings: false,
+								}),
+							);
+						}}
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							>
-								<title>Trending Up</title>
-								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-								<path d="M3 17l6 -6l4 4l8 -8" />
-								<path d="M14 7l7 0l0 7" />
-							</svg>
+							<title>Trending Down</title>
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M3 7l6 6l4 -4l8 8" />
+							<path d="M21 10l0 7l-7 0" />
+						</svg>
 
-							<span className="text-base text-dark font-medium font-rubik">Income</span>
-						</button>
+						<span className="text-base text-dark font-medium font-rubik">Expenses</span>
+					</button>
 
-						<button
-							type="button"
-							className="flex gap-x-2 items-center justify-center btn bg-orange px-6 py-3 rounded-3xl"
-							onClick={(): void => {
-								dispatch(
-									setModals({
-										extraincome: false,
-										extraexpense: true,
-										language: false,
-										settings: false,
-									}),
-								);
-							}}
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							>
-								<title>Trending Down</title>
-								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-								<path d="M3 7l6 6l4 -4l8 8" />
-								<path d="M21 10l0 7l-7 0" />
-							</svg>
-
-							<span className="text-base text-dark font-medium font-rubik">Expenses</span>
-						</button>
-
-						{/* <button
+					{/* <button
 							type="button"
 							className="flex gap-x-2 items-center justify-center btn bg-red px-6 py-3 rounded-3xl"
 							onClick={(): void => {
@@ -455,8 +408,7 @@ function Budget(): React.ReactNode {
 
 							<span className="text-base text-dark font-medium font-rubik">Delete</span>
 						</button> */}
-					</div>
-				)}
+				</div>
 
 				{resetBudgetModal && (
 					<Modal
@@ -524,7 +476,7 @@ function Budget(): React.ReactNode {
 			{modals.settings && <SettingsModal />}
 
 			{forceLogin && <LoginPopup />}
-		</div>
+		</>
 	);
 }
 

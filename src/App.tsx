@@ -1,15 +1,18 @@
+import type { Dispatch } from "@reduxjs/toolkit";
 import React from "react";
 import { IntlProvider } from "react-intl";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { getCookie } from "typescript-cookie";
 import ErrorPopup from "./components/ErrorPopup";
-import Sidebar from "./components/Sidebar";
+import Navbar from "./components/Navbar";
 import Budget from "./routes/Budget";
 import BudgetGetStarted from "./routes/BudgetGetStarted";
 import BudgetNew from "./routes/BudgetNew";
 import CreateAnAccount from "./routes/CreateAnAccount";
 import Login from "./routes/Login";
 import PrivacyPolicy from "./routes/PrivacyPolicy";
+import { setAuth } from "./stores/Auth";
 import type { IRootState } from "./types";
 import { Utils } from "./utils";
 
@@ -41,6 +44,8 @@ export const router = createBrowserRouter([
 ]);
 
 function App(): React.ReactNode {
+	const dispatch: Dispatch = useDispatch();
+
 	const error: string = useSelector((state: IRootState) => state.error);
 	const loader: boolean = useSelector((state: IRootState) => state.loader);
 
@@ -54,7 +59,14 @@ function App(): React.ReactNode {
 		};
 
 		handleLoadLocaleMessages(locale);
-	}, [locale]);
+
+		const auth: string = getCookie("Authorization") ?? "";
+		if (!auth) {
+			return;
+		}
+
+		dispatch(setAuth(auth));
+	}, [dispatch, locale]);
 
 	return (
 		<>
@@ -65,14 +77,16 @@ function App(): React.ReactNode {
 			)}
 
 			<IntlProvider locale={locale} messages={localeMessages}>
-				<div className={`${loader && "opacity-0"}`}>
-					<div className="hidden sm:block">
-						<Sidebar router={router} />
-					</div>
+				<div className={`flex flex-col gap-y-20 ${loader && "opacity-0"}`}>
+					<Navbar router={router} />
 
 					{error && <ErrorPopup />}
 
-					<RouterProvider router={router} />
+					<div className="flex justify-center w-screen h-screen">
+						<div className="flex justify-center md:w-[800px]">
+							<RouterProvider router={router} />
+						</div>
+					</div>
 				</div>
 			</IntlProvider>
 		</>

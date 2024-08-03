@@ -161,16 +161,6 @@ function Budget(): React.ReactNode {
 		}
 	};
 
-	const handleRedirectLogin = (): void => {
-		try {
-			navigate("/login");
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				dispatch(setError(error.message));
-			}
-		}
-	};
-
 	React.useEffect((): void => {
 		const onLoad = async (): Promise<void> => {
 			const auth: string = getCookie("Authorization") ?? "";

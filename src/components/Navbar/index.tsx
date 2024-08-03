@@ -97,31 +97,33 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 						<span className="text-base text-white font-normal font-rubik">Support</span>
 					</button>
 
-					<button
-						type="button"
-						className="flex items-center justify-center"
-						onClick={(): void => handleOpenSettingsModal()}
-					>
-						<span className="text-base text-white font-normal font-rubik">Settings</span>
-					</button>
+					{getCookie("Authorization") && (
+						<button
+							type="button"
+							className="flex items-center justify-center"
+							onClick={(): void => handleOpenSettingsModal()}
+						>
+							<span className="text-base text-white font-normal font-rubik">Settings</span>
+						</button>
+					)}
 				</div>
 
 				<div className="flex gap-x-6 items-center">
-					{!getCookie("Authorization") ? (
-						<button
-							type="button"
-							className="btn bg-dark flex items-center justify-center"
-							onClick={(): void => handleLogin()}
-						>
-							<span className="text-base text-white font-normal font-rubik">Login</span>
-						</button>
-					) : (
+					{getCookie("Authorization") ? (
 						<button
 							type="button"
 							className="btn bg-darker flex items-center justify-center"
 							onClick={(): void => handleLogout()}
 						>
 							<span className="text-base text-white font-normal font-rubik">Logout</span>
+						</button>
+					) : (
+						<button
+							type="button"
+							className="btn bg-dark flex items-center justify-center"
+							onClick={(): void => handleLogin()}
+						>
+							<span className="text-base text-white font-normal font-rubik">Login</span>
 						</button>
 					)}
 				</div>

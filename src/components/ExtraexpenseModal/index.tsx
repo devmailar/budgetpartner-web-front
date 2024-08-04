@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
+import { setForceLogin } from "../../stores/ForceLogin";
 import { setModals } from "../../stores/Modals";
 import type { IBudget, IExtraexpense, IResponseError, IRootState } from "../../types";
 import { Utils } from "../../utils";
@@ -45,6 +46,11 @@ function ExtraexpenseModal(): React.ReactNode {
 				throw new Error("Please enter valid amount");
 			}
 
+			if (!auth) {
+				dispatch(setForceLogin(true));
+				return;
+			}
+
 			const createExtraexpenseResponse: Response = await fetch(`${Utils.baseurl}/extraexpenses/create`, {
 				method: "POST",
 				headers: {
@@ -75,6 +81,11 @@ function ExtraexpenseModal(): React.ReactNode {
 	const handleRemoveExtraexpense = async (extraexpense_id: number): Promise<void> => {
 		try {
 			setRemoveExtraexpenseButtonDisabled(true);
+
+			if (!auth) {
+				dispatch(setForceLogin(true));
+				return;
+			}
 
 			const removeExtraexpenseResponse: Response = await fetch(
 				`${Utils.baseurl}/extraexpenses/remove/${extraexpense_id}`,
@@ -205,26 +216,22 @@ function ExtraexpenseModal(): React.ReactNode {
 					{!createExtraexpenseModal && !removeExtraexpenseModal ? (
 						<div className="flex flex-col gap-y-4">
 							<div className="flex items-center justify-between">
-								<div className="flex gap-x-1 items-center">
-									<span className="text-sm text-light font-medium font-rubik">EXPENSES</span>
-
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="24"
-										height="24"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="#B85C3D"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									>
-										<title>Trending Down</title>
-										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-										<path d="M3 7l6 6l4 -4l8 8" />
-										<path d="M21 10l0 7l-7 0" />
-									</svg>
-								</div>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="#B85C3D"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
+									<title>Trending Down</title>
+									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+									<path d="M3 7l6 6l4 -4l8 8" />
+									<path d="M21 10l0 7l-7 0" />
+								</svg>
 
 								<button className="mr-[-0.25rem]" type="button" onClick={(): void => handleClose()}>
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -254,48 +261,50 @@ function ExtraexpenseModal(): React.ReactNode {
 								</button>
 							</div>
 
-							<div className="overflow-auto">
-								<table className="w-full">
-									<thead>
-										<tr>
-											<th className="px-0 py-1 text-left text-sm text-white font-medium font-rubik">ID</th>
-											<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Expense</th>
-											<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Amount</th>
-											<th className="px-0 py-1 text-right text-sm text-white font-medium font-rubik">Created</th>
-										</tr>
-									</thead>
-
-									<tbody className="overflow-y-auto table-fixed">
-										{extraexpensesOrderedAscendingByAmount.map((extraexpense: IExtraexpense, index: number) => (
-											<tr
-												className="border-t border-t-dark cursor-pointer"
-												key={extraexpense.id}
-												onClick={(): void => {
-													setRemoveExtraexpense(extraexpense);
-													setRemoveExtraexpenseModal(true);
-												}}
-												onKeyUp={(): void => {
-													setRemoveExtraexpense(extraexpense);
-													setRemoveExtraexpenseModal(true);
-												}}
-											>
-												<td className="px-0 py-2 text-left text-sm text-light font-normal font-rubik truncate">
-													<span>{index + 1}</span>
-												</td>
-												<td className="px-3 py-2 text-left text-sm text-light font-normal font-rubik truncate">
-													<span>{extraexpense.extraexpense_type}</span>
-												</td>
-												<td className="px-3 py-2 text-left text-sm text-light font-normal font-rubik truncate">
-													<span>{extraexpense.extraexpense_amount_monthly.toFixed(1)}€</span>
-												</td>
-												<td className="px-0 py-2 text-right text-sm text-light font-normal font-rubik truncate">
-													<span>{new Date(extraexpense.created_at).toLocaleDateString()}</span>
-												</td>
+							{extraexpensesOrderedAscendingByAmount.length > 0 && (
+								<div className="overflow-auto">
+									<table className="w-full">
+										<thead>
+											<tr>
+												<th className="px-0 py-1 text-left text-sm text-white font-medium font-rubik">ID</th>
+												<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Expense</th>
+												<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Amount</th>
+												<th className="px-0 py-1 text-right text-sm text-white font-medium font-rubik">Created</th>
 											</tr>
-										))}
-									</tbody>
-								</table>
-							</div>
+										</thead>
+
+										<tbody className="overflow-y-auto table-fixed">
+											{extraexpensesOrderedAscendingByAmount.map((extraexpense: IExtraexpense, index: number) => (
+												<tr
+													className="border-t border-t-dark cursor-pointer"
+													key={extraexpense.id}
+													onClick={(): void => {
+														setRemoveExtraexpense(extraexpense);
+														setRemoveExtraexpenseModal(true);
+													}}
+													onKeyUp={(): void => {
+														setRemoveExtraexpense(extraexpense);
+														setRemoveExtraexpenseModal(true);
+													}}
+												>
+													<td className="px-0 py-2 text-left text-sm text-light font-normal font-rubik truncate">
+														<span>{index + 1}</span>
+													</td>
+													<td className="px-3 py-2 text-left text-sm text-light font-normal font-rubik truncate">
+														<span>{extraexpense.extraexpense_type}</span>
+													</td>
+													<td className="px-3 py-2 text-left text-sm text-light font-normal font-rubik truncate">
+														<span>{extraexpense.extraexpense_amount_monthly.toFixed(1)}€</span>
+													</td>
+													<td className="px-0 py-2 text-right text-sm text-light font-normal font-rubik truncate">
+														<span>{new Date(extraexpense.created_at).toLocaleDateString()}</span>
+													</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+								</div>
+							)}
 
 							<div className="flex items-center justify-end">
 								<span className="text-sm text-orange font-bold font-rubik truncate">
@@ -305,34 +314,16 @@ function ExtraexpenseModal(): React.ReactNode {
 
 							<button
 								type="button"
-								className="btn bg-orange border border-grey rounded-xl"
+								className="btn bg-dark rounded-xl"
 								onClick={(): void => setCreateExtraexpenseModal(true)}
 							>
-								<span className="text-sm text-white font-medium font-rubik">Create</span>
+								<span className="text-sm text-white font-normal font-rubik">Add New</span>
 							</button>
 						</div>
 					) : (
 						<form className="flex flex-col gap-y-4" onSubmit={handleCreateExtraexpense}>
 							<div className="flex items-center justify-between">
-								<div className="flex gap-x-1 items-center">
-									<span className="text-sm text-light font-medium font-rubik">NEW EXPENSE</span>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="24"
-										height="24"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="#B85C3D"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									>
-										<title>Trending Down</title>
-										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-										<path d="M3 7l6 6l4 -4l8 8" />
-										<path d="M21 10l0 7l-7 0" />
-									</svg>
-								</div>
+								<span className="text-sm text-light font-medium font-rubik">NEW EXPENSE</span>
 
 								<button className="mr-[-0.25rem]" type="button" onClick={(): void => setCreateExtraexpenseModal(false)}>
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -379,15 +370,15 @@ function ExtraexpenseModal(): React.ReactNode {
 									type="number"
 									name="extraexpense_amount_monthly"
 									id="extraexpense_amount_monthly"
-									placeholder="0.00€"
+									placeholder="0.00"
 									required
 								/>
 
 								<span className="text-sm text-light font-normal font-rubik">€/MO</span>
 							</div>
 
-							<button type="submit" className="btn bg-orange border border-grey rounded-xl">
-								<span className="text-sm text-white font-medium font-rubik">Save</span>
+							<button type="submit" className="btn bg-orange rounded-xl">
+								<span className="text-sm text-white font-normal font-rubik">Save</span>
 							</button>
 						</form>
 					)}

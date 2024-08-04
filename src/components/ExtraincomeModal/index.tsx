@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
+import { setForceLogin } from "../../stores/ForceLogin";
 import { setModals } from "../../stores/Modals";
 import type { IBudget, IExtraincome, IResponseError, IRootState } from "../../types";
 import { Utils } from "../../utils";
@@ -46,6 +47,11 @@ function ExtraincomeModal(): React.ReactNode {
 				throw new Error("Please enter valid amount");
 			}
 
+			if (!auth) {
+				dispatch(setForceLogin(true));
+				return;
+			}
+
 			const createExtraincomeResponse: Response = await fetch(`${Utils.baseurl}/extraincomes/create`, {
 				method: "POST",
 				headers: {
@@ -76,6 +82,11 @@ function ExtraincomeModal(): React.ReactNode {
 	const handleRemoveExtraincome = async (extraincome_id: number): Promise<void> => {
 		try {
 			setRemoveExtraincomeButtonDisabled(true);
+
+			if (!auth) {
+				dispatch(setForceLogin(true));
+				return;
+			}
 
 			const removeExtraincomeResponse: Response = await fetch(
 				`${Utils.baseurl}/extraincomes/remove/${extraincome_id}`,
@@ -206,25 +217,22 @@ function ExtraincomeModal(): React.ReactNode {
 					{!createExtraincomeModal && !removeExtraincomeModal ? (
 						<div className="flex flex-col gap-y-4">
 							<div className="flex items-center justify-between">
-								<div className="flex gap-x-1 items-center">
-									<span className="text-sm text-light font-medium font-rubik">INCOME</span>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="24"
-										height="24"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="#895FF5"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									>
-										<title>Trending Up</title>
-										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-										<path d="M3 17l6 -6l4 4l8 -8" />
-										<path d="M14 7l7 0l0 7" />
-									</svg>
-								</div>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="#895FF5"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
+									<title>Trending Up</title>
+									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+									<path d="M3 17l6 -6l4 4l8 -8" />
+									<path d="M14 7l7 0l0 7" />
+								</svg>
 
 								<button className="mr-[-0.25rem]" type="button" onClick={(): void => handleClose()}>
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -254,48 +262,50 @@ function ExtraincomeModal(): React.ReactNode {
 								</button>
 							</div>
 
-							<div className="overflow-auto">
-								<table className="w-full">
-									<thead>
-										<tr>
-											<th className="px-0 py-1 text-left text-sm text-white font-medium font-rubik">ID</th>
-											<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Income</th>
-											<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Amount</th>
-											<th className="px-0 py-1 text-right text-sm text-white font-medium font-rubik">Created</th>
-										</tr>
-									</thead>
-
-									<tbody className="overflow-y-auto table-fixed">
-										{extraincomesOrderedAscendingByAmount.map((extraincome: IExtraincome, index: number) => (
-											<tr
-												className="border-t border-t-dark cursor-pointer"
-												key={extraincome.id}
-												onClick={(): void => {
-													setRemoveExtraincome(extraincome);
-													setRemoveExtraincomeModal(true);
-												}}
-												onKeyUp={(): void => {
-													setRemoveExtraincome(extraincome);
-													setRemoveExtraincomeModal(true);
-												}}
-											>
-												<td className="px-0 py-2 text-left text-sm text-light font-normal font-rubik truncate">
-													<span>{index + 1}</span>
-												</td>
-												<td className="px-3 py-2 text-left text-sm text-light font-normal font-rubik truncate">
-													<span>{extraincome.extraincome_type}</span>
-												</td>
-												<td className="px-3 py-2 text-left text-sm text-light font-normal font-rubik truncate">
-													<span>{extraincome.extraincome_amount_monthly.toFixed(1)}€</span>
-												</td>
-												<td className="px-0 py-2 text-right text-sm text-light font-normal font-rubik truncate">
-													<span>{new Date(extraincome.created_at).toLocaleDateString()}</span>
-												</td>
+							{extraincomesOrderedAscendingByAmount.length > 0 && (
+								<div className="overflow-auto">
+									<table className="w-full">
+										<thead>
+											<tr>
+												<th className="px-0 py-1 text-left text-sm text-white font-medium font-rubik">ID</th>
+												<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Income</th>
+												<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Amount</th>
+												<th className="px-0 py-1 text-right text-sm text-white font-medium font-rubik">Created</th>
 											</tr>
-										))}
-									</tbody>
-								</table>
-							</div>
+										</thead>
+
+										<tbody className="overflow-y-auto table-fixed">
+											{extraincomesOrderedAscendingByAmount.map((extraincome: IExtraincome, index: number) => (
+												<tr
+													className="border-t border-t-dark cursor-pointer"
+													key={extraincome.id}
+													onClick={(): void => {
+														setRemoveExtraincome(extraincome);
+														setRemoveExtraincomeModal(true);
+													}}
+													onKeyUp={(): void => {
+														setRemoveExtraincome(extraincome);
+														setRemoveExtraincomeModal(true);
+													}}
+												>
+													<td className="px-0 py-2 text-left text-sm text-light font-normal font-rubik truncate">
+														<span>{index + 1}</span>
+													</td>
+													<td className="px-3 py-2 text-left text-sm text-light font-normal font-rubik truncate">
+														<span>{extraincome.extraincome_type}</span>
+													</td>
+													<td className="px-3 py-2 text-left text-sm text-light font-normal font-rubik truncate">
+														<span>{extraincome.extraincome_amount_monthly.toFixed(1)}€</span>
+													</td>
+													<td className="px-0 py-2 text-right text-sm text-light font-normal font-rubik truncate">
+														<span>{new Date(extraincome.created_at).toLocaleDateString()}</span>
+													</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+								</div>
+							)}
 
 							<div className="flex items-center justify-end">
 								<span className="text-sm text-purple font-bold font-rubik truncate">
@@ -305,34 +315,16 @@ function ExtraincomeModal(): React.ReactNode {
 
 							<button
 								type="button"
-								className="btn bg-purple2 border border-grey rounded-xl"
+								className="btn bg-dark rounded-xl"
 								onClick={(): void => setCreateExtraincomeModal(true)}
 							>
-								<span className="text-sm text-white font-medium font-rubik">Create</span>
+								<span className="text-sm text-white font-normal font-rubik">Add New</span>
 							</button>
 						</div>
 					) : (
 						<form className="flex flex-col gap-y-4" onSubmit={handleCreateExtraincome}>
 							<div className="flex items-center justify-between">
-								<div className="flex gap-x-1 items-center">
-									<span className="text-sm text-light font-medium font-rubik">NEW INCOME</span>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="24"
-										height="24"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="#895FF5"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									>
-										<title>Trending Up</title>
-										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-										<path d="M3 17l6 -6l4 4l8 -8" />
-										<path d="M14 7l7 0l0 7" />
-									</svg>
-								</div>
+								<span className="text-sm text-light font-medium font-rubik">NEW INCOME</span>
 
 								<button className="mr-[-0.25rem]" type="button" onClick={(): void => setCreateExtraincomeModal(false)}>
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -379,7 +371,7 @@ function ExtraincomeModal(): React.ReactNode {
 									type="number"
 									name="extraincome_amount_monthly"
 									id="extraincome_amount_monthly"
-									placeholder="0.00€"
+									placeholder="0.00"
 									required
 								/>
 
@@ -415,8 +407,8 @@ function ExtraincomeModal(): React.ReactNode {
 								</div>
 							</div>
 
-							<button type="submit" className="btn bg-purple2 border border-grey rounded-xl">
-								<span className="text-sm text-white font-medium font-rubik">Save</span>
+							<button type="submit" className="btn bg-purple rounded-xl">
+								<span className="text-sm text-white font-normal font-rubik">Save</span>
 							</button>
 						</form>
 					)}

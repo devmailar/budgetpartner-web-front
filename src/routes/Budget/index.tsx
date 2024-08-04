@@ -294,6 +294,10 @@ function Budget(): React.ReactNode {
 				</div>
 
 				<div className="flex flex-col gap-y-3 items-center">
+					{monthlyBudgetAmount === 0 && (
+						<span className="text-center text-sm text-white font-normal font-rubik">⬇️ Please add your income ⬇️</span>
+					)}
+
 					<button
 						type="button"
 						className="flex gap-x-2 items-center justify-center btn bg-purple px-6 py-3 rounded-3xl"

@@ -23,18 +23,15 @@ function LoginPopup(): React.ReactNode {
 	};
 
 	return (
-		<Modal index={50}>
-			<div className="flex flex-col gap-y-4 items-center px-4 py-4 shadow-sm shadow-black">
-				<img src={ArtLogin} alt={ArtLogin} width="200" />
+		<Modal
+			index={50}
+			classes="gap-y-4 px-4 py-4 border border-dark shadow-sm shadow-dark animate__animated animate__fadeInDown animate__faster"
+		>
+			<img src={ArtLogin} alt={ArtLogin} width="200" />
 
-				<button
-					type="button"
-					className="btn w-full from-purple to-purple2 bg-gradient-to-b"
-					onClick={(): void => handleLogin()}
-				>
-					<span className="text-sm text-white font-normal font-rubik">Login</span>
-				</button>
-			</div>
+			<button type="button" className="btn bg-purple2 rounded-base" onClick={(): void => handleLogin()}>
+				<span className="text-sm text-white font-medium font-rubik">Login</span>
+			</button>
 		</Modal>
 	);
 }

@@ -98,6 +98,17 @@ function Login(): React.ReactNode {
 					disabled={isLoading}
 				/>
 
+				{/* <GoogleOAuthProvider clientId="139164895162-5ldfva77u8ie0eej44abvjtg576lu5ph.apps.googleusercontent.com">
+					<GoogleLogin
+						onSuccess={(credentialResponse: CredentialResponse) => {
+							console.table(credentialResponse);
+						}}
+						onError={() => {
+							console.error("Login Failed");
+						}}
+					/>
+				</GoogleOAuthProvider> */}
+
 				<div className="flex gap-x-2 items-center justify-center">
 					<div className="border-[0.1px] border-light w-1/3" />
 					<p className="text-base text-white font-normal">or continue with</p>

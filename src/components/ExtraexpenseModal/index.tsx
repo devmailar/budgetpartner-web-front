@@ -239,22 +239,22 @@ function ExtraexpenseModal(): React.ReactNode {
 										<g clipPath="url(#clip0_283_267)">
 											<path
 												d="M18 6L6 18"
-												stroke="white"
-												strokeWidth="3"
+												stroke="#B7B7B7"
+												strokeWidth="2"
 												strokeLinecap="round"
 												strokeLinejoin="round"
 											/>
 											<path
 												d="M6 6L18 18"
-												stroke="white"
-												strokeWidth="3"
+												stroke="#B7B7B7"
+												strokeWidth="2"
 												strokeLinecap="round"
 												strokeLinejoin="round"
 											/>
 										</g>
 										<defs>
 											<clipPath id="clip0_283_267">
-												<rect width="24" height="24" fill="white" />
+												<rect width="24" height="24" fill="#B7B7B7" />
 											</clipPath>
 										</defs>
 									</svg>

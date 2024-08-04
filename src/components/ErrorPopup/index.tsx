@@ -20,7 +20,7 @@ function ErrorPopup(): React.ReactNode {
 	setTimeout(async (): Promise<void> => await handleClose(), 3000);
 
 	return (
-		<div className="z-50 absolute top-8 flex items-center justify-center w-screen">
+		<div className="z-50 absolute top-20 flex items-center justify-center w-screen">
 			<button
 				className="btn px-3.5 py-2.5 border border-red animate__animated animate__fadeInDown animate__faster"
 				type="button"

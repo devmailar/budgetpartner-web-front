@@ -211,7 +211,21 @@ function Budget(): React.ReactNode {
 			end: endOfMonth(new Date()),
 		});
 
-		const weekdaysInMonth: Date[] = currentDaysInMonth.filter((day: Date) => !isWeekend(day));
+		const includesWeekends: boolean = budget.extraincomes.some((extraincome: IExtraincome) => {
+			return extraincome.extraincome_includes_weekends;
+		});
+
+		const daysInMonth: Date[] = includesWeekends
+			? currentDaysInMonth
+			: currentDaysInMonth.filter((day: Date) => {
+					return !isWeekend(day);
+				});
+
+		const weekdaysInMonth: Date[] = daysInMonth.filter((day: Date) => {
+			return !isWeekend(day);
+		});
+
+		// TODO: Check if budget.extraincome.map((ei => )) has extraincome_includes_weekends set to true ..then calculate for that extraincome daysInMonth instead of weekdaysInMonth
 
 		// Can we allow player to set if monthly budget income is from fullweek or like 5 days counted.
 
@@ -219,7 +233,10 @@ function Budget(): React.ReactNode {
 
 		// That doesn't make sense, as some people might have stocks that happen every weekend when counting dailyBudget
 
-		const dailyBudgetAmount: number = (totalExtraincomes - totalExtraexpenses) / weekdaysInMonth.length;
+		const dailyBudgetAmount: number = includesWeekends
+			? (totalExtraincomes - totalExtraexpenses) / daysInMonth.length
+			: (totalExtraincomes - totalExtraexpenses) / weekdaysInMonth.length;
+
 		const monthlyBudgetAmount: number = totalExtraincomes - totalExtraexpenses;
 
 		setDailyBudgetAmount(dailyBudgetAmount);

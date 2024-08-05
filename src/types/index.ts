@@ -12,6 +12,7 @@ export interface IExtraincome {
 	user_id: number;
 	extraincome_type: string;
 	extraincome_amount_monthly: number;
+	extraincome_includes_weekends: boolean;
 	created_at: Date;
 	updated_at: Date;
 }

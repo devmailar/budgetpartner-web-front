@@ -62,7 +62,7 @@ function ExtraincomeModal(): React.ReactNode {
 					budget_id: budget.id,
 					extraincome_type: extraincomeType,
 					extraincome_amount_monthly: extraincomeAmountMonthly,
-					extraincome_includes_weekends: true,
+					extraincome_includes_weekends: includeWeekends,
 				}),
 			});
 
@@ -393,13 +393,13 @@ function ExtraincomeModal(): React.ReactNode {
 									<button type="button" onClick={() => setIncludeWeekends(!includeWeekends)}>
 										{includeWeekends ? (
 											<svg width="48" height="28" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<title>Checkbox Not Checked</title>
+												<title>Checkbox Checked</title>
 												<rect width="48" height="28" rx="14" fill="#252525" />
 												<circle cx="34" cy="14" r="10" fill="#895FF5" />
 											</svg>
 										) : (
 											<svg width="48" height="28" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<title>Checkbox Checked</title>
+												<title>Checkbox Not Checked</title>
 												<rect width="48" height="28" rx="14" fill="#252525" />
 												<circle cx="14" cy="14" r="10" fill="#b7b7b7" />
 											</svg>

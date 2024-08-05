@@ -62,6 +62,7 @@ function ExtraincomeModal(): React.ReactNode {
 					budget_id: budget.id,
 					extraincome_type: extraincomeType,
 					extraincome_amount_monthly: extraincomeAmountMonthly,
+					extraincome_includes_weekends: true,
 				}),
 			});
 

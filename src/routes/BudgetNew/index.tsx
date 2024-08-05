@@ -94,6 +94,7 @@ function BudgetNew(): React.ReactNode {
 						budget_id: currentBudget.id,
 						extraincome_type: "Salary",
 						extraincome_amount_monthly: income,
+						extraincome_includes_weekends: false,
 					}),
 				});
 

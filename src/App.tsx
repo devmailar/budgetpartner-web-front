@@ -77,7 +77,7 @@ function App(): React.ReactNode {
 			)}
 
 			<IntlProvider locale={locale} messages={localeMessages}>
-				<div className={`flex flex-col gap-y-20 ${loader && "opacity-0"}`}>
+				<div className={`flex flex-col gap-y-10 md:gap-y-20 ${loader && "opacity-0"}`}>
 					<Navbar router={router} />
 
 					{error && <ErrorPopup />}

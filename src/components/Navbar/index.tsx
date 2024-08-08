@@ -61,12 +61,12 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 	};
 
 	return (
-		<div className="flex items-center justify-center bg-[#1A0D24] w-full px-3 py-3 animate__animated animate__fadeInDown animate__faster">
+		<div className="flex items-center justify-center md:bg-[#1A0D24] w-full px-[1.625rem] py-4 animate__animated animate__fadeInDown animate__faster">
 			<div className="flex flex-wrap items-center justify-between w-full md:w-[800px]">
 				<a href="/" className="flex gap-x-2 items-center">
 					<img src={ArtLogo} alt={ArtLogo} width={28} height={28} />
 
-					<h2 className="text-lg text-white font-normal lower font-rubik">budgetpartner.app</h2>
+					<h2 className="hidden md:block text-lg text-white font-normal lower font-rubik">budgetpartner.app</h2>
 				</a>
 
 				<div className="hidden md:flex gap-x-6 items-center">
@@ -119,12 +119,20 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 							<span className="text-base text-white font-normal font-rubik">Logout</span>
 						</button>
 					) : (
-						<button
-							type="button"
-							className="btn bg-dark flex items-center justify-center"
-							onClick={(): void => handleRedirectToLogin()}
-						>
-							<span className="text-base text-white font-normal font-rubik">Login</span>
+						<button type="button" onClick={(): void => handleRedirectToLogin()}>
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<title>Login</title>
+								<path
+									d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+									stroke="white"
+									stroke-width="1.5"
+								/>
+								<path
+									d="M8.00781 15.9947L8.00787 8M17.9961 12.0041H11.6395M14 9L11.0147 12.0041L14.0095 14.9966"
+									stroke="white"
+									stroke-width="1.5"
+								/>
+							</svg>
 						</button>
 					)}
 				</div>

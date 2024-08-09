@@ -14,7 +14,7 @@ function Modal({ index, classes, children }: IModalProps): React.ReactNode {
 
 	return (
 		<div
-			className={`absolute z-${index} flex items-center justify-center w-screen h-screen left-0 top-0 bg-black bg-opacity-40`}
+			className={`absolute z-${index} flex items-center justify-center w-screen h-screen left-0 top-0 bg-[#080808] bg-opacity-60 backdrop-blur-[2px]`}
 			onClick={(): void => {
 				dispatch(
 					setModals({
@@ -29,7 +29,7 @@ function Modal({ index, classes, children }: IModalProps): React.ReactNode {
 			onKeyDown={(): void => {}}
 		>
 			<div
-				className={`flex flex-col bg-darker rounded-2xl ${classes}`}
+				className={`flex flex-col bg-[#0F0F0F] border border-[#252525] rounded-2xl ${classes}`}
 				onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 					e.stopPropagation();
 				}}

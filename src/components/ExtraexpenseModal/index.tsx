@@ -211,54 +211,89 @@ function ExtraexpenseModal(): React.ReactNode {
 			) : (
 				<Modal
 					index={40}
-					classes="gap-y-4 px-4 py-4 w-[20rem] md:w-fit md:min-w-[25rem] border border-dark shadow-sm shadow-dark animate__animated animate__fadeInDown animate__faster"
+					classes="gap-y-4 px-5 py-5 w-[20rem] md:w-fit md:min-w-[25rem] animate__animated animate__fadeInDown animate__faster"
 				>
 					{!createExtraexpenseModal && !removeExtraexpenseModal ? (
 						<div className="flex flex-col gap-y-4">
 							<div className="flex items-center justify-between">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="24"
-									height="24"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="#B85C3D"
-									strokeWidth="2"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								>
-									<title>Trending Down</title>
-									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-									<path d="M3 7l6 6l4 -4l8 8" />
-									<path d="M21 10l0 7l-7 0" />
-								</svg>
-
-								<button className="mr-[-0.25rem]" type="button" onClick={(): void => handleClose()}>
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
-										<title>Close</title>
-										<g clipPath="url(#clip0_283_267)">
+								<div className="flex gap-x-1 items-center">
+									<span className="text-sm text-[#B7B7B7] font-light font-rubik">Expenses</span>
+									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<title>Trending Down</title>
+										<g clip-path="url(#clip0_626_89)">
 											<path
-												d="M18 6L6 18"
+												d="M2.5 5.83334L7.5 10.8333L10.8333 7.50001L17.5 14.1667"
 												stroke="#B7B7B7"
-												strokeWidth="2"
-												strokeLinecap="round"
-												strokeLinejoin="round"
+												stroke-width="0.5"
+												stroke-linecap="round"
+												stroke-linejoin="round"
 											/>
 											<path
-												d="M6 6L18 18"
+												d="M17.5 8.33334V14.1667H11.6667"
 												stroke="#B7B7B7"
-												strokeWidth="2"
-												strokeLinecap="round"
-												strokeLinejoin="round"
+												stroke-width="0.5"
+												stroke-linecap="round"
+												stroke-linejoin="round"
 											/>
 										</g>
 										<defs>
-											<clipPath id="clip0_283_267">
-												<rect width="24" height="24" fill="#B7B7B7" />
+											<clipPath id="clip0_626_89">
+												<rect width="20" height="20" fill="white" />
 											</clipPath>
 										</defs>
 									</svg>
-								</button>
+								</div>
+
+								<div className="flex gap-x-3 items-center">
+									<button type="button" onClick={(): void => {}}>
+										<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<title>Maximize</title>
+											<g clip-path="url(#clip0_626_56)">
+												<path
+													d="M2.5 14.1667C2.5 13.9457 2.5878 13.7337 2.74408 13.5774C2.90036 13.4211 3.11232 13.3333 3.33333 13.3333H5.83333C6.05435 13.3333 6.26631 13.4211 6.42259 13.5774C6.57887 13.7337 6.66667 13.9457 6.66667 14.1667V16.6667C6.66667 16.8877 6.57887 17.0996 6.42259 17.2559C6.26631 17.4122 6.05435 17.5 5.83333 17.5H3.33333C3.11232 17.5 2.90036 17.4122 2.74408 17.2559C2.5878 17.0996 2.5 16.8877 2.5 16.6667V14.1667Z"
+													stroke="#B7B7B7"
+													stroke-width="0.5"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+												/>
+												<path
+													d="M3.33334 10V5C3.33334 4.55797 3.50894 4.13405 3.8215 3.82149C4.13406 3.50893 4.55798 3.33333 5.00001 3.33333H15C15.442 3.33333 15.866 3.50893 16.1785 3.82149C16.4911 4.13405 16.6667 4.55797 16.6667 5V15C16.6667 15.442 16.4911 15.8659 16.1785 16.1785C15.866 16.4911 15.442 16.6667 15 16.6667H10"
+													stroke="#B7B7B7"
+													stroke-width="0.5"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+												/>
+												<path
+													d="M10 6.66667H13.3333V10"
+													stroke="#B7B7B7"
+													stroke-width="0.5"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+												/>
+												<path
+													d="M13.3333 6.66667L9.16666 10.8333"
+													stroke="#B7B7B7"
+													stroke-width="0.5"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+												/>
+											</g>
+											<defs>
+												<clipPath id="clip0_626_56">
+													<rect width="20" height="20" fill="white" />
+												</clipPath>
+											</defs>
+										</svg>
+									</button>
+
+									<button type="button" onClick={(): void => handleClose()}>
+										<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<title>Close</title>
+											<path d="M15 5L5 15" stroke="#B7B7B7" stroke-width="0.5" />
+											<path d="M5 5L15 15" stroke="#B7B7B7" stroke-width="0.5" />
+										</svg>
+									</button>
+								</div>
 							</div>
 
 							{extraexpensesOrderedAscendingByAmount.length > 0 && (

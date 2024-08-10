@@ -59,18 +59,25 @@ function BudgetSwitch(): React.ReactNode {
 			<div className="flex flex-col gap-y-2 items-center">
 				<button
 					type="button"
-					className={`${budgetSwitch ? "z-50" : "z-40"} flex gap-x-1 items-center justify-center bg-darker border border-grey px-4 py-2 rounded-3xl`}
+					className={`${budgetSwitch ? "z-50" : "z-40"} flex gap-x-1.5 items-center justify-center px-2.5 py-2.5 bg-[#160C1F] border border-[#414141] rounded-3xl`}
 					onClick={(): void => setBudgetSwitch(!budgetSwitch)}
 				>
-					<span className="text-lg text-light font-normal font-rubik">
-						{Utils.months[new Date(budget.created_at).getMonth()]} {"("}
-						<span className="font-medium">{new Date().getFullYear()}</span>
-						{")"}
+					<span className="text-base text-[#A0A0A0] font-normal font-rubik">
+						{Utils.months[new Date(budget.created_at).getMonth()]} {new Date().getFullYear()}
 					</span>
 
-					<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<title>Arrow Down</title>
-						<path d="M7.5 12.5L15 20L22.5 12.5H7.5Z" stroke="#B7B7B7" strokeWidth="1.5" />
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<title>Menu</title>
+						<path
+							d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+							stroke="#A0A0A0"
+						/>
+						<path
+							d="M16 10.5C16 10.5 13.054 13.5 12 13.5C10.9459 13.5 8 10.5 8 10.5"
+							stroke="#A0A0A0"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
 					</svg>
 				</button>
 			</div>
@@ -78,7 +85,7 @@ function BudgetSwitch(): React.ReactNode {
 			{budgetSwitch && (
 				<Modal
 					index={40}
-					classes="gap-y-6 px-2 py-5 absolute top-52 z-50 w-60 rounded-2xl border border-dark animate__animated animate__fadeInDown animate__faster"
+					classes="gap-y-6 px-2 py-4 absolute top-52 z-50 w-60 rounded-2xl border border-dark animate__animated animate__fadeInDown animate__faster"
 				>
 					<div className="flex flex-col gap-y-2.5 items-center justify-center">
 						{budgets.map((b: IBudget) => (

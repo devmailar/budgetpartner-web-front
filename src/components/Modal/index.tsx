@@ -14,7 +14,7 @@ function Modal({ index, classes, children }: IModalProps): React.ReactNode {
 
 	return (
 		<div
-			className={`absolute z-${index} flex items-center justify-center w-screen h-screen left-0 top-0 bg-[#080808] bg-opacity-60 backdrop-blur-[2px]`}
+			className={`absolute z-${index} flex items-center justify-center w-screen h-screen left-0 top-0 bg-[#080808] bg-opacity-20 backdrop-blur-[2px]`}
 			onClick={(): void => {
 				dispatch(
 					setModals({

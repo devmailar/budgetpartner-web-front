@@ -245,18 +245,43 @@ function Budget(): React.ReactNode {
 
 	return (
 		<>
-			<div className="flex flex-col gap-y-12 items-center">
+			<div className="flex flex-col gap-y-4 items-center">
 				<div className="flex flex-col gap-y-2 items-center">
 					<BudgetSwitch />
 
 					<Swiper
 						className="w-[20rem] md:w-[30rem] h-fit z-0"
-						autoplay={{ delay: 20000, disableOnInteraction: false }}
-						pagination={{ clickable: true }}
-						modules={[Autoplay, Pagination]}
+						modules={[Autoplay]}
+						autoplay={{ delay: 10000, disableOnInteraction: false }}
 					>
 						<SwiperSlide>
-							<div className="flex flex-col gap-y-1 items-center pt-14 pb-7">
+							<div className="flex flex-col gap-y-2 items-center py-8">
+								<span className="text-base text-[#57456F] font-medium font-rubik">
+									<FormattedMessage id="HOME_SWIPER_SPAN_TEXT2" />
+								</span>
+
+								<button
+									type="button"
+									onClick={(): void => {
+										dispatch(
+											setModals({
+												extraincome: false,
+												extraexpense: false,
+												language: false,
+												settings: false,
+											}),
+										);
+									}}
+								>
+									<h1 className="animate__animated animate__fadeInUp text-5xl text-white font-bold font-rubik">
+										{dailyBudgetAmount.toFixed(2)}€
+									</h1>
+								</button>
+							</div>
+						</SwiperSlide>
+
+						<SwiperSlide>
+							<div className="flex flex-col gap-y-1 items-center py-8">
 								<span className="text-base text-[#57456F] font-medium font-rubik">
 									<FormattedMessage id="HOME_SWIPER_SPAN_TEXT1" />{" "}
 									{Utils.months[new Date(budget.created_at).getMonth()]}
@@ -277,32 +302,6 @@ function Budget(): React.ReactNode {
 								>
 									<h1 className="animate__animated animate__fadeInUp text-5xl text-white font-bold font-rubik">
 										{monthlyBudgetAmount.toFixed(2)}€
-									</h1>
-								</button>
-							</div>
-						</SwiperSlide>
-
-						<SwiperSlide>
-							<div className="flex flex-col gap-y-2 items-center pt-14 pb-7">
-								<span className="text-base text-[#57456F] font-medium font-rubik">
-									<FormattedMessage id="HOME_SWIPER_SPAN_TEXT2" />
-								</span>
-
-								<button
-									type="button"
-									onClick={(): void => {
-										dispatch(
-											setModals({
-												extraincome: false,
-												extraexpense: false,
-												language: false,
-												settings: false,
-											}),
-										);
-									}}
-								>
-									<h1 className="animate__animated animate__fadeInUp text-5xl text-white font-bold font-rubik">
-										{dailyBudgetAmount.toFixed(2)}€
 									</h1>
 								</button>
 							</div>
@@ -329,24 +328,20 @@ function Budget(): React.ReactNode {
 							);
 						}}
 					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						>
+						<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<title>Trending Up</title>
-							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-							<path d="M3 17l6 -6l4 4l8 -8" />
-							<path d="M14 7l7 0l0 7" />
+							<g clip-path="url(#clip0_624_21)">
+								<path d="M3.5 17L9.5 11L13.5 15L21.5 7" stroke="#160C1F" stroke-width="2" />
+								<path d="M14.5 7H21.5V14" stroke="#160C1F" stroke-width="2" />
+							</g>
+							<defs>
+								<clipPath id="clip0_624_21">
+									<rect width="24" height="24" fill="white" transform="translate(0.5)" />
+								</clipPath>
+							</defs>
 						</svg>
 
-						<span className="text-base text-dark font-medium font-rubik">Income</span>
+						<span className="text-base text-[#160C1F] font-medium font-rubik">Income</span>
 					</button>
 
 					<button
@@ -363,24 +358,32 @@ function Budget(): React.ReactNode {
 							);
 						}}
 					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						>
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<title>Trending Down</title>
-							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-							<path d="M3 7l6 6l4 -4l8 8" />
-							<path d="M21 10l0 7l-7 0" />
+							<g clip-path="url(#clip0_624_27)">
+								<path
+									d="M3 7L9 13L13 9L21 17"
+									stroke="#160C1F"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M21 10V17H14"
+									stroke="#160C1F"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</g>
+							<defs>
+								<clipPath id="clip0_624_27">
+									<rect width="24" height="24" fill="white" />
+								</clipPath>
+							</defs>
 						</svg>
 
-						<span className="text-base text-dark font-medium font-rubik">Expenses</span>
+						<span className="text-base text-[#160C1F] font-medium font-rubik">Expenses</span>
 					</button>
 				</div>
 

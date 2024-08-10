@@ -111,12 +111,22 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 
 				<div className="flex gap-x-6 items-center">
 					{auth ? (
-						<button
-							type="button"
-							className="btn bg-darker flex items-center justify-center"
-							onClick={(): void => handleLogoutAndRedirectToLogin()}
-						>
-							<span className="text-base text-white font-normal font-rubik">Logout</span>
+						<button type="button" onClick={(): void => handleLogoutAndRedirectToLogin()}>
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<title>Logout</title>
+								<path
+									d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z"
+									stroke="white"
+									stroke-width="1.5"
+								/>
+								<path
+									d="M11 14.4902L13.5 11.9902L11 9.49023M7.5 11.9902H12.8912M16.5 15V9"
+									stroke="white"
+									stroke-width="1.5"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
 						</button>
 					) : (
 						<button type="button" onClick={(): void => handleRedirectToLogin()}>

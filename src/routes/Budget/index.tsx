@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import BudgetSwitch from "../../components/BudgetSwitch";
 import ExtraexpenseModal from "../../components/ExtraexpenseModal";

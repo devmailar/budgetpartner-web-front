@@ -29,7 +29,7 @@ function Modal({ index, classes, children }: IModalProps): React.ReactNode {
 			onKeyDown={(): void => {}}
 		>
 			<div
-				className={`flex flex-col bg-[#0F0F0F] border border-[#252525] rounded-2xl ${classes}`}
+				className={`flex flex-col bg-[#232224] border border-[#252525] rounded-3xl ${classes}`}
 				onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 					e.stopPropagation();
 				}}

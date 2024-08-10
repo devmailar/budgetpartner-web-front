@@ -217,97 +217,50 @@ function ExtraexpenseModal(): React.ReactNode {
 						<div className="flex flex-col gap-y-4">
 							<div className="flex items-center justify-between">
 								<div className="flex gap-x-1 items-center">
-									<span className="text-sm text-[#B7B7B7] font-light font-rubik">Expenses</span>
-									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<span className="text-base text-[#B7B7B7] font-normal font-rubik">expenses</span>
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<title>Trending Down</title>
 										<g clip-path="url(#clip0_626_89)">
-											<path
-												d="M2.5 5.83334L7.5 10.8333L10.8333 7.50001L17.5 14.1667"
-												stroke="#B7B7B7"
-												stroke-width="0.5"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-											/>
-											<path
-												d="M17.5 8.33334V14.1667H11.6667"
-												stroke="#B7B7B7"
-												stroke-width="0.5"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-											/>
+											<path d="M3 7L9 13L13 9L21 17" stroke="#D9D9D9" stroke-width="1.5" stroke-linejoin="round" />
+											<path d="M21 10V17H14" stroke="#D9D9D9" stroke-width="1.5" stroke-linejoin="round" />
 										</g>
 										<defs>
 											<clipPath id="clip0_626_89">
-												<rect width="20" height="20" fill="white" />
+												<rect width="24" height="24" fill="white" />
 											</clipPath>
 										</defs>
 									</svg>
 								</div>
 
-								<div className="flex gap-x-3 items-center">
-									<button type="button" onClick={(): void => {}}>
-										<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<title>Maximize</title>
-											<g clip-path="url(#clip0_626_56)">
-												<path
-													d="M2.5 14.1667C2.5 13.9457 2.5878 13.7337 2.74408 13.5774C2.90036 13.4211 3.11232 13.3333 3.33333 13.3333H5.83333C6.05435 13.3333 6.26631 13.4211 6.42259 13.5774C6.57887 13.7337 6.66667 13.9457 6.66667 14.1667V16.6667C6.66667 16.8877 6.57887 17.0996 6.42259 17.2559C6.26631 17.4122 6.05435 17.5 5.83333 17.5H3.33333C3.11232 17.5 2.90036 17.4122 2.74408 17.2559C2.5878 17.0996 2.5 16.8877 2.5 16.6667V14.1667Z"
-													stroke="#B7B7B7"
-													stroke-width="0.5"
-													stroke-linecap="round"
-													stroke-linejoin="round"
-												/>
-												<path
-													d="M3.33334 10V5C3.33334 4.55797 3.50894 4.13405 3.8215 3.82149C4.13406 3.50893 4.55798 3.33333 5.00001 3.33333H15C15.442 3.33333 15.866 3.50893 16.1785 3.82149C16.4911 4.13405 16.6667 4.55797 16.6667 5V15C16.6667 15.442 16.4911 15.8659 16.1785 16.1785C15.866 16.4911 15.442 16.6667 15 16.6667H10"
-													stroke="#B7B7B7"
-													stroke-width="0.5"
-													stroke-linecap="round"
-													stroke-linejoin="round"
-												/>
-												<path
-													d="M10 6.66667H13.3333V10"
-													stroke="#B7B7B7"
-													stroke-width="0.5"
-													stroke-linecap="round"
-													stroke-linejoin="round"
-												/>
-												<path
-													d="M13.3333 6.66667L9.16666 10.8333"
-													stroke="#B7B7B7"
-													stroke-width="0.5"
-													stroke-linecap="round"
-													stroke-linejoin="round"
-												/>
-											</g>
-											<defs>
-												<clipPath id="clip0_626_56">
-													<rect width="20" height="20" fill="white" />
-												</clipPath>
-											</defs>
-										</svg>
-									</button>
-
-									<button type="button" onClick={(): void => handleClose()}>
-										<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<title>Close</title>
-											<path d="M15 5L5 15" stroke="#B7B7B7" stroke-width="0.5" />
-											<path d="M5 5L15 15" stroke="#B7B7B7" stroke-width="0.5" />
-										</svg>
-									</button>
-								</div>
+								<button type="button" onClick={(): void => handleClose()}>
+									<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<title>Close</title>
+										<path
+											d="M22.3125 21.25L13.8125 12.75ZM13.8125 21.25L22.3125 12.75ZM32.2292 17C32.2292 9.17575 25.8868 2.83333 18.0625 2.83333C10.2383 2.83333 3.89584 9.17575 3.89584 17C3.89584 24.8242 10.2383 31.1667 18.0625 31.1667C25.8868 31.1667 32.2292 24.8242 32.2292 17Z"
+											fill="#232224"
+										/>
+										<path
+											d="M22.3125 21.25L13.8125 12.75M13.8125 21.25L22.3125 12.75M32.2292 17C32.2292 9.17575 25.8868 2.83333 18.0625 2.83333C10.2383 2.83333 3.89584 9.17575 3.89584 17C3.89584 24.8242 10.2383 31.1667 18.0625 31.1667C25.8868 31.1667 32.2292 24.8242 32.2292 17Z"
+											stroke="#A0A0A0"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</svg>
+								</button>
 							</div>
 
-							{extraexpensesOrderedAscendingByAmount.length > 0 && (
-								<div className="overflow-auto">
-									<table className="w-full">
-										<thead>
-											<tr>
-												<th className="px-0 py-1 text-left text-sm text-white font-medium font-rubik">ID</th>
-												<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Expense</th>
-												<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Amount</th>
-												<th className="px-0 py-1 text-right text-sm text-white font-medium font-rubik">Created</th>
-											</tr>
-										</thead>
+							<div className="overflow-auto">
+								<table className="w-full">
+									<thead>
+										<tr>
+											<th className="px-0 py-1 text-left text-sm text-white font-medium font-rubik">ID</th>
+											<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Expense</th>
+											<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Amount</th>
+											<th className="px-0 py-1 text-right text-sm text-white font-medium font-rubik">Created</th>
+										</tr>
+									</thead>
 
+									{extraexpensesOrderedAscendingByAmount.length > 0 && (
 										<tbody className="overflow-y-auto table-fixed">
 											{extraexpensesOrderedAscendingByAmount.map((extraexpense: IExtraexpense, index: number) => (
 												<tr
@@ -337,9 +290,9 @@ function ExtraexpenseModal(): React.ReactNode {
 												</tr>
 											))}
 										</tbody>
-									</table>
-								</div>
-							)}
+									)}
+								</table>
+							</div>
 
 							<div className="flex items-center justify-end">
 								<span className="text-sm text-orange font-bold font-rubik truncate">

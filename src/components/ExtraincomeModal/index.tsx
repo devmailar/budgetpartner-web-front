@@ -219,7 +219,8 @@ function ExtraincomeModal(): React.ReactNode {
 						<div className="flex flex-col gap-y-4">
 							<div className="flex items-center justify-between">
 								<div className="flex gap-x-1 items-center">
-									<span className="text-base text-[#B7B7B7] font-normal font-rubik">income</span>
+									<span className="text-base text-[#B7B7B7] font-normal font-rubik">incomes</span>
+
 									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<title>Trending Up</title>
 										<g clip-path="url(#clip0_626_63)">

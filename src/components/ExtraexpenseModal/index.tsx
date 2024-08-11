@@ -211,37 +211,21 @@ function ExtraexpenseModal(): React.ReactNode {
 			) : (
 				<Modal
 					index={40}
-					classes="gap-y-4 px-5 py-5 w-[20rem] md:w-fit md:min-w-[25rem] animate__animated animate__fadeInDown animate__faster"
+					classes="gap-y-4 px-5 py-5 w-full md:w-fit md:min-w-[25rem] animate__animated animate__fadeInDown animate__faster"
 				>
 					{!createExtraexpenseModal && !removeExtraexpenseModal ? (
 						<div className="flex flex-col gap-y-4">
 							<div className="flex items-center justify-between">
-								<div className="flex gap-x-1 items-center">
-									<span className="text-base text-[#B7B7B7] font-normal font-rubik">expenses</span>
-									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<title>Trending Down</title>
-										<g clip-path="url(#clip0_626_89)">
-											<path d="M3 7L9 13L13 9L21 17" stroke="#D9D9D9" stroke-width="1.5" stroke-linejoin="round" />
-											<path d="M21 10V17H14" stroke="#D9D9D9" stroke-width="1.5" stroke-linejoin="round" />
-										</g>
-										<defs>
-											<clipPath id="clip0_626_89">
-												<rect width="24" height="24" fill="white" />
-											</clipPath>
-										</defs>
-									</svg>
-								</div>
+								<span className="text-sm text-orange font-bold font-rubik truncate">
+									+{handleGetTotalExtraexpense(budget.extraexpenses).toFixed(1)}€
+								</span>
 
 								<button type="button" onClick={(): void => handleClose()}>
-									<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<title>Close</title>
 										<path
-											d="M22.3125 21.25L13.8125 12.75ZM13.8125 21.25L22.3125 12.75ZM32.2292 17C32.2292 9.17575 25.8868 2.83333 18.0625 2.83333C10.2383 2.83333 3.89584 9.17575 3.89584 17C3.89584 24.8242 10.2383 31.1667 18.0625 31.1667C25.8868 31.1667 32.2292 24.8242 32.2292 17Z"
-											fill="#232224"
-										/>
-										<path
-											d="M22.3125 21.25L13.8125 12.75M13.8125 21.25L22.3125 12.75M32.2292 17C32.2292 9.17575 25.8868 2.83333 18.0625 2.83333C10.2383 2.83333 3.89584 9.17575 3.89584 17C3.89584 24.8242 10.2383 31.1667 18.0625 31.1667C25.8868 31.1667 32.2292 24.8242 32.2292 17Z"
-											stroke="#A0A0A0"
+											d="M15.75 15L9.75 9M9.75 15L15.75 9M22.75 12C22.75 6.477 18.273 2 12.75 2C7.227 2 2.75 6.477 2.75 12C2.75 17.523 7.227 22 12.75 22C18.273 22 22.75 17.523 22.75 12Z"
+											stroke="white"
 											stroke-linecap="round"
 											stroke-linejoin="round"
 										/>
@@ -275,16 +259,16 @@ function ExtraexpenseModal(): React.ReactNode {
 														setRemoveExtraexpenseModal(true);
 													}}
 												>
-													<td className="px-0 py-2 text-left text-sm text-light font-normal font-rubik truncate">
+													<td className="px-0 py-0.5 text-left text-sm text-light font-normal font-rubik truncate">
 														<span>{index + 1}</span>
 													</td>
-													<td className="px-3 py-2 text-left text-sm text-light font-normal font-rubik truncate">
+													<td className="px-3 py-0.5 text-left text-sm text-light font-normal font-rubik truncate">
 														<span>{extraexpense.extraexpense_type}</span>
 													</td>
-													<td className="px-3 py-2 text-left text-sm text-light font-normal font-rubik truncate">
+													<td className="px-3 py-0.5 text-left text-sm text-light font-normal font-rubik truncate">
 														<span>{extraexpense.extraexpense_amount_monthly.toFixed(1)}€</span>
 													</td>
-													<td className="px-0 py-2 text-right text-sm text-light font-normal font-rubik truncate">
+													<td className="px-0 py-0.5 text-right text-sm text-light font-normal font-rubik truncate">
 														<span>{new Date(extraexpense.created_at).toLocaleDateString()}</span>
 													</td>
 												</tr>
@@ -294,18 +278,12 @@ function ExtraexpenseModal(): React.ReactNode {
 								</table>
 							</div>
 
-							<div className="flex items-center justify-end">
-								<span className="text-sm text-orange font-bold font-rubik truncate">
-									-{handleGetTotalExtraexpense(budget.extraexpenses).toFixed(1)}€
-								</span>
-							</div>
-
 							<button
 								type="button"
 								className="btn bg-dark rounded-xl"
 								onClick={(): void => setCreateExtraexpenseModal(true)}
 							>
-								<span className="text-sm text-white font-normal font-rubik">Add New</span>
+								<span className="text-sm text-white font-normal font-rubik">Create</span>
 							</button>
 						</div>
 					) : (
@@ -313,30 +291,15 @@ function ExtraexpenseModal(): React.ReactNode {
 							<div className="flex items-center justify-between">
 								<span className="text-sm text-light font-medium font-rubik">NEW EXPENSE</span>
 
-								<button className="mr-[-0.25rem]" type="button" onClick={(): void => setCreateExtraexpenseModal(false)}>
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+								<button type="button" onClick={(): void => setCreateExtraexpenseModal(false)}>
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<title>Close</title>
-										<g clipPath="url(#clip0_283_267)">
-											<path
-												d="M18 6L6 18"
-												stroke="#B7B7B7"
-												strokeWidth="2"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											/>
-											<path
-												d="M6 6L18 18"
-												stroke="#B7B7B7"
-												strokeWidth="2"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											/>
-										</g>
-										<defs>
-											<clipPath id="clip0_283_267">
-												<rect width="24" height="24" fill="#B7B7B7" />
-											</clipPath>
-										</defs>
+										<path
+											d="M15.75 15L9.75 9M9.75 15L15.75 9M22.75 12C22.75 6.477 18.273 2 12.75 2C7.227 2 2.75 6.477 2.75 12C2.75 17.523 7.227 22 12.75 22C18.273 22 22.75 17.523 22.75 12Z"
+											stroke="white"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
 									</svg>
 								</button>
 							</div>
@@ -365,7 +328,7 @@ function ExtraexpenseModal(): React.ReactNode {
 								<span className="text-sm text-light font-normal font-rubik">€/MO</span>
 							</div>
 
-							<button type="submit" className="btn bg-orange rounded-xl">
+							<button type="submit" className="btn bg-dark rounded-xl">
 								<span className="text-sm text-white font-normal font-rubik">Save</span>
 							</button>
 						</form>

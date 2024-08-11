@@ -61,7 +61,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 	};
 
 	return (
-		<div className="flex items-center justify-center md:bg-[#1A0D24] w-full px-[1.625rem] py-6 md:py-4 animate__animated animate__fadeInDown animate__faster">
+		<div className="flex items-center justify-center md:bg-[#1A0D24] w-full px-6 py-6 md:py-4 animate__animated animate__fadeInDown animate__faster">
 			<div className="flex flex-wrap items-center justify-between w-full md:w-[800px]">
 				<a href="/" className="flex gap-x-2 items-center">
 					<img src={ArtLogo} alt={ArtLogo} width={28} height={28} />

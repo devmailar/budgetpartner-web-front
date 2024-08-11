@@ -82,10 +82,8 @@ function App(): React.ReactNode {
 
 					{error && <ErrorPopup />}
 
-					<div className="flex justify-center w-screen h-screen">
-						<div className="flex justify-center md:w-[800px]">
-							<RouterProvider router={router} />
-						</div>
+					<div className="flex justify-center w-screen h-screen px-6">
+						<RouterProvider router={router} />
 					</div>
 				</div>
 			</IntlProvider>

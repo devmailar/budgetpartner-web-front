@@ -85,7 +85,7 @@ function BudgetSwitch(): React.ReactNode {
 			{budgetSwitch && (
 				<Modal
 					index={40}
-					classes="gap-y-6 px-2 py-4 absolute z-50 top-0 w-60 rounded-2xl border border-dark animate__animated animate__fadeInDown animate__faster"
+					classes="gap-y-6 px-2 py-4 absolute z-50 top-48 w-60 rounded-2xl border border-dark animate__animated animate__fadeInDown animate__faster"
 				>
 					<div className="flex flex-col gap-y-2.5 items-center justify-center">
 						{budgets.map((b: IBudget) => (

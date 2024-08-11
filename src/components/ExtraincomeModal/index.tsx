@@ -261,16 +261,16 @@ function ExtraincomeModal(): React.ReactNode {
 														setRemoveExtraincomeModal(true);
 													}}
 												>
-													<td className="px-0 py-0.5 text-left text-sm text-light font-normal font-rubik truncate">
+													<td className="px-0 py-0.5 text-left text-sm text-white font-normal font-rubik truncate">
 														<span>{index + 1}</span>
 													</td>
-													<td className="px-3 py-0.5 text-left text-sm text-light font-normal font-rubik truncate">
+													<td className="px-3 py-0.5 text-left text-sm text-white font-normal font-rubik truncate">
 														<span>{extraincome.extraincome_type}</span>
 													</td>
-													<td className="px-3 py-0.5 text-left text-sm text-light font-normal font-rubik truncate">
+													<td className="px-3 py-0.5 text-left text-sm text-white font-normal font-rubik truncate">
 														<span>{extraincome.extraincome_amount_monthly.toFixed(1)}€</span>
 													</td>
-													<td className="px-0 py-0.5 text-right text-sm text-light font-normal font-rubik truncate">
+													<td className="px-0 py-0.5 text-right text-sm text-white font-normal font-rubik truncate">
 														<span>{new Date(extraincome.created_at).toLocaleDateString()}</span>
 													</td>
 												</tr>

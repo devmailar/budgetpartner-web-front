@@ -237,10 +237,10 @@ function ExtraexpenseModal(): React.ReactNode {
 								<table className="w-full">
 									<thead>
 										<tr>
-											<th className="px-0 py-1 text-left text-sm text-white font-medium font-rubik">ID</th>
-											<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Expense</th>
-											<th className="px-3 py-1 text-left text-sm text-white font-medium font-rubik">Amount</th>
-											<th className="px-0 py-1 text-right text-sm text-white font-medium font-rubik">Created</th>
+											<th className="px-0 py-1 text-left text-sm text-white font-normal font-rubik">ID</th>
+											<th className="px-3 py-1 text-left text-sm text-white font-normal font-rubik">Expense</th>
+											<th className="px-3 py-1 text-left text-sm text-white font-normal font-rubik">Amount</th>
+											<th className="px-0 py-1 text-right text-sm text-white font-normal font-rubik">Created</th>
 										</tr>
 									</thead>
 
@@ -259,16 +259,16 @@ function ExtraexpenseModal(): React.ReactNode {
 														setRemoveExtraexpenseModal(true);
 													}}
 												>
-													<td className="px-0 py-0.5 text-left text-sm text-light font-normal font-rubik truncate">
+													<td className="px-0 py-0.5 text-left text-sm text-white font-normal font-rubik truncate">
 														<span>{index + 1}</span>
 													</td>
-													<td className="px-3 py-0.5 text-left text-sm text-light font-normal font-rubik truncate">
+													<td className="px-3 py-0.5 text-left text-sm text-white font-normal font-rubik truncate">
 														<span>{extraexpense.extraexpense_type}</span>
 													</td>
-													<td className="px-3 py-0.5 text-left text-sm text-light font-normal font-rubik truncate">
+													<td className="px-3 py-0.5 text-left text-sm text-white font-normal font-rubik truncate">
 														<span>{extraexpense.extraexpense_amount_monthly.toFixed(1)}€</span>
 													</td>
-													<td className="px-0 py-0.5 text-right text-sm text-light font-normal font-rubik truncate">
+													<td className="px-0 py-0.5 text-right text-sm text-white font-normal font-rubik truncate">
 														<span>{new Date(extraexpense.created_at).toLocaleDateString()}</span>
 													</td>
 												</tr>

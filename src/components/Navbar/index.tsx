@@ -61,17 +61,17 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 	};
 
 	return (
-		<div className="flex items-center justify-center md:bg-[#1A0D24] w-full px-6 py-6 md:py-4 animate__animated animate__fadeInDown animate__faster">
+		<div className="flex items-center justify-center md:bg-[#1A0D24] w-full px-6 py-6 md:py-3.5 animate__animated animate__fadeInDown animate__faster">
 			<div className="flex flex-wrap items-center justify-between w-full md:w-[800px]">
 				<a href="/" className="flex gap-x-2 items-center">
 					<img src={ArtLogo} alt={ArtLogo} width={28} height={28} />
 
-					<h2 className="hidden md:block text-lg text-white font-normal lower font-rubik">budgetpartner.app</h2>
+					<h2 className="hidden md:block text-lg text-white font-normal font-rubik">budgetpartner.app</h2>
 				</a>
 
 				<div className="hidden md:flex gap-x-6 items-center">
 					<button type="button" className="flex items-center justify-center" onClick={(): void => router.navigate("/")}>
-						<span className="text-base text-white font-normal font-rubik">Home</span>
+						<span className="text-base text-white font-medium font-rubik">Home</span>
 					</button>
 
 					<button
@@ -111,38 +111,46 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 
 				<div className="flex gap-x-6 items-center">
 					{auth ? (
-						<button type="button" onClick={(): void => handleLogoutAndRedirectToLogin()}>
-							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<button
+							type="button"
+							className="flex gap-x-1.5 items-center btn bg-[#313131] bg-opacity-50 px-3 py-2 rounded-full"
+							onClick={(): void => handleLogoutAndRedirectToLogin()}
+						>
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<title>Logout</title>
 								<path
-									d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z"
+									d="M18.3334 9.99996C18.3334 5.39758 14.6024 1.66663 10.0001 1.66663C5.39771 1.66663 1.66675 5.39758 1.66675 9.99996C1.66675 14.6023 5.39771 18.3333 10.0001 18.3333C14.6024 18.3333 18.3334 14.6023 18.3334 9.99996Z"
 									stroke="white"
-									stroke-width="1.5"
 								/>
 								<path
-									d="M11 14.4902L13.5 11.9902L11 9.49023M7.5 11.9902H12.8912M16.5 15V9"
+									d="M9.16667 12.0752L11.25 9.99183L9.16667 7.90852M6.25 9.99183H10.7427M13.75 12.5V7.5"
 									stroke="white"
-									stroke-width="1.5"
 									stroke-linecap="round"
 									stroke-linejoin="round"
 								/>
 							</svg>
+
+							<span className="text-sm text-white font-normal font-rubik">Logout</span>
 						</button>
 					) : (
-						<button type="button" onClick={(): void => handleRedirectToLogin()}>
-							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<button
+							type="button"
+							className="flex gap-x-1.5 items-center btn bg-[#895FF5] bg-opacity-50 px-3 py-2 rounded-full"
+							onClick={(): void => handleRedirectToLogin()}
+						>
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<title>Login</title>
 								<path
-									d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+									d="M10.0001 18.3333C14.6024 18.3333 18.3334 14.6023 18.3334 9.99996C18.3334 5.39758 14.6024 1.66663 10.0001 1.66663C5.39771 1.66663 1.66675 5.39758 1.66675 9.99996C1.66675 14.6023 5.39771 18.3333 10.0001 18.3333Z"
 									stroke="white"
-									stroke-width="1.5"
 								/>
 								<path
-									d="M8.00781 15.9947L8.00787 8M17.9961 12.0041H11.6395M14 9L11.0147 12.0041L14.0095 14.9966"
+									d="M6.6731 13.3289L6.67315 6.66663M14.9967 10.0034H9.6995M11.6666 7.49996L9.17884 10.0034L11.6745 12.4971"
 									stroke="white"
-									stroke-width="1.5"
 								/>
 							</svg>
+
+							<span className="text-sm text-white font-normal font-rubik">Login</span>
 						</button>
 					)}
 				</div>

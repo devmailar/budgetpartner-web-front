@@ -135,7 +135,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 					) : (
 						<button
 							type="button"
-							className="flex gap-x-1.5 items-center btn bg-[#160C1F] px-2.5 py-1.5 border-2 border-[#895FF5] rounded-full"
+							className="flex gap-x-1.5 items-center btn bg-[#160C1F] px-2.5 py-1.5 border-2 border-[#6D28D9] rounded-full"
 							onClick={(): void => handleRedirectToLogin()}
 						>
 							<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">

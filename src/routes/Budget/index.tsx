@@ -244,7 +244,7 @@ function Budget(): React.ReactNode {
 	}, [budget]);
 
 	return (
-		<>
+		<div className="flex flex-col gap-y-20">
 			<div className="flex flex-col gap-y-4 items-center">
 				<div className="flex flex-col gap-y-2 items-center">
 					<BudgetSwitch />
@@ -447,13 +447,42 @@ function Budget(): React.ReactNode {
 				)}
 			</div>
 
+			<div className="flex flex-col gap-y-4 items-center">
+				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-[#313131]">
+					<h3 className="text-base text-white font-bold font-rubik text-center">Easy Setup</h3>
+
+					<p className="text-sm text-white font-normal font-rubik text-center">
+						Budget Partner is designed for beginners. Set up your budget quickly, track income, and record expenses
+						effortlessly. No more complicated spreadsheets or confusing apps!
+					</p>
+				</div>
+
+				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-[#313131]">
+					<h3 className="text-base text-white font-bold font-rubik text-center">Secure Data Storage</h3>
+
+					<p className="text-sm text-white font-normal font-rubik text-center">
+						Your financial information is safe with us. Budget Partner securely stores your data, allowing you to
+						revisit your progress over time. It’s like having a personal financial assistant at your fingertips.
+					</p>
+				</div>
+
+				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-[#313131]">
+					<h3 className="text-base text-white font-bold font-rubik text-center">Track Your Journey</h3>
+
+					<p className="text-sm text-white font-normal font-rubik text-center">
+						Compare your financial milestones and see how far you’ve come. Whether you’re saving for a dream vacation or
+						building an emergency fund, Budget Partner keeps you motivated.
+					</p>
+				</div>
+			</div>
+
 			{modals.extraincome && <ExtraincomeModal />}
 			{modals.extraexpense && <ExtraexpenseModal />}
 			{modals.language && <LanguageModal />}
 			{modals.settings && <SettingsModal />}
 
 			{forceLogin && <LoginPopup />}
-		</>
+		</div>
 	);
 }
 

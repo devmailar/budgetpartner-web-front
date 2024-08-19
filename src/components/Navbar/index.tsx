@@ -61,10 +61,10 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 	};
 
 	return (
-		<div className="flex items-center justify-center md:bg-[#1A0D24] w-full px-6 py-6 md:py-3.5 animate__animated animate__fadeInDown animate__faster">
+		<div className="flex items-center justify-center md:bg-[#1A0D24] w-full px-7 py-7 md:py-3">
 			<div className="flex flex-wrap items-center justify-between w-full md:w-[800px]">
 				<a href="/" className="flex gap-x-2 items-center">
-					<img src={ArtLogo} alt={ArtLogo} width={28} height={28} />
+					<img src={ArtLogo} alt={ArtLogo} width={35} height={35} />
 
 					<h2 className="hidden md:block text-lg text-white font-normal font-rubik">budgetpartner.app</h2>
 				</a>
@@ -135,22 +135,24 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 					) : (
 						<button
 							type="button"
-							className="flex gap-x-1.5 items-center btn bg-[#895FF5] bg-opacity-50 px-3 py-2 rounded-full"
+							className="flex gap-x-1.5 items-center btn bg-[#160C1F] px-2.5 py-1.5 border-2 border-[#895FF5] rounded-full"
 							onClick={(): void => handleRedirectToLogin()}
 						>
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<title>Login</title>
 								<path
-									d="M10.0001 18.3333C14.6024 18.3333 18.3334 14.6023 18.3334 9.99996C18.3334 5.39758 14.6024 1.66663 10.0001 1.66663C5.39771 1.66663 1.66675 5.39758 1.66675 9.99996C1.66675 14.6023 5.39771 18.3333 10.0001 18.3333Z"
-									stroke="white"
+									d="M10 18.8333C14.6024 18.8333 18.3334 15.1023 18.3334 10.5C18.3334 5.89758 14.6024 2.16663 10 2.16663C5.39765 2.16663 1.66669 5.89758 1.66669 10.5C1.66669 15.1023 5.39765 18.8333 10 18.8333Z"
+									stroke="#895FF5"
+									stroke-width="1.5"
 								/>
 								<path
-									d="M6.6731 13.3289L6.67315 6.66663M14.9967 10.0034H9.6995M11.6666 7.49996L9.17884 10.0034L11.6745 12.4971"
-									stroke="white"
+									d="M6.67316 13.8289L6.67321 7.16663M14.9967 10.5034H9.69957M11.6666 7.99996L9.1789 10.5034L11.6746 12.9971"
+									stroke="#895FF5"
+									stroke-width="1.5"
 								/>
 							</svg>
 
-							<span className="text-sm text-white font-normal font-rubik">Login</span>
+							<span className="text-sm text-[#895FF5] font-medium font-rubik">Login</span>
 						</button>
 					)}
 				</div>

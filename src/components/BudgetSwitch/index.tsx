@@ -59,7 +59,7 @@ function BudgetSwitch(): React.ReactNode {
 			<div className="flex flex-col gap-y-2 items-center">
 				<button
 					type="button"
-					className={`${budgetSwitch ? "z-50" : "z-40"} flex gap-x-1.5 items-center justify-center px-2.5 py-2.5 bg-[#160C1F] border border-[#414141] rounded-3xl`}
+					className={`${budgetSwitch ? "z-50" : "z-40"} flex gap-x-1.5 items-center justify-center px-2.5 py-2.5 bg-[#160C1F] border border-[#3131317c] rounded-3xl`}
 					onClick={(): void => setBudgetSwitch(!budgetSwitch)}
 				>
 					<span className="text-base text-[#A0A0A0] font-normal font-rubik">

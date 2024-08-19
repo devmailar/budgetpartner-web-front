@@ -43,75 +43,77 @@ function CreateAnAccount(): React.ReactNode {
 	};
 
 	return (
-		<form className="flex flex-col gap-y-6 w-full md:w-[26rem]" onSubmit={handleCreate}>
-			<div className="flex items-center justify-end">
-				<button type="button" onClick={(): void => navigate("/login")}>
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-						<title>Close</title>
-						<g clipPath="url(#clip0_283_267)">
-							<path d="M18 6L6 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-							<path d="M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-						</g>
-						<defs>
-							<clipPath id="clip0_283_267">
-								<rect width="24" height="24" fill="white" />
-							</clipPath>
-						</defs>
-					</svg>
-				</button>
-			</div>
-
-			<div className="flex flex-col gap-y-6">
-				<div className="flex flex-col gap-y-1 items-center">
-					<h1 className="text-2xl text-white font-medium font-rubik">Create an account</h1>
-					<p className="text-base text-white font-normal font-rubik">Enter your email to sign up</p>
+		<div className="flex justify-center h-screen px-7">
+			<form className="flex flex-col gap-y-6 w-full md:w-[26rem]" onSubmit={handleCreate}>
+				<div className="absolute right-8">
+					<button type="button" onClick={(): void => navigate("/login")}>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+							<title>Close</title>
+							<g clipPath="url(#clip0_283_267)">
+								<path d="M18 6L6 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+								<path d="M6 6L18 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+							</g>
+							<defs>
+								<clipPath id="clip0_283_267">
+									<rect width="24" height="24" fill="white" />
+								</clipPath>
+							</defs>
+						</svg>
+					</button>
 				</div>
 
-				<div className="flex flex-col gap-y-3">
+				<div className="flex flex-col gap-y-6">
+					<div className="flex flex-col gap-y-1 items-center">
+						<h1 className="text-2xl text-White font-medium font-rubik">Create an account</h1>
+						<p className="text-base text-White font-normal font-rubik">Enter your email to sign up</p>
+					</div>
+
+					<div className="flex flex-col gap-y-3">
+						<input
+							className="bg-[#160C1F] px-2 py-2 text-lg text-White placeholder:text-White font-normal font-rubik border-2 border-PurpleBright rounded-lg"
+							type="email"
+							id="email"
+							name="email"
+							placeholder="Email"
+							autoComplete="email"
+							required
+						/>
+
+						<input
+							className="bg-[#160C1F] px-2 py-2 text-lg text-White placeholder:text-White font-normal font-rubik border-2 border-PurpleBright rounded-lg"
+							type="password"
+							id="password"
+							name="password"
+							placeholder="Password"
+							autoComplete="password"
+							required
+						/>
+					</div>
+				</div>
+
+				<div className="flex flex-col gap-y-4">
 					<input
-						className="bg-transparent border-purple2 border px-2 py-2 text-lg text-white placeholder:text-white font-normal font-rubik rounded-lg"
-						type="email"
-						id="email"
-						name="email"
-						placeholder="Email"
-						autoComplete="email"
-						required
+						className="btn bg-PurpleBright text-sm text-White font-medium py-2.5 rounded-lg"
+						type="submit"
+						value="Sign up with email"
+						disabled={isLoading}
 					/>
 
-					<input
-						className="bg-transparent border-purple2 border px-2 py-2 text-lg text-white placeholder:text-white font-normal font-rubik rounded-lg"
-						type="password"
-						id="password"
-						name="password"
-						placeholder="Password"
-						autoComplete="password"
-						required
-					/>
+					<div className="text-center px-4">
+						<p className="text-base text-White font-light font-rubik">
+							By clicking continue, you agree to our{" "}
+							<a href="terms-of-service" className="text-Purple">
+								Terms of Service
+							</a>{" "}
+							and{" "}
+							<a href="privacy-policy" className="text-Purple">
+								Privacy Policy
+							</a>
+						</p>
+					</div>
 				</div>
-			</div>
-
-			<div className="flex flex-col gap-y-4">
-				<input
-					className="btn bg-purple2 text-sm text-white font-medium py-2.5 rounded-lg"
-					type="submit"
-					value="Sign up with email"
-					disabled={isLoading}
-				/>
-
-				<div className="text-center px-4">
-					<p className="text-base text-white font-light font-rubik">
-						By clicking continue, you agree to our{" "}
-						<a href="terms-of-service" className="text-purple">
-							Terms of Service
-						</a>{" "}
-						and{" "}
-						<a href="privacy-policy" className="text-purple">
-							Privacy Policy
-						</a>
-					</p>
-				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	);
 }
 

@@ -79,12 +79,9 @@ function App(): React.ReactNode {
 			<IntlProvider locale={locale} messages={localeMessages}>
 				<div className={`flex flex-col gap-y-20 md:gap-y-24 ${loader && "opacity-0"}`}>
 					<Navbar router={router} />
-
 					{error && <ErrorPopup />}
 
-					<div className="flex justify-center w-screen h-screen px-6">
-						<RouterProvider router={router} />
-					</div>
+					<RouterProvider router={router} />
 				</div>
 			</IntlProvider>
 		</>

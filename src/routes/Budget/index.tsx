@@ -244,7 +244,7 @@ function Budget(): React.ReactNode {
 	}, [budget]);
 
 	return (
-		<div className="flex flex-col gap-y-20">
+		<>
 			<div className="flex flex-col gap-y-4 items-center">
 				<div className="flex flex-col gap-y-2 items-center">
 					<BudgetSwitch />
@@ -447,7 +447,7 @@ function Budget(): React.ReactNode {
 				)}
 			</div>
 
-			<div className="flex flex-col md:flex-row gap-4 items-center">
+			<div className="flex flex-col md:flex-row gap-4 items-center justify-center">
 				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-[#313131]">
 					<h3 className="text-base text-white font-bold font-rubik text-center">Easy Setup</h3>
 
@@ -482,7 +482,7 @@ function Budget(): React.ReactNode {
 			{modals.settings && <SettingsModal />}
 
 			{forceLogin && <LoginPopup />}
-		</div>
+		</>
 	);
 }
 

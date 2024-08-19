@@ -13,7 +13,6 @@ import ExtraexpenseModal from "../../components/ExtraexpenseModal";
 import ExtraincomeModal from "../../components/ExtraincomeModal";
 import LanguageModal from "../../components/LanguageModal";
 import LoginPopup from "../../components/LoginPopup";
-import Modal from "../../components/Modal";
 import SettingsModal from "../../components/SettingsModal";
 import { setAuth } from "../../stores/Auth";
 import { setBudget } from "../../stores/Budget";
@@ -46,9 +45,6 @@ function Budget(): React.ReactNode {
 
 	const [dailyBudgetAmount, setDailyBudgetAmount] = React.useState<number>(0);
 	const [monthlyBudgetAmount, setMonthlyBudgetAmount] = React.useState<number>(0);
-	const [resetBudgetModal, setResetBudgetModal] = React.useState<boolean>(false);
-
-	const [removeBudgetButtonDisabled, setRemoveBudgetButtonDisabled] = React.useState<boolean>(false);
 
 	const handleGetUserResponse = React.useCallback(
 		async (auth: string): Promise<void> => {
@@ -127,34 +123,34 @@ function Budget(): React.ReactNode {
 		[dispatch, navigate],
 	);
 
-	const handleRemoveBudget = async (budget: IBudget): Promise<void> => {
-		try {
-			setRemoveBudgetButtonDisabled(true);
+	// const handleRemoveBudget = async (budget: IBudget): Promise<void> => {
+	// 	try {
+	// 		setRemoveBudgetButtonDisabled(true);
 
-			if (new Date(budget.created_at).getMonth() === new Date().getMonth()) {
-				throw new Error("You cant delete present budget");
-			}
+	// 		if (new Date(budget.created_at).getMonth() === new Date().getMonth()) {
+	// 			throw new Error("You cant delete present budget");
+	// 		}
 
-			const removeBudgetResponse: Response = await fetch(`${Utils.baseurl}/budgets/remove/${budget.id}`, {
-				method: "DELETE",
-				headers: { Authorization: `Bearer ${auth}` },
-			});
+	// 		const removeBudgetResponse: Response = await fetch(`${Utils.baseurl}/budgets/remove/${budget.id}`, {
+	// 			method: "DELETE",
+	// 			headers: { Authorization: `Bearer ${auth}` },
+	// 		});
 
-			if (!removeBudgetResponse.ok) {
-				const removeBudgetResponseError: IResponseError = await removeBudgetResponse.json();
+	// 		if (!removeBudgetResponse.ok) {
+	// 			const removeBudgetResponseError: IResponseError = await removeBudgetResponse.json();
 
-				throw new Error(removeBudgetResponseError.message);
-			}
+	// 			throw new Error(removeBudgetResponseError.message);
+	// 		}
 
-			localStorage.removeItem("budget");
-			window.location.reload();
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				dispatch(setError(error.message));
-				setTimeout((): void => setRemoveBudgetButtonDisabled(false), 2000);
-			}
-		}
-	};
+	// 		localStorage.removeItem("budget");
+	// 		window.location.reload();
+	// 	} catch (error: unknown) {
+	// 		if (error instanceof Error) {
+	// 			dispatch(setError(error.message));
+	// 			setTimeout((): void => setRemoveBudgetButtonDisabled(false), 2000);
+	// 		}
+	// 	}
+	// };
 
 	React.useEffect((): void => {
 		const onLoad = async (): Promise<void> => {
@@ -256,7 +252,7 @@ function Budget(): React.ReactNode {
 					>
 						<SwiperSlide>
 							<div className="flex flex-col gap-y-2 items-center py-8">
-								<span className="text-base text-[#57456F] font-medium font-rubik">
+								<span className="text-base text-PurpleLight font-medium font-rubik">
 									<FormattedMessage id="HOME_SWIPER_SPAN_TEXT2" />
 								</span>
 
@@ -273,7 +269,7 @@ function Budget(): React.ReactNode {
 										);
 									}}
 								>
-									<h1 className="animate__animated animate__fadeInUp text-5xl text-white font-bold font-rubik">
+									<h1 className="animate__animated animate__fadeInUp text-5xl text-White font-bold font-rubik">
 										{dailyBudgetAmount.toFixed(2)}€
 									</h1>
 								</button>
@@ -282,7 +278,7 @@ function Budget(): React.ReactNode {
 
 						<SwiperSlide>
 							<div className="flex flex-col gap-y-1 items-center py-8">
-								<span className="text-base text-[#57456F] font-medium font-rubik">
+								<span className="text-base text-PurpleLight font-medium font-rubik">
 									<FormattedMessage id="HOME_SWIPER_SPAN_TEXT1" />{" "}
 									{Utils.months[new Date(budget.created_at).getMonth()]}
 								</span>
@@ -300,7 +296,7 @@ function Budget(): React.ReactNode {
 										);
 									}}
 								>
-									<h1 className="animate__animated animate__fadeInUp text-5xl text-white font-bold font-rubik">
+									<h1 className="animate__animated animate__fadeInUp text-5xl text-White font-bold font-rubik">
 										{monthlyBudgetAmount.toFixed(2)}€
 									</h1>
 								</button>
@@ -311,12 +307,12 @@ function Budget(): React.ReactNode {
 
 				<div className="flex flex-col gap-y-3 items-center">
 					{auth && monthlyBudgetAmount === 0 && (
-						<span className="text-center text-sm text-white font-normal font-rubik">⬇️ Please add your income ⬇️</span>
+						<span className="text-center text-sm text-White font-normal font-rubik">⬇️ Please add your income ⬇️</span>
 					)}
 
 					<button
 						type="button"
-						className="flex gap-x-2 items-center justify-center btn bg-purple px-6 py-3 rounded-3xl"
+						className="flex gap-x-2 items-center justify-center btn bg-Purple px-6 py-3 rounded-3xl"
 						onClick={(): void => {
 							dispatch(
 								setModals({
@@ -341,12 +337,12 @@ function Budget(): React.ReactNode {
 							</defs>
 						</svg>
 
-						<span className="text-base text-[#160C1F] font-medium font-rubik">Income</span>
+						<span className="text-base text-PurpleDark font-medium font-rubik">Income</span>
 					</button>
 
 					<button
 						type="button"
-						className="flex gap-x-2 items-center justify-center btn bg-orange px-6 py-3 rounded-3xl"
+						className="flex gap-x-2 items-center justify-center btn bg-Orange px-6 py-3 rounded-3xl"
 						onClick={(): void => {
 							dispatch(
 								setModals({
@@ -383,93 +379,34 @@ function Budget(): React.ReactNode {
 							</defs>
 						</svg>
 
-						<span className="text-base text-[#160C1F] font-medium font-rubik">Expenses</span>
+						<span className="text-base text-PurpleDark font-medium font-rubik">Expenses</span>
 					</button>
 				</div>
-
-				{resetBudgetModal && (
-					<Modal
-						index={40}
-						classes="gap-y-3 items-center justify-center px-6 py-6 w-[20rem] md:min-w-[26rem] animate__animated animate__fadeInUp animate__faster"
-					>
-						<div className="flex flex-col gap-y-2">
-							<span className="text-lg text-center text-white font-medium font-rubik">Warning</span>
-
-							<span className="text-base text-center text-light font-light font-rubik">
-								This operation is permanent and will delete{" "}
-								<b>
-									{Utils.months[new Date(budget.created_at).getMonth()]}
-									{new Date(budget.created_at).getFullYear()}
-								</b>{" "}
-								budget.
-							</span>
-						</div>
-
-						<div className="flex gap-x-3 items-center">
-							<button
-								className="btn px-2.5 py-1.5 border border-red hover:bg-red text-red hover:text-light stroke-red hover:stroke-light"
-								type="submit"
-								onClick={(): Promise<void> => handleRemoveBudget(budget)}
-								disabled={removeBudgetButtonDisabled}
-							>
-								<div className="flex gap-x-0 items-center">
-									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-										<title>Flame</title>
-										<g clipPath="url(#clip0_307_158)">
-											<path
-												d="M12 12C14 9.04 12 5 11 4C11 7.038 9.227 8.741 8 10C6.774 11.26 6 13.24 6 15C6 16.5913 6.63214 18.1174 7.75736 19.2426C8.88258 20.3679 10.4087 21 12 21C13.5913 21 15.1174 20.3679 16.2426 19.2426C17.3679 18.1174 18 16.5913 18 15C18 13.468 16.944 11.06 16 10C14.214 13 13.209 13 12 12Z"
-												stroke=""
-												strokeWidth="1.5"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											/>
-										</g>
-										<defs>
-											<clipPath id="clip0_307_158">
-												<rect width="24" height="24" fill="" />
-											</clipPath>
-										</defs>
-									</svg>
-
-									<span className="text-base font-normal font-rubik">Delete</span>
-								</div>
-							</button>
-
-							<button
-								type="submit"
-								className="btn px-2.5 py-1.5 border border-light"
-								onClick={(): void => setResetBudgetModal(false)}
-							>
-								<span className="text-base text-light font-normal font-rubik">Cancel</span>
-							</button>
-						</div>
-					</Modal>
-				)}
 			</div>
 
 			<div className="flex flex-col md:flex-row gap-4 items-center justify-center">
-				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-[#313131]">
-					<h3 className="text-base text-white font-bold font-rubik text-center">Easy Setup</h3>
+				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-Grey">
+					<h3 className="text-base text-White font-bold font-rubik text-center">Easy Setup</h3>
 
-					<p className="text-sm text-white font-normal font-rubik text-center">
+					<p className="text-sm text-White font-normal font-rubik text-center">
 						Budget Partner is designed for beginners. Set up your budget quickly, track income, and record expenses
 						effortlessly. No more complicated spreadsheets or confusing apps!
 					</p>
 				</div>
 
-				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-[#313131]">
-					<h3 className="text-base text-white font-bold font-rubik text-center">Secure Data Storage</h3>
+				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-Grey">
+					<h3 className="text-base text-White font-bold font-rubik text-center">Secure Data Storage</h3>
 
-					<p className="text-sm text-white font-normal font-rubik text-center">
+					<p className="text-sm text-White font-normal font-rubik text-center">
 						Your financial information is safe with us. Budget Partner securely stores your data, allowing you to
 						revisit your progress over time. It’s like having a personal financial assistant at your fingertips.
 					</p>
 				</div>
 
-				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-[#313131]">
-					<h3 className="text-base text-white font-bold font-rubik text-center">Track Your Journey</h3>
+				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-Grey">
+					<h3 className="text-base text-White font-bold font-rubik text-center">Track Your Journey</h3>
 
-					<p className="text-sm text-white font-normal font-rubik text-center">
+					<p className="text-sm text-White font-normal font-rubik text-center">
 						Compare your financial milestones and see how far you’ve come. Whether you’re saving for a dream vacation or
 						building an emergency fund, Budget Partner keeps you motivated.
 					</p>

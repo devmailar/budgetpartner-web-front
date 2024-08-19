@@ -66,12 +66,12 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 				<a href="/" className="flex gap-x-2 items-center">
 					<img src={ArtLogo} alt={ArtLogo} width={35} height={35} />
 
-					<h2 className="hidden md:block text-lg text-white font-normal font-rubik">budgetpartner.app</h2>
+					<h2 className="hidden md:block text-lg text-White font-normal font-rubik">budgetpartner.app</h2>
 				</a>
 
 				<div className="hidden md:flex gap-x-6 items-center">
 					<button type="button" className="flex items-center justify-center" onClick={(): void => router.navigate("/")}>
-						<span className="text-base text-white font-medium font-rubik">Home</span>
+						<span className="text-base text-White font-medium font-rubik">Home</span>
 					</button>
 
 					<button
@@ -79,7 +79,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 						className="flex items-center justify-center"
 						onClick={() => dispatch(setError("Coming soon! ✨"))}
 					>
-						<span className="text-base text-white font-normal font-rubik">Notes</span>
+						<span className="text-base text-White font-normal font-rubik">Notes</span>
 					</button>
 
 					<button
@@ -87,7 +87,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 						className="flex items-center justify-center"
 						onClick={() => dispatch(setError("Coming soon! ✨"))}
 					>
-						<span className="text-base text-white font-normal font-rubik">Calculator</span>
+						<span className="text-base text-White font-normal font-rubik">Calculator</span>
 					</button>
 
 					<button
@@ -95,7 +95,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 						className="flex items-center justify-center"
 						onClick={() => dispatch(setError("Coming soon! ✨"))}
 					>
-						<span className="text-base text-white font-normal font-rubik">Support</span>
+						<span className="text-base text-White font-normal font-rubik">Support</span>
 					</button>
 
 					{getCookie("Authorization") && (
@@ -113,7 +113,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 					{auth ? (
 						<button
 							type="button"
-							className="flex gap-x-1.5 items-center btn bg-[#313131] px-2.5 py-1.5 bg-opacity-50 rounded-full"
+							className="flex gap-x-1.5 items-center btn bg-Grey px-2.5 py-1.5 bg-opacity-50 rounded-full"
 							onClick={(): void => handleLogoutAndRedirectToLogin()}
 						>
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -135,7 +135,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 					) : (
 						<button
 							type="button"
-							className="flex gap-x-1.5 items-center btn bg-[#160C1F] px-2.5 py-1.5 border-2 border-[#6D28D9] rounded-full"
+							className="flex gap-x-1.5 items-center btn bg-PurpleDark px-2.5 py-1.5 border-2 border-PurpleBright rounded-full"
 							onClick={(): void => handleRedirectToLogin()}
 						>
 							<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -152,7 +152,7 @@ function Navbar({ router }: INavbarProps): React.ReactNode {
 								/>
 							</svg>
 
-							<span className="text-sm text-[#895FF5] font-medium font-rubik">Login</span>
+							<span className="text-sm text-Purple font-medium font-rubik">Login</span>
 						</button>
 					)}
 				</div>

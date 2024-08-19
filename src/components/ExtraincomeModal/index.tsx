@@ -5,10 +5,10 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
-import { setModals } from "../../stores/Modals";
 import type { IBudget, IExtraincome, IResponseError, IRootState } from "../../types";
 import { Utils } from "../../utils";
 import Modal from "../Modal";
+import SlideUpDialog from "../SlideUpDialog";
 
 function ExtraincomeModal(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
@@ -24,6 +24,7 @@ function ExtraincomeModal(): React.ReactNode {
 		user_id: 0,
 		extraincome_type: "",
 		extraincome_amount_monthly: 0,
+		extraincome_includes_weekends: false,
 		created_at: new Date(),
 		updated_at: new Date(),
 	});
@@ -31,8 +32,8 @@ function ExtraincomeModal(): React.ReactNode {
 	const [removeExtraincomeButtonDisabled, setRemoveExtraincomeButtonDisabled] = React.useState<boolean>(false);
 	const [includeWeekends, setIncludeWeekends] = React.useState<boolean>(false);
 
-	const extraincomesOrderedAscendingByAmount: IExtraincome[] = [...budget.extraincomes].sort((a, b) => {
-		return b.extraincome_amount_monthly - a.extraincome_amount_monthly;
+	const extraincomesSortedByCreatedAtAscending: IExtraincome[] = [...budget.extraincomes].sort((a, b) => {
+		return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
 	});
 
 	const handleCreateExtraincome = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
@@ -108,23 +109,6 @@ function ExtraincomeModal(): React.ReactNode {
 			if (error instanceof Error) {
 				dispatch(setError(error.message));
 				setTimeout((): void => setRemoveExtraincomeButtonDisabled(false), 2000);
-			}
-		}
-	};
-
-	const handleClose = (): void => {
-		try {
-			dispatch(
-				setModals({
-					extraincome: false,
-					extraexpense: false,
-					language: false,
-					settings: false,
-				}),
-			);
-		} catch (error: unknown) {
-			if (error instanceof Error) {
-				dispatch(setError(error.message));
 			}
 		}
 	};
@@ -211,82 +195,72 @@ function ExtraincomeModal(): React.ReactNode {
 					</div>
 				</Modal>
 			) : (
-				<Modal
-					index={40}
-					classes="gap-y-4 px-5 py-5 w-full md:w-fit md:min-w-[25rem] animate__animated animate__fadeInDown animate__faster"
-				>
+				<SlideUpDialog classes="gap-y-4 px-8 py-6">
 					{!createExtraincomeModal && !removeExtraincomeModal ? (
-						<div className="flex flex-col gap-y-4">
-							<div className="flex items-center justify-between">
-								<span className="text-sm text-purple font-bold font-rubik truncate">
-									+{handleGetTotalExtraincome(budget.extraincomes).toFixed(1)}€
-								</span>
-
-								<button type="button" onClick={(): void => handleClose()}>
-									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<title>Close</title>
-										<path
-											d="M15.75 15L9.75 9M9.75 15L15.75 9M22.75 12C22.75 6.477 18.273 2 12.75 2C7.227 2 2.75 6.477 2.75 12C2.75 17.523 7.227 22 12.75 22C18.273 22 22.75 17.523 22.75 12Z"
-											stroke="white"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-										/>
-									</svg>
-								</button>
+						<div className="flex flex-col gap-y-6">
+							<div className="flex items-center justify-center">
+								<button type="button" className="bg-White px-0 py-[0.18rem] w-28 rounded-lg" />
 							</div>
+							<div className="flex flex-col">
+								<div className="flex items-center justify-between">
+									<div className="flex flex-col">
+										<h2 className="text-base text-White font-normal font-rubik">income</h2>
 
-							<div className="overflow-auto">
-								<table className="w-full">
-									<thead>
-										<tr>
-											<th className="px-0 py-1 text-left text-sm text-white font-normal font-rubik">ID</th>
-											<th className="px-3 py-1 text-left text-sm text-white font-normal font-rubik">Income</th>
-											<th className="px-3 py-1 text-left text-sm text-white font-normal font-rubik">Amount</th>
-											<th className="px-0 py-1 text-right text-sm text-white font-normal font-rubik">Created</th>
-										</tr>
-									</thead>
+										<span className="text-base text-Purple font-normal font-rubik">
+											+{handleGetTotalExtraincome(budget.extraincomes).toFixed(1)}€
+										</span>
+									</div>
 
-									{extraincomesOrderedAscendingByAmount.length > 0 && (
-										<tbody className="overflow-y-auto table-fixed">
-											{extraincomesOrderedAscendingByAmount.map((extraincome: IExtraincome, index: number) => (
-												<tr
-													className="border-t border-t-dark cursor-pointer"
-													key={extraincome.id}
-													onClick={(): void => {
-														setRemoveExtraincome(extraincome);
-														setRemoveExtraincomeModal(true);
-													}}
-													onKeyUp={(): void => {
-														setRemoveExtraincome(extraincome);
-														setRemoveExtraincomeModal(true);
-													}}
-												>
-													<td className="px-0 py-0.5 text-left text-sm text-white font-normal font-rubik truncate">
-														<span>{index + 1}</span>
-													</td>
-													<td className="px-3 py-0.5 text-left text-sm text-white font-normal font-rubik truncate">
-														<span>{extraincome.extraincome_type}</span>
-													</td>
-													<td className="px-3 py-0.5 text-left text-sm text-white font-normal font-rubik truncate">
-														<span>{extraincome.extraincome_amount_monthly.toFixed(1)}€</span>
-													</td>
-													<td className="px-0 py-0.5 text-right text-sm text-white font-normal font-rubik truncate">
-														<span>{new Date(extraincome.created_at).toLocaleDateString()}</span>
-													</td>
-												</tr>
-											))}
-										</tbody>
-									)}
-								</table>
+									<button type="button" className="btn bg-transparent px-3 py-1.5 border-2 border-Purple rounded-full">
+										<span className="text-[0.813rem] text-White font-medium font-rubik">+ Add new</span>
+									</button>
+								</div>
+
+								<div className="overflow-auto">
+									<table className="w-full">
+										<thead>
+											<tr>
+												<th className="px-0 py-2 text-left text-sm text-White font-normal font-rubik">ID</th>
+												<th className="px-3 py-2 text-left text-sm text-White font-normal font-rubik">Income</th>
+												<th className="px-3 py-2 text-left text-sm text-White font-normal font-rubik">Amount</th>
+												<th className="px-0 py-2 text-right text-sm text-White font-normal font-rubik">Created</th>
+											</tr>
+										</thead>
+
+										{extraincomesSortedByCreatedAtAscending.length > 0 && (
+											<tbody className="overflow-y-auto table-fixed">
+												{extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome, index: number) => (
+													<tr
+														className="border-t border-t-Grey cursor-pointer"
+														key={extraincome.id}
+														onClick={(): void => {
+															setRemoveExtraincome(extraincome);
+															setRemoveExtraincomeModal(true);
+														}}
+														onKeyUp={(): void => {
+															setRemoveExtraincome(extraincome);
+															setRemoveExtraincomeModal(true);
+														}}
+													>
+														<td className="px-0 py-1 text-left text-sm text-White font-normal font-rubik truncate">
+															<span>{index + 1}</span>
+														</td>
+														<td className="px-3 py-1 text-left text-sm text-White font-normal font-rubik truncate">
+															<span>{extraincome.extraincome_type}</span>
+														</td>
+														<td className="px-3 py-1 text-left text-sm text-White font-normal font-rubik truncate">
+															<span>{extraincome.extraincome_amount_monthly.toFixed(1)}€</span>
+														</td>
+														<td className="px-0 py-1 text-right text-sm text-White font-normal font-rubik truncate">
+															<span>{new Date(extraincome.created_at).toLocaleDateString()}</span>
+														</td>
+													</tr>
+												))}
+											</tbody>
+										)}
+									</table>
+								</div>
 							</div>
-
-							<button
-								type="button"
-								className="btn bg-dark rounded-xl"
-								onClick={(): void => setCreateExtraincomeModal(true)}
-							>
-								<span className="text-sm text-white font-normal font-rubik">Create</span>
-							</button>
 						</div>
 					) : (
 						<form className="flex flex-col gap-y-4" onSubmit={handleCreateExtraincome}>
@@ -364,7 +338,7 @@ function ExtraincomeModal(): React.ReactNode {
 							</button>
 						</form>
 					)}
-				</Modal>
+				</SlideUpDialog>
 			)}
 		</>
 	);

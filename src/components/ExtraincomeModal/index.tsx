@@ -196,7 +196,7 @@ function ExtraincomeModal(): React.ReactNode {
 					</div>
 				</Modal>
 			) : (
-				<SlideUpDialog classes="gap-y-4 px-8 py-6">
+				<SlideUpDialog classes="gap-y-4 px-6 py-6">
 					{!createExtraincomeModal && !removeExtraincomeModal ? (
 						<div className="flex flex-col gap-y-6">
 							<button

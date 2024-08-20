@@ -269,7 +269,7 @@ function Budget(): React.ReactNode {
 										);
 									}}
 								>
-									<h1 className="animate__animated animate__fadeInUp text-5xl text-White font-bold font-rubik">
+									<h1 className="animate__animated animate__fadeInUp text-4xl text-White font-bold font-rubik">
 										{dailyBudgetAmount.toFixed(2)}€
 									</h1>
 								</button>
@@ -296,7 +296,7 @@ function Budget(): React.ReactNode {
 										);
 									}}
 								>
-									<h1 className="animate__animated animate__fadeInUp text-5xl text-White font-bold font-rubik">
+									<h1 className="animate__animated animate__fadeInUp text-4xl text-White font-bold font-rubik">
 										{monthlyBudgetAmount.toFixed(2)}€
 									</h1>
 								</button>
@@ -384,34 +384,36 @@ function Budget(): React.ReactNode {
 				</div>
 			</div>
 
-			<div className="flex flex-col md:flex-row gap-4 items-center justify-center">
-				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-Grey">
-					<h3 className="text-base text-White font-bold font-rubik text-center">Easy Setup</h3>
+			{!modals.extraincome && !modals.extraexpense && (
+				<div className="flex flex-col md:flex-row gap-4 items-center justify-center">
+					<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-Grey">
+						<h3 className="text-base text-White font-bold font-rubik text-center">Easy Setup</h3>
 
-					<p className="text-sm text-White font-normal font-rubik text-center">
-						Budget Partner is designed for beginners. Set up your budget quickly, track income, and record expenses
-						effortlessly. No more complicated spreadsheets or confusing apps!
-					</p>
+						<p className="text-sm text-White font-normal font-rubik text-center">
+							Budget Partner is designed for beginners. Set up your budget quickly, track income, and record expenses
+							effortlessly. No more complicated spreadsheets or confusing apps!
+						</p>
+					</div>
+
+					<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-Grey">
+						<h3 className="text-base text-White font-bold font-rubik text-center">Secure Data Storage</h3>
+
+						<p className="text-sm text-White font-normal font-rubik text-center">
+							Your financial information is safe with us. Budget Partner securely stores your data, allowing you to
+							revisit your progress over time. It’s like having a personal financial assistant at your fingertips.
+						</p>
+					</div>
+
+					<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-Grey">
+						<h3 className="text-base text-White font-bold font-rubik text-center">Track Your Journey</h3>
+
+						<p className="text-sm text-White font-normal font-rubik text-center">
+							Compare your financial milestones and see how far you’ve come. Whether you’re saving for a dream vacation
+							or building an emergency fund, Budget Partner keeps you motivated.
+						</p>
+					</div>
 				</div>
-
-				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-Grey">
-					<h3 className="text-base text-White font-bold font-rubik text-center">Secure Data Storage</h3>
-
-					<p className="text-sm text-White font-normal font-rubik text-center">
-						Your financial information is safe with us. Budget Partner securely stores your data, allowing you to
-						revisit your progress over time. It’s like having a personal financial assistant at your fingertips.
-					</p>
-				</div>
-
-				<div className="flex flex-col gap-y-2.5 items-center w-80 py-5 border-t border-t-Grey">
-					<h3 className="text-base text-White font-bold font-rubik text-center">Track Your Journey</h3>
-
-					<p className="text-sm text-White font-normal font-rubik text-center">
-						Compare your financial milestones and see how far you’ve come. Whether you’re saving for a dream vacation or
-						building an emergency fund, Budget Partner keeps you motivated.
-					</p>
-				</div>
-			</div>
+			)}
 
 			{modals.extraincome && <ExtraincomeModal />}
 			{modals.extraexpense && <ExtraexpenseModal />}

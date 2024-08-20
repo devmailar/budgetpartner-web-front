@@ -33,6 +33,8 @@ function ExtraincomeModal(): React.ReactNode {
 	const [removeExtraincomeButtonDisabled, setRemoveExtraincomeButtonDisabled] = React.useState<boolean>(false);
 	const [includeWeekends, setIncludeWeekends] = React.useState<boolean>(false);
 
+	const [eventInvalidAmount, setEventInvalidAmount] = React.useState<string>("");
+
 	const extraincomesSortedByCreatedAtAscending: IExtraincome[] = [...budget.extraincomes].sort((a, b) => {
 		return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
 	});
@@ -40,13 +42,15 @@ function ExtraincomeModal(): React.ReactNode {
 	const handleCreateExtraincome = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
+			setEventInvalidAmount("");
 
 			const form: FormData = new FormData(event.currentTarget);
 			const extraincomeType: string = form.get("extraincome_type") as string;
 			const extraincomeAmountMonthly: number = Number.parseInt(form.get("extraincome_amount_monthly") as string);
 
 			if (Number.isNaN(extraincomeAmountMonthly) || extraincomeAmountMonthly <= 0) {
-				throw new Error("Please enter valid amount");
+				setEventInvalidAmount("Invalid amount !");
+				return;
 			}
 
 			if (!auth) {
@@ -292,9 +296,9 @@ function ExtraincomeModal(): React.ReactNode {
 							</div>
 						</div>
 					) : (
-						<form className="flex flex-col gap-y-4" onSubmit={handleCreateExtraincome}>
+						<form className="flex flex-col gap-y-8" onSubmit={handleCreateExtraincome}>
 							<div className="flex items-center justify-between">
-								<h2 className="text-sm text-White font-medium font-rubik">New Income</h2>
+								<h2 className="text-base text-White font-medium font-rubik">New Income</h2>
 
 								<button type="button" onClick={(): void => setCreateExtraincomeModal(false)}>
 									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -309,40 +313,44 @@ function ExtraincomeModal(): React.ReactNode {
 								</button>
 							</div>
 
-							<div className="flex items-center justify-between px-0 py-1.5 border-b border-b-Grey">
-								<input
-									className="bg-transparent w-full text-sm text-White placeholder:text-Grey font-normal font-rubik focus:outline-none"
-									type="text"
-									name="extraincome_type"
-									id="extraincome_type"
-									placeholder="Salary"
-									required
-								/>
-							</div>
+							<div className="flex flex-col gap-y-2">
+								<div className="flex items-center justify-between px-2 py-2 bg-GreyTransparentStroke rounded-md">
+									<input
+										className="bg-transparent w-full text-lg text-GreyLight font-normal font-rubik focus:outline-none"
+										type="text"
+										name="extraincome_type"
+										id="extraincome_type"
+										placeholder="income"
+										required
+									/>
+								</div>
 
-							<div className="flex items-center justify-between px-0 py-1.5 border-b border-b-Grey">
-								<input
-									className="bg-transparent w-full text-sm text-White placeholder:text-Grey font-normal font-rubik focus:outline-none"
-									type="number"
-									name="extraincome_amount_monthly"
-									id="extraincome_amount_monthly"
-									placeholder="0.00"
-									required
-								/>
+								<div className="flex items-center justify-between px-2 py-2 bg-GreyTransparentStroke rounded-md">
+									<input
+										className="bg-transparent w-full text-lg text-GreyLight font-normal font-rubik focus:outline-none"
+										type="text"
+										name="extraincome_amount_monthly"
+										id="extraincome_amount_monthly"
+										placeholder="amount"
+										required
+									/>
 
-								<span className="text-base text-Grey font-normal font-rubik">€/MO</span>
+									<span className="text-lg text-GreyLight font-normal font-rubik">€</span>
+								</div>
+
+								<span className="text-lg text-red-600 font-medium font-rubik">{eventInvalidAmount}</span>
 							</div>
 
 							<div className="flex flex-col gap-y-2">
 								<div className="w-full md:w-80">
-									<p className="text-sm text-GreyLight font-normal font-rubik leading-tight">
+									<p className="text-lg text-GreyLight font-normal font-rubik leading-tight">
 										If ‘Include Weekends’ is enabled, then the income is calculated for all days in the month, including
 										weekends.
 									</p>
 								</div>
 
 								<div className="flex gap-x-1 items-center justify-between">
-									<span className="text-sm text-PurpleBright font-normal font-rubik">Include Weekends</span>
+									<span className="text-xl text-PurpleBright font-normal font-rubik">Include Weekends</span>
 
 									<button type="button" onClick={() => setIncludeWeekends(!includeWeekends)}>
 										{includeWeekends ? (
@@ -362,11 +370,9 @@ function ExtraincomeModal(): React.ReactNode {
 								</div>
 							</div>
 
-							<div className="flex items-center justify-center">
-								<button type="submit" className="btn bg-GreyTransparentStroke px-4 py-0.5">
-									<span className="text-sm text-GreyLight font-normal font-rubik">Save</span>
-								</button>
-							</div>
+							<button type="submit" className="btn bg-GreyTransparentStroke px-4 py-2">
+								<span className="text-base text-GreyLight font-normal font-rubik">Save</span>
+							</button>
 						</form>
 					)}
 				</SlideUpDialog>

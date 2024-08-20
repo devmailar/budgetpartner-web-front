@@ -12,7 +12,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
+
+
+html, body {
   background-image: radial-gradient(circle at 50% 0%, #221130 15%, #000000);
 }
 

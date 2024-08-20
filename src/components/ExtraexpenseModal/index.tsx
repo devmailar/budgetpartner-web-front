@@ -196,7 +196,20 @@ function ExtraexpenseModal(): React.ReactNode {
 				<SlideUpDialog classes="gap-y-4 px-8 py-6">
 					{!createExtraexpenseModal && !removeExtraexpenseModal ? (
 						<div className="flex flex-col gap-y-6">
-							<div className="flex items-center justify-center">
+							<button
+								type="button"
+								className="flex items-center justify-center"
+								onClick={(): void => {
+									dispatch(
+										setModals({
+											extraincome: false,
+											extraexpense: false,
+											language: false,
+											settings: false,
+										}),
+									);
+								}}
+							>
 								<button
 									type="button"
 									className="bg-White px-0 py-[0.18rem] w-28 rounded-lg"
@@ -211,7 +224,7 @@ function ExtraexpenseModal(): React.ReactNode {
 										);
 									}}
 								/>
-							</div>
+							</button>
 
 							<div className="flex flex-col">
 								<div className="flex items-center justify-between">

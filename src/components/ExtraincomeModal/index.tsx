@@ -231,11 +231,11 @@ function ExtraincomeModal(): React.ReactNode {
 
 							<div className="flex flex-col">
 								<div className="flex items-center justify-between">
-									<div className="flex flex-col">
-										<h2 className="text-base text-White font-normal font-rubik">income</h2>
+									<div className="flex gap-x-2 items-center">
+										<h2 className="text-base text-White font-medium font-rubik">Income:</h2>
 
-										<span className="text-base text-Purple font-normal font-rubik">
-											+{handleGetTotalExtraincome(budget.extraincomes).toFixed(1)}€
+										<span className="text-base text-Purple font-bold font-rubik">
+											+ {handleGetTotalExtraincome(budget.extraincomes).toFixed(1)}€
 										</span>
 									</div>
 

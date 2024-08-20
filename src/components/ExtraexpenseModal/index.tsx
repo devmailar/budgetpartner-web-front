@@ -228,7 +228,7 @@ function ExtraexpenseModal(): React.ReactNode {
 									</button>
 								</div>
 
-								<div className="flex flex-col w-full max-h-[30rem] overflow-hidden">
+								<div className="flex flex-col w-full max-h-[24rem] overflow-hidden">
 									<table className="w-full">
 										<thead>
 											<tr>

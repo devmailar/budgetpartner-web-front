@@ -31,9 +31,9 @@ function ExtraincomeModal(): React.ReactNode {
 	});
 
 	const [removeExtraincomeButtonDisabled, setRemoveExtraincomeButtonDisabled] = React.useState<boolean>(false);
-	const [includeWeekends, setIncludeWeekends] = React.useState<boolean>(false);
 
-	const [eventInvalidAmount, setEventInvalidAmount] = React.useState<string>("");
+	const [includeWeekends, setIncludeWeekends] = React.useState<boolean>(false);
+	const [invalidAmount, setInvalidAmount] = React.useState<string>("");
 
 	const extraincomesSortedByCreatedAtAscending: IExtraincome[] = [...budget.extraincomes].sort((a, b) => {
 		return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
@@ -42,14 +42,14 @@ function ExtraincomeModal(): React.ReactNode {
 	const handleCreateExtraincome = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
-			setEventInvalidAmount("");
+			setInvalidAmount("");
 
 			const form: FormData = new FormData(event.currentTarget);
 			const extraincomeType: string = form.get("extraincome_type") as string;
 			const extraincomeAmountMonthly: number = Number.parseInt(form.get("extraincome_amount_monthly") as string);
 
 			if (Number.isNaN(extraincomeAmountMonthly) || extraincomeAmountMonthly <= 0) {
-				setEventInvalidAmount("Invalid amount !");
+				setInvalidAmount("Invalid amount !");
 				return;
 			}
 
@@ -338,7 +338,7 @@ function ExtraincomeModal(): React.ReactNode {
 									<span className="text-lg text-GreyLight font-normal font-rubik">€</span>
 								</div>
 
-								<span className="text-lg text-red-600 font-medium font-rubik">{eventInvalidAmount}</span>
+								<span className="text-lg text-red-600 font-medium font-rubik">{invalidAmount}</span>
 							</div>
 
 							<div className="flex flex-col gap-y-2">

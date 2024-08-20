@@ -31,6 +31,8 @@ function ExtraexpenseModal(): React.ReactNode {
 
 	const [removeExtraexpenseButtonDisabled, setRemoveExtraexpenseButtonDisabled] = React.useState<boolean>(false);
 
+	const [invalidAmount, setInvalidAmount] = React.useState<string>("");
+
 	const extraexpensesSortedByCreatedAtAscending: IExtraexpense[] = [...budget.extraexpenses].sort((a, b) => {
 		return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
 	});
@@ -38,13 +40,15 @@ function ExtraexpenseModal(): React.ReactNode {
 	const handleCreateExtraexpense = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
+			setInvalidAmount("");
 
 			const form: FormData = new FormData(event.currentTarget);
 			const extraexpenseType: string = form.get("extraexpense_type") as string;
 			const extraexpenseAmountMonthly: number = Number.parseInt(form.get("extraexpense_amount_monthly") as string);
 
 			if (Number.isNaN(extraexpenseAmountMonthly) || extraexpenseAmountMonthly <= 0) {
-				throw new Error("Please enter valid amount");
+				setInvalidAmount("Invalid amount !");
+				return;
 			}
 
 			if (!auth) {
@@ -194,107 +198,104 @@ function ExtraexpenseModal(): React.ReactNode {
 				</Modal>
 			) : (
 				<SlideUpDialog classes="gap-y-4 px-6 py-6">
+					<button
+						type="button"
+						className="flex items-center justify-center"
+						onClick={(): void => {
+							dispatch(
+								setModals({
+									extraincome: false,
+									extraexpense: false,
+									language: false,
+									settings: false,
+								}),
+							);
+						}}
+					>
+						<button
+							type="button"
+							className="bg-White px-0 py-[0.18rem] w-28 rounded-lg"
+							onClick={(): void => {
+								dispatch(
+									setModals({
+										extraincome: false,
+										extraexpense: false,
+										language: false,
+										settings: false,
+									}),
+								);
+							}}
+						/>
+					</button>
+
 					{!createExtraexpenseModal && !removeExtraexpenseModal ? (
-						<div className="flex flex-col gap-y-6">
-							<button
-								type="button"
-								className="flex items-center justify-center"
-								onClick={(): void => {
-									dispatch(
-										setModals({
-											extraincome: false,
-											extraexpense: false,
-											language: false,
-											settings: false,
-										}),
-									);
-								}}
-							>
-								<button
-									type="button"
-									className="bg-White px-0 py-[0.18rem] w-28 rounded-lg"
-									onClick={(): void => {
-										dispatch(
-											setModals({
-												extraincome: false,
-												extraexpense: false,
-												language: false,
-												settings: false,
-											}),
-										);
-									}}
-								/>
-							</button>
+						<div className="flex flex-col gap-y-4">
+							<div className="flex items-center justify-between">
+								<div className="flex gap-x-0.5 items-center">
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<title>Trending Down</title>
+										<path d="M3.35999 7L9.11999 13L12.96 9L20.64 17" stroke="#B85C3D" stroke-width="2" />
+										<path d="M13.92 17H20.64V10" stroke="#B85C3D" stroke-width="2" />
+									</svg>
 
-							<div className="flex flex-col">
-								<div className="flex items-center justify-between">
-									<div className="flex gap-x-2 items-center">
-										<h2 className="text-sm text-White font-medium font-rubik">Expenses:</h2>
-
-										<span className="text-sm text-Orange font-bold font-rubik">
-											+ {handleGetTotalExtraexpense(budget.extraexpenses).toFixed(1)}€
-										</span>
-									</div>
-
-									<button type="button" className="btn bg-transparent px-3 py-1.5 border-2 border-Orange rounded-full">
-										<span className="text-sm text-White font-medium font-rubik">+ Add new</span>
-									</button>
+									<span className="text-base text-Orange font-normal font-rubik">
+										{handleGetTotalExtraexpense(budget.extraexpenses).toFixed(2)}€
+									</span>
 								</div>
 
-								<div className="flex flex-col w-full max-h-[24rem] overflow-hidden">
-									<table className="w-full">
-										<thead>
-											<tr>
-												<th className="px-0 py-3 text-left text-sm text-White font-normal font-rubik">ID</th>
-												<th className="px-3 py-3 text-left text-sm text-White font-normal font-rubik">Expense</th>
-												<th className="px-3 py-3 text-left text-sm text-White font-normal font-rubik">Amount</th>
-												<th className="px-0 py-3 text-right text-sm text-White font-normal font-rubik">Created</th>
-											</tr>
-										</thead>
-									</table>
+								<button
+									type="button"
+									className="btn bg-GreyTransparentStroke px-4 py-0.5"
+									onClick={(): void => setCreateExtraexpenseModal(true)}
+								>
+									<span className="text-sm text-GreyLight font-normal font-rubik">+ Add new</span>
+								</button>
+							</div>
 
-									<div className="overflow-y-auto">
-										<table className="w-full">
-											{extraexpensesSortedByCreatedAtAscending.length > 0 && (
-												<tbody className="table-fixed">
-													{extraexpensesSortedByCreatedAtAscending.map((extraexpense: IExtraexpense, index: number) => (
-														<tr
-															className="border-t border-t-Grey cursor-pointer"
-															key={extraexpense.id}
-															onClick={(): void => {
-																setRemoveExtraexpense(extraexpense);
-																setRemoveExtraexpenseModal(true);
-															}}
-															onKeyUp={(): void => {
-																setRemoveExtraexpense(extraexpense);
-																setRemoveExtraexpenseModal(true);
-															}}
-														>
-															<td className="px-0 py-2 text-left text-sm text-White font-normal font-rubik truncate">
-																<span>{index + 1}</span>
-															</td>
-															<td className="px-3 py-2 text-left text-sm text-White font-normal font-rubik truncate">
-																<span>{extraexpense.extraexpense_type}</span>
-															</td>
-															<td className="px-3 py-2 text-left text-sm text-White font-normal font-rubik truncate">
-																<span>{extraexpense.extraexpense_amount_monthly.toFixed(1)}€</span>
-															</td>
-															<td className="px-0 py-2 text-right text-sm text-White font-normal font-rubik truncate">
-																<span>{new Date(extraexpense.created_at).toLocaleDateString()}</span>
-															</td>
-														</tr>
-													))}
-												</tbody>
-											)}
-										</table>
-									</div>
+							<div className="flex flex-col">
+								<div className="flex gap-x-2 items-center justify-between px-0 py-1 border-b border-b-Grey">
+									<span className="w-16 text-sm text-White font-normal font-rubik">ID</span>
+									<span className="w-80 text-sm text-White font-normal font-rubik">Expense</span>
+									<span className="w-40 text-sm text-White font-normal font-rubik">Amount</span>
+									<span className="w-52 text-sm text-White font-normal font-rubik">Date</span>
+								</div>
+
+								<div className="max-h-[17.05rem] overflow-y-scroll">
+									{extraexpensesSortedByCreatedAtAscending.length > 0 &&
+										extraexpensesSortedByCreatedAtAscending.map((extraexpense: IExtraexpense, index: number) => (
+											<div
+												className="flex gap-x-2 items-center justify-between py-1 bg-GreyTransparent border-t border-t-Grey cursor-pointer"
+												key={extraexpense.id}
+												onClick={(): void => {
+													setRemoveExtraexpense(extraexpense);
+													setRemoveExtraexpenseModal(true);
+												}}
+												onKeyUp={(): void => {
+													setRemoveExtraexpense(extraexpense);
+													setRemoveExtraexpenseModal(true);
+												}}
+											>
+												<div className="w-16 text-sm text-White font-normal font-rubik truncate">
+													<span>{index + 1}</span>
+												</div>
+												<div className="w-80 text-sm text-White font-normal font-rubik truncate">
+													<span>{extraexpense.extraexpense_type}</span>
+												</div>
+												<div className="w-40 text-sm text-White font-normal font-rubik truncate">
+													<span>{extraexpense.extraexpense_amount_monthly.toFixed(1)}€</span>
+												</div>
+												<div className="w-52 text-sm text-White font-normal font-rubik truncate">
+													<span>{new Date(extraexpense.created_at).toLocaleDateString()}</span>
+												</div>
+											</div>
+										))}
 								</div>
 							</div>
 						</div>
 					) : (
 						<form className="flex flex-col gap-y-4" onSubmit={handleCreateExtraexpense}>
 							<div className="flex items-center justify-between">
-								<span className="text-sm text-light font-medium font-rubik">NEW EXPENSE</span>
+								<h2 className="text-base text-White font-medium font-rubik">New Expense</h2>
 
 								<button type="button" onClick={(): void => setCreateExtraexpenseModal(false)}>
 									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -309,32 +310,36 @@ function ExtraexpenseModal(): React.ReactNode {
 								</button>
 							</div>
 
-							<div className="flex items-center justify-between px-0 py-2 border-b border-b-grey">
-								<input
-									className="bg-transparent w-full text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
-									type="text"
-									name="extraexpense_type"
-									id="extraexpense_type"
-									placeholder="Rent"
-									required
-								/>
+							<div className="flex flex-col gap-y-2">
+								<div className="flex items-center justify-between px-2 py-2 bg-GreyTransparentStroke rounded-md">
+									<input
+										className="bg-transparent w-full text-lg text-GreyLight font-normal font-rubik focus:outline-none"
+										type="text"
+										name="extraexpense_type"
+										id="extraexpense_type"
+										placeholder="expense"
+										required
+									/>
+								</div>
+
+								<div className="flex items-center justify-between px-2 py-2 bg-GreyTransparentStroke rounded-md">
+									<input
+										className="bg-transparent w-full text-lg text-GreyLight font-normal font-rubik focus:outline-none"
+										type="text"
+										name="extraexpense_amount_monthly"
+										id="extraexpense_amount_monthly"
+										placeholder="amount"
+										required
+									/>
+
+									<span className="text-lg text-GreyLight font-normal font-rubik">€</span>
+								</div>
+
+								<span className="text-lg text-red-600 font-medium font-rubik">{invalidAmount}</span>
 							</div>
 
-							<div className="flex items-center justify-between px-0 py-2 border-b border-b-grey">
-								<input
-									className="bg-transparent w-full text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
-									type="number"
-									name="extraexpense_amount_monthly"
-									id="extraexpense_amount_monthly"
-									placeholder="0.00"
-									required
-								/>
-
-								<span className="text-sm text-light font-normal font-rubik">€/MO</span>
-							</div>
-
-							<button type="submit" className="btn bg-dark rounded-xl">
-								<span className="text-sm text-white font-normal font-rubik">Save</span>
+							<button type="submit" className="btn bg-GreyTransparentStroke px-4 py-2">
+								<span className="text-base text-GreyLight font-normal font-rubik">Save</span>
 							</button>
 						</form>
 					)}

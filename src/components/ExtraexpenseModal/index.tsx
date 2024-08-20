@@ -270,16 +270,16 @@ function ExtraexpenseModal(): React.ReactNode {
 																setRemoveExtraexpenseModal(true);
 															}}
 														>
-															<td className="px-0 py-1 text-left text-sm text-White font-normal font-rubik truncate">
+															<td className="px-0 py-2 text-left text-sm text-White font-normal font-rubik truncate">
 																<span>{index + 1}</span>
 															</td>
-															<td className="px-3 py-1 text-left text-sm text-White font-normal font-rubik truncate">
+															<td className="px-3 py-2 text-left text-sm text-White font-normal font-rubik truncate">
 																<span>{extraexpense.extraexpense_type}</span>
 															</td>
-															<td className="px-3 py-1 text-left text-sm text-White font-normal font-rubik truncate">
+															<td className="px-3 py-2 text-left text-sm text-White font-normal font-rubik truncate">
 																<span>{extraexpense.extraexpense_amount_monthly.toFixed(1)}€</span>
 															</td>
-															<td className="px-0 py-1 text-right text-sm text-White font-normal font-rubik truncate">
+															<td className="px-0 py-2 text-right text-sm text-White font-normal font-rubik truncate">
 																<span>{new Date(extraexpense.created_at).toLocaleDateString()}</span>
 															</td>
 														</tr>

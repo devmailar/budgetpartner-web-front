@@ -35,6 +35,9 @@ function SlideUpDialog({ classes, children }: ISlideUpDialog): React.ReactNode {
 				style={{
 					backgroundColor: "rgba(26, 26, 26, 0.7)",
 				}}
+				onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+					e.stopPropagation();
+				}}
 				onKeyUp={(): void => {}}
 				onKeyDown={(): void => {}}
 			>

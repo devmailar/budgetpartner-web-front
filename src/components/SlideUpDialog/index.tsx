@@ -31,7 +31,7 @@ function SlideUpDialog({ classes, children }: ISlideUpDialog): React.ReactNode {
 			onKeyDown={(): void => {}}
 		>
 			<div
-				className={`flex flex-col w-full h-[80%] backdrop-blur-[1rem] rounded-t-[2rem] animate__animated animate__fadeInUp animate__faster ${classes}`}
+				className={`flex flex-col w-full h-[66%] backdrop-blur-[1rem] rounded-t-[2rem] animate__animated animate__fadeInUp animate__faster ${classes}`}
 				style={{
 					backgroundColor: "rgba(26, 26, 26, 0.7)",
 				}}

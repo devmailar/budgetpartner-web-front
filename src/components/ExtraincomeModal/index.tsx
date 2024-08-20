@@ -196,7 +196,7 @@ function ExtraincomeModal(): React.ReactNode {
 					</div>
 				</Modal>
 			) : (
-				<SlideUpDialog classes="gap-y-4 px-6 py-6">
+				<SlideUpDialog classes="gap-y-6 px-6 py-6">
 					<button
 						type="button"
 						className="flex items-center justify-center"
@@ -230,13 +230,21 @@ function ExtraincomeModal(): React.ReactNode {
 					{!createExtraincomeModal && !removeExtraincomeModal ? (
 						<div className="flex flex-col gap-y-4">
 							<div className="flex items-center justify-between">
-								<h2 className="text-lg text-Purple font-normal font-rubik">
-									Income: {handleGetTotalExtraincome(budget.extraincomes).toFixed(1)}€
-								</h2>
+								<div className="flex gap-x-0.5 items-center">
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<title>Trending Up</title>
+										<path d="M3.35999 17L9.11999 11L12.96 15L20.64 7" stroke="#895FF5" stroke-width="2" />
+										<path d="M13.92 7H20.64V14" stroke="#895FF5" stroke-width="2" />
+									</svg>
+
+									<span className="text-base text-Purple font-normal font-rubik">
+										{handleGetTotalExtraincome(budget.extraincomes).toFixed(2)}€
+									</span>
+								</div>
 
 								<button
 									type="button"
-									className="btn bg-GreyTransparentStroke px-3.5 py-0.5"
+									className="btn bg-GreyTransparentStroke px-4 py-0.5"
 									onClick={(): void => setCreateExtraincomeModal(true)}
 								>
 									<span className="text-sm text-GreyLight font-normal font-rubik">+ Add new</span>
@@ -244,18 +252,18 @@ function ExtraincomeModal(): React.ReactNode {
 							</div>
 
 							<div className="flex flex-col">
-								<div className="flex items-center justify-between px-0 py-1 border-b border-b-Grey">
-									<span className="w-40 text-sm text-White font-normal font-rubik">ID</span>
+								<div className="flex gap-x-2 items-center justify-between px-0 py-1 border-b border-b-Grey">
+									<span className="w-16 text-sm text-White font-normal font-rubik">ID</span>
 									<span className="w-80 text-sm text-White font-normal font-rubik">Income</span>
 									<span className="w-40 text-sm text-White font-normal font-rubik">Amount</span>
-									<span className="w-40 text-sm text-White font-normal font-rubik">Created at</span>
+									<span className="w-52 text-sm text-White font-normal font-rubik">Date</span>
 								</div>
 
-								<div className="max-h-[24rem] overflow-y-scroll">
+								<div className="max-h-[17.05rem] overflow-y-scroll">
 									{extraincomesSortedByCreatedAtAscending.length > 0 &&
 										extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome, index: number) => (
 											<div
-												className="flex items-center justify-between py-1 border-t border-t-Grey cursor-pointer"
+												className="flex gap-x-2 items-center justify-between py-1 bg-GreyTransparent border-t border-t-Grey cursor-pointer"
 												key={extraincome.id}
 												onClick={(): void => {
 													setRemoveExtraincome(extraincome);
@@ -266,7 +274,7 @@ function ExtraincomeModal(): React.ReactNode {
 													setRemoveExtraincomeModal(true);
 												}}
 											>
-												<div className="w-40 text-sm text-White font-normal font-rubik truncate">
+												<div className="w-16 text-sm text-White font-normal font-rubik truncate">
 													<span>{index + 1}</span>
 												</div>
 												<div className="w-80 text-sm text-White font-normal font-rubik truncate">
@@ -275,7 +283,7 @@ function ExtraincomeModal(): React.ReactNode {
 												<div className="w-40 text-sm text-White font-normal font-rubik truncate">
 													<span>{extraincome.extraincome_amount_monthly.toFixed(1)}€</span>
 												</div>
-												<div className="w-40 text-sm text-White font-normal font-rubik truncate">
+												<div className="w-52 text-sm text-White font-normal font-rubik truncate">
 													<span>{new Date(extraincome.created_at).toLocaleDateString()}</span>
 												</div>
 											</div>
@@ -301,9 +309,9 @@ function ExtraincomeModal(): React.ReactNode {
 								</button>
 							</div>
 
-							<div className="flex items-center justify-between px-0 py-2 border-b border-b-grey">
+							<div className="flex items-center justify-between px-0 py-1.5 border-b border-b-Grey">
 								<input
-									className="bg-transparent w-full text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
+									className="bg-transparent w-full text-sm text-White placeholder:text-Grey font-normal font-rubik focus:outline-none"
 									type="text"
 									name="extraincome_type"
 									id="extraincome_type"
@@ -312,9 +320,9 @@ function ExtraincomeModal(): React.ReactNode {
 								/>
 							</div>
 
-							<div className="flex items-center justify-between px-0 py-2 border-b border-b-grey">
+							<div className="flex items-center justify-between px-0 py-1.5 border-b border-b-Grey">
 								<input
-									className="bg-transparent w-full text-sm text-white placeholder:text-light font-normal font-rubik focus:outline-none"
+									className="bg-transparent w-full text-sm text-White placeholder:text-Grey font-normal font-rubik focus:outline-none"
 									type="number"
 									name="extraincome_amount_monthly"
 									id="extraincome_amount_monthly"
@@ -322,31 +330,31 @@ function ExtraincomeModal(): React.ReactNode {
 									required
 								/>
 
-								<span className="text-sm text-light font-normal font-rubik">€/MO</span>
+								<span className="text-base text-Grey font-normal font-rubik">€/MO</span>
 							</div>
 
 							<div className="flex flex-col gap-y-2">
 								<div className="w-full md:w-80">
-									<p className="text-xs text-grey font-normal font-rubik leading-tight">
+									<p className="text-sm text-GreyLight font-normal font-rubik leading-tight">
 										If ‘Include Weekends’ is enabled, then the income is calculated for all days in the month, including
 										weekends.
 									</p>
 								</div>
 
 								<div className="flex gap-x-1 items-center justify-between">
-									<span className="text-sm text-light font-normal font-rubik">Include Weekends</span>
+									<span className="text-sm text-PurpleBright font-normal font-rubik">Include Weekends</span>
 
 									<button type="button" onClick={() => setIncludeWeekends(!includeWeekends)}>
 										{includeWeekends ? (
 											<svg width="48" height="28" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<title>Checkbox Checked</title>
-												<rect width="48" height="28" rx="14" fill="#252525" />
-												<circle cx="34" cy="14" r="10" fill="#895FF5" />
+												<rect width="48" height="28" rx="14" fill="#313131" />
+												<circle cx="34" cy="14" r="10" fill="#6D28D9" />
 											</svg>
 										) : (
 											<svg width="48" height="28" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<title>Checkbox Not Checked</title>
-												<rect width="48" height="28" rx="14" fill="#252525" />
+												<rect width="48" height="28" rx="14" fill="#313131" />
 												<circle cx="14" cy="14" r="10" fill="#b7b7b7" />
 											</svg>
 										)}
@@ -354,9 +362,11 @@ function ExtraincomeModal(): React.ReactNode {
 								</div>
 							</div>
 
-							<button type="submit" className="btn bg-dark rounded-xl">
-								<span className="text-sm text-white font-normal font-rubik">Save</span>
-							</button>
+							<div className="flex items-center justify-center">
+								<button type="submit" className="btn bg-GreyTransparentStroke px-4 py-0.5">
+									<span className="text-sm text-GreyLight font-normal font-rubik">Save</span>
+								</button>
+							</div>
 						</form>
 					)}
 				</SlideUpDialog>

@@ -5,6 +5,7 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import { setError } from "../../stores/Error";
 import { setForceLogin } from "../../stores/ForceLogin";
+import { setModals } from "../../stores/Modals";
 import type { IBudget, IExtraincome, IResponseError, IRootState } from "../../types";
 import { Utils } from "../../utils";
 import Modal from "../Modal";
@@ -199,7 +200,20 @@ function ExtraincomeModal(): React.ReactNode {
 					{!createExtraincomeModal && !removeExtraincomeModal ? (
 						<div className="flex flex-col gap-y-6">
 							<div className="flex items-center justify-center">
-								<button type="button" className="bg-White px-0 py-[0.18rem] w-28 rounded-lg" />
+								<button
+									type="button"
+									className="bg-White px-0 py-[0.18rem] w-28 rounded-lg"
+									onClick={(): void => {
+										dispatch(
+											setModals({
+												extraincome: false,
+												extraexpense: false,
+												language: false,
+												settings: false,
+											}),
+										);
+									}}
+								/>
 							</div>
 							<div className="flex flex-col">
 								<div className="flex items-center justify-between">

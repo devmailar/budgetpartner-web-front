@@ -197,107 +197,96 @@ function ExtraincomeModal(): React.ReactNode {
 				</Modal>
 			) : (
 				<SlideUpDialog classes="gap-y-4 px-6 py-6">
+					<button
+						type="button"
+						className="flex items-center justify-center"
+						onClick={(): void => {
+							dispatch(
+								setModals({
+									extraincome: false,
+									extraexpense: false,
+									language: false,
+									settings: false,
+								}),
+							);
+						}}
+					>
+						<button
+							type="button"
+							className="bg-White px-0 py-[0.18rem] w-28 rounded-lg"
+							onClick={(): void => {
+								dispatch(
+									setModals({
+										extraincome: false,
+										extraexpense: false,
+										language: false,
+										settings: false,
+									}),
+								);
+							}}
+						/>
+					</button>
+
 					{!createExtraincomeModal && !removeExtraincomeModal ? (
-						<div className="flex flex-col gap-y-6">
-							<button
-								type="button"
-								className="flex items-center justify-center"
-								onClick={(): void => {
-									dispatch(
-										setModals({
-											extraincome: false,
-											extraexpense: false,
-											language: false,
-											settings: false,
-										}),
-									);
-								}}
-							>
+						<div className="flex flex-col gap-y-4">
+							<div className="flex items-center justify-between">
+								<h2 className="text-lg text-Purple font-normal font-rubik">
+									Income: {handleGetTotalExtraincome(budget.extraincomes).toFixed(1)}€
+								</h2>
+
 								<button
 									type="button"
-									className="bg-White px-0 py-[0.18rem] w-28 rounded-lg"
-									onClick={(): void => {
-										dispatch(
-											setModals({
-												extraincome: false,
-												extraexpense: false,
-												language: false,
-												settings: false,
-											}),
-										);
-									}}
-								/>
-							</button>
+									className="btn bg-GreyTransparentStroke px-3.5 py-0.5"
+									onClick={(): void => setCreateExtraincomeModal(true)}
+								>
+									<span className="text-sm text-GreyLight font-normal font-rubik">+ Add new</span>
+								</button>
+							</div>
 
 							<div className="flex flex-col">
-								<div className="flex items-center justify-between">
-									<div className="flex gap-x-2 items-center">
-										<h2 className="text-sm text-White font-medium font-rubik">Income:</h2>
-
-										<span className="text-sm text-Purple font-bold font-rubik">
-											+ {handleGetTotalExtraincome(budget.extraincomes).toFixed(1)}€
-										</span>
-									</div>
-
-									<button type="button" className="btn bg-transparent px-3 py-1.5 border-2 border-Purple rounded-full">
-										<span className="text-sm text-White font-medium font-rubik">+ Add new</span>
-									</button>
+								<div className="flex items-center justify-between px-0 py-1 border-b border-b-Grey">
+									<span className="w-40 text-sm text-White font-normal font-rubik">ID</span>
+									<span className="w-80 text-sm text-White font-normal font-rubik">Income</span>
+									<span className="w-40 text-sm text-White font-normal font-rubik">Amount</span>
+									<span className="w-40 text-sm text-White font-normal font-rubik">Created at</span>
 								</div>
 
-								<div className="flex flex-col w-full max-h-[24rem] overflow-hidden">
-									<table className="w-full">
-										<thead>
-											<tr>
-												<th className="px-0 py-3 text-left text-sm text-White font-normal font-rubik">ID</th>
-												<th className="px-3 py-3 text-left text-sm text-White font-normal font-rubik">Income</th>
-												<th className="px-3 py-3 text-left text-sm text-White font-normal font-rubik">Amount</th>
-												<th className="px-0 py-3 text-right text-sm text-White font-normal font-rubik">Created</th>
-											</tr>
-										</thead>
-									</table>
-
-									<div className="overflow-y-auto">
-										<table className="w-full">
-											{extraincomesSortedByCreatedAtAscending.length > 0 && (
-												<tbody className="table-fixed">
-													{extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome, index: number) => (
-														<tr
-															className="border-t border-t-Grey cursor-pointer"
-															key={extraincome.id}
-															onClick={(): void => {
-																setRemoveExtraincome(extraincome);
-																setRemoveExtraincomeModal(true);
-															}}
-															onKeyUp={(): void => {
-																setRemoveExtraincome(extraincome);
-																setRemoveExtraincomeModal(true);
-															}}
-														>
-															<td className="px-0 py-2 text-left text-sm text-White font-normal font-rubik truncate">
-																<span>{index + 1}</span>
-															</td>
-															<td className="px-3 py-2 text-left text-sm text-White font-normal font-rubik truncate">
-																<span>{extraincome.extraincome_type}</span>
-															</td>
-															<td className="px-3 py-2 text-left text-sm text-White font-normal font-rubik truncate">
-																<span>{extraincome.extraincome_amount_monthly.toFixed(1)}€</span>
-															</td>
-															<td className="px-0 py-2 text-right text-sm text-White font-normal font-rubik truncate">
-																<span>{new Date(extraincome.created_at).toLocaleDateString()}</span>
-															</td>
-														</tr>
-													))}
-												</tbody>
-											)}
-										</table>
-									</div>
+								<div className="max-h-[24rem] overflow-y-scroll">
+									{extraincomesSortedByCreatedAtAscending.length > 0 &&
+										extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome, index: number) => (
+											<div
+												className="flex items-center justify-between py-1 border-t border-t-Grey cursor-pointer"
+												key={extraincome.id}
+												onClick={(): void => {
+													setRemoveExtraincome(extraincome);
+													setRemoveExtraincomeModal(true);
+												}}
+												onKeyUp={(): void => {
+													setRemoveExtraincome(extraincome);
+													setRemoveExtraincomeModal(true);
+												}}
+											>
+												<div className="w-40 text-sm text-White font-normal font-rubik truncate">
+													<span>{index + 1}</span>
+												</div>
+												<div className="w-80 text-sm text-White font-normal font-rubik truncate">
+													<span>{extraincome.extraincome_type}</span>
+												</div>
+												<div className="w-40 text-sm text-White font-normal font-rubik truncate">
+													<span>{extraincome.extraincome_amount_monthly.toFixed(1)}€</span>
+												</div>
+												<div className="w-40 text-sm text-White font-normal font-rubik truncate">
+													<span>{new Date(extraincome.created_at).toLocaleDateString()}</span>
+												</div>
+											</div>
+										))}
 								</div>
 							</div>
 						</div>
 					) : (
 						<form className="flex flex-col gap-y-4" onSubmit={handleCreateExtraincome}>
 							<div className="flex items-center justify-between">
-								<span className="text-sm text-light font-medium font-rubik">NEW INCOME</span>
+								<h2 className="text-sm text-White font-medium font-rubik">New Income</h2>
 
 								<button type="button" onClick={(): void => setCreateExtraincomeModal(false)}>
 									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

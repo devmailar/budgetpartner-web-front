@@ -248,10 +248,10 @@ function ExtraincomeModal(): React.ReactNode {
 									<table className="w-full">
 										<thead>
 											<tr>
-												<th className="px-0 py-2 text-left text-sm text-White font-normal font-rubik">ID</th>
-												<th className="px-3 py-2 text-left text-sm text-White font-normal font-rubik">Income</th>
-												<th className="px-3 py-2 text-left text-sm text-White font-normal font-rubik">Amount</th>
-												<th className="px-0 py-2 text-right text-sm text-White font-normal font-rubik">Created</th>
+												<th className="px-0 py-3 text-left text-sm text-White font-normal font-rubik">ID</th>
+												<th className="px-3 py-3 text-left text-sm text-White font-normal font-rubik">Income</th>
+												<th className="px-3 py-3 text-left text-sm text-White font-normal font-rubik">Amount</th>
+												<th className="px-0 py-3 text-right text-sm text-White font-normal font-rubik">Created</th>
 											</tr>
 										</thead>
 									</table>

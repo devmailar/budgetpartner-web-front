@@ -237,7 +237,7 @@ function ExtraexpenseModal(): React.ReactNode {
 									</div>
 
 									<button type="button" className="btn bg-transparent px-3 py-1.5 border-2 border-Orange rounded-full">
-										<span className="text-[0.813rem] text-White font-medium font-rubik">+ Add new</span>
+										<span className="text-sm text-White font-medium font-rubik">+ Add new</span>
 									</button>
 								</div>
 

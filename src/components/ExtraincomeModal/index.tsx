@@ -231,7 +231,7 @@ function ExtraincomeModal(): React.ReactNode {
 									</button>
 								</div>
 
-								<div className="overflow-auto">
+								<div className="flex flex-col w-full max-h-[24rem] overflow-hidden">
 									<table className="w-full">
 										<thead>
 											<tr>
@@ -241,39 +241,43 @@ function ExtraincomeModal(): React.ReactNode {
 												<th className="px-0 py-2 text-right text-sm text-White font-normal font-rubik">Created</th>
 											</tr>
 										</thead>
-
-										{extraincomesSortedByCreatedAtAscending.length > 0 && (
-											<tbody className="overflow-y-auto table-fixed">
-												{extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome, index: number) => (
-													<tr
-														className="border-t border-t-Grey cursor-pointer"
-														key={extraincome.id}
-														onClick={(): void => {
-															setRemoveExtraincome(extraincome);
-															setRemoveExtraincomeModal(true);
-														}}
-														onKeyUp={(): void => {
-															setRemoveExtraincome(extraincome);
-															setRemoveExtraincomeModal(true);
-														}}
-													>
-														<td className="px-0 py-1 text-left text-sm text-White font-normal font-rubik truncate">
-															<span>{index + 1}</span>
-														</td>
-														<td className="px-3 py-1 text-left text-sm text-White font-normal font-rubik truncate">
-															<span>{extraincome.extraincome_type}</span>
-														</td>
-														<td className="px-3 py-1 text-left text-sm text-White font-normal font-rubik truncate">
-															<span>{extraincome.extraincome_amount_monthly.toFixed(1)}€</span>
-														</td>
-														<td className="px-0 py-1 text-right text-sm text-White font-normal font-rubik truncate">
-															<span>{new Date(extraincome.created_at).toLocaleDateString()}</span>
-														</td>
-													</tr>
-												))}
-											</tbody>
-										)}
 									</table>
+
+									<div className="overflow-y-auto">
+										<table className="w-full">
+											{extraincomesSortedByCreatedAtAscending.length > 0 && (
+												<tbody className="table-fixed">
+													{extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome, index: number) => (
+														<tr
+															className="border-t border-t-Grey cursor-pointer"
+															key={extraincome.id}
+															onClick={(): void => {
+																setRemoveExtraincome(extraincome);
+																setRemoveExtraincomeModal(true);
+															}}
+															onKeyUp={(): void => {
+																setRemoveExtraincome(extraincome);
+																setRemoveExtraincomeModal(true);
+															}}
+														>
+															<td className="px-0 py-1 text-left text-sm text-White font-normal font-rubik truncate">
+																<span>{index + 1}</span>
+															</td>
+															<td className="px-3 py-1 text-left text-sm text-White font-normal font-rubik truncate">
+																<span>{extraincome.extraincome_type}</span>
+															</td>
+															<td className="px-3 py-1 text-left text-sm text-White font-normal font-rubik truncate">
+																<span>{extraincome.extraincome_amount_monthly.toFixed(1)}€</span>
+															</td>
+															<td className="px-0 py-1 text-right text-sm text-White font-normal font-rubik truncate">
+																<span>{new Date(extraincome.created_at).toLocaleDateString()}</span>
+															</td>
+														</tr>
+													))}
+												</tbody>
+											)}
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -228,7 +228,7 @@ function ExtraexpenseModal(): React.ReactNode {
 									</button>
 								</div>
 
-								<div className="overflow-auto">
+								<div className="flex flex-col w-full max-h-[20rem] overflow-hidden">
 									<table className="w-full">
 										<thead>
 											<tr>
@@ -238,39 +238,43 @@ function ExtraexpenseModal(): React.ReactNode {
 												<th className="px-0 py-2 text-right text-sm text-White font-normal font-rubik">Created</th>
 											</tr>
 										</thead>
-
-										{extraexpensesSortedByCreatedAtAscending.length > 0 && (
-											<tbody className="overflow-y-auto table-fixed">
-												{extraexpensesSortedByCreatedAtAscending.map((extraexpense: IExtraexpense, index: number) => (
-													<tr
-														className="border-t border-t-Grey cursor-pointer"
-														key={extraexpense.id}
-														onClick={(): void => {
-															setRemoveExtraexpense(extraexpense);
-															setRemoveExtraexpenseModal(true);
-														}}
-														onKeyUp={(): void => {
-															setRemoveExtraexpense(extraexpense);
-															setRemoveExtraexpenseModal(true);
-														}}
-													>
-														<td className="px-0 py-1 text-left text-sm text-White font-normal font-rubik truncate">
-															<span>{index + 1}</span>
-														</td>
-														<td className="px-3 py-1 text-left text-sm text-White font-normal font-rubik truncate">
-															<span>{extraexpense.extraexpense_type}</span>
-														</td>
-														<td className="px-3 py-1 text-left text-sm text-White font-normal font-rubik truncate">
-															<span>{extraexpense.extraexpense_amount_monthly.toFixed(1)}€</span>
-														</td>
-														<td className="px-0 py-1 text-right text-sm text-White font-normal font-rubik truncate">
-															<span>{new Date(extraexpense.created_at).toLocaleDateString()}</span>
-														</td>
-													</tr>
-												))}
-											</tbody>
-										)}
 									</table>
+
+									<div className="overflow-y-auto">
+										<table className="w-full">
+											{extraexpensesSortedByCreatedAtAscending.length > 0 && (
+												<tbody className="table-fixed">
+													{extraexpensesSortedByCreatedAtAscending.map((extraexpense: IExtraexpense, index: number) => (
+														<tr
+															className="border-t border-t-Grey cursor-pointer"
+															key={extraexpense.id}
+															onClick={(): void => {
+																setRemoveExtraexpense(extraexpense);
+																setRemoveExtraexpenseModal(true);
+															}}
+															onKeyUp={(): void => {
+																setRemoveExtraexpense(extraexpense);
+																setRemoveExtraexpenseModal(true);
+															}}
+														>
+															<td className="px-0 py-1 text-left text-sm text-White font-normal font-rubik truncate">
+																<span>{index + 1}</span>
+															</td>
+															<td className="px-3 py-1 text-left text-sm text-White font-normal font-rubik truncate">
+																<span>{extraexpense.extraexpense_type}</span>
+															</td>
+															<td className="px-3 py-1 text-left text-sm text-White font-normal font-rubik truncate">
+																<span>{extraexpense.extraexpense_amount_monthly.toFixed(1)}€</span>
+															</td>
+															<td className="px-0 py-1 text-right text-sm text-White font-normal font-rubik truncate">
+																<span>{new Date(extraexpense.created_at).toLocaleDateString()}</span>
+															</td>
+														</tr>
+													))}
+												</tbody>
+											)}
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>

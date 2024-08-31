@@ -1,5 +1,5 @@
 export interface IDialog {
-	extraincome: boolean;
+	extraincomes: boolean;
 	extraexpenses: boolean;
 }
 

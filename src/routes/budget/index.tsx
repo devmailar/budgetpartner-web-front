@@ -4,11 +4,21 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
+import ExtraincomesDialog from "../../components/ExtraincomesDialog";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
+import { setDialogStore } from "../../stores/dialog";
 import { setUserStore } from "../../stores/user";
-import type { IBudget, IExtraexpense, IExtraincome, IResponseError, IRootState, IUserResponse } from "../../types";
+import type {
+	IBudget,
+	IDialog,
+	IExtraexpense,
+	IExtraincome,
+	IResponseError,
+	IRootState,
+	IUserResponse,
+} from "../../types";
 import { Utils } from "../../utils";
 
 function Budget(): React.ReactNode {
@@ -17,6 +27,7 @@ function Budget(): React.ReactNode {
 
 	const authStore: string = useSelector((state: IRootState) => state.auth);
 	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
+	const dialogStore: IDialog = useSelector((state: IRootState) => state.dialog);
 
 	const [dailyBudget, setDailyBudget] = React.useState<number>(0);
 	const [monthlyBudget, setMonthlyBudget] = React.useState<number>(0);
@@ -50,7 +61,7 @@ function Budget(): React.ReactNode {
 					});
 
 					const storedBudgetDate: string = localStorage.getItem("budget") ?? "";
-					alert("Welcome Back💙");
+					// alert("Welcome Back💙");
 
 					if (storedBudgetDate) {
 						const matchingBudget: IBudget | undefined = getUserResponseBody.budgets.find((budget: IBudget): boolean => {
@@ -173,6 +184,7 @@ function Budget(): React.ReactNode {
 							dispatch(setBudgetStore({}));
 							dispatch(setBudgetsStore([]));
 							dispatch(setUserStore({}));
+							dispatch(setDialogStore({ extraincomes: false, extraexpenses: false }));
 
 							setDailyBudget(0);
 							setMonthlyBudget(0);
@@ -258,6 +270,19 @@ function Budget(): React.ReactNode {
 					<button
 						type="button"
 						className="flex items-center justify-center gap-1 btn bg-[#007AFF] px-2 py-3 rounded-lg"
+						onClick={(): void => {
+							if (!authStore) {
+								navigate("login");
+								return;
+							}
+
+							dispatch(
+								setDialogStore({
+									extraincomes: true,
+									extraexpenses: false,
+								}),
+							);
+						}}
 					>
 						<span className="text-base text-white font-medium">View Income</span>
 
@@ -304,6 +329,8 @@ function Budget(): React.ReactNode {
 					</p>
 				</div>
 			</div>
+
+			{dialogStore.extraincomes && <ExtraincomesDialog />}
 		</div>
 	);
 }

@@ -13,7 +13,7 @@ function Login(): React.ReactNode {
 
 	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
 
-	const handleLogin = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
 			setDisableSubmit(true);
@@ -73,7 +73,7 @@ function Login(): React.ReactNode {
 				</button>
 			</nav>
 
-			<form className="flex flex-col gap-7 items-center px-6 py-12" onSubmit={handleLogin}>
+			<form className="flex flex-col gap-7 items-center px-6 py-12" onSubmit={handleSubmit}>
 				<h1 className="text-2xl font-semibold text-white">Login to existing account</h1>
 
 				<div className="flex flex-col gap-y-3">

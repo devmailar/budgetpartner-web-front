@@ -27,6 +27,7 @@ function Switch(): React.ReactNode {
 			{budgetsStore.map((b: IBudget) => (
 				<option
 					key={b.id}
+					selected={b.id === budgetStore.id}
 					value={`${new Date(b.created_at).getMonth()}-${new Date(b.created_at).getFullYear()}`}
 					className={`text-base ${
 						new Date(budgetStore.created_at).getMonth() === new Date(b.created_at).getMonth() &&
@@ -35,9 +36,7 @@ function Switch(): React.ReactNode {
 							: "text-GreyLight"
 					} font-rubik`}
 				>
-					{Utils.monthsList[new Date(b.created_at).getMonth()]} {"("}
-					{new Date(b.created_at).getFullYear()}
-					{")"}
+					{Utils.monthsList[new Date(b.created_at).getMonth()]} {"-"} {new Date(b.created_at).getFullYear()}
 				</option>
 			))}
 		</select>

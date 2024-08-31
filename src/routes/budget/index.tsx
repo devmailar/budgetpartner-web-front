@@ -251,6 +251,47 @@ function Budget(): React.ReactNode {
 					</div>
 				</div>
 
+				<div className="flex items-center justify-center gap-3 py-6 border-t border-t-[#313131]">
+					<button
+						type="button"
+						className="flex items-center justify-center gap-1 btn bg-[#007AFF] px-2 py-3 rounded-lg"
+					>
+						<span className="text-base text-white font-medium">View Income</span>
+
+						<svg width={29} height={28} fill="none" viewBox="0 0 29 28">
+							<title>Arrow Up</title>
+							<g clipPath="url(#clip0_838_2559)">
+								<path stroke="white" strokeWidth="2" d="M4.25 19.8333L11.25 12.8333L15.9167 17.5L25.25 8.16663" />
+								<path stroke="white" strokeWidth="2" d="M17.0833 8.16663H25.25V16.3333" />
+							</g>
+							<defs>
+								<clipPath id="clip0_838_2559">
+									<rect width={28} height={28} fill="white" transform="translate(0.75)" />
+								</clipPath>
+							</defs>
+						</svg>
+					</button>
+
+					<button
+						type="button"
+						className="flex items-center justify-center gap-1 btn bg-transparent px-2 py-3 rounded-lg border-[1.5px] border-[#B85C3D]"
+					>
+						<svg width={29} height={28} fill="none" viewBox="0 0 29 28">
+							<title>Arrow Down</title>
+							<g clipPath="url(#clip0_838_2565)">
+								<path stroke="white" strokeWidth="2" d="M3.75 8.16671L10.75 15.1667L15.4167 10.5L24.75 19.8334" />
+								<path stroke="white" strokeWidth="2" d="M16.5833 19.8334H24.75V11.6667" />
+							</g>
+							<defs>
+								<clipPath id="clip0_838_2559">
+									<rect width={28} height={28} fill="white" transform="matrix(1 0 0 -1 0.25 28)" />
+								</clipPath>
+							</defs>
+						</svg>
+						<span className="text-base text-white font-medium">View Expenses</span>
+					</button>
+				</div>
+
 				<div className="flex flex-col items-center justify-center gap-3 px-4 py-4 border-t border-t-[#313131]">
 					<h2 className="text-base text-[#66666F] font-semibold">Privacy</h2>
 

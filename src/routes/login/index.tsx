@@ -58,10 +58,10 @@ function Login(): React.ReactNode {
 						navigate("/");
 					}}
 				>
-					<span className="text-lg text-[#007AFF]">Back</span>
+					<span className="text-lg text-[#007AFF] font-medium">Back</span>
 				</button>
 
-				<h2 className="text-lg text-white">BudgetPartner</h2>
+				<h2 className="text-lg text-white font-medium">BudgetPartner</h2>
 
 				<button
 					type="button"
@@ -69,7 +69,7 @@ function Login(): React.ReactNode {
 						navigate("/signup");
 					}}
 				>
-					<span className="text-lg text-[#007AFF]">Sign up</span>
+					<span className="text-lg text-[#007AFF] font-medium">Sign up</span>
 				</button>
 			</nav>
 

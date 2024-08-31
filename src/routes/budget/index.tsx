@@ -1,5 +1,4 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import "animate.css";
 import { eachDayOfInterval, endOfMonth, isWeekend, startOfMonth } from "date-fns";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,7 +39,7 @@ function Budget(): React.ReactNode {
 					const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
 					if (getUserResponseBody.user.is_new) {
-						return navigate("login");
+						return navigate("/login");
 					}
 
 					dispatch(setUserStore(getUserResponseBody.user));
@@ -72,20 +71,21 @@ function Budget(): React.ReactNode {
 					}
 				} catch (error: unknown) {
 					if (error instanceof Error) {
-						dispatch(setAuthStore(""));
-						dispatch(setBudgetStore({}));
+						// dispatch(setAuthStore(""));
+						// dispatch(setBudgetStore({}));
 
 						alert(error.message);
 					}
 				}
 			};
 
-			if (!authStore) {
-				dispatch(setBudgetStore({}));
-				navigate("login");
+			// if (!authStore) {
+			// 	console.log("🚀 ~ React.useEffect ~ authStore:", authStore);
+			// 	dispatch(setBudgetStore({}));
+			// 	navigate("/login");
 
-				return;
-			}
+			// 	return;
+			// }
 
 			handleGetUserResponse();
 		} catch (error: unknown) {
@@ -158,149 +158,108 @@ function Budget(): React.ReactNode {
 	}, [budgetStore]);
 
 	return (
-		<div className="bg-black h-screen">
-			{/* <div className="flex flex-col gap-y-4 items-center">
-				<div className="flex flex-col gap-y-2 items-center">
-					<BudgetSwitch />
+		<div className="h-screen animate__animated animate__slideInLeft animate__faster">
+			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
+				<h2 className="text-lg text-white font-medium">BudgetPartner</h2>
 
-					<Swiper
-						className="w-[20rem] md:w-[30rem] h-fit z-0"
-						modules={[Autoplay]}
-						autoplay={{ delay: 10000, disableOnInteraction: false }}
-					>
-						<SwiperSlide>
-							<div className="flex flex-col gap-y-2 items-center py-8">
-								<span className="text-base text-PurpleLight font-medium font-rubik">
-									<FormattedMessage id="HOME_SWIPER_SPAN_TEXT2" />
-								</span>
-
-								<button
-									type="button"
-									onClick={(): void => {
-										dispatch(
-											setModals({
-												extraincome: false,
-												extraexpense: false,
-												language: false,
-												settings: false,
-											}),
-										);
-									}}
-								>
-									<h1 className="animate__animated animate__fadeInUp text-4xl text-White font-bold font-rubik">
-										{dailyBudgetAmount.toFixed(2)}€
-									</h1>
-								</button>
-							</div>
-						</SwiperSlide>
-
-						<SwiperSlide>
-							<div className="flex flex-col gap-y-1 items-center py-8">
-								<span className="text-base text-PurpleLight font-medium font-rubik">
-									<FormattedMessage id="HOME_SWIPER_SPAN_TEXT1" />{" "}
-									{Utils.months[new Date(budget.created_at).getMonth()]}
-								</span>
-
-								<button
-									type="button"
-									onClick={(): void => {
-										dispatch(
-											setModals({
-												extraincome: false,
-												extraexpense: false,
-												language: false,
-												settings: false,
-											}),
-										);
-									}}
-								>
-									<h1 className="animate__animated animate__fadeInUp text-4xl text-White font-bold font-rubik">
-										{monthlyBudgetAmount.toFixed(2)}€
-									</h1>
-								</button>
-							</div>
-						</SwiperSlide>
-					</Swiper>
-				</div>
-
-				<div className="flex flex-col gap-y-3 items-center">
-					{auth && monthlyBudgetAmount === 0 && (
-						<span className="text-center text-sm text-White font-normal font-rubik">⬇️ Please add your income ⬇️</span>
-					)}
-
+				{authStore ? (
 					<button
 						type="button"
-						className="flex gap-x-2 items-center justify-center btn bg-Purple px-6 py-3 rounded-3xl"
 						onClick={(): void => {
-							dispatch(
-								setModals({
-									extraincome: true,
-									extraexpense: false,
-									language: false,
-									settings: false,
-								}),
-							);
+							dispatch(setAuthStore(""));
+							dispatch(setBudgetStore({}));
+							dispatch(setBudgetsStore([]));
+							dispatch(setUserStore({}));
+
+							setDailyBudget(0);
+							setMonthlyBudget(0);
+
+							navigate("/login");
 						}}
 					>
-						<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<title>Trending Up</title>
-							<g clip-path="url(#clip0_624_21)">
-								<path d="M3.5 17L9.5 11L13.5 15L21.5 7" stroke="#160C1F" stroke-width="2" />
-								<path d="M14.5 7H21.5V14" stroke="#160C1F" stroke-width="2" />
-							</g>
-							<defs>
-								<clipPath id="clip0_624_21">
-									<rect width="24" height="24" fill="white" transform="translate(0.5)" />
-								</clipPath>
-							</defs>
-						</svg>
-
-						<span className="text-base text-PurpleDark font-medium font-rubik">Income</span>
+						<span className="text-lg text-[#007AFF] font-medium">Logout</span>
 					</button>
-
+				) : (
 					<button
 						type="button"
-						className="flex gap-x-2 items-center justify-center btn bg-Orange px-6 py-3 rounded-3xl"
 						onClick={(): void => {
-							dispatch(
-								setModals({
-									extraincome: false,
-									extraexpense: true,
-									language: false,
-									settings: false,
-								}),
-							);
+							navigate("/login");
 						}}
 					>
-						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<title>Trending Down</title>
-							<g clip-path="url(#clip0_624_27)">
-								<path
-									d="M3 7L9 13L13 9L21 17"
-									stroke="#160C1F"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M21 10V17H14"
-									stroke="#160C1F"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</g>
-							<defs>
-								<clipPath id="clip0_624_27">
-									<rect width="24" height="24" fill="white" />
-								</clipPath>
-							</defs>
-						</svg>
-
-						<span className="text-base text-PurpleDark font-medium font-rubik">Expenses</span>
+						<span className="text-lg text-[#007AFF] font-medium">Login</span>
 					</button>
+				)}
+			</nav>
+
+			<div className="flex flex-col gap-y-[18px] px-6 py-12">
+				<div className="flex flex-col gap-1 px-[18px] py-[18px] bg-[#18181B] border border-[#212121] rounded-2xl">
+					<div className="flex items-center justify-between">
+						<div className="flex flex-col gap-1">
+							<p className="font-base font-semibold text-[#007AFF]">
+								We saved in{" "}
+								{Object.keys(budgetStore).length === 0
+									? Utils.monthsList[new Date().getMonth()]
+									: Utils.monthsList[new Date(budgetStore.created_at).getMonth()]}
+							</p>
+
+							<p className="text-[32px] font-bold text-white">{monthlyBudget ? monthlyBudget.toFixed(2) : "···"}€</p>
+						</div>
+
+						<button
+							type="button"
+							className="flex items-center gap-1 px-3 py-2 border-[1.5px] border-[#3F3F46] rounded-2xl"
+						>
+							<span className="text-lg text-[#66666F] font-normal">
+								{Object.keys(budgetStore).length === 0
+									? Utils.monthsList[new Date().getMonth()]
+									: Utils.monthsList[new Date(budgetStore.created_at).getMonth()]}
+							</span>
+
+							<svg width={20} height={22} fill="none" viewBox="0 0 20 22">
+								<title>ArrowDown</title>
+								<path
+									stroke="#66666F"
+									strokeWidth="1.5"
+									d="M10 19.75C14.6024 19.75 18.3334 15.8325 18.3334 11C18.3334 6.16751 14.6024 2.25 10 2.25C5.39765 2.25 1.66669 6.16751 1.66669 11C1.66669 15.8325 5.39765 19.75 10 19.75Z"
+								/>
+								<path
+									stroke="#66666F"
+									strokeWidth="1.5"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M13.3334 9.6875C13.3334 9.6875 10.8784 12.3125 10 12.3125C9.1216 12.3125 6.66669 9.6875 6.66669 9.6875"
+								/>
+							</svg>
+						</button>
+					</div>
+
+					<span className="text-base text-[#66666F] font-medium">#budgetingmakeslegends</span>
 				</div>
-			</div> */}
+
+				<div className="flex gap-6 items-center px-[18px] py-[18px] bg-[#18181B] border border-[#212121] rounded-2xl">
+					<img
+						src="https://ucarecdn.com/d8300ff5-fe6e-4e8c-a79d-db94212a2ab5/-/preview/77x77/"
+						alt="https://ucarecdn.com/d8300ff5-fe6e-4e8c-a79d-db94212a2ab5/-/preview/77x77/"
+						width={77}
+						height={77}
+					/>
+
+					<div className="flex flex-col gap-1">
+						<p className="font-base font-semibold text-[#007AFF]">We saved Today</p>
+						<p className="text-[28px] font-bold text-white"> {dailyBudget ? dailyBudget.toFixed(2) : "···"}€</p>
+						<p className="text-base text-[#66666F] font-medium">#financialfreedom</p>
+					</div>
+				</div>
+
+				<div className="flex flex-col items-center justify-center gap-3 px-4 py-4 border-t border-t-[#313131]">
+					<h2 className="text-base text-[#66666F] font-semibold">Privacy</h2>
+
+					<p className="text-sm text-[#66666F] text-center font-normal">
+						Your financial information is safe with us. Budget Partner securely stores your data, allowing you to
+						revisit your progress over time. It’s like having a personal financial assistant at your fingertips.
+					</p>
+				</div>
+			</div>
 		</div>
 	);
 }

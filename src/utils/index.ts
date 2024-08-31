@@ -1,6 +1,5 @@
-const baseurl: string = "https://unique-legible-seagull.ngrok-free.app";
-
-const months: string[] = [
+const baseUrl: string = "https://unique-legible-seagull.ngrok-free.app";
+const monthsList: string[] = [
 	"January",
 	"February",
 	"March",
@@ -15,22 +14,4 @@ const months: string[] = [
 	"December",
 ];
 
-const handleLoadLocales = async (locale: string) => {
-	switch (locale) {
-		case "en":
-			return import("../locales/en.json");
-		case "fi":
-			return import("../locales/fi.json");
-		default:
-			return import("../locales/en.json");
-	}
-};
-
-export const Utils = {
-	baseurl,
-	months,
-
-	Methods: {
-		handleLoadLocales,
-	},
-};
+export const Utils = { baseUrl, monthsList };

@@ -19,10 +19,6 @@ export default {
 				GreyTransparentStroke: "rgba(49, 49, 49, 0.5)",
 			},
 		},
-
-		fontFamily: {
-			rubik: ["Rubik"],
-		},
 	},
 	plugins: [require("kutty")],
 };

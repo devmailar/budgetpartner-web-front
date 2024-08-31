@@ -1,3 +1,8 @@
+export interface IDialog {
+	extraincomes: boolean;
+	extraexpenses: boolean;
+}
+
 export interface IUser {
 	id: number;
 	email: string;
@@ -13,6 +18,7 @@ export interface IExtraincome {
 	extraincome_type: string;
 	extraincome_amount_monthly: number;
 	extraincome_includes_weekends: boolean;
+	extraincome_date: Date;
 	created_at: Date;
 	updated_at: Date;
 }
@@ -22,6 +28,7 @@ export interface IExtraexpense {
 	user_id: number;
 	extraexpense_type: string;
 	extraexpense_amount_monthly: number;
+	extraexpense_date: Date;
 	created_at: Date;
 	updated_at: Date;
 }
@@ -40,27 +47,15 @@ export interface IUserResponse {
 	budgets: IBudget[];
 }
 
-export interface IModals {
-	extraincome: boolean;
-	extraexpense: boolean;
-	language: boolean;
-	settings: boolean;
-}
-
-export interface IRootState {
-	user: IUser;
-	budget: IBudget;
-	budgets: IBudget[];
-	modals: IModals;
-	error: string;
-	language: string;
-	loader: boolean;
-	forceLogin: boolean;
-	auth: string;
-}
-
 export interface IResponseError {
 	statusCode: number;
 	error: string;
 	message: string;
+}
+
+export interface IRootState {
+	auth: string;
+	budget: IBudget;
+	budgets: IBudget[];
+	dialog: IDialog;
 }

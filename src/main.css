@@ -3,33 +3,11 @@
 @tailwind utilities;
 
 :root {
-  font-family: Rubik;
+  font-family: "SF Pro Display";
   font-weight: 400;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-
-
-html, body {
-  background-image: radial-gradient(circle at 50% 0%, #221130 15%, #000000);
-}
-
-.loader {
-  width: 35px;
-  height: 35px;
-  --c: radial-gradient(farthest-side, #895ff5 92%, #00000000);
-  background: var(--c) 50% 0, var(--c) 50% 100%, var(--c) 100% 50%, var(--c) 0 50%;
-  background-size: 8px 8px;
-  background-repeat: no-repeat;
-  animation: turn 1s infinite;
-}
-
-@keyframes turn {
-  to {
-    transform: rotate(0.5turn);
-  }
 }

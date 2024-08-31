@@ -2,13 +2,18 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import type React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { setBudgetStore } from "../../stores/budget";
+import { setBudgetsStore } from "../../stores/budgets";
 import { setDialogStore } from "../../stores/dialog";
-import type { IBudget, IExtraincome, IRootState } from "../../types";
+import { setUserStore } from "../../stores/user";
+import type { IBudget, IExtraincome, IResponseError, IRootState, IUserResponse } from "../../types";
+import { Utils } from "../../utils";
 
 function ExtraincomesDialog(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
+	const authStore: string = useSelector((state: IRootState) => state.auth);
 	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
 
 	const totalExtraincomes: number = budgetStore?.extraincomes?.reduce(
@@ -72,9 +77,55 @@ function ExtraincomesDialog(): React.ReactNode {
 			<div className="h-72 overflow-scroll">
 				{extraincomesSortedByCreatedAtAscending.length > 0 &&
 					extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome, index: number) => (
-						<div
+						<button
+							type="button"
 							key={extraincome.id}
-							className="flex items-center justify-between px-1.5 py-1.5 border-y border-y-[#313131]"
+							className="btn bg-transparent flex items-center justify-between w-full px-1.5 py-1.5 border-y border-y-[#313131] rounded-none"
+							onClick={async (): Promise<void> => {
+								if (
+									confirm(
+										`Are you sure you want to remove income "${extraincome.extraincome_type}" with amount ${extraincome.extraincome_amount_monthly.toFixed(2)}€?`,
+									)
+								) {
+									const removeExtraincomeResponse: Response = await fetch(
+										`${Utils.baseUrl}/extraincomes/remove/${extraincome.id}`,
+										{
+											method: "DELETE",
+											headers: { Authorization: `Bearer ${authStore}` },
+										},
+									);
+
+									if (!removeExtraincomeResponse.ok) {
+										const removeExtraincomeResponseError: IResponseError = await removeExtraincomeResponse.json();
+
+										throw new Error(removeExtraincomeResponseError.message);
+									}
+
+									const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
+										method: "GET",
+										headers: { Authorization: `Bearer ${authStore}` },
+									});
+
+									if (!getUserResponse.ok) {
+										const getUserResponseError: IResponseError = await getUserResponse.json();
+
+										throw new Error(getUserResponseError.message);
+									}
+
+									const getUserResponseBody: IUserResponse = await getUserResponse.json();
+
+									dispatch(setUserStore(getUserResponseBody.user));
+									dispatch(setBudgetsStore(getUserResponseBody.budgets));
+
+									const currentBudget: IBudget | undefined = getUserResponseBody.budgets.find(
+										(budget: IBudget): boolean => {
+											return new Date(budget.created_at).getMonth() === new Date().getMonth();
+										},
+									);
+
+									dispatch(setBudgetStore(currentBudget));
+								}
+							}}
 						>
 							<span className="text-sm text-[#007AFF] text-left w-6 font-normal">{index + 1}</span>
 							<span className="text-sm text-[#BEBEC2] text-left w-32 truncate">{extraincome.extraincome_type}</span>
@@ -86,7 +137,7 @@ function ExtraincomesDialog(): React.ReactNode {
 							<span className="text-sm text-[#BEBEC2] text-left w-20 font-normal">
 								{new Date(extraincome.extraincome_date).toLocaleDateString()}
 							</span>
-						</div>
+						</button>
 					))}
 			</div>
 		</div>

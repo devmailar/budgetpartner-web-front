@@ -324,8 +324,8 @@ function Budget(): React.ReactNode {
 					<h2 className="text-base text-[#66666F] font-semibold">Privacy</h2>
 
 					<p className="text-sm text-[#66666F] text-center font-normal">
-						Your financial information is safe with us. Budget Partner securely stores your data, allowing you to
-						revisit your progress over time. It’s like having a personal financial assistant at your fingertips.
+						Your financial information is safe with us. BudgetPartner securely stores your data, allowing you to revisit
+						your progress over time. It’s like having a personal financial assistant at your fingertips.
 					</p>
 				</div>
 			</div>

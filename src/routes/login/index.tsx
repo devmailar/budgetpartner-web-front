@@ -11,12 +11,12 @@ function Login(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const [disableButton, setDisableButton] = useState<boolean>(false);
+	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
 
 	const handleLogin = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
-			setDisableButton(true);
+			setDisableSubmit(true);
 
 			const form: FormData = new FormData(event.currentTarget);
 			const email: string = form.get("email") as string;
@@ -44,7 +44,7 @@ function Login(): React.ReactNode {
 			if (error instanceof Error) {
 				alert(error.message);
 
-				setTimeout(() => setDisableButton(false), 2250);
+				setTimeout(() => setDisableSubmit(false), 2250);
 			}
 		}
 	};
@@ -174,8 +174,8 @@ function Login(): React.ReactNode {
 				<div className="flex items-center justify-center w-full px-5 py-5 border-y border-y-[#313131]">
 					<button
 						type="submit"
-						className={`btn bg-[#007AFF] w-full px-2 py-3 rounded-lg ${disableButton ? "opacity-40" : "opacity-100"}`}
-						disabled={disableButton}
+						className={`btn bg-[#007AFF] w-full px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}
+						disabled={disableSubmit}
 					>
 						<span className="text-base font-medium text-white">Login</span>
 					</button>

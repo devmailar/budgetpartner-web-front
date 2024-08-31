@@ -71,21 +71,24 @@ function Budget(): React.ReactNode {
 					}
 				} catch (error: unknown) {
 					if (error instanceof Error) {
-						// dispatch(setAuthStore(""));
-						// dispatch(setBudgetStore({}));
+						dispatch(setAuthStore(""));
+						dispatch(setBudgetStore({}));
+						dispatch(setBudgetsStore([]));
+						dispatch(setUserStore({}));
+
+						navigate("/login");
 
 						alert(error.message);
 					}
 				}
 			};
 
-			// if (!authStore) {
-			// 	console.log("🚀 ~ React.useEffect ~ authStore:", authStore);
-			// 	dispatch(setBudgetStore({}));
-			// 	navigate("/login");
-
-			// 	return;
-			// }
+			if (!authStore) {
+				dispatch(setBudgetStore({}));
+				dispatch(setBudgetsStore([]));
+				dispatch(setUserStore({}));
+				return;
+			}
 
 			handleGetUserResponse();
 		} catch (error: unknown) {

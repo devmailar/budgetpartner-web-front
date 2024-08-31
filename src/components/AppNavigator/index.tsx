@@ -3,9 +3,9 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
+import Budget from "../../routes/budget";
 import Login from "../../routes/login";
 import { setAuthStore } from "../../stores/auth";
-import Budget from "../../stores/budget";
 
 export const router = createBrowserRouter([
 	{
@@ -16,23 +16,6 @@ export const router = createBrowserRouter([
 		path: "/login",
 		element: <Login />,
 	},
-	// {
-	// 	path: "/budget/new",
-	// 	element: <BudgetNew />,
-	// },
-	// {
-	// 	path: "/budget/get-started",
-	// 	element: <BudgetGetStarted />,
-	// },
-
-	// {
-	// 	path: "/create-an-account",
-	// 	element: <CreateAnAccount />,
-	// },
-	// {
-	// 	path: "/privacy-policy",
-	// 	element: <PrivacyPolicy />,
-	// },
 ]);
 
 function AppNavigator(): React.ReactNode {
@@ -42,7 +25,7 @@ function AppNavigator(): React.ReactNode {
 		try {
 			const authenticate = (): void => {
 				try {
-					const auth: string = getCookie("Authorization") ?? "";
+					const auth: string = getCookie("auth") ?? "";
 					dispatch(setAuthStore(auth));
 				} catch (error: unknown) {
 					if (error instanceof Error) {

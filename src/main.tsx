@@ -1,5 +1,4 @@
 import { type Store, configureStore } from "@reduxjs/toolkit";
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import AppNavigator from "./components/AppNavigator/index.tsx";
@@ -23,10 +22,8 @@ const store: Store = configureStore({
 
 if (root) {
 	ReactDOM.createRoot(root).render(
-		<React.StrictMode>
-			<Provider store={store}>
-				<AppNavigator />
-			</Provider>
-		</React.StrictMode>,
+		<Provider store={store}>
+			<AppNavigator />
+		</Provider>,
 	);
 }

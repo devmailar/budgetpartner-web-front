@@ -50,7 +50,7 @@ function Login(): React.ReactNode {
 	};
 
 	return (
-		<div className="bg-black h-screen">
+		<div className="h-screen animate__animated animate__slideInRight animate__faster">
 			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#474747]">
 				<button
 					type="button"

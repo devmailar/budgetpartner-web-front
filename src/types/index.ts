@@ -56,5 +56,6 @@ export interface IResponseError {
 export interface IRootState {
 	auth: string;
 	budget: IBudget;
+	budgets: IBudget[];
 	dialog: IDialog;
 }

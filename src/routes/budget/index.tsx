@@ -6,6 +6,7 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
 import ExtraexpensesDialog from "../../components/ExtraexpensesDialog";
 import ExtraincomesDialog from "../../components/ExtraincomesDialog";
+import Switch from "../../components/Switch";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
@@ -221,32 +222,7 @@ function Budget(): React.ReactNode {
 							<p className="text-[32px] font-bold text-white">{monthlyBudget ? monthlyBudget.toFixed(2) : "···"}€</p>
 						</div>
 
-						<button
-							type="button"
-							className="flex items-center gap-1 px-3 py-2 border-[1.5px] border-[#3F3F46] rounded-2xl"
-						>
-							<span className="text-lg text-[#66666F] font-normal">
-								{Object.keys(budgetStore).length === 0
-									? Utils.monthsList[new Date().getMonth()]
-									: Utils.monthsList[new Date(budgetStore.created_at).getMonth()]}
-							</span>
-
-							<svg width={20} height={22} fill="none" viewBox="0 0 20 22">
-								<title>ArrowDown</title>
-								<path
-									stroke="#66666F"
-									strokeWidth="1.5"
-									d="M10 19.75C14.6024 19.75 18.3334 15.8325 18.3334 11C18.3334 6.16751 14.6024 2.25 10 2.25C5.39765 2.25 1.66669 6.16751 1.66669 11C1.66669 15.8325 5.39765 19.75 10 19.75Z"
-								/>
-								<path
-									stroke="#66666F"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M13.3334 9.6875C13.3334 9.6875 10.8784 12.3125 10 12.3125C9.1216 12.3125 6.66669 9.6875 6.66669 9.6875"
-								/>
-							</svg>
-						</button>
+						<Switch />
 					</div>
 
 					<span className="text-base text-[#66666F] font-medium">#budgetingmakeslegends</span>

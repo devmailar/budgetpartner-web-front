@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import Budget from "../../routes/budget";
+import BudgetNewExtraincome from "../../routes/budget-new-extraincome";
 import Login from "../../routes/login";
 import { setAuthStore } from "../../stores/auth";
 
@@ -11,6 +12,10 @@ export const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <Budget />,
+	},
+	{
+		path: "/new-extraincome",
+		element: <BudgetNewExtraincome />,
 	},
 	{
 		path: "/login",

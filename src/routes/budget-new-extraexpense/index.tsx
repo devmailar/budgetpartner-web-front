@@ -9,14 +9,14 @@ import { setUserStore } from "../../stores/user";
 import type { IBudget, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
-function BudgetNewExtraincome(): React.ReactNode {
+function BudgetNewExtraexpense(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
 	const authStore: string = useSelector((state: IRootState) => state.auth);
 	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
 
-	const [extraincomeDate, setExtraincomeDate] = React.useState<Date>(new Date());
+	const [extraexpenseDate, setExtraexpenseDate] = React.useState<Date>(new Date());
 	const [disableSubmit, setDisableSubmit] = React.useState<boolean>(false);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
@@ -26,33 +26,32 @@ function BudgetNewExtraincome(): React.ReactNode {
 			setDisableSubmit(true);
 
 			const form: FormData = new FormData(event.currentTarget);
-			const extraincome_type: string = form.get("extraincome_type") as string;
-			const extraincome_amount_monthly: number = Number.parseInt(form.get("extraincome_amount_monthly") as string);
+			const extraexpense_type: string = form.get("extraexpense_type") as string;
+			const extraexpense_amount_monthly: number = Number.parseInt(form.get("extraexpense_amount_monthly") as string);
 
-			if (extraincome_amount_monthly < 1 || !extraincome_amount_monthly) {
-				alert("Invalid income amount");
+			if (extraexpense_amount_monthly < 1 || !extraexpense_amount_monthly) {
+				alert("Invalid expense amount");
 
 				setTimeout((): void => setDisableSubmit(false), 2500);
 
 				return;
 			}
 
-			const createExtraincomeResponse: Response = await fetch(`${Utils.baseUrl}/extraincomes/create`, {
+			const createExtraexpenseResponse: Response = await fetch(`${Utils.baseUrl}/extraexpenses/create`, {
 				method: "POST",
 				headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
 				body: JSON.stringify({
 					budget_id: budgetStore.id,
-					extraincome_type: extraincome_type,
-					extraincome_amount_monthly: extraincome_amount_monthly,
-					extraincome_includes_weekends: false,
-					extraincome_date: extraincomeDate,
+					extraexpense_type: extraexpense_type,
+					extraexpense_amount_monthly: extraexpense_amount_monthly,
+					extraexpense_date: extraexpenseDate,
 				}),
 			});
 
-			if (!createExtraincomeResponse.ok) {
-				const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();
+			if (!createExtraexpenseResponse.ok) {
+				const createExtraexpenseResponseError: IResponseError = await createExtraexpenseResponse.json();
 
-				throw new Error(createExtraincomeResponseError.message);
+				throw new Error(createExtraexpenseResponseError.message);
 			}
 
 			const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -103,7 +102,7 @@ function BudgetNewExtraincome(): React.ReactNode {
 			</nav>
 
 			<form className="flex flex-col gap-7 items-center px-6 py-12" onSubmit={handleSubmit}>
-				<h1 className="text-2xl font-semibold text-white">New Income</h1>
+				<h1 className="text-2xl font-semibold text-white">New Expense</h1>
 
 				<div className="flex flex-col gap-y-3">
 					<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
@@ -130,9 +129,9 @@ function BudgetNewExtraincome(): React.ReactNode {
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
 							type="text"
-							name="extraincome_type"
-							id="extraincome_type"
-							placeholder="Income"
+							name="extraexpense_type"
+							id="extraexpense_type"
+							placeholder="Expense"
 							required
 						/>
 					</div>
@@ -180,8 +179,8 @@ function BudgetNewExtraincome(): React.ReactNode {
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
 							type="text"
-							name="extraincome_amount_monthly"
-							id="extraincome_amount_monthly"
+							name="extraexpense_amount_monthly"
+							id="extraexpense_amount_monthly"
 							placeholder="0.00"
 							required
 						/>
@@ -212,11 +211,11 @@ function BudgetNewExtraincome(): React.ReactNode {
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] outline-none"
 							type="date"
-							name="extraincome_date"
-							id="extraincome_date"
-							value={format(extraincomeDate, "yyyy-MM-dd")}
+							name="extraexpense_date"
+							id="extraexpense_date"
+							value={format(extraexpenseDate, "yyyy-MM-dd")}
 							required
-							onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setExtraincomeDate(new Date(e.target.value))}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setExtraexpenseDate(new Date(e.target.value))}
 						/>
 					</div>
 				</div>
@@ -224,10 +223,10 @@ function BudgetNewExtraincome(): React.ReactNode {
 				<div className="flex items-center justify-center w-full px-5 py-5 border-y border-y-[#313131]">
 					<button
 						type="submit"
-						className={`btn bg-[#007AFF] w-full px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}
+						className={`btn bg-[#B85C3D] w-full px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}
 						disabled={disableSubmit}
 					>
-						<span className="text-base font-medium text-white">Add new income</span>
+						<span className="text-base font-medium text-white">Add new expense</span>
 					</button>
 				</div>
 			</form>
@@ -235,4 +234,4 @@ function BudgetNewExtraincome(): React.ReactNode {
 	);
 }
 
-export default BudgetNewExtraincome;
+export default BudgetNewExtraexpense;

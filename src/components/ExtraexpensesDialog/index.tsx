@@ -6,25 +6,25 @@ import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
 import { setDialogStore } from "../../stores/dialog";
 import { setUserStore } from "../../stores/user";
-import type { IBudget, IExtraincome, IResponseError, IRootState, IUserResponse } from "../../types";
+import type { IBudget, IExtraexpense, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
-function ExtraincomesDialog(): React.ReactNode {
+function ExtraexpensesDialog(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
 	const authStore: string = useSelector((state: IRootState) => state.auth);
 	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
 
-	const totalExtraincomes: number = budgetStore?.extraincomes?.reduce(
-		(accumulator: number, extraincome: IExtraincome) => {
-			return accumulator + extraincome.extraincome_amount_monthly;
+	const totalExtraexpenses: number = budgetStore?.extraexpenses?.reduce(
+		(accumulator: number, extraexpense: IExtraexpense) => {
+			return accumulator + extraexpense.extraexpense_amount_monthly;
 		},
 		0,
 	);
 
-	const extraincomesSortedByCreatedAtAscending: IExtraincome[] = [...budgetStore.extraincomes].sort((a, b) => {
-		return new Date(b.extraincome_date).getTime() - new Date(a.extraincome_date).getTime();
+	const extraexpensesSortedByCreatedAtAscending: IExtraexpense[] = [...budgetStore.extraexpenses].sort((a, b) => {
+		return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
 	});
 
 	return (
@@ -56,9 +56,9 @@ function ExtraincomesDialog(): React.ReactNode {
 			</button>
 
 			<div className="flex items-center justify-between">
-				<span className="text-base text-[#007AFF] font-semibold">Total Income</span>
+				<span className="text-base text-[#B85C3D] font-semibold">Total Expenses</span>
 				<span className="text-lg text-white font-bold">
-					{totalExtraincomes ? totalExtraincomes.toFixed(2) : "···"}€
+					{totalExtraexpenses ? totalExtraexpenses.toFixed(2) : "···"}€
 				</span>
 
 				<div className="flex">
@@ -66,39 +66,39 @@ function ExtraincomesDialog(): React.ReactNode {
 						type="button"
 						className="btn bg-transparent"
 						onClick={() => {
-							navigate("/new-extraincome");
+							navigate("/new-extraexpense");
 						}}
 					>
-						<span className="text-base text-[#007AFF] font-semibold">+ Add new</span>
+						<span className="text-base text-[#B85C3D] font-semibold">+ Add new</span>
 					</button>
 				</div>
 			</div>
 
 			<div className="h-72 overflow-scroll">
-				{extraincomesSortedByCreatedAtAscending.length > 0 &&
-					extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome, index: number) => (
+				{extraexpensesSortedByCreatedAtAscending.length > 0 &&
+					extraexpensesSortedByCreatedAtAscending.map((extraexpense: IExtraexpense, index: number) => (
 						<button
 							type="button"
-							key={extraincome.id}
+							key={extraexpense.id}
 							className="btn bg-transparent flex items-center justify-between w-full px-1.5 py-1.5 border-y border-y-[#313131] rounded-none"
 							onClick={async (): Promise<void> => {
 								if (
 									confirm(
-										`Are you sure you want to remove income "${extraincome.extraincome_type}" with amount ${extraincome.extraincome_amount_monthly.toFixed(2)}€?`,
+										`Are you sure you want to remove expense "${extraexpense.extraexpense_type}" with amount ${extraexpense.extraexpense_amount_monthly.toFixed(2)}€?`,
 									)
 								) {
-									const removeExtraincomeResponse: Response = await fetch(
-										`${Utils.baseUrl}/extraincomes/remove/${extraincome.id}`,
+									const removeExtraexpenseResponse: Response = await fetch(
+										`${Utils.baseUrl}/extraexpenses/remove/${extraexpense.id}`,
 										{
 											method: "DELETE",
 											headers: { Authorization: `Bearer ${authStore}` },
 										},
 									);
 
-									if (!removeExtraincomeResponse.ok) {
-										const removeExtraincomeResponseError: IResponseError = await removeExtraincomeResponse.json();
+									if (!removeExtraexpenseResponse.ok) {
+										const removeExtraexpenseResponseError: IResponseError = await removeExtraexpenseResponse.json();
 
-										throw new Error(removeExtraincomeResponseError.message);
+										throw new Error(removeExtraexpenseResponseError.message);
 									}
 
 									const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -127,15 +127,15 @@ function ExtraincomesDialog(): React.ReactNode {
 								}
 							}}
 						>
-							<span className="text-sm text-[#007AFF] text-left w-6 font-normal">{index + 1}</span>
-							<span className="text-sm text-[#BEBEC2] text-left w-32 truncate">{extraincome.extraincome_type}</span>
+							<span className="text-sm text-[#B85C3D] text-left w-6 font-normal">{index + 1}</span>
+							<span className="text-sm text-[#BEBEC2] text-left w-32 truncate">{extraexpense.extraexpense_type}</span>
 
 							<span className="text-sm text-[#BEBEC2] text-left w-20 font-normal">
-								{extraincome.extraincome_amount_monthly.toFixed(2)}€
+								{extraexpense.extraexpense_amount_monthly.toFixed(2)}€
 							</span>
 
 							<span className="text-sm text-[#BEBEC2] text-left w-20 font-normal">
-								{new Date(extraincome.extraincome_date).toLocaleDateString()}
+								{new Date(extraexpense.extraexpense_date).toLocaleDateString()}
 							</span>
 						</button>
 					))}
@@ -144,4 +144,4 @@ function ExtraincomesDialog(): React.ReactNode {
 	);
 }
 
-export default ExtraincomesDialog;
+export default ExtraexpensesDialog;

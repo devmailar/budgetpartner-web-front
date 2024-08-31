@@ -4,6 +4,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
+import ExtraexpensesDialog from "../../components/ExtraexpensesDialog";
 import ExtraincomesDialog from "../../components/ExtraincomesDialog";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
@@ -303,6 +304,19 @@ function Budget(): React.ReactNode {
 					<button
 						type="button"
 						className="flex items-center justify-center gap-1 btn bg-transparent px-2 py-3 rounded-lg border-[1.5px] border-[#B85C3D]"
+						onClick={(): void => {
+							if (!authStore) {
+								navigate("login");
+								return;
+							}
+
+							dispatch(
+								setDialogStore({
+									extraincomes: false,
+									extraexpenses: true,
+								}),
+							);
+						}}
 					>
 						<svg width={29} height={28} fill="none" viewBox="0 0 29 28">
 							<title>Arrow Down</title>
@@ -331,6 +345,7 @@ function Budget(): React.ReactNode {
 			</div>
 
 			{dialogStore.extraincomes && <ExtraincomesDialog />}
+			{dialogStore.extraexpenses && <ExtraexpensesDialog />}
 		</div>
 	);
 }

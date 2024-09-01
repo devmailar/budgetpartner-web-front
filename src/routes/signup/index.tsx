@@ -1,17 +1,12 @@
-import type { Dispatch } from "@reduxjs/toolkit";
-import type React from "react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import { setAuthStore } from "../../stores/auth";
 import type { IResponseError } from "../../types";
 import { Utils } from "../../utils";
 
-function Login(): React.ReactNode {
-	const dispatch: Dispatch = useDispatch();
+function Signup(): React.ReactNode {
 	const navigate: NavigateFunction = useNavigate();
 
-	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
+	const [disableSubmit, setDisableSubmit] = React.useState<boolean>(false);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
@@ -23,24 +18,19 @@ function Login(): React.ReactNode {
 			const email: string = form.get("email") as string;
 			const password: string = form.get("password") as string;
 
-			const loginUserResponse: Response = await fetch(`${Utils.baseUrl}/users/login`, {
+			const createUserResponse: Response = await fetch(`${Utils.baseUrl}/users/create`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ email: email, password: password }),
+				body: JSON.stringify({ email, password }),
 			});
 
-			if (!loginUserResponse.ok) {
-				const loginUserResponseError: IResponseError = await loginUserResponse.json();
+			if (!createUserResponse.ok) {
+				const createUserResponseError: IResponseError = await createUserResponse.json();
 
-				throw new Error(loginUserResponseError.message);
+				throw new Error(createUserResponseError.message);
 			}
 
-			const authHeader: string = loginUserResponse.headers.get("Authorization") ?? "";
-			const auth: string = authHeader.split(" ")[1];
-
-			dispatch(setAuthStore(auth));
-
-			navigate("/");
+			navigate("/login");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				alert(error.message);
@@ -56,7 +46,7 @@ function Login(): React.ReactNode {
 				<button
 					type="button"
 					onClick={(): void => {
-						navigate("/");
+						navigate("/login");
 					}}
 				>
 					<span className="text-lg text-[#007AFF] font-medium">Back</span>
@@ -67,15 +57,15 @@ function Login(): React.ReactNode {
 				<button
 					type="button"
 					onClick={(): void => {
-						navigate("/signup");
+						navigate("/login");
 					}}
 				>
-					<span className="text-lg text-[#007AFF] font-medium">Sign up</span>
+					<span className="text-lg text-[#007AFF] font-medium">Login</span>
 				</button>
 			</nav>
 
 			<form className="flex flex-col gap-7 items-center px-6 py-12" onSubmit={handleSubmit}>
-				<h1 className="text-2xl font-semibold text-white">Login to existing account</h1>
+				<h1 className="text-2xl font-semibold text-white">Create an account</h1>
 
 				<div className="flex flex-col gap-y-3">
 					<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
@@ -166,7 +156,7 @@ function Login(): React.ReactNode {
 							name="password"
 							id="password"
 							placeholder="Password"
-							autoComplete="current-password"
+							autoComplete="new-password"
 							required
 						/>
 					</div>
@@ -178,7 +168,7 @@ function Login(): React.ReactNode {
 						className={`btn bg-[#007AFF] w-full px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}
 						disabled={disableSubmit}
 					>
-						<span className="text-base font-medium text-white">Login</span>
+						<span className="text-base font-medium text-white">Sign up with email</span>
 					</button>
 				</div>
 			</form>
@@ -186,4 +176,4 @@ function Login(): React.ReactNode {
 	);
 }
 
-export default Login;
+export default Signup;

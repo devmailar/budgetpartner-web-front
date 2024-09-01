@@ -7,6 +7,7 @@ import Budget from "../../routes/budget";
 import BudgetNewExtraexpense from "../../routes/budget-new-extraexpense";
 import BudgetNewExtraincome from "../../routes/budget-new-extraincome";
 import Login from "../../routes/login";
+import Signup from "../../routes/signup";
 import { setAuthStore } from "../../stores/auth";
 
 export const router = createBrowserRouter([
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
 	{
 		path: "/login",
 		element: <Login />,
+	},
+	{
+		path: "/signup",
+		element: <Signup />,
 	},
 ]);
 

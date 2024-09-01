@@ -62,6 +62,48 @@ function Budget(): React.ReactNode {
 						return new Date(budget.created_at).getMonth() === new Date().getMonth();
 					});
 
+					if (!currentBudget) {
+						const createBudgetResponse: Response = await fetch(`${Utils.baseUrl}/budgets/create`, {
+							method: "POST",
+							headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
+							body: JSON.stringify({ date: new Date() }),
+						});
+
+						if (!createBudgetResponse.ok) {
+							const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
+
+							throw new Error(createBudgetResponseError.message);
+						}
+
+						alert(`Happy ${Utils.monthsList[new Date().getMonth()]} 💙\n\nEnjoy your new budget!`);
+
+						const getUserResponseAgain: Response = await fetch(`${Utils.baseUrl}/users/get`, {
+							method: "GET",
+							headers: { Authorization: `Bearer ${authStore}` },
+						});
+
+						if (!getUserResponseAgain.ok) {
+							const getUserResponseAgainError: IResponseError = await getUserResponseAgain.json();
+
+							throw new Error(getUserResponseAgainError.message);
+						}
+
+						const getUserResponseBodyAgain: IUserResponse = await getUserResponseAgain.json();
+
+						dispatch(setUserStore(getUserResponseBodyAgain.user));
+						dispatch(setBudgetsStore(getUserResponseBodyAgain.budgets));
+
+						const currentBudgetAgain: IBudget | undefined = getUserResponseBodyAgain.budgets.find(
+							(budget: IBudget): boolean => {
+								return new Date(budget.created_at).getMonth() === new Date().getMonth();
+							},
+						);
+
+						dispatch(setBudgetStore(currentBudgetAgain));
+
+						return;
+					}
+
 					const storedBudgetDate: string = localStorage.getItem("budget") ?? "";
 					// alert("Welcome Back💙");
 

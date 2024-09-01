@@ -27,7 +27,7 @@ function BudgetNewExtraexpense(): React.ReactNode {
 
 			const form: FormData = new FormData(event.currentTarget);
 			const extraexpense_type: string = form.get("extraexpense_type") as string;
-			const extraexpense_amount_monthly: number = Number.parseInt(form.get("extraexpense_amount_monthly") as string);
+			const extraexpense_amount_monthly: number = Number.parseFloat(form.get("extraexpense_amount_monthly") as string);
 
 			if (extraexpense_amount_monthly < 1 || !extraexpense_amount_monthly) {
 				alert("Invalid expense amount");

@@ -52,7 +52,7 @@ function Budget(): React.ReactNode {
 					const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
 					if (getUserResponseBody.user.is_new) {
-						return navigate("/login");
+						return navigate("/tour");
 					}
 
 					dispatch(setUserStore(getUserResponseBody.user));

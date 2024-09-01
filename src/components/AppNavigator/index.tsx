@@ -8,6 +8,7 @@ import BudgetNewExtraexpense from "../../routes/budget-new-extraexpense";
 import BudgetNewExtraincome from "../../routes/budget-new-extraincome";
 import Login from "../../routes/login";
 import Signup from "../../routes/signup";
+import Tour from "../../routes/tour";
 import { setAuthStore } from "../../stores/auth";
 
 export const router = createBrowserRouter([
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
 	{
 		path: "/signup",
 		element: <Signup />,
+	},
+	{
+		path: "/tour",
+		element: <Tour />,
 	},
 ]);
 

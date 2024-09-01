@@ -117,7 +117,7 @@ function Login(): React.ReactNode {
 
 					<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
 						<svg width={24} height={24} fill="none" viewBox="0 0 24 24">
-							<title>Email</title>
+							<title>Password</title>
 							<g clipPath="url(#clip0_906_69)">
 								<path stroke="#66666F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M12 10V14" />
 								<path

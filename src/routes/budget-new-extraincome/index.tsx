@@ -27,7 +27,7 @@ function BudgetNewExtraincome(): React.ReactNode {
 
 			const form: FormData = new FormData(event.currentTarget);
 			const extraincome_type: string = form.get("extraincome_type") as string;
-			const extraincome_amount_monthly: number = Number.parseInt(form.get("extraincome_amount_monthly") as string);
+			const extraincome_amount_monthly: number = Number.parseFloat(form.get("extraincome_amount_monthly") as string);
 
 			if (extraincome_amount_monthly < 1 || !extraincome_amount_monthly) {
 				alert("Invalid income amount");

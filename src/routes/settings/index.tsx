@@ -8,8 +8,6 @@ function Settings(): React.ReactNode {
 
 	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
 
-	alert(JSON.stringify(budgetStore, null, 2));
-
 	return (
 		<div className="h-screen animate__animated animate__slideInRight animate__faster">
 			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
@@ -31,12 +29,26 @@ function Settings(): React.ReactNode {
 				<div className="flex flex-col gap-y-1 items-center">
 					<span className="font-base font-semibold text-[#007AFF]">Currency</span>
 					<select
+						name="currencies"
 						className="px-2.5 py-1.5 bg-transparent border-[1.5px] border-[#3F3F46] rounded-2xl text-lg text-[#66666F] font-normal"
 						defaultValue={budgetStore.currency}
+						onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+							try {
+								alert(`Selected currency changed to ${e.target.value}`);
+
+								// update {budgetStore.id} currency column in table budgets
+
+								// fetch the user again and set budgetStore state
+							} catch (error: unknown) {
+								if (error instanceof Error) {
+									alert(error.message);
+								}
+							}
+						}}
 					>
-						<option value="">EUR</option>
-						<option value="">USD</option>
-						<option value="">INR</option>
+						<option value="EUR">EUR</option>
+						<option value="USD">USD</option>
+						<option value="INR">INR</option>
 					</select>
 				</div>
 			</div>

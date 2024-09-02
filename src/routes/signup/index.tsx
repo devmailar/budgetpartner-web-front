@@ -162,7 +162,7 @@ function Signup(): React.ReactNode {
 					</div>
 				</div>
 
-				<div className="flex items-center justify-center w-full px-5 py-5 border-y border-y-[#313131]">
+				<div className="flex items-center justify-center w-full md:w-80 px-5 py-5 border-y border-y-[#313131]">
 					<button
 						type="submit"
 						className={`btn bg-[#007AFF] w-full px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}

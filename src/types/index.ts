@@ -36,6 +36,7 @@ export interface IExtraexpense {
 export interface IBudget {
 	id: number;
 	user_id: number;
+	currency: string;
 	extraincomes: IExtraincome[];
 	extraexpenses: IExtraexpense[];
 	created_at: Date;

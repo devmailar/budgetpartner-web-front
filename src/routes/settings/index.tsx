@@ -1,8 +1,14 @@
 import type React from "react";
+import { useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import type { IBudget, IRootState } from "../../types";
 
 function Settings(): React.ReactNode {
 	const navigate: NavigateFunction = useNavigate();
+
+	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
+
+	alert(JSON.stringify(budgetStore, null, 2));
 
 	return (
 		<div className="h-screen animate__animated animate__slideInRight animate__faster">
@@ -24,7 +30,10 @@ function Settings(): React.ReactNode {
 
 				<div className="flex flex-col gap-y-1 items-center">
 					<span className="font-base font-semibold text-[#007AFF]">Currency</span>
-					<select className="px-2.5 py-1.5 bg-transparent border-[1.5px] border-[#3F3F46] rounded-2xl text-lg text-[#66666F] font-normal">
+					<select
+						className="px-2.5 py-1.5 bg-transparent border-[1.5px] border-[#3F3F46] rounded-2xl text-lg text-[#66666F] font-normal"
+						defaultValue={budgetStore.currency}
+					>
 						<option value="">EUR</option>
 						<option value="">USD</option>
 						<option value="">INR</option>

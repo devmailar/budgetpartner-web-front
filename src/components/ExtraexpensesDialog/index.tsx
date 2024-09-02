@@ -80,7 +80,7 @@ function ExtraexpensesDialog(): React.ReactNode {
 						<button
 							type="button"
 							key={extraexpense.id}
-							className="btn bg-transparent flex items-center justify-between w-full px-1.5 py-1.5 border-y border-y-[#313131] rounded-none"
+							className="btn bg-transparent flex items-center justify-between w-full px-1.5 py-1.5 md:py-2.5 border-y border-y-[#313131] rounded-none"
 							onClick={async (): Promise<void> => {
 								if (
 									confirm(
@@ -127,14 +127,16 @@ function ExtraexpensesDialog(): React.ReactNode {
 								}
 							}}
 						>
-							<span className="text-sm text-[#B85C3D] text-left w-6 font-normal">{index + 1}</span>
-							<span className="text-sm text-[#BEBEC2] text-left w-32 truncate">{extraexpense.extraexpense_type}</span>
+							<span className="text-sm md:text-base text-[#B85C3D] text-left w-6 font-normal">{index + 1}</span>
+							<span className="text-sm md:text-base text-[#BEBEC2] text-left w-32 truncate">
+								{extraexpense.extraexpense_type}
+							</span>
 
-							<span className="text-sm text-[#BEBEC2] text-left w-20 font-normal">
+							<span className="text-sm md:text-base text-[#BEBEC2] text-left w-20 font-normal">
 								{extraexpense.extraexpense_amount_monthly.toFixed(2)}€
 							</span>
 
-							<span className="text-sm text-[#BEBEC2] text-left w-20 font-normal">
+							<span className="text-sm md:text-base text-[#BEBEC2] text-left w-20 font-normal">
 								{new Date(extraexpense.extraexpense_date).toLocaleDateString()}
 							</span>
 						</button>

@@ -253,7 +253,7 @@ function Budget(): React.ReactNode {
 			<div className="flex flex-col gap-y-[18px] px-6 py-6">
 				<div className="flex items-center justify-end">
 					{authStore && (
-						<button type="button">
+						<button type="button" onClick={(): void => navigate("/settings")}>
 							<svg width="39" height="38" viewBox="0 0 39 38" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<title>Settings</title>
 								<path

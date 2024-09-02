@@ -34,10 +34,7 @@ function Settings(): React.ReactNode {
 						defaultValue={budgetStore.currency}
 						onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
 							try {
-								alert(`Selected currency changed to ${e.target.value}`);
-
 								// update {budgetStore.id} currency column in table budgets
-
 								// fetch the user again and set budgetStore state
 							} catch (error: unknown) {
 								if (error instanceof Error) {

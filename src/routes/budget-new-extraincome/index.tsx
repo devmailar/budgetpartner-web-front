@@ -224,7 +224,7 @@ function BudgetNewExtraincome(): React.ReactNode {
 				<div className="flex items-center justify-center w-full px-5 py-5 border-y border-y-[#313131]">
 					<button
 						type="submit"
-						className={`btn bg-[#007AFF] w-full px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}
+						className={`btn bg-[#007AFF] w-full md:w-80 px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}
 						disabled={disableSubmit}
 					>
 						<span className="text-base font-medium text-white">Add new income</span>

@@ -74,7 +74,7 @@ function ExtraincomesDialog(): React.ReactNode {
 				</div>
 			</div>
 
-			<div className="h-72 overflow-scroll">
+			<div className="h-72 md:h-[40rem] overflow-scroll">
 				{extraincomesSortedByCreatedAtAscending.length > 0 &&
 					extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome, index: number) => (
 						<button

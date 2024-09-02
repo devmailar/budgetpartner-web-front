@@ -74,7 +74,7 @@ function ExtraexpensesDialog(): React.ReactNode {
 				</div>
 			</div>
 
-			<div className="h-72 overflow-scroll">
+			<div className="h-72 md:h-[40rem] overflow-scroll">
 				{extraexpensesSortedByCreatedAtAscending.length > 0 &&
 					extraexpensesSortedByCreatedAtAscending.map((extraexpense: IExtraexpense, index: number) => (
 						<button

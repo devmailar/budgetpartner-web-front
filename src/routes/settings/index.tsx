@@ -1,11 +1,13 @@
 import type React from "react";
 import { useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import type { IBudget, IRootState } from "../../types";
+import type { IBudget, IResponseError, IRootState } from "../../types";
+import { Utils } from "../../utils";
 
 function Settings(): React.ReactNode {
 	const navigate: NavigateFunction = useNavigate();
 
+	const authStore: string = useSelector((state: IRootState) => state.auth);
 	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
 
 	return (
@@ -32,9 +34,22 @@ function Settings(): React.ReactNode {
 						name="currencies"
 						className="px-2.5 py-1.5 bg-transparent border-[1.5px] border-[#3F3F46] rounded-2xl text-lg text-[#66666F] font-normal"
 						defaultValue={budgetStore.currency}
-						onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+						onChange={async (e: React.ChangeEvent<HTMLSelectElement>) => {
 							try {
 								// update {budgetStore.id} currency column in table budgets
+
+								const changeCurrencyResponse: Response = await fetch(`${Utils.baseUrl}/budgets/change-currency`, {
+									method: "POST",
+									headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
+									body: JSON.stringify({ currency: e.target.value }),
+								});
+
+								if (!changeCurrencyResponse.ok) {
+									const changeCurrencyResponseError: IResponseError = await changeCurrencyResponse.json();
+
+									throw new Error(changeCurrencyResponseError.message);
+								}
+
 								// fetch the user again and set budgetStore state
 							} catch (error: unknown) {
 								if (error instanceof Error) {

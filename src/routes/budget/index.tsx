@@ -285,7 +285,10 @@ function Budget(): React.ReactNode {
 									: Utils.monthsList[new Date(budgetStore.created_at).getMonth()]}
 							</p>
 
-							<p className="text-[32px] font-bold text-white">{monthlyBudget ? monthlyBudget.toFixed(2) : "···"}€</p>
+							<p className="text-[32px] font-bold text-white">
+								{monthlyBudget ? monthlyBudget.toFixed(2) : "···"}
+								{Utils.formatCurrencyFunction(budgetStore.currency)}
+							</p>
 						</div>
 
 						<Switch />
@@ -304,7 +307,11 @@ function Budget(): React.ReactNode {
 
 					<div className="flex flex-col gap-1">
 						<p className="font-base font-semibold text-[#007AFF]">We saved Today</p>
-						<p className="text-[28px] font-bold text-white"> {dailyBudget ? dailyBudget.toFixed(2) : "···"}€</p>
+						<p className="text-[28px] font-bold text-white">
+							{" "}
+							{dailyBudget ? dailyBudget.toFixed(2) : "···"}
+							{Utils.formatCurrencyFunction(budgetStore.currency)}
+						</p>
 						<p className="text-base text-[#66666F] font-medium">#financialfreedom</p>
 					</div>
 				</div>

@@ -58,7 +58,8 @@ function ExtraexpensesDialog(): React.ReactNode {
 			<div className="flex items-center justify-between">
 				<span className="text-base text-[#B85C3D] font-semibold">Total Expenses</span>
 				<span className="text-lg text-white font-bold">
-					{totalExtraexpenses ? totalExtraexpenses.toFixed(2) : "···"}€
+					{totalExtraexpenses ? totalExtraexpenses.toFixed(2) : "···"}
+					{Utils.formatCurrencyFunction(budgetStore.currency)}
 				</span>
 
 				<div className="flex">
@@ -84,7 +85,7 @@ function ExtraexpensesDialog(): React.ReactNode {
 							onClick={async (): Promise<void> => {
 								if (
 									confirm(
-										`Are you sure you want to remove expense "${extraexpense.extraexpense_type}" with amount ${extraexpense.extraexpense_amount_monthly.toFixed(2)}€?`,
+										`Are you sure you want to remove expense "${extraexpense.extraexpense_type}" with amount ${extraexpense.extraexpense_amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budgetStore.currency)}?`,
 									)
 								) {
 									const removeExtraexpenseResponse: Response = await fetch(
@@ -133,7 +134,8 @@ function ExtraexpensesDialog(): React.ReactNode {
 							</span>
 
 							<span className="text-sm md:text-base text-[#BEBEC2] text-left w-20 font-normal">
-								{extraexpense.extraexpense_amount_monthly.toFixed(2)}€
+								{extraexpense.extraexpense_amount_monthly.toFixed(2)}
+								{Utils.formatCurrencyFunction(budgetStore.currency)}
 							</span>
 
 							<span className="text-sm md:text-base text-[#BEBEC2] text-left w-20 font-normal">

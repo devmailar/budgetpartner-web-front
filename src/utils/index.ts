@@ -14,4 +14,25 @@ const monthsList: string[] = [
 	"December",
 ];
 
-export const Utils = { baseUrl, monthsList };
+const formatCurrencyFunction = (currency: string) => {
+	try {
+		switch (currency.toUpperCase()) {
+			case "EUR":
+				return "€";
+			case "USD":
+				return "$";
+			case "INR":
+				return "₹";
+			case "BDT":
+				return "৳";
+			default:
+				return "€";
+		}
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			alert(error.message);
+		}
+	}
+};
+
+export const Utils = { baseUrl, monthsList, formatCurrencyFunction };

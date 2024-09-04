@@ -61,6 +61,7 @@ function Settings(): React.ReactNode {
 						<option value="EUR">EUR</option>
 						<option value="USD">USD</option>
 						<option value="INR">INR</option>
+						<option value="BDT">BDT</option>
 					</select>
 				</div>
 			</div>

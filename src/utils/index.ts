@@ -16,7 +16,7 @@ const monthsList: string[] = [
 
 const formatCurrencyFunction = (currency: string) => {
 	try {
-		switch (currency.toUpperCase()) {
+		switch (currency) {
 			case "EUR":
 				return "€";
 			case "USD":

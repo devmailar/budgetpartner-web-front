@@ -41,7 +41,7 @@ function Settings(): React.ReactNode {
 								const changeCurrencyResponse: Response = await fetch(`${Utils.baseUrl}/budgets/change-currency`, {
 									method: "POST",
 									headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
-									body: JSON.stringify({ currency: e.target.value }),
+									body: JSON.stringify({ budgetId: budgetStore.id, budgetCurrency: e.target.value }),
 								});
 
 								if (!changeCurrencyResponse.ok) {

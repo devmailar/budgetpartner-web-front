@@ -136,45 +136,8 @@ function BudgetNewExtraexpense(): React.ReactNode {
 						/>
 					</div>
 
-					<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
-						<svg width={24} height={25} fill="none" viewBox="0 0 24 25">
-							<title>Euro</title>
-							<g clipPath="url(#clip0_946_105)">
-								<path
-									stroke="#66666F"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M3 12.4253C3 13.6072 3.23279 14.7775 3.68508 15.8694C4.13738 16.9614 4.80031 17.9535 5.63604 18.7893C6.47177 19.625 7.46392 20.2879 8.55585 20.7402C9.64778 21.1925 10.8181 21.4253 12 21.4253C13.1819 21.4253 14.3522 21.1925 15.4442 20.7402C16.5361 20.2879 17.5282 19.625 18.364 18.7893C19.1997 17.9535 19.8626 16.9614 20.3149 15.8694C20.7672 14.7775 21 13.6072 21 12.4253C21 11.2434 20.7672 10.0731 20.3149 8.98114C19.8626 7.88921 19.1997 6.89706 18.364 6.06133C17.5282 5.2256 16.5361 4.56267 15.4442 4.11038C14.3522 3.65808 13.1819 3.42529 12 3.42529C10.8181 3.42529 9.64778 3.65808 8.55585 4.11038C7.46392 4.56267 6.47177 5.2256 5.63604 6.06133C4.80031 6.89706 4.13738 7.88921 3.68508 8.98114C3.23279 10.0731 3 11.2434 3 12.4253Z"
-								/>
-								<path
-									stroke="#66666F"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M14.401 8.42529C13.732 7.79729 12.901 7.42529 12 7.42529C9.79 7.42529 8 9.66429 8 12.4253C8 15.1863 9.79 17.4253 12 17.4253C12.9 17.4253 13.731 17.0533 14.4 16.4253"
-								/>
-								<path
-									stroke="#66666F"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M7 10.9253H11"
-								/>
-								<path
-									stroke="#66666F"
-									strokeWidth="1.5"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M7 13.9253H11"
-								/>
-							</g>
-							<defs>
-								<clipPath id="clip0_946_105">
-									<rect width={24} height={24} fill={"white"} transform="translate(0 0.425293)" />
-								</clipPath>
-							</defs>
-						</svg>
+					<div className="flex items-center gap-3.5 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
+						<span className="ml-1 text-xl text-[#66666F]">{Utils.formatCurrencyFunction(budgetStore.currency)}</span>
 
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"

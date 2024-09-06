@@ -52,16 +52,22 @@ function Signup(): React.ReactNode {
 		const transporterVerificationToken: string = searchParams.get("token") ?? "";
 
 		const verify = async (): Promise<void> => {
-			const signupVerifyUserResponse: Response = await fetch(`${Utils.baseUrl}/users/signup/verify`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ email_verification_token: transporterVerificationToken }),
-			});
+			try {
+				const signupVerifyUserResponse: Response = await fetch(`${Utils.baseUrl}/users/signup/verify`, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ email_verification_token: transporterVerificationToken }),
+				});
 
-			if (!signupVerifyUserResponse.ok) {
-				const signupVerifyUserResponseError: IResponseError = await signupVerifyUserResponse.json();
+				if (!signupVerifyUserResponse.ok) {
+					const signupVerifyUserResponseError: IResponseError = await signupVerifyUserResponse.json();
 
-				throw new Error(signupVerifyUserResponseError.message);
+					throw new Error(signupVerifyUserResponseError.message);
+				}
+			} catch (error: unknown) {
+				if (error instanceof Error) {
+					alert(error.message);
+				}
 			}
 		};
 

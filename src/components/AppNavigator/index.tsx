@@ -6,6 +6,7 @@ import { getCookie } from "typescript-cookie";
 import Budget from "../../routes/budget";
 import BudgetNewExtraexpense from "../../routes/budget-new-extraexpense";
 import BudgetNewExtraincome from "../../routes/budget-new-extraincome";
+import Landing from "../../routes/landing";
 import Login from "../../routes/login";
 import Settings from "../../routes/settings";
 import Signup from "../../routes/signup";
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <Budget />,
+	},
+	{
+		path: "/landing",
+		element: <Landing />,
 	},
 	{
 		path: "/new-extraincome",

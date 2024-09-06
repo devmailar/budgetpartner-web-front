@@ -7,7 +7,6 @@ function Signup(): React.ReactNode {
 	const navigate: NavigateFunction = useNavigate();
 
 	const [searchParams] = useSearchParams();
-	console.log(searchParams.get("token"));
 
 	// if token exists then request backend to validate the token agaisnt the signup
 
@@ -27,7 +26,7 @@ function Signup(): React.ReactNode {
 			const email: string = form.get("email") as string;
 			const password: string = form.get("password") as string;
 
-			const signupUserResponse: Response = await fetch(`${Utils.baseUrl}/usersi/sgnup`, {
+			const signupUserResponse: Response = await fetch(`${Utils.baseUrl}/users/signup`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ email, password }),
@@ -48,6 +47,26 @@ function Signup(): React.ReactNode {
 			}
 		}
 	};
+
+	React.useEffect((): void => {
+		const transporterVerificationToken: string = searchParams.get("token") ?? "";
+
+		const verify = async (): Promise<void> => {
+			const signupVerifyUserResponse: Response = await fetch(`${Utils.baseUrl}/users/signup/verify`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ email_verification_token: transporterVerificationToken }),
+			});
+
+			if (!signupVerifyUserResponse.ok) {
+				const signupVerifyUserResponseError: IResponseError = await signupVerifyUserResponse.json();
+
+				throw new Error(signupVerifyUserResponseError.message);
+			}
+		};
+
+		transporterVerificationToken && verify();
+	}, [searchParams]);
 
 	return (
 		<div className="h-screen animate__animated animate__slideInRight animate__faster">

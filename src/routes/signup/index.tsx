@@ -27,16 +27,16 @@ function Signup(): React.ReactNode {
 			const email: string = form.get("email") as string;
 			const password: string = form.get("password") as string;
 
-			const createUserResponse: Response = await fetch(`${Utils.baseUrl}/users/create`, {
+			const signupUserResponse: Response = await fetch(`${Utils.baseUrl}/usersi/sgnup`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ email, password }),
 			});
 
-			if (!createUserResponse.ok) {
-				const createUserResponseError: IResponseError = await createUserResponse.json();
+			if (!signupUserResponse.ok) {
+				const signupUserResponseError: IResponseError = await signupUserResponse.json();
 
-				throw new Error(createUserResponseError.message);
+				throw new Error(signupUserResponseError.message);
 			}
 
 			navigate("/login");

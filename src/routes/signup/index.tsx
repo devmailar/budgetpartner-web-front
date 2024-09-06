@@ -1,10 +1,19 @@
 import React from "react";
-import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { type NavigateFunction, useNavigate, useSearchParams } from "react-router-dom";
 import type { IResponseError } from "../../types";
 import { Utils } from "../../utils";
 
 function Signup(): React.ReactNode {
 	const navigate: NavigateFunction = useNavigate();
+
+	const [searchParams] = useSearchParams();
+	console.log(searchParams.get("token"));
+
+	// if token exists then request backend to validate the token agaisnt the signup
+
+	// 1. client signup -> server creates email verification token and sends smtp message
+
+	// 2. server then saves this token to database under that
 
 	const [disableSubmit, setDisableSubmit] = React.useState<boolean>(false);
 

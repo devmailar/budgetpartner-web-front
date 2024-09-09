@@ -109,7 +109,7 @@ function Budget(): React.ReactNode {
 					setTimeout((): void => {
 						if (!getUserResponseBody.user.is_email_verified) {
 							alert(
-								`We have sent a verification email to ${getUserResponseBody.user.email}. Please check your inbox or spam folder for the message and click the link to complete the verification process.\n\nThank you for your prompt attention.\n\nBest regards,\nsupport@budgetpartner.app`,
+								`We have sent a verification email to ${getUserResponseBody.user.email}. Please check your inbox or spam folder for the message and click the link to complete the verification process.\n\nBest regards,\nsupport@budgetpartner.app`,
 							);
 						}
 					}, 3000);

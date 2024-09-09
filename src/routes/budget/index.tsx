@@ -312,6 +312,8 @@ function Budget(): React.ReactNode {
 						alt="https://ucarecdn.com/d8300ff5-fe6e-4e8c-a79d-db94212a2ab5/-/preview/77x77/"
 						width={77}
 						height={77}
+						loading="lazy"
+						fetchPriority="high"
 					/>
 
 					<div className="flex flex-col gap-1">

@@ -172,6 +172,8 @@ function Tour(): React.ReactNode {
 					alt="https://ucarecdn.com/6d80f052-288f-47ff-9ed7-f9fc3118bf70/-/preview/101x100/"
 					width={101}
 					height={100}
+					loading="lazy"
+					fetchPriority="high"
 				/>
 
 				<div className="flex flex-col items-center justify-center gap-y-3">

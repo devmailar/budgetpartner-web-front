@@ -1,0 +1,16 @@
+/* TEAM */
+Site: https://budgetpartner.app
+Developers: 
+- Senior Developer: Leo Koivunen (github.com/devmailar)
+
+/* THANKS */
+Thanks to all the contributors and open-source projects!
+
+/* TECHNOLOGY */
+Built using:
+- ReactJS
+- Node.js
+- Typescript
+- PostgreSQL
+- Fastify
+- Kysely

@@ -26,7 +26,7 @@ function Settings(): React.ReactNode {
 			</nav>
 
 			<div className="flex flex-col gap-y-6 items-center justify-center px-6 py-6">
-				<h1 className="text-2xl font-semibold text-white">Settings</h1>
+				<h2 className="text-2xl font-semibold text-white">Settings</h2>
 
 				<div className="flex flex-col gap-y-1 items-center">
 					<span className="font-base font-semibold text-[#007AFF]">Currency</span>

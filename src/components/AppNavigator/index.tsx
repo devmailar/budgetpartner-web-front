@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
 		element: (
 			<div className="h-screen animate__animated animate__slideInRight animate__faster">
 				<div className="flex flex-col gap-y-6 items-center justify-center px-6 py-6">
-					<h1>404 - Page Not Found</h1>
+					<h2>404 - Page Not Found</h2>
 					<p>Oops! The page you're looking for doesn't exist.</p>
 					<Link to="/">Go back to Home</Link>
 				</div>

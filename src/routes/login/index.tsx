@@ -75,7 +75,7 @@ function Login(): React.ReactNode {
 			</nav>
 
 			<form className="flex flex-col gap-7 items-center px-6 py-12" onSubmit={handleSubmit}>
-				<h1 className="text-2xl font-semibold text-white">Login to existing account</h1>
+				<h2 className="text-2xl font-semibold text-white">Login to existing account</h2>
 
 				<div className="flex flex-col gap-y-3">
 					<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">

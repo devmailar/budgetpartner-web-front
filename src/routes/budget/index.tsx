@@ -225,7 +225,9 @@ function Budget(): React.ReactNode {
 	return (
 		<div className="h-screen animate__animated animate__slideInLeft animate__faster">
 			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
-				<h2 className="text-lg text-white font-medium">BudgetPartner</h2>
+				<a href="/" className="text-lg text-white font-medium">
+					BudgetPartner
+				</a>
 
 				{authStore ? (
 					<button
@@ -285,23 +287,23 @@ function Budget(): React.ReactNode {
 				<div className="flex flex-col gap-1 px-[18px] py-[18px] bg-[#18181B] border border-[#212121] rounded-2xl">
 					<div className="flex items-center justify-between">
 						<div className="flex flex-col gap-1">
-							<p className="font-base font-semibold text-[#007AFF]">
+							<h1 className="font-base font-semibold text-[#007AFF]">
 								We saved in{" "}
 								{Object.keys(budgetStore).length === 0
 									? Utils.monthsList[new Date().getMonth()]
 									: Utils.monthsList[new Date(budgetStore.created_at).getMonth()]}
-							</p>
+							</h1>
 
-							<p className="text-[32px] font-bold text-white">
+							<span className="text-[32px] font-bold text-white">
 								{monthlyBudget ? monthlyBudget.toFixed(2) : "···"}
 								{Utils.formatCurrencyFunction(budgetStore.currency)}
-							</p>
+							</span>
 						</div>
 
 						<Switch />
 					</div>
 
-					<span className="text-base text-[#66666F] font-medium">#budgetingmakeslegends</span>
+					<p className="text-base text-[#66666F] font-medium">#budgetingmakeslegends</p>
 				</div>
 
 				<div className="flex gap-6 items-center px-[18px] py-[18px] bg-[#18181B] border border-[#212121] rounded-2xl">
@@ -313,12 +315,14 @@ function Budget(): React.ReactNode {
 					/>
 
 					<div className="flex flex-col gap-1">
-						<p className="font-base font-semibold text-[#007AFF]">We saved Today</p>
-						<p className="text-[28px] font-bold text-white">
+						<h1 className="font-base font-semibold text-[#007AFF]">We saved Today</h1>
+
+						<span className="text-[28px] font-bold text-white">
 							{" "}
 							{dailyBudget ? dailyBudget.toFixed(2) : "···"}
 							{Utils.formatCurrencyFunction(budgetStore.currency)}
-						</p>
+						</span>
+
 						<p className="text-base text-[#66666F] font-medium">#financialfreedom</p>
 					</div>
 				</div>

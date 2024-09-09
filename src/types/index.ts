@@ -6,6 +6,7 @@ export interface IDialog {
 export interface IUser {
 	id: number;
 	email: string;
+	email_verification_token: string;
 	password_hash: string;
 	is_new: boolean;
 	is_email_verified: boolean;

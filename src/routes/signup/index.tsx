@@ -64,6 +64,8 @@ function Signup(): React.ReactNode {
 
 					throw new Error(signupVerifyUserResponseError.message);
 				}
+
+				navigate("/");
 			} catch (error: unknown) {
 				if (error instanceof Error) {
 					alert(error.message);
@@ -72,7 +74,7 @@ function Signup(): React.ReactNode {
 		};
 
 		transporterVerificationToken && verify();
-	}, [searchParams]);
+	}, [searchParams, navigate]);
 
 	return (
 		<div className="h-screen animate__animated animate__slideInRight animate__faster">

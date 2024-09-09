@@ -8,6 +8,7 @@ export interface IUser {
 	email: string;
 	password_hash: string;
 	is_new: boolean;
+	is_email_verified: boolean;
 	created_at: Date;
 	updated_at: Date;
 }
@@ -55,6 +56,7 @@ export interface IResponseError {
 }
 
 export interface IRootState {
+	user: IUser;
 	auth: string;
 	budget: IBudget;
 	budgets: IBudget[];

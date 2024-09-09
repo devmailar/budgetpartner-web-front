@@ -106,11 +106,13 @@ function Budget(): React.ReactNode {
 
 					const storedBudgetDate: string = localStorage.getItem("budget") ?? "";
 					// alert("Welcome Back💙");
-					if (!getUserResponseBody.user.is_email_verified) {
-						alert(
-							`We have sent a verification email to ${getUserResponseBody.user.email}. Please check your inbox or spam folder for the message and click the link to complete the verification process.\n\nThank you for your prompt attention.\n\nBest regards,\nsupport@budgetpartner.app`,
-						);
-					}
+					setTimeout((): void => {
+						if (!getUserResponseBody.user.is_email_verified) {
+							alert(
+								`We have sent a verification email to ${getUserResponseBody.user.email}. Please check your inbox or spam folder for the message and click the link to complete the verification process.\n\nThank you for your prompt attention.\n\nBest regards,\nsupport@budgetpartner.app`,
+							);
+						}
+					}, 3000);
 
 					if (storedBudgetDate) {
 						const matchingBudget: IBudget | undefined = getUserResponseBody.budgets.find((budget: IBudget): boolean => {

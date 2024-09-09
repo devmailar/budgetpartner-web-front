@@ -1,7 +1,7 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import Budget from "../../routes/budget";
 import BudgetNewExtraexpense from "../../routes/budget-new-extraexpense";
@@ -17,6 +17,18 @@ export const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <Budget />,
+	},
+	{
+		path: "*",
+		element: (
+			<div className="h-screen animate__animated animate__slideInRight animate__faster">
+				<div className="flex flex-col gap-y-6 items-center justify-center px-6 py-6">
+					<h1>404 - Page Not Found</h1>
+					<p>Oops! The page you're looking for doesn't exist.</p>
+					<Link to="/">Go back to Home</Link>
+				</div>
+			</div>
+		),
 	},
 	{
 		path: "/landing",

@@ -35,18 +35,6 @@ function Tour(): React.ReactNode {
 				return;
 			}
 
-			const createBudgetResponse: Response = await fetch(`${Utils.baseUrl}/budgets/create`, {
-				method: "POST",
-				headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
-				body: JSON.stringify({ date: new Date() }),
-			});
-
-			if (!createBudgetResponse.ok) {
-				const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
-
-				throw new Error(createBudgetResponseError.message);
-			}
-
 			const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
 				method: "GET",
 				headers: { Authorization: `Bearer ${authStore}` },
@@ -123,6 +111,30 @@ function Tour(): React.ReactNode {
 			}
 		}
 	};
+
+	React.useEffect((): void => {
+		const handleCreateBudget = async (): Promise<void> => {
+			try {
+				const createBudgetResponse: Response = await fetch(`${Utils.baseUrl}/budgets/create`, {
+					method: "POST",
+					headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
+					body: JSON.stringify({ date: new Date() }),
+				});
+
+				if (!createBudgetResponse.ok) {
+					const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
+
+					throw new Error(createBudgetResponseError.message);
+				}
+			} catch (error: unknown) {
+				if (error instanceof Error) {
+					alert(error.message);
+				}
+			}
+		};
+
+		handleCreateBudget();
+	}, [authStore]);
 
 	return (
 		<div className="h-screen animate__animated animate__slideInRight animate__faster">

@@ -23,8 +23,8 @@ function ExtraexpensesDialog(): React.ReactNode {
 		0,
 	);
 
-	const extraexpensesSortedByCreatedAtAscending: IExtraexpense[] = [...budgetStore.extraexpenses].sort((a, b) => {
-		return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+	const extraexpensesSortedByExpenseDateAscending: IExtraexpense[] = [...budgetStore.extraexpenses].sort((a, b) => {
+		return new Date(b.extraexpense_date).getTime() - new Date(a.extraexpense_date).getTime();
 	});
 
 	return (
@@ -76,8 +76,8 @@ function ExtraexpensesDialog(): React.ReactNode {
 			</div>
 
 			<div className="h-72 md:h-[40rem] overflow-scroll">
-				{extraexpensesSortedByCreatedAtAscending.length > 0 &&
-					extraexpensesSortedByCreatedAtAscending.map((extraexpense: IExtraexpense, index: number) => (
+				{extraexpensesSortedByExpenseDateAscending.length > 0 &&
+					extraexpensesSortedByExpenseDateAscending.map((extraexpense: IExtraexpense, index: number) => (
 						<button
 							type="button"
 							key={extraexpense.id}

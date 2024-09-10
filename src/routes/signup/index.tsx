@@ -39,6 +39,12 @@ function Signup(): React.ReactNode {
 			}
 
 			navigate("/login");
+
+			setTimeout((): void => {
+				alert(
+					"✅ You have successfully signed up! Please log in to your new account and check your email (including the spam folder) to verify your email address by clicking the verification link.",
+				);
+			}, 1500);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				alert(error.message);

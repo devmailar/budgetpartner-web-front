@@ -9,6 +9,7 @@ import { setDialogStore } from "../../stores/dialog";
 import { setUserStore } from "../../stores/user";
 import type { IBudget, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
+import ImagePiggy from "../../assets/piggy.webp";
 
 function Tour(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
@@ -142,7 +143,7 @@ function Tour(): React.ReactNode {
 				<button
 					type="button"
 					onClick={(): void => {
-						navigate("/login");
+						navigate("/");
 					}}
 				>
 					<span className="text-lg text-[#007AFF] font-medium">Back</span>
@@ -166,43 +167,40 @@ function Tour(): React.ReactNode {
 				</button>
 			</nav>
 
-			<form className="flex flex-col gap-7 items-center px-6 py-12" onSubmit={handleSubmit}>
-				<img
-					src="https://ucarecdn.com/6d80f052-288f-47ff-9ed7-f9fc3118bf70/-/preview/101x100/"
-					alt="https://ucarecdn.com/6d80f052-288f-47ff-9ed7-f9fc3118bf70/-/preview/101x100/"
-					width={101}
-					height={100}
-					loading="lazy"
-					fetchPriority="high"
-				/>
+			<form className="flex flex-col items-center px-6 py-12" onSubmit={handleSubmit}>
+				<img src={ImagePiggy} alt={ImagePiggy} width={301} height={300} loading="lazy" fetchPriority="high" />
 
-				<div className="flex flex-col items-center justify-center gap-y-3">
-					<h1 className="text-2xl font-semibold text-white">
-						{Utils.monthsList[new Date().getMonth()]} ({new Date().getFullYear()})
-					</h1>
+				<div className="flex flex-col gap-7 items-center">
+					<div className="flex flex-col items-center justify-center gap-y-3">
+						<h1 className="text-2xl font-semibold text-white">
+							{Utils.monthsList[new Date().getMonth()]} ({new Date().getFullYear()})
+						</h1>
 
-					<p className="text-sm font-normal text-[#66666F] text-center">Set your start eg. salary to start a budget.</p>
-				</div>
+						<p className="text-sm font-normal text-[#66666F] text-center">
+							Set your start eg. salary to start a budget.
+						</p>
+					</div>
 
-				<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
-					<input
-						className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
-						type="text"
-						name="extraincome_amount_monthly"
-						id="extraincome_amount_monthly"
-						placeholder="0.00"
-						required
-					/>
-				</div>
+					<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
+						<input
+							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
+							type="text"
+							name="extraincome_amount_monthly"
+							id="extraincome_amount_monthly"
+							placeholder="0.00"
+							required
+						/>
+					</div>
 
-				<div className="flex items-center justify-center w-full md:w-80 px-5 py-5 border-y border-y-[#313131]">
-					<button
-						type="submit"
-						className={`btn bg-[#007AFF] w-full px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}
-						disabled={disableSubmit}
-					>
-						<span className="text-base font-medium text-white">Finish</span>
-					</button>
+					<div className="flex items-center justify-center w-full md:w-80 px-5 py-5 border-y border-y-[#313131]">
+						<button
+							type="submit"
+							className={`btn bg-[#007AFF] w-full px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}
+							disabled={disableSubmit}
+						>
+							<span className="text-base font-medium text-white">Finish</span>
+						</button>
+					</div>
 				</div>
 			</form>
 		</div>

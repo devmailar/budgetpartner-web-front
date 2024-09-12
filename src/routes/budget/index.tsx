@@ -4,6 +4,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
+import ImageCointree from '../../assets/cointree.webp'
 import ExtraexpensesDialog from "../../components/ExtraexpensesDialog";
 import ExtraincomesDialog from "../../components/ExtraincomesDialog";
 import Switch from "../../components/Switch";
@@ -308,8 +309,8 @@ function Budget(): React.ReactNode {
 
 				<div className="flex gap-6 items-center px-[18px] py-[18px] bg-[#18181B] border border-[#212121] rounded-2xl">
 					<img
-						src="https://ucarecdn.com/383b34e7-4ce7-4d1f-807d-615db2ad1230/-/preview/77x77/"
-						alt="https://ucarecdn.com/383b34e7-4ce7-4d1f-807d-615db2ad1230/-/preview/77x77/"
+						src={ImageCointree}
+						alt={ImageCointree}
 						width={77}
 						height={77}
 						loading="lazy"

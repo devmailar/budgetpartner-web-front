@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
+import Image404 from "../../assets/404.webp";
 import Budget from "../../routes/budget";
 import BudgetNewExtraexpense from "../../routes/budget-new-extraexpense";
 import BudgetNewExtraincome from "../../routes/budget-new-extraincome";
@@ -22,10 +23,13 @@ export const router = createBrowserRouter([
 		path: "*",
 		element: (
 			<div className="h-screen animate__animated animate__slideInRight animate__faster">
-				<div className="flex flex-col gap-y-6 items-center justify-center px-6 py-6">
-					<h2>404 - Page Not Found</h2>
-					<p>Oops! The page you're looking for doesn't exist.</p>
-					<Link to="/">Go back to Home</Link>
+				<div className="flex flex-col gap-y-4 items-center justify-center px-6 py-6">
+					<img src={Image404} alt={Image404} width={130} height={130} loading="lazy" fetchPriority="high" />
+					<h2 className="text-base text-[#66666F] font-semibold">404 - Page Not Found</h2>
+					<p className="text-sm text-[#66666F] text-center font-normal">
+						Oops! The page you're looking for doesn't exist.
+					</p>
+					<Link className="text-base text-white font-normal" to="/">Go back to Home</Link>
 				</div>
 			</div>
 		),

@@ -4,7 +4,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import "swiper/css";
-import ImageGrowth from '../../assets/growth.webp';
+import ImageGrowth from "../../assets/growth.webp";
 import ExtraexpensesDialog from "../../components/ExtraexpensesDialog";
 import ExtraincomesDialog from "../../components/ExtraincomesDialog";
 import Switch from "../../components/Switch";
@@ -308,14 +308,7 @@ function Budget(): React.ReactNode {
 				</div>
 
 				<div className="flex gap-6 items-center px-[18px] py-[18px] bg-[#18181B] border border-[#212121] rounded-2xl">
-					<img
-						src={ImageGrowth}
-						alt={ImageGrowth}
-						width={77}
-						height={77}
-						loading="lazy"
-						fetchPriority="high"
-					/>
+					<img src={ImageGrowth} alt={ImageGrowth} width={77} height={77} loading="lazy" fetchPriority="high" />
 
 					<div className="flex flex-col gap-1">
 						<h1 className="font-base font-semibold text-[#007AFF]">We saved Today</h1>

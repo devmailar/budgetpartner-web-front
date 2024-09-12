@@ -308,8 +308,8 @@ function Budget(): React.ReactNode {
 
 				<div className="flex gap-6 items-center px-[18px] py-[18px] bg-[#18181B] border border-[#212121] rounded-2xl">
 					<img
-						src="https://ucarecdn.com/d8300ff5-fe6e-4e8c-a79d-db94212a2ab5/-/preview/77x77/"
-						alt="https://ucarecdn.com/d8300ff5-fe6e-4e8c-a79d-db94212a2ab5/-/preview/77x77/"
+						src="https://ucarecdn.com/383b34e7-4ce7-4d1f-807d-615db2ad1230/-/preview/77x77/"
+						alt="https://ucarecdn.com/383b34e7-4ce7-4d1f-807d-615db2ad1230/-/preview/77x77/"
 						width={77}
 						height={77}
 						loading="lazy"

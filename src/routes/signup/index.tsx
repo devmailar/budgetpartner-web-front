@@ -35,7 +35,7 @@ function Signup(): React.ReactNode {
 			if (!signupUserResponse.ok) {
 				const signupUserResponseError: IResponseError = await signupUserResponse.json();
 
-				throw new Error(signupUserResponseError.message);
+				throw new Error(signupUserResponseError.errorMessage);
 			}
 
 			navigate("/login");
@@ -68,7 +68,7 @@ function Signup(): React.ReactNode {
 				if (!signupVerifyUserResponse.ok) {
 					const signupVerifyUserResponseError: IResponseError = await signupVerifyUserResponse.json();
 
-					throw new Error(signupVerifyUserResponseError.message);
+					throw new Error(signupVerifyUserResponseError.errorMessage);
 				}
 
 				navigate("/");

@@ -32,7 +32,7 @@ function Login(): React.ReactNode {
 			if (!loginUserResponse.ok) {
 				const loginUserResponseError: IResponseError = await loginUserResponse.json();
 
-				throw new Error(loginUserResponseError.message);
+				throw new Error(loginUserResponseError.errorMessage);
 			}
 
 			const authHeader: string = loginUserResponse.headers.get("Authorization") ?? "";

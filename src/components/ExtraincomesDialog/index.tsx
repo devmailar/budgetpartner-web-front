@@ -99,7 +99,7 @@ function ExtraincomesDialog(): React.ReactNode {
 									if (!removeExtraincomeResponse.ok) {
 										const removeExtraincomeResponseError: IResponseError = await removeExtraincomeResponse.json();
 
-										throw new Error(removeExtraincomeResponseError.message);
+										throw new Error(removeExtraincomeResponseError.errorMessage);
 									}
 
 									const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -110,7 +110,7 @@ function ExtraincomesDialog(): React.ReactNode {
 									if (!getUserResponse.ok) {
 										const getUserResponseError: IResponseError = await getUserResponse.json();
 
-										throw new Error(getUserResponseError.message);
+										throw new Error(getUserResponseError.errorMessage);
 									}
 
 									const getUserResponseBody: IUserResponse = await getUserResponse.json();

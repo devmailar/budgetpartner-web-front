@@ -28,7 +28,7 @@ function ExtraexpensesDialog(): React.ReactNode {
 	});
 
 	return (
-		<div className="flex flex-col gap-4 absolute bottom-0 bg-[#18181B] w-full h-[64%] px-7 pb-5 border border-[#212121] rounded-3xl">
+		<div className="animate__animated animate__slideInUp animate__faster flex flex-col gap-4 absolute bottom-0 bg-[#18181B] w-full h-[64%] px-7 pb-5 border border-[#212121] rounded-3xl">
 			<button
 				type="button"
 				className="flex items-center justify-center pt-[18px]"

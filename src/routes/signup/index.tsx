@@ -1,9 +1,13 @@
+import type { Dispatch } from "@reduxjs/toolkit";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate, useSearchParams } from "react-router-dom";
+import { setAuthStore } from "../../stores/auth";
 import type { IResponseError } from "../../types";
 import { Utils } from "../../utils";
 
 function Signup(): React.ReactNode {
+	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
 	const [searchParams] = useSearchParams();
@@ -45,6 +49,25 @@ function Signup(): React.ReactNode {
 					"✅ You have successfully signed up! Please log in to your new account and check your email (including the spam folder) to verify your email address by clicking the verification link.",
 				);
 			}, 1500);
+
+			const loginUserResponse: Response = await fetch(`${Utils.baseUrl}/users/login`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ email: email, password: password }),
+			});
+
+			if (!loginUserResponse.ok) {
+				const loginUserResponseError: IResponseError = await loginUserResponse.json();
+
+				throw new Error(loginUserResponseError.errorMessage);
+			}
+
+			const authHeader: string = loginUserResponse.headers.get("Authorization") ?? "";
+			const auth: string = authHeader.split(" ")[1];
+
+			dispatch(setAuthStore(auth));
+
+			navigate("/");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				alert(error.message);

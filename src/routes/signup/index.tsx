@@ -46,7 +46,7 @@ function Signup(): React.ReactNode {
 
 			setTimeout((): void => {
 				alert(
-					"✅ You have successfully signed up! Please log in to your new account and check your email (including the spam folder) to verify your email address by clicking the verification link.",
+					"✅ You have successfully signed up! Please check your email (including the spam folder) to verify your email address by clicking the verification link.",
 				);
 			}, 1500);
 

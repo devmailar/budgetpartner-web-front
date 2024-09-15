@@ -68,12 +68,14 @@ function BudgetNewExtraincome(): React.ReactNode {
 
 			const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
-			dispatch(setUserStore(getUserResponseBody.user));
-			dispatch(setBudgetsStore(getUserResponseBody.budgets));
+			dispatch(setUserStore(getUserResponseBody.errorNoData.user));
+			dispatch(setBudgetsStore(getUserResponseBody.errorNoData.budgets));
 
-			const currentBudget: IBudget | undefined = getUserResponseBody.budgets.find((budget: IBudget): boolean => {
-				return new Date(budget.created_at).getMonth() === new Date().getMonth();
-			});
+			const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
+				(budget: IBudget): boolean => {
+					return new Date(budget.created_at).getMonth() === new Date().getMonth();
+				},
+			);
 
 			dispatch(setBudgetStore(currentBudget));
 

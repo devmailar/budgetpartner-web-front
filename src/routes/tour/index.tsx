@@ -49,9 +49,11 @@ function Tour(): React.ReactNode {
 
 			const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
-			const currentBudget: IBudget | undefined = getUserResponseBody.budgets.find((budget: IBudget): boolean => {
-				return new Date(budget.created_at).getMonth() === new Date().getMonth();
-			});
+			const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
+				(budget: IBudget): boolean => {
+					return new Date(budget.created_at).getMonth() === new Date().getMonth();
+				},
+			);
 
 			if (!currentBudget) {
 				throw new Error("No currentBudget");
@@ -92,10 +94,10 @@ function Tour(): React.ReactNode {
 				throw new Error("User response again is empty");
 			}
 
-			dispatch(setUserStore(getUserResponseAgainBody.user));
-			dispatch(setBudgetsStore(getUserResponseAgainBody.budgets));
+			dispatch(setUserStore(getUserResponseAgainBody.errorNoData.user));
+			dispatch(setBudgetsStore(getUserResponseAgainBody.errorNoData.budgets));
 
-			const currentBudgetAgain: IBudget | undefined = getUserResponseAgainBody.budgets.find(
+			const currentBudgetAgain: IBudget | undefined = getUserResponseAgainBody.errorNoData.budgets.find(
 				(budget: IBudget): boolean => {
 					return new Date(budget.created_at).getMonth() === new Date().getMonth();
 				},

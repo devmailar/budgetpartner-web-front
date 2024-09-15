@@ -46,8 +46,12 @@ export interface IBudget {
 }
 
 export interface IUserResponse {
-	user: IUser;
-	budgets: IBudget[];
+	errorMessage: string;
+	errorStatusCode: number;
+	errorNoData: {
+		user: IUser;
+		budgets: IBudget[];
+	};
 }
 
 export interface IResponseError {

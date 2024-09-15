@@ -52,16 +52,18 @@ function Budget(): React.ReactNode {
 
 					const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
-					if (getUserResponseBody.user.is_new) {
+					if (getUserResponseBody.errorNoData.user.is_new) {
 						return navigate("/tour");
 					}
 
-					dispatch(setUserStore(getUserResponseBody.user));
-					dispatch(setBudgetsStore(getUserResponseBody.budgets));
+					dispatch(setUserStore(getUserResponseBody.errorNoData.user));
+					dispatch(setBudgetsStore(getUserResponseBody.errorNoData.budgets));
 
-					const currentBudget: IBudget | undefined = getUserResponseBody.budgets.find((budget: IBudget): boolean => {
-						return new Date(budget.created_at).getMonth() === new Date().getMonth();
-					});
+					const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
+						(budget: IBudget): boolean => {
+							return new Date(budget.created_at).getMonth() === new Date().getMonth();
+						},
+					);
 
 					if (!currentBudget) {
 						const createBudgetResponse: Response = await fetch(`${Utils.baseUrl}/budgets/create`, {
@@ -91,10 +93,10 @@ function Budget(): React.ReactNode {
 
 						const getUserResponseBodyAgain: IUserResponse = await getUserResponseAgain.json();
 
-						dispatch(setUserStore(getUserResponseBodyAgain.user));
-						dispatch(setBudgetsStore(getUserResponseBodyAgain.budgets));
+						dispatch(setUserStore(getUserResponseBodyAgain.errorNoData.user));
+						dispatch(setBudgetsStore(getUserResponseBodyAgain.errorNoData.budgets));
 
-						const currentBudgetAgain: IBudget | undefined = getUserResponseBodyAgain.budgets.find(
+						const currentBudgetAgain: IBudget | undefined = getUserResponseBodyAgain.errorNoData.budgets.find(
 							(budget: IBudget): boolean => {
 								return new Date(budget.created_at).getMonth() === new Date().getMonth();
 							},
@@ -108,20 +110,22 @@ function Budget(): React.ReactNode {
 					const storedBudgetDate: string = localStorage.getItem("budget") ?? "";
 					// alert("Welcome Back💙");
 					setTimeout((): void => {
-						if (!getUserResponseBody.user.is_email_verified) {
+						if (!getUserResponseBody.errorNoData.user.is_email_verified) {
 							alert(
-								`We have sent a verification email to ${getUserResponseBody.user.email}. Please check your inbox or spam folder for the message and click the link to complete the verification process.\n\nBest regards,\nsupport@budgetpartner.app`,
+								`We have sent a verification email to ${getUserResponseBody.errorNoData.user.email}. Please check your inbox or spam folder for the message and click the link to complete the verification process.\n\nBest regards,\nsupport@budgetpartner.app`,
 							);
 						}
 					}, 1500);
 
 					if (storedBudgetDate) {
-						const matchingBudget: IBudget | undefined = getUserResponseBody.budgets.find((budget: IBudget): boolean => {
-							const budgetDate: Date = new Date(budget.created_at);
-							const match: boolean = budgetDate.toISOString() === storedBudgetDate;
+						const matchingBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
+							(budget: IBudget): boolean => {
+								const budgetDate: Date = new Date(budget.created_at);
+								const match: boolean = budgetDate.toISOString() === storedBudgetDate;
 
-							return match;
-						});
+								return match;
+							},
+						);
 
 						if (!matchingBudget) {
 							dispatch(setBudgetStore(currentBudget));

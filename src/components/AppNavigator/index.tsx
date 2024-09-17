@@ -29,7 +29,9 @@ export const router = createBrowserRouter([
 					<p className="text-sm text-[#66666F] text-center font-normal">
 						Oops! The page you're looking for doesn't exist.
 					</p>
-					<Link className="text-base text-white font-normal" to="/">Go back to Home</Link>
+					<Link className="text-base text-white font-normal" to="/">
+						Go back to Home
+					</Link>
 				</div>
 			</div>
 		),

@@ -2,6 +2,7 @@ import type { Dispatch } from "@reduxjs/toolkit";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import ImagePiggy from "../../assets/piggy.webp";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
@@ -9,7 +10,6 @@ import { setDialogStore } from "../../stores/dialog";
 import { setUserStore } from "../../stores/user";
 import type { IBudget, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
-import ImagePiggy from "../../assets/piggy.webp";
 
 function Tour(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();

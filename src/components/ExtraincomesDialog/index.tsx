@@ -28,7 +28,7 @@ function ExtraincomesDialog(): React.ReactNode {
 	});
 
 	return (
-		<div className="animate__animated animate__slideInUp animate__faster flex flex-col gap-4 absolute bottom-0 bg-[#18181B] w-full h-[64%] px-7 pb-5 border border-[#212121] rounded-3xl">
+		<div className="animate__animated animate__slideInUp animate__faster flex flex-col gap-4 absolute bottom-0 bg-black w-full h-[64%] px-7 pb-5 border border-[#212121] rounded-3xl">
 			<button
 				type="button"
 				className="flex items-center justify-center pt-[18px]"
@@ -75,13 +75,13 @@ function ExtraincomesDialog(): React.ReactNode {
 				</div>
 			</div>
 
-			<div className="h-72 md:h-[40rem] overflow-scroll">
+			<div className="flex flex-col gap-y-6 h-72 md:h-[40rem] overflow-scroll">
 				{extraincomesSortedByCreatedAtAscending.length > 0 &&
 					extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome, index: number) => (
 						<button
 							type="button"
 							key={extraincome.id}
-							className="btn bg-transparent flex items-center justify-between w-full px-1.5 py-1.5 md:py-2.5 border-y border-y-[#313131] rounded-none"
+							className="flex flex-col gap-y-1 btn px-0 py-0 w-full rounded-none"
 							onClick={async (): Promise<void> => {
 								if (
 									confirm(
@@ -128,19 +128,21 @@ function ExtraincomesDialog(): React.ReactNode {
 								}
 							}}
 						>
-							<span className="text-sm md:text-base text-[#007AFF] text-left w-6 font-normal">{index + 1}</span>
-							<span className="text-sm md:text-base text-[#BEBEC2] text-left w-32 truncate">
-								{extraincome.extraincome_type}
-							</span>
+							<div className="flex items-center gap-x-2 w-full">
+								<span className="text-base text-[#66666F] font-medium">
+									{new Date(extraincome.extraincome_date).toDateString()}
+								</span>
 
-							<span className="text-sm md:text-base text-[#BEBEC2] text-left w-20 font-normal">
-								{extraincome.extraincome_amount_monthly.toFixed(2)}
-								{Utils.formatCurrencyFunction(budgetStore.currency)}
-							</span>
+								<hr className="flex-grow bg-[#66666F] text-[#66666F] h-[0.5px] border-none" />
+							</div>
 
-							<span className="text-sm md:text-base text-[#BEBEC2] text-left w-20 font-normal">
-								{new Date(extraincome.extraincome_date).toLocaleDateString()}
-							</span>
+							<div className="flex items-center justify-between w-full">
+								<span className="text-xl text-[#91919A] font-medium truncate">{extraincome.extraincome_type}</span>
+								<span className="text-xl text-[#007AFF] font-medium truncate">
+									+{extraincome.extraincome_amount_monthly.toFixed(2)}
+									{Utils.formatCurrencyFunction(budgetStore.currency)}
+								</span>
+							</div>
 						</button>
 					))}
 			</div>

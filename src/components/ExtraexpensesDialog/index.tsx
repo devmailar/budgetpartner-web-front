@@ -75,13 +75,13 @@ function ExtraexpensesDialog(): React.ReactNode {
 				</div>
 			</div>
 
-			<div className="h-72 md:h-[40rem] overflow-scroll">
+			<div className="flex flex-col gap-y-6 h-72 md:h-[40rem] overflow-scroll">
 				{extraexpensesSortedByExpenseDateAscending.length > 0 &&
 					extraexpensesSortedByExpenseDateAscending.map((extraexpense: IExtraexpense, index: number) => (
 						<button
 							type="button"
 							key={extraexpense.id}
-							className="btn bg-transparent flex items-center justify-between w-full px-1.5 py-1.5 md:py-2.5 border-y border-y-[#313131] rounded-none"
+							className="flex flex-col gap-y-1 btn px-0 py-0 w-full rounded-none"
 							onClick={async (): Promise<void> => {
 								if (
 									confirm(
@@ -128,19 +128,21 @@ function ExtraexpensesDialog(): React.ReactNode {
 								}
 							}}
 						>
-							<span className="text-sm md:text-base text-[#B85C3D] text-left w-6 font-normal">{index + 1}</span>
-							<span className="text-sm md:text-base text-[#BEBEC2] text-left w-32 truncate">
-								{extraexpense.extraexpense_type}
-							</span>
+							<div className="flex items-center gap-x-2 w-full">
+								<span className="text-base text-[#66666F] font-medium">
+									{new Date(extraexpense.extraexpense_date).toDateString()}
+								</span>
 
-							<span className="text-sm md:text-base text-[#BEBEC2] text-left w-20 font-normal">
-								{extraexpense.extraexpense_amount_monthly.toFixed(2)}
-								{Utils.formatCurrencyFunction(budgetStore.currency)}
-							</span>
+								<hr className="flex-grow bg-[#66666F] text-[#66666F] h-[0.5px] border-none" />
+							</div>
 
-							<span className="text-sm md:text-base text-[#BEBEC2] text-left w-20 font-normal">
-								{new Date(extraexpense.extraexpense_date).toLocaleDateString()}
-							</span>
+							<div className="flex items-center justify-between w-full">
+								<span className="text-xl text-[#91919A] font-medium truncate">{extraexpense.extraexpense_type}</span>
+								<span className="text-xl text-[#B85C3D] font-medium truncate">
+									-{extraexpense.extraexpense_amount_monthly.toFixed(2)}
+									{Utils.formatCurrencyFunction(budgetStore.currency)}
+								</span>
+							</div>
 						</button>
 					))}
 			</div>

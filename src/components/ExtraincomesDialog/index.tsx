@@ -81,7 +81,7 @@ function ExtraincomesDialog(): React.ReactNode {
 						<button
 							type="button"
 							key={extraincome.id}
-							className="flex flex-col gap-y-1 btn w-full rounded-none"
+							className="flex flex-col gap-y-1 btn px-0 py-0 w-full rounded-none"
 							onClick={async (): Promise<void> => {
 								if (
 									confirm(

@@ -264,7 +264,20 @@ function Budget(): React.ReactNode {
 				)}
 			</nav>
 
-			<div className="flex flex-col gap-y-[18px] px-6 py-6">
+			{!authStore && (
+				<div className="flex items-center justify-center px-6 pt-6">
+					<div className="px-4 py-1.5 bg-[#fff2002a] rounded-md">
+						<p className="text-sm text-[#ffd500] font-bold">
+							Don't wanna signup? Try our{" "}
+							<a href="/demo" className="underline">
+								demo
+							</a>
+						</p>
+					</div>
+				</div>
+			)}
+
+			<div className="flex flex-col gap-y-[18px] px-6 p-6">
 				<div className="flex items-center justify-end">
 					{authStore && (
 						<button type="button" onClick={(): void => navigate("/settings")}>

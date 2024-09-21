@@ -13,8 +13,8 @@ export interface ExtraincomeTable {
 	budget_id: number;
 
 	type: string;
-	amountMonthly: number;
-	includesWeekends: boolean;
+	amount_monthly: number;
+	includes_weekends: boolean;
 	date: Date;
 
 	created_at: Date;
@@ -26,7 +26,7 @@ export interface ExtraexpenseTable {
 	budget_id: number;
 
 	type: string;
-	amountMonthly: number;
+	amount_monthly: number;
 	date: Date;
 
 	created_at: Date;
@@ -41,6 +41,6 @@ export const db: Dexie = new Dexie("Database") as Dexie & {
 
 db.version(1).stores({
 	budgets: "++id, currency, created_at, updated_at",
-	extraincomes: "++id, budget_id, type, amountMonthly, includesWeekends, date, created_at, updated_at",
-	extraexpenses: "++id, budget_id, type, amountMonthly, date, created_at, updated_at",
+	extraincomes: "++id, budget_id, type, amount_monthly, includes_weekends, date, created_at, updated_at",
+	extraexpenses: "++id, budget_id, type, amount_monthly, date, created_at, updated_at",
 });

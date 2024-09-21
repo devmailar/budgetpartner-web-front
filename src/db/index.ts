@@ -33,7 +33,11 @@ export interface ExtraexpenseTable {
 	updated_at: Date;
 }
 
-export const db: Dexie = new Dexie("Database") as Dexie & {
+export const db: Dexie & {
+	budgets: EntityTable<BudgetTable, "id">;
+	extraincomes: EntityTable<ExtraincomeTable, "id">;
+	extraexpenses: EntityTable<ExtraexpenseTable, "id">;
+} = new Dexie("Database") as Dexie & {
 	budgets: EntityTable<BudgetTable, "id">;
 	extraincomes: EntityTable<ExtraincomeTable, "id">;
 	extraexpenses: EntityTable<ExtraexpenseTable, "id">;

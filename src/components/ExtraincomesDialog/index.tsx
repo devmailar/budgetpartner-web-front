@@ -18,13 +18,13 @@ function ExtraincomesDialog(): React.ReactNode {
 
 	const totalExtraincomes: number = budgetStore?.extraincomes?.reduce(
 		(accumulator: number, extraincome: IExtraincome) => {
-			return accumulator + extraincome.extraincome_amount_monthly;
+			return accumulator + extraincome.amount_monthly;
 		},
 		0,
 	);
 
 	const extraincomesSortedByCreatedAtAscending: IExtraincome[] = [...budgetStore.extraincomes].sort((a, b) => {
-		return new Date(b.extraincome_date).getTime() - new Date(a.extraincome_date).getTime();
+		return new Date(b.date).getTime() - new Date(a.date).getTime();
 	});
 
 	return (
@@ -85,7 +85,7 @@ function ExtraincomesDialog(): React.ReactNode {
 							onClick={async (): Promise<void> => {
 								if (
 									confirm(
-										`Are you sure you want to remove income "${extraincome.extraincome_type}" with amount ${extraincome.extraincome_amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budgetStore.currency)}?`,
+										`Are you sure you want to remove income "${extraincome.type}" with amount ${extraincome.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budgetStore.currency)}?`,
 									)
 								) {
 									const removeExtraincomeResponse: Response = await fetch(
@@ -130,16 +130,16 @@ function ExtraincomesDialog(): React.ReactNode {
 						>
 							<div className="flex items-center gap-x-2 w-full">
 								<span className="text-base text-[#66666F] font-medium">
-									{new Date(extraincome.extraincome_date).toDateString()}
+									{new Date(extraincome.date).toDateString()}
 								</span>
 
 								<hr className="flex-grow bg-[#66666F] text-[#66666F] h-[0.5px] border-none" />
 							</div>
 
 							<div className="flex items-center justify-between w-full">
-								<span className="text-xl text-[#91919A] font-medium truncate">{extraincome.extraincome_type}</span>
+								<span className="text-xl text-[#91919A] font-medium truncate">{extraincome.type}</span>
 								<span className="text-xl text-[#007AFF] font-medium truncate">
-									+{extraincome.extraincome_amount_monthly.toFixed(2)}
+									+{extraincome.amount_monthly.toFixed(2)}
 									{Utils.formatCurrencyFunction(budgetStore.currency)}
 								</span>
 							</div>

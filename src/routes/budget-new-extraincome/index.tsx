@@ -26,10 +26,10 @@ function BudgetNewExtraincome(): React.ReactNode {
 			setDisableSubmit(true);
 
 			const form: FormData = new FormData(event.currentTarget);
-			const extraincome_type: string = form.get("extraincome_type") as string;
-			const extraincome_amount_monthly: number = Number.parseFloat(form.get("extraincome_amount_monthly") as string);
+			const type: string = form.get("type") as string;
+			const amount_monthly: number = Number.parseFloat(form.get("amount_monthly") as string);
 
-			if (extraincome_amount_monthly < 1 || !extraincome_amount_monthly) {
+			if (amount_monthly < 1 || !amount_monthly) {
 				alert("Invalid income amount");
 
 				setTimeout((): void => setDisableSubmit(false), 2500);
@@ -42,10 +42,10 @@ function BudgetNewExtraincome(): React.ReactNode {
 				headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
 				body: JSON.stringify({
 					budget_id: budgetStore.id,
-					extraincome_type: extraincome_type,
-					extraincome_amount_monthly: extraincome_amount_monthly,
-					extraincome_includes_weekends: false,
-					extraincome_date: extraincomeDate,
+					type: type,
+					amount_monthly: amount_monthly,
+					includes_weekends: false,
+					date: extraincomeDate,
 				}),
 			});
 
@@ -132,8 +132,8 @@ function BudgetNewExtraincome(): React.ReactNode {
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
 							type="text"
-							name="extraincome_type"
-							id="extraincome_type"
+							name="type"
+							id="type"
 							placeholder="Income"
 							required
 						/>
@@ -145,8 +145,8 @@ function BudgetNewExtraincome(): React.ReactNode {
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
 							type="text"
-							name="extraincome_amount_monthly"
-							id="extraincome_amount_monthly"
+							name="amount_monthly"
+							id="amount_monthly"
 							placeholder="0.00"
 							required
 						/>
@@ -177,8 +177,8 @@ function BudgetNewExtraincome(): React.ReactNode {
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] outline-none"
 							type="date"
-							name="extraincome_date"
-							id="extraincome_date"
+							name="date"
+							id="date"
 							value={format(extraincomeDate, "yyyy-MM-dd")}
 							required
 							onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setExtraincomeDate(new Date(e.target.value))}

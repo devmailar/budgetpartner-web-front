@@ -26,9 +26,9 @@ function Tour(): React.ReactNode {
 			setDisableSubmit(true);
 
 			const form: FormData = new FormData(event.currentTarget);
-			const extraincome_amount_monthly: number = Number.parseFloat(form.get("extraincome_amount_monthly") as string);
+			const amount_monthly: number = Number.parseFloat(form.get("amount_monthly") as string);
 
-			if (extraincome_amount_monthly < 1 || !extraincome_amount_monthly) {
+			if (amount_monthly < 1 || !amount_monthly) {
 				alert("Invalid income amount");
 
 				setTimeout((): void => setDisableSubmit(false), 2500);
@@ -64,10 +64,10 @@ function Tour(): React.ReactNode {
 				headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
 				body: JSON.stringify({
 					budget_id: currentBudget.id,
-					extraincome_type: "Salary",
-					extraincome_amount_monthly: extraincome_amount_monthly,
-					extraincome_includes_weekends: false,
-					extraincome_date: new Date(),
+					type: "Salary",
+					amount_monthly: amount_monthly,
+					includes_weekends: false,
+					date: new Date(),
 				}),
 			});
 
@@ -187,8 +187,8 @@ function Tour(): React.ReactNode {
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
 							type="text"
-							name="extraincome_amount_monthly"
-							id="extraincome_amount_monthly"
+							name="amount_monthly"
+							id="amount_monthly"
 							placeholder="0.00"
 							required
 						/>

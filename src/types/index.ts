@@ -65,4 +65,5 @@ export interface IRootState {
 	budget: IBudget;
 	budgets: IBudget[];
 	dialog: IDialog;
+	demo: boolean;
 }

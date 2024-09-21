@@ -3,7 +3,6 @@ import { eachDayOfInterval, endOfMonth, isWeekend, startOfMonth } from "date-fns
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import "swiper/css";
 import ImageGrowth from "../../assets/growth.webp";
 import ExtraexpensesDialog from "../../components/ExtraexpensesDialog";
 import ExtraincomesDialog from "../../components/ExtraincomesDialog";
@@ -11,6 +10,7 @@ import Switch from "../../components/Switch";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
+import { setDemo } from "../../stores/demo";
 import { setDialogStore } from "../../stores/dialog";
 import { setUserStore } from "../../stores/user";
 import type {
@@ -31,6 +31,7 @@ function Budget(): React.ReactNode {
 	const authStore: string = useSelector((state: IRootState) => state.auth);
 	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
 	const dialogStore: IDialog = useSelector((state: IRootState) => state.dialog);
+	const demoStore: IDialog = useSelector((state: IRootState) => state.demo);
 
 	const [dailyBudget, setDailyBudget] = React.useState<number>(0);
 	const [monthlyBudget, setMonthlyBudget] = React.useState<number>(0);
@@ -265,16 +266,38 @@ function Budget(): React.ReactNode {
 			</nav>
 
 			{!authStore && (
-				<div className="flex items-center justify-center px-6 pt-6">
-					<div className="px-4 py-1.5 bg-[#fff2002a] rounded-md">
-						<p className="text-sm text-[#ffd500] font-bold">
-							Don't wanna signup? Try our{" "}
-							<a href="/demo" className="underline">
-								demo
-							</a>
-						</p>
-					</div>
-				</div>
+				<>
+					{demoStore ? (
+						<div className="flex items-center justify-center px-6 pt-6">
+							<div className="px-4 py-1.5 bg-[#ff00002a] rounded-md">
+								<p className="text-sm text-[#ff0000] font-bold">You are on Demo</p>
+							</div>
+						</div>
+					) : (
+						<div className="flex items-center justify-center px-6 pt-6">
+							<div className="px-4 py-1.5 bg-[#fff2002a] rounded-md">
+								<p className="text-sm text-[#ffd500] font-bold">
+									Don't wanna signup? Try our{" "}
+									<button
+										type="button"
+										className="underline font-normal"
+										onClick={(): void => {
+											try {
+												dispatch(setDemo(true));
+											} catch (error: unknown) {
+												if (error instanceof Error) {
+													alert(error.message);
+												}
+											}
+										}}
+									>
+										<span>Demo</span>
+									</button>
+								</p>
+							</div>
+						</div>
+					)}
+				</>
 			)}
 
 			<div className="flex flex-col gap-y-[18px] px-6 p-6">

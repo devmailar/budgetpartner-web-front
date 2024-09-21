@@ -6,6 +6,7 @@ import "./main.css";
 import { authStore } from "./stores/auth/index.tsx";
 import { budgetStore } from "./stores/budget/index.tsx";
 import { budgetsStore } from "./stores/budgets/index.tsx";
+import { demoStore } from "./stores/demo/index.tsx";
 import { dialogStore } from "./stores/dialog/index.tsx";
 import { userStore } from "./stores/user/index.tsx";
 
@@ -17,6 +18,7 @@ const store: Store = configureStore({
 		user: userStore.reducer,
 		budget: budgetStore.reducer,
 		budgets: budgetsStore.reducer,
+		demo: demoStore.reducer,
 		dialog: dialogStore.reducer,
 	},
 });

@@ -18,13 +18,13 @@ function ExtraexpensesDialog(): React.ReactNode {
 
 	const totalExtraexpenses: number = budgetStore?.extraexpenses?.reduce(
 		(accumulator: number, extraexpense: IExtraexpense) => {
-			return accumulator + extraexpense.extraexpense_amount_monthly;
+			return accumulator + extraexpense.amount_monthly;
 		},
 		0,
 	);
 
 	const extraexpensesSortedByExpenseDateAscending: IExtraexpense[] = [...budgetStore.extraexpenses].sort((a, b) => {
-		return new Date(b.extraexpense_date).getTime() - new Date(a.extraexpense_date).getTime();
+		return new Date(b.date).getTime() - new Date(a.date).getTime();
 	});
 
 	return (
@@ -85,7 +85,7 @@ function ExtraexpensesDialog(): React.ReactNode {
 							onClick={async (): Promise<void> => {
 								if (
 									confirm(
-										`Are you sure you want to remove expense "${extraexpense.extraexpense_type}" with amount ${extraexpense.extraexpense_amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budgetStore.currency)}?`,
+										`Are you sure you want to remove expense "${extraexpense.type}" with amount ${extraexpense.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budgetStore.currency)}?`,
 									)
 								) {
 									const removeExtraexpenseResponse: Response = await fetch(
@@ -130,16 +130,16 @@ function ExtraexpensesDialog(): React.ReactNode {
 						>
 							<div className="flex items-center gap-x-2 w-full">
 								<span className="text-base text-[#66666F] font-medium">
-									{new Date(extraexpense.extraexpense_date).toDateString()}
+									{new Date(extraexpense.date).toDateString()}
 								</span>
 
 								<hr className="flex-grow bg-[#66666F] text-[#66666F] h-[0.5px] border-none" />
 							</div>
 
 							<div className="flex items-center justify-between w-full">
-								<span className="text-xl text-[#91919A] font-medium truncate">{extraexpense.extraexpense_type}</span>
+								<span className="text-xl text-[#91919A] font-medium truncate">{extraexpense.type}</span>
 								<span className="text-xl text-[#B85C3D] font-medium truncate">
-									-{extraexpense.extraexpense_amount_monthly.toFixed(2)}
+									-{extraexpense.amount_monthly.toFixed(2)}
 									{Utils.formatCurrencyFunction(budgetStore.currency)}
 								</span>
 							</div>

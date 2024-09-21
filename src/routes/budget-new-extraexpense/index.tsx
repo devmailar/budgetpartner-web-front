@@ -26,10 +26,10 @@ function BudgetNewExtraexpense(): React.ReactNode {
 			setDisableSubmit(true);
 
 			const form: FormData = new FormData(event.currentTarget);
-			const extraexpense_type: string = form.get("extraexpense_type") as string;
-			const extraexpense_amount_monthly: number = Number.parseFloat(form.get("extraexpense_amount_monthly") as string);
+			const type: string = form.get("type") as string;
+			const amount_monthly: number = Number.parseFloat(form.get("amount_monthly") as string);
 
-			if (extraexpense_amount_monthly < 1 || !extraexpense_amount_monthly) {
+			if (amount_monthly < 1 || !amount_monthly) {
 				alert("Invalid expense amount");
 
 				setTimeout((): void => setDisableSubmit(false), 2500);
@@ -42,9 +42,9 @@ function BudgetNewExtraexpense(): React.ReactNode {
 				headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
 				body: JSON.stringify({
 					budget_id: budgetStore.id,
-					extraexpense_type: extraexpense_type,
-					extraexpense_amount_monthly: extraexpense_amount_monthly,
-					extraexpense_date: extraexpenseDate,
+					type: type,
+					amount_monthly: amount_monthly,
+					date: extraexpenseDate,
 				}),
 			});
 
@@ -131,8 +131,8 @@ function BudgetNewExtraexpense(): React.ReactNode {
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
 							type="text"
-							name="extraexpense_type"
-							id="extraexpense_type"
+							name="type"
+							id="type"
 							placeholder="Expense"
 							required
 						/>
@@ -144,8 +144,8 @@ function BudgetNewExtraexpense(): React.ReactNode {
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
 							type="text"
-							name="extraexpense_amount_monthly"
-							id="extraexpense_amount_monthly"
+							name="amount_monthly"
+							id="amount_monthly"
 							placeholder="0.00"
 							required
 						/>
@@ -176,8 +176,8 @@ function BudgetNewExtraexpense(): React.ReactNode {
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] outline-none"
 							type="date"
-							name="extraexpense_date"
-							id="extraexpense_date"
+							name="date"
+							id="date"
 							value={format(extraexpenseDate, "yyyy-MM-dd")}
 							required
 							onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setExtraexpenseDate(new Date(e.target.value))}

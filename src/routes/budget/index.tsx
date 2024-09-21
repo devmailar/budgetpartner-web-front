@@ -173,7 +173,7 @@ function Budget(): React.ReactNode {
 
 			const totalExtraincomes: number = budgetStore.extraincomes.reduce(
 				(accumulator: number, extraincome: IExtraincome) => {
-					return accumulator + extraincome.extraincome_amount_monthly;
+					return accumulator + extraincome.amount_monthly;
 				},
 				0,
 			);
@@ -184,7 +184,7 @@ function Budget(): React.ReactNode {
 
 			const totalExtraexpenses: number = budgetStore.extraexpenses.reduce(
 				(accumulator: number, extraexpense: IExtraexpense) => {
-					return accumulator + extraexpense.extraexpense_amount_monthly;
+					return accumulator + extraexpense.amount_monthly;
 				},
 				0,
 			);
@@ -199,7 +199,7 @@ function Budget(): React.ReactNode {
 			});
 
 			const includesWeekends: boolean = budgetStore.extraincomes.some((extraincome: IExtraincome) => {
-				return extraincome.extraincome_includes_weekends;
+				return extraincome.includes_weekends;
 			});
 
 			const daysInMonth: Date[] = includesWeekends

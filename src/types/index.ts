@@ -17,10 +17,10 @@ export interface IUser {
 export interface IExtraincome {
 	id: number;
 	user_id: number;
-	extraincome_type: string;
-	extraincome_amount_monthly: number;
-	extraincome_includes_weekends: boolean;
-	extraincome_date: Date;
+	type: string;
+	amount_monthly: number;
+	includes_weekends: boolean;
+	date: Date;
 	created_at: Date;
 	updated_at: Date;
 }
@@ -28,9 +28,9 @@ export interface IExtraincome {
 export interface IExtraexpense {
 	id: number;
 	user_id: number;
-	extraexpense_type: string;
-	extraexpense_amount_monthly: number;
-	extraexpense_date: Date;
+	type: string;
+	amount_monthly: number;
+	date: Date;
 	created_at: Date;
 	updated_at: Date;
 }

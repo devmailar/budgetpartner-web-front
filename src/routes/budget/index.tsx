@@ -31,7 +31,7 @@ function Budget(): React.ReactNode {
 	const authStore: string = useSelector((state: IRootState) => state.auth);
 	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
 	const dialogStore: IDialog = useSelector((state: IRootState) => state.dialog);
-	const demoStore: IDialog = useSelector((state: IRootState) => state.demo);
+	const demoStore: boolean = useSelector((state: IRootState) => state.demo);
 
 	const [dailyBudget, setDailyBudget] = React.useState<number>(0);
 	const [monthlyBudget, setMonthlyBudget] = React.useState<number>(0);

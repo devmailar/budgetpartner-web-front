@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImagePiggy from "../../assets/piggy.webp";
+import { type BudgetTable, db } from "../../db";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
@@ -16,6 +17,7 @@ function Tour(): React.ReactNode {
 	const navigate: NavigateFunction = useNavigate();
 
 	const authStore: string = useSelector((state: IRootState) => state.auth);
+	const demoStore: boolean = useSelector((state: IRootState) => state.demo);
 
 	const [disableSubmit, setDisableSubmit] = React.useState<boolean>(false);
 
@@ -34,6 +36,30 @@ function Tour(): React.ReactNode {
 				setTimeout((): void => setDisableSubmit(false), 2500);
 
 				return;
+			}
+
+			if (demoStore) {
+				const budgets: BudgetTable[] = await db.budgets.toArray();
+
+				const currentBudget: BudgetTable | undefined = budgets.find((budget: BudgetTable): boolean => {
+					return new Date(budget.created_at).getMonth() === new Date().getMonth();
+				});
+
+				if (!currentBudget) {
+					throw new Error("No currentBudget");
+				}
+
+				await db.extraincomes.add({
+					budget_id: currentBudget.id,
+					type: "First income",
+					amount_monthly: amount_monthly,
+					includes_weekends: false,
+					date: new Date(),
+					created_at: new Date(),
+					updated_at: new Date(),
+				});
+
+				return navigate("/");
 			}
 
 			const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -64,7 +90,7 @@ function Tour(): React.ReactNode {
 				headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
 				body: JSON.stringify({
 					budget_id: currentBudget.id,
-					type: "Salary",
+					type: "First income",
 					amount_monthly: amount_monthly,
 					includes_weekends: false,
 					date: new Date(),
@@ -116,28 +142,60 @@ function Tour(): React.ReactNode {
 	};
 
 	React.useEffect((): void => {
-		const handleCreateBudget = async (): Promise<void> => {
-			try {
-				const createBudgetResponse: Response = await fetch(`${Utils.baseUrl}/budgets/create`, {
-					method: "POST",
-					headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
-					body: JSON.stringify({ date: new Date() }),
-				});
+		try {
+			if (demoStore) {
+				const handleCreateDemoBudget = async (): Promise<void> => {
+					try {
+						await db.open();
 
-				if (!createBudgetResponse.ok) {
-					const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
+						const budgets: BudgetTable[] = await db.budgets.toArray();
 
-					throw new Error(createBudgetResponseError.errorMessage);
-				}
-			} catch (error: unknown) {
-				if (error instanceof Error) {
-					alert(error.message);
-				}
+						if (budgets.length) {
+							navigate("/");
+
+							return;
+						}
+
+						await db.budgets.add({ currency: "EUR", created_at: new Date(), updated_at: new Date() });
+					} catch (error: unknown) {
+						if (error instanceof Error) {
+							alert(error.message);
+						}
+					}
+				};
+
+				handleCreateDemoBudget();
+
+				return;
 			}
-		};
 
-		handleCreateBudget();
-	}, [authStore]);
+			const handleCreateBudget = async (): Promise<void> => {
+				try {
+					const createBudgetResponse: Response = await fetch(`${Utils.baseUrl}/budgets/create`, {
+						method: "POST",
+						headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
+						body: JSON.stringify({ date: new Date() }),
+					});
+
+					if (!createBudgetResponse.ok) {
+						const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
+
+						throw new Error(createBudgetResponseError.errorMessage);
+					}
+				} catch (error: unknown) {
+					if (error instanceof Error) {
+						alert(error.message);
+					}
+				}
+			};
+
+			handleCreateBudget();
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				alert(error.message);
+			}
+		}
+	}, [demoStore, authStore, navigate]);
 
 	return (
 		<div className="h-screen animate__animated animate__slideInRight animate__faster">

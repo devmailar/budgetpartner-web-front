@@ -7,6 +7,7 @@ import ImageGrowth from "../../assets/growth.webp";
 import ExtraexpensesDialog from "../../components/ExtraexpensesDialog";
 import ExtraincomesDialog from "../../components/ExtraincomesDialog";
 import Switch from "../../components/Switch";
+import { type ExtraexpenseTable, type ExtraincomeTable, db } from "../../db";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
@@ -168,6 +169,73 @@ function Budget(): React.ReactNode {
 
 	React.useEffect((): void => {
 		try {
+			if (demoStore) {
+				const handleDemo = async (): Promise<void> => {
+					try {
+						const extraincomes: ExtraincomeTable[] = await db.extraincomes.toArray();
+						const extraexpenses: ExtraexpenseTable[] = await db.extraexpenses.toArray();
+
+						const totalExtraincomes: number = extraincomes.reduce(
+							(accumulator: number, extraincome: ExtraincomeTable) => {
+								return accumulator + extraincome.amount_monthly;
+							},
+							0,
+						);
+
+						if (Number.isNaN(totalExtraincomes)) {
+							return;
+						}
+
+						const totalExtraexpenses: number = extraexpenses.reduce(
+							(accumulator: number, extraexpense: ExtraexpenseTable) => {
+								return accumulator + extraexpense.amount_monthly;
+							},
+							0,
+						);
+
+						if (Number.isNaN(totalExtraexpenses)) {
+							return;
+						}
+
+						const currentDaysInMonth: Date[] = eachDayOfInterval({
+							start: startOfMonth(new Date()),
+							end: endOfMonth(new Date()),
+						});
+
+						const includesWeekends: boolean = extraincomes.some((extraincome: ExtraincomeTable) => {
+							return extraincome.includes_weekends;
+						});
+
+						const daysInMonth: Date[] = includesWeekends
+							? currentDaysInMonth
+							: currentDaysInMonth.filter((day: Date) => {
+									return !isWeekend(day);
+								});
+
+						const weekdaysInMonth: Date[] = daysInMonth.filter((day: Date) => {
+							return !isWeekend(day);
+						});
+
+						const dailyBudgetAmount: number = includesWeekends
+							? (totalExtraincomes - totalExtraexpenses) / daysInMonth.length
+							: (totalExtraincomes - totalExtraexpenses) / weekdaysInMonth.length;
+
+						const monthlyBudgetAmount: number = totalExtraincomes - totalExtraexpenses;
+
+						setDailyBudget(dailyBudgetAmount);
+						setMonthlyBudget(monthlyBudgetAmount);
+					} catch (error: unknown) {
+						if (error instanceof Error) {
+							alert(error.message);
+						}
+					}
+				};
+
+				handleDemo();
+
+				return;
+			}
+
 			if (Object.keys(budgetStore).length === 0) {
 				return;
 			}
@@ -226,7 +294,7 @@ function Budget(): React.ReactNode {
 				alert(error.message);
 			}
 		}
-	}, [budgetStore]);
+	}, [demoStore, budgetStore]);
 
 	return (
 		<div className="h-screen animate__animated animate__slideInLeft animate__faster">
@@ -284,6 +352,7 @@ function Budget(): React.ReactNode {
 										onClick={(): void => {
 											try {
 												dispatch(setDemo(true));
+												navigate("/tour");
 											} catch (error: unknown) {
 												if (error instanceof Error) {
 													alert(error.message);

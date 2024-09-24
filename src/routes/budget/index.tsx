@@ -352,6 +352,9 @@ function Budget(): React.ReactNode {
 										onClick={(): void => {
 											try {
 												dispatch(setDemo(true));
+
+												localStorage.setItem("demo", "true");
+
 												navigate("/tour");
 											} catch (error: unknown) {
 												if (error instanceof Error) {

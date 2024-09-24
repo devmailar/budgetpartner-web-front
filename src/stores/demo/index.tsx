@@ -5,8 +5,6 @@ export const demoStore: Slice = createSlice({
 	initialState: false,
 	reducers: {
 		setDemo: (_state: unknown, action: PayloadAction<boolean>) => {
-			localStorage.setItem("demo", action.payload.toString());
-
 			return action.payload;
 		},
 	},

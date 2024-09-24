@@ -74,9 +74,12 @@ function AppNavigator(): React.ReactNode {
 
 	dispatch(setAuthStore(auth));
 
-	const demo: boolean = Boolean(localStorage.getItem("demo") ?? "");
-
-	dispatch(setDemo(demo));
+	const demo: string | null = localStorage.getItem("demo");
+	if (!demo) {
+		dispatch(setDemo(false));
+	} else {
+		dispatch(setDemo(Boolean(demo)));
+	}
 
 	return <RouterProvider router={router} />;
 }

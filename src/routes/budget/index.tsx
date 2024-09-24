@@ -7,7 +7,6 @@ import ImageGrowth from "../../assets/growth.webp";
 import ExtraexpensesDialog from "../../components/ExtraexpensesDialog";
 import ExtraincomesDialog from "../../components/ExtraincomesDialog";
 import Switch from "../../components/Switch";
-import { type ExtraexpenseTable, type ExtraincomeTable, db } from "../../db";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
@@ -258,6 +257,8 @@ function Budget(): React.ReactNode {
 					<button
 						type="button"
 						onClick={(): void => {
+							localStorage.removeItem("demo");
+
 							navigate("/login");
 						}}
 					>

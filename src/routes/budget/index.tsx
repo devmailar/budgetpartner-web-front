@@ -259,6 +259,8 @@ function Budget(): React.ReactNode {
 						onClick={(): void => {
 							localStorage.removeItem("demo");
 
+							dispatch(setDemo(false));
+
 							navigate("/login");
 						}}
 					>

@@ -3,13 +3,13 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImagePiggy from "../../assets/piggy.webp";
-import { type BudgetTable, db } from "../../db";
+import { db } from "../../db";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
 import { setDialogStore } from "../../stores/dialog";
 import { setUserStore } from "../../stores/user";
-import type { IBudget, IResponseError, IRootState, IUserResponse } from "../../types";
+import type { IBudget, IExtraincome, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 function Tour(): React.ReactNode {
@@ -39,27 +39,71 @@ function Tour(): React.ReactNode {
 			}
 
 			if (demoStore) {
-				const budgets: BudgetTable[] = await db.budgets.toArray();
+				try {
+					const budgets: IBudget[] = await db.budgets.toArray();
 
-				const currentBudget: BudgetTable | undefined = budgets.find((budget: BudgetTable): boolean => {
-					return new Date(budget.created_at).getMonth() === new Date().getMonth();
-				});
+					if (!budgets.length) {
+						throw new Error("No budgets");
+					}
 
-				if (!currentBudget) {
-					throw new Error("No currentBudget");
+					const currentBudget: IBudget | undefined = budgets.find((budget: IBudget): boolean => {
+						return new Date(budget.created_at).getMonth() === new Date().getMonth();
+					});
+
+					if (!currentBudget) {
+						throw new Error("No currentBudget");
+					}
+
+					await db.extraincomes.add({
+						user_id: 0,
+						type: "First income",
+						amount_monthly: amount_monthly,
+						includes_weekends: false,
+						date: new Date(),
+						created_at: new Date(),
+						updated_at: new Date(),
+					});
+
+					const budgetsAgain: IBudget[] = await db.budgets.toArray();
+
+					if (!budgetsAgain.length) {
+						throw new Error("No budgetsAgain");
+					}
+
+					const currentBudgetAgain: IBudget | undefined = budgetsAgain.find((budget: IBudget): boolean => {
+						return new Date(budget.created_at).getMonth() === new Date().getMonth();
+					});
+
+					if (!currentBudgetAgain) {
+						throw new Error("No currentBudgetAgain");
+					}
+
+					const extraincomes: IExtraincome[] = await db.extraincomes.toArray();
+
+					if (!budgets.length) {
+						throw new Error("No extraincomes");
+					}
+
+					dispatch(
+						setBudgetStore({
+							id: currentBudgetAgain.id,
+							user_id: currentBudgetAgain.user_id,
+							currency: currentBudgetAgain.currency,
+							extraincomes: extraincomes,
+							extraexpenses: currentBudgetAgain.extraexpenses,
+							created_at: new Date(currentBudgetAgain.created_at).toISOString(),
+							updated_at: new Date(currentBudgetAgain.updated_at).toISOString(),
+						}),
+					);
+
+					return navigate("/");
+				} catch (error: unknown) {
+					if (error instanceof Error) {
+						alert(error.message);
+
+						setTimeout(() => setDisableSubmit(false), 2250);
+					}
 				}
-
-				await db.extraincomes.add({
-					budget_id: currentBudget.id,
-					type: "First income",
-					amount_monthly: amount_monthly,
-					includes_weekends: false,
-					date: new Date(),
-					created_at: new Date(),
-					updated_at: new Date(),
-				});
-
-				return navigate("/");
 			}
 
 			const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -148,7 +192,7 @@ function Tour(): React.ReactNode {
 					try {
 						await db.open();
 
-						const budgets: BudgetTable[] = await db.budgets.toArray();
+						const budgets: IBudget[] = await db.budgets.toArray();
 
 						if (budgets.length) {
 							navigate("/");
@@ -156,7 +200,14 @@ function Tour(): React.ReactNode {
 							return;
 						}
 
-						await db.budgets.add({ currency: "EUR", created_at: new Date(), updated_at: new Date() });
+						await db.budgets.add({
+							user_id: 0,
+							currency: "EUR",
+							extraincomes: [],
+							extraexpenses: [],
+							created_at: new Date(),
+							updated_at: new Date(),
+						});
 					} catch (error: unknown) {
 						if (error instanceof Error) {
 							alert(error.message);

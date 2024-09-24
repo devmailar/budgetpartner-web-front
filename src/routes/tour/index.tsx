@@ -251,15 +251,6 @@ function Tour(): React.ReactNode {
 	return (
 		<div className="h-screen animate__animated animate__slideInRight animate__faster">
 			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
-				<button
-					type="button"
-					onClick={(): void => {
-						navigate("/");
-					}}
-				>
-					<span className="text-lg text-[#007AFF] font-medium">Back</span>
-				</button>
-
 				<h2 className="text-lg text-white font-medium">BudgetPartner</h2>
 
 				<button

@@ -23,6 +23,7 @@ import type {
 	IUserResponse,
 } from "../../types";
 import { Utils } from "../../utils";
+import { db } from "../../db";
 
 function Budget(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
@@ -257,6 +258,8 @@ function Budget(): React.ReactNode {
 					<button
 						type="button"
 						onClick={(): void => {
+							db.delete();
+
 							localStorage.removeItem("demo");
 
 							dispatch(setDemo(false));

@@ -7,6 +7,7 @@ import ImageGrowth from "../../assets/growth.webp";
 import ExtraexpensesDialog from "../../components/ExtraexpensesDialog";
 import ExtraincomesDialog from "../../components/ExtraincomesDialog";
 import Switch from "../../components/Switch";
+import { db } from "../../db";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
@@ -23,7 +24,6 @@ import type {
 	IUserResponse,
 } from "../../types";
 import { Utils } from "../../utils";
-import { db } from "../../db";
 
 function Budget(): React.ReactNode {
 	const dispatch: Dispatch = useDispatch();
@@ -153,8 +153,6 @@ function Budget(): React.ReactNode {
 			};
 
 			if (!authStore) {
-				dispatch(setBudgetStore({}));
-				dispatch(setBudgetsStore([]));
 				dispatch(setUserStore({}));
 				return;
 			}
@@ -261,6 +259,11 @@ function Budget(): React.ReactNode {
 							db.delete();
 
 							localStorage.removeItem("demo");
+
+							dispatch(setAuthStore(""));
+							dispatch(setBudgetStore({}));
+							dispatch(setBudgetsStore([]));
+							dispatch(setUserStore({}));
 
 							dispatch(setDemo(false));
 

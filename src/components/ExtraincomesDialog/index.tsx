@@ -151,7 +151,7 @@ function ExtraincomesDialog(): React.ReactNode {
 								}}
 							>
 								<div className="flex items-center gap-x-2 w-full">
-									<span className="text-xl text-[#66666F] font-normal">
+									<span className="text-lg text-[#66666F] font-normal">
 										{new Date(extraincome.date).toDateString()}
 									</span>
 

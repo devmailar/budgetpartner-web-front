@@ -3,7 +3,6 @@ import { eachDayOfInterval, endOfMonth, isWeekend, startOfMonth } from "date-fns
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import "swiper/css";
 import ImageGrowth from "../../assets/growth.webp";
 import ExtraexpensesDialog from "../../components/ExtraexpensesDialog";
 import ExtraincomesDialog from "../../components/ExtraincomesDialog";

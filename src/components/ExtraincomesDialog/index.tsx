@@ -28,7 +28,7 @@ function ExtraincomesDialog(): React.ReactNode {
 	});
 
 	return (
-		<div className="animate__animated animate__slideInUp animate__faster flex flex-col gap-y-6 absolute bottom-0 bg-black w-full h-[80%] md:h-[90%] px-7 pb-5 border border-[#212121] rounded-3xl">
+		<div className="animate__animated animate__slideInLeft animate__faster flex flex-col gap-y-6 absolute bottom-0 bg-black w-full h-[80%] md:h-[90%] px-7 pb-5 border border-[#212121] rounded-3xl">
 			<button
 				type="button"
 				className="flex items-center justify-center pt-[18px]"
@@ -97,7 +97,7 @@ function ExtraincomesDialog(): React.ReactNode {
 					</span>
 				</div>
 
-				<div className="flex flex-col gap-y-6 h-72 md:h-[40rem] overflow-scroll">
+				<div className="flex flex-col gap-y-4 h-72 md:h-[40rem] overflow-scroll">
 					{extraincomesSortedByCreatedAtAscending.length > 0 &&
 						extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome, index: number) => (
 							<button
@@ -159,8 +159,8 @@ function ExtraincomesDialog(): React.ReactNode {
 								</div>
 
 								<div className="flex items-center justify-between w-full">
-									<span className="text-xl text-[#91919A] font-medium truncate">{extraincome.type}</span>
-									<span className="text-xl text-[#007AFF] font-medium truncate">
+									<span className="text-lg text-[#91919A] font-medium truncate">{extraincome.type}</span>
+									<span className="text-lg text-[#007AFF] font-medium truncate">
 										+{extraincome.amount_monthly.toFixed(2)}
 										{Utils.formatCurrencyFunction(budgetStore.currency)}
 									</span>

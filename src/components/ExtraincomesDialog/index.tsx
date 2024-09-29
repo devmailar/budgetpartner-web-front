@@ -90,8 +90,8 @@ function ExtraincomesDialog(): React.ReactNode {
 
 			<div className="flex flex-col gap-y-3">
 				<div className="flex items-center justify-between">
-					<span className="text-2xl text-white font-semibold">Total Income</span>
-					<span className="text-2xl text-white font-bold">
+					<span className="text-xl text-white font-semibold">Total Income</span>
+					<span className="text-xl text-white font-bold">
 						{totalExtraincomes ? totalExtraincomes.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "···"}
 						{Utils.formatCurrencyFunction(budgetStore.currency)}
 					</span>

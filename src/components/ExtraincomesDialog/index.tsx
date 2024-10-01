@@ -28,7 +28,7 @@ function ExtraincomesDialog(): React.ReactNode {
 	});
 
 	return (
-		<div className="animate__animated animate__slideInLeft animate__faster flex flex-col gap-y-6 absolute bottom-0 bg-black w-full h-[80%] md:h-[90%] px-7 pb-5 border border-[#212121] rounded-3xl">
+		<div className="animate__animated animate__slideInBottom animate__faster flex flex-col gap-y-6 absolute bottom-0 bg-black w-full h-[80%] md:h-[95%] px-7 pb-5 border border-[#212121] rounded-3xl">
 			<button
 				type="button"
 				className="flex items-center justify-center pt-[18px]"

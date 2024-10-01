@@ -1,8 +1,8 @@
-import type { Dispatch } from "@reduxjs/toolkit";
-import { eachDayOfInterval, endOfMonth, isWeekend, startOfMonth } from "date-fns";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { type NavigateFunction, useNavigate } from "react-router-dom";
+import type * as Redux from "@reduxjs/toolkit";
+import * as Datefns from "date-fns";
+import * as React from "react";
+import * as ReactRedux from "react-redux";
+import * as ReactRouter from "react-router-dom";
 import ImageGrowth from "../../assets/growth.webp";
 import ExtraexpensesDialog from "../../components/ExtraexpensesDialog";
 import ExtraincomesDialog from "../../components/ExtraincomesDialog";
@@ -23,13 +23,13 @@ import type {
 } from "../../types";
 import { Utils } from "../../utils";
 
-function Budget(): React.ReactNode {
-	const dispatch: Dispatch = useDispatch();
-	const navigate: NavigateFunction = useNavigate();
+const Budget = (): React.ReactNode => {
+	const dispatch: Redux.Dispatch = ReactRedux.useDispatch();
+	const navigate: ReactRouter.NavigateFunction = ReactRouter.useNavigate();
 
-	const authStore: string = useSelector((state: IRootState) => state.auth);
-	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
-	const dialogStore: IDialog = useSelector((state: IRootState) => state.dialog);
+	const authStore: string = ReactRedux.useSelector((state: IRootState) => state.auth);
+	const budgetStore: IBudget = ReactRedux.useSelector((state: IRootState) => state.budget);
+	const dialogStore: IDialog = ReactRedux.useSelector((state: IRootState) => state.dialog);
 
 	const [dailyBudget, setDailyBudget] = React.useState<number>(0);
 	const [monthlyBudget, setMonthlyBudget] = React.useState<number>(0);
@@ -192,9 +192,9 @@ function Budget(): React.ReactNode {
 				return;
 			}
 
-			const currentDaysInMonth: Date[] = eachDayOfInterval({
-				start: startOfMonth(new Date()),
-				end: endOfMonth(new Date()),
+			const currentDaysInMonth: Date[] = Datefns.eachDayOfInterval({
+				start: Datefns.startOfMonth(new Date()),
+				end: Datefns.endOfMonth(new Date()),
 			});
 
 			const includesWeekends: boolean = budgetStore.extraincomes.some((extraincome: IExtraincome) => {
@@ -204,11 +204,11 @@ function Budget(): React.ReactNode {
 			const daysInMonth: Date[] = includesWeekends
 				? currentDaysInMonth
 				: currentDaysInMonth.filter((day: Date) => {
-						return !isWeekend(day);
+						return !Datefns.isWeekend(day);
 					});
 
 			const weekdaysInMonth: Date[] = daysInMonth.filter((day: Date) => {
-				return !isWeekend(day);
+				return !Datefns.isWeekend(day);
 			});
 
 			const dailyBudgetAmount: number = includesWeekends
@@ -314,7 +314,7 @@ function Budget(): React.ReactNode {
 					<img src={ImageGrowth} alt={ImageGrowth} width={77} height={77} loading="lazy" fetchPriority="high" />
 
 					<div className="flex flex-col gap-1">
-						<h1 className="font-base font-semibold text-[#007AFF]">We saved Today</h1>
+						<h1 className="font-base font-semibold text-[#007AFF]">We saved Everyday</h1>
 
 						<span className="text-[28px] font-bold text-white">
 							{" "}
@@ -407,6 +407,6 @@ function Budget(): React.ReactNode {
 			{dialogStore.extraexpenses && <ExtraexpensesDialog />}
 		</div>
 	);
-}
+};
 
 export default Budget;

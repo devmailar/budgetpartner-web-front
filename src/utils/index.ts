@@ -14,7 +14,7 @@ const monthsList: string[] = [
 	"December",
 ];
 
-const formatCurrencyFunction = (currency: string) => {
+const formatCurrencyFunction = (currency: string): string | undefined => {
 	try {
 		switch (currency) {
 			case "EUR":

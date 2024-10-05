@@ -117,7 +117,7 @@ const BudgetExtraincomes = (): React.ReactNode => {
 					</span>
 				</div>
 
-				<div className="flex flex-col gap-y-4 h-screen overflow-y-scroll">
+				<div className="flex flex-col gap-y-4 h-[30rem] overflow-y-scroll">
 					{extraincomesSortedByCreatedAtAscending.length > 0 &&
 						extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome) => (
 							<button

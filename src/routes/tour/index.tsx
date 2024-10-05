@@ -6,7 +6,6 @@ import ImagePiggy from "../../assets/piggy.webp";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
-import { setDialogStore } from "../../stores/dialog";
 import { setUserStore } from "../../stores/user";
 import type { IBudget, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
@@ -160,7 +159,6 @@ function Tour(): React.ReactNode {
 						dispatch(setBudgetStore({}));
 						dispatch(setBudgetsStore([]));
 						dispatch(setUserStore({}));
-						dispatch(setDialogStore({ extraincomes: false, extraexpenses: false }));
 
 						navigate("/login");
 					}}

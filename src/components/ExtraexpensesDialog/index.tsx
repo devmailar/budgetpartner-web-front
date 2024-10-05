@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
-import { setDialogStore } from "../../stores/dialog";
 import { setUserStore } from "../../stores/user";
 import type { IBudget, IExtraexpense, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
@@ -29,32 +28,6 @@ function ExtraexpensesDialog(): React.ReactNode {
 
 	return (
 		<div className="animate__animated animate__slideInUp animate__faster flex flex-col gap-4 absolute bottom-0 bg-black w-full h-[64%] md:h-[90%] px-7 pb-5 border border-[#212121] rounded-3xl">
-			<button
-				type="button"
-				className="flex items-center justify-center pt-[18px]"
-				onClick={(): void => {
-					dispatch(
-						setDialogStore({
-							extraincomes: false,
-							extraexpenses: false,
-						}),
-					);
-				}}
-			>
-				<button
-					type="button"
-					className="w-[125px] h-[5px] bg-white rounded-lg"
-					onClick={(): void => {
-						dispatch(
-							setDialogStore({
-								extraincomes: false,
-								extraexpenses: false,
-							}),
-						);
-					}}
-				/>
-			</button>
-
 			<div className="flex items-center justify-between">
 				<span className="text-base text-[#B85C3D] font-semibold">Total Expenses</span>
 				<span className="text-lg text-white font-bold">

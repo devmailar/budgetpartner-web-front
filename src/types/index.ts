@@ -1,8 +1,3 @@
-export interface IDialog {
-	extraincomes: boolean;
-	extraexpenses: boolean;
-}
-
 export interface IUser {
 	id: number;
 	email: string;
@@ -64,5 +59,4 @@ export interface IRootState {
 	auth: string;
 	budget: IBudget;
 	budgets: IBudget[];
-	dialog: IDialog;
 }

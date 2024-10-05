@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
-import { setDialogStore } from "../../stores/dialog";
 import { setUserStore } from "../../stores/user";
 import type { IBudget, IExtraincome, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
@@ -92,18 +91,7 @@ const ExtraincomesDialog = (): React.ReactNode => {
 					<span className="text-base text-white font-medium">+ Add new</span>
 				</button>
 
-				<button
-					type="button"
-					className="bg-[#1B1818] h-full px-6 py-0 rounded-2xl"
-					onClick={(): void => {
-						dispatch(
-							setDialogStore({
-								extraincomes: false,
-								extraexpenses: false,
-							}),
-						);
-					}}
-				>
+				<button type="button" className="bg-[#1B1818] h-full px-6 py-0 rounded-2xl" onClick={(): void => {}}>
 					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<title>Close</title>
 						<path

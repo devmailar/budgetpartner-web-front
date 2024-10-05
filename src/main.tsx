@@ -6,7 +6,6 @@ import "./main.css";
 import { authStore } from "./stores/auth/index.tsx";
 import { budgetStore } from "./stores/budget/index.tsx";
 import { budgetsStore } from "./stores/budgets/index.tsx";
-import { dialogStore } from "./stores/dialog/index.tsx";
 import { userStore } from "./stores/user/index.tsx";
 
 const root: HTMLElement | null = document.getElementById("root");
@@ -17,7 +16,6 @@ const store: Redux.Store = Redux.configureStore({
 		user: userStore.reducer,
 		budget: budgetStore.reducer,
 		budgets: budgetsStore.reducer,
-		dialog: dialogStore.reducer,
 	},
 });
 

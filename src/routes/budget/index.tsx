@@ -4,23 +4,12 @@ import * as React from "react";
 import * as ReactRedux from "react-redux";
 import * as ReactRouter from "react-router-dom";
 import ImageGrowth from "../../assets/growth.webp";
-import ExtraexpensesDialog from "../../components/ExtraexpensesDialog";
-import ExtraincomesDialog from "../../components/ExtraincomesDialog";
 import Switch from "../../components/Switch";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
 import { setBudgetsStore } from "../../stores/budgets";
-import { setDialogStore } from "../../stores/dialog";
 import { setUserStore } from "../../stores/user";
-import type {
-	IBudget,
-	IDialog,
-	IExtraexpense,
-	IExtraincome,
-	IResponseError,
-	IRootState,
-	IUserResponse,
-} from "../../types";
+import type { IBudget, IExtraexpense, IExtraincome, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 const Budget = (): React.ReactNode => {
@@ -29,7 +18,6 @@ const Budget = (): React.ReactNode => {
 
 	const authStore: string = ReactRedux.useSelector((state: IRootState) => state.auth);
 	const budgetStore: IBudget = ReactRedux.useSelector((state: IRootState) => state.budget);
-	const dialogStore: IDialog = ReactRedux.useSelector((state: IRootState) => state.dialog);
 
 	const [dailyBudget, setDailyBudget] = React.useState<number>(0);
 	const [monthlyBudget, setMonthlyBudget] = React.useState<number>(0);
@@ -241,7 +229,6 @@ const Budget = (): React.ReactNode => {
 							dispatch(setBudgetStore({}));
 							dispatch(setBudgetsStore([]));
 							dispatch(setUserStore({}));
-							dispatch(setDialogStore({ extraincomes: false, extraexpenses: false }));
 
 							setDailyBudget(0);
 							setMonthlyBudget(0);
@@ -335,13 +322,6 @@ const Budget = (): React.ReactNode => {
 								navigate("login");
 								return;
 							}
-
-							dispatch(
-								setDialogStore({
-									extraincomes: true,
-									extraexpenses: false,
-								}),
-							);
 						}}
 					>
 						<span className="text-base text-white font-medium">View Income</span>
@@ -368,13 +348,6 @@ const Budget = (): React.ReactNode => {
 								navigate("login");
 								return;
 							}
-
-							dispatch(
-								setDialogStore({
-									extraincomes: false,
-									extraexpenses: true,
-								}),
-							);
 						}}
 					>
 						<svg width={29} height={28} fill="none" viewBox="0 0 29 28">
@@ -402,9 +375,6 @@ const Budget = (): React.ReactNode => {
 					</p>
 				</div>
 			</div>
-
-			{dialogStore.extraincomes && <ExtraincomesDialog />}
-			{dialogStore.extraexpenses && <ExtraexpensesDialog />}
 		</div>
 	);
 };

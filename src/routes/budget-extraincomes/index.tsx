@@ -79,7 +79,7 @@ const BudgetExtraincomes = (): React.ReactNode => {
 	};
 
 	return (
-		<div className="h-screen animate__animated animate__slideInRight animate__faster flex flex-col gap-y-6 px-7 py-7">
+		<div className="animate__animated animate__slideInRight animate__faster flex flex-col gap-y-6 px-7 py-7">
 			<div className="flex gap-x-3 items-center justify-end h-[26px]">
 				<button
 					type="button"
@@ -111,7 +111,7 @@ const BudgetExtraincomes = (): React.ReactNode => {
 					</span>
 				</div>
 
-				<div className="flex flex-col gap-y-4 h-[30rem] overflow-y-scroll">
+				<div className="flex flex-col gap-y-4 h-screen overflow-y-scroll">
 					{extraincomesSortedByCreatedAtAscending.length > 0 &&
 						extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome) => (
 							<button

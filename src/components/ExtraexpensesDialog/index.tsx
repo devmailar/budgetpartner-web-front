@@ -27,7 +27,7 @@ function ExtraexpensesDialog(): React.ReactNode {
 	});
 
 	return (
-		<div className="animate__animated animate__slideInUp animate__faster flex flex-col gap-4 absolute bottom-0 bg-black w-full h-[64%] md:h-[90%] px-7 pb-5 border border-[#212121] rounded-3xl">
+		<div className="animate__animated animate__slideInUp animate__faster flex flex-col gap-4 absolute bottom-0 w-full h-[64%] md:h-[90%] px-7 pb-5 border border-[#212121] rounded-3xl">
 			<div className="flex items-center justify-between">
 				<span className="text-base text-[#B85C3D] font-semibold">Total Expenses</span>
 				<span className="text-lg text-white font-bold">

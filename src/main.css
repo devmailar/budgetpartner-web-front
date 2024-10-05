@@ -3,11 +3,13 @@
 @tailwind utilities;
 
 :root {
-  font-family: "SF Pro Display";
-  font-weight: 400;
+	background: black;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-family: "SF Pro Display";
+	font-weight: 400;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }

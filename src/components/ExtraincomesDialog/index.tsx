@@ -9,7 +9,7 @@ import { setUserStore } from "../../stores/user";
 import type { IBudget, IExtraincome, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
-function ExtraincomesDialog(): React.ReactNode {
+const ExtraincomesDialog = (): React.ReactNode => {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
@@ -23,9 +23,61 @@ function ExtraincomesDialog(): React.ReactNode {
 		0,
 	);
 
-	const extraincomesSortedByCreatedAtAscending: IExtraincome[] = [...budgetStore.extraincomes].sort((a, b) => {
+	const extraincomesSortedByCreatedAtAscending: IExtraincome[] = [...budgetStore.extraincomes].sort((a, b): number => {
 		return new Date(b.date).getTime() - new Date(a.date).getTime();
 	});
+
+	const handleCreateExtraincome = async (extraincome: IExtraincome): Promise<void> => {
+		try {
+			if (
+				confirm(
+					`Are you sure you want to remove income "${extraincome.type}" with amount ${extraincome.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budgetStore.currency)}?`,
+				)
+			) {
+				const removeExtraincomeResponse: Response = await fetch(
+					`${Utils.baseUrl}/extraincomes/remove/${extraincome.id}`,
+					{
+						method: "DELETE",
+						headers: { Authorization: `Bearer ${authStore}` },
+					},
+				);
+
+				if (!removeExtraincomeResponse.ok) {
+					const removeExtraincomeResponseError: IResponseError = await removeExtraincomeResponse.json();
+
+					throw new Error(removeExtraincomeResponseError.errorMessage);
+				}
+
+				const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
+					method: "GET",
+					headers: { Authorization: `Bearer ${authStore}` },
+				});
+
+				if (!getUserResponse.ok) {
+					const getUserResponseError: IResponseError = await getUserResponse.json();
+
+					throw new Error(getUserResponseError.errorMessage);
+				}
+
+				const getUserResponseBody: IUserResponse = await getUserResponse.json();
+
+				dispatch(setUserStore(getUserResponseBody.errorNoData.user));
+				dispatch(setBudgetsStore(getUserResponseBody.errorNoData.budgets));
+
+				const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
+					(budget: IBudget): boolean => {
+						return new Date(budget.created_at).getMonth() === new Date().getMonth();
+					},
+				);
+
+				dispatch(setBudgetStore(currentBudget));
+			}
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				alert(error.message);
+			}
+		}
+	};
 
 	return (
 		<div className="animate__animated animate__slideInUp animate__faster flex flex-col gap-y-6 absolute bottom-0 bg-black w-full h-[95%] px-7 py-7 border border-[#212121] rounded-3xl">
@@ -78,51 +130,7 @@ function ExtraincomesDialog(): React.ReactNode {
 								type="button"
 								key={extraincome.id}
 								className="flex flex-col gap-y-1 btn px-0 py-0 w-full rounded-none"
-								onClick={async (): Promise<void> => {
-									if (
-										confirm(
-											`Are you sure you want to remove income "${extraincome.type}" with amount ${extraincome.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budgetStore.currency)}?`,
-										)
-									) {
-										const removeExtraincomeResponse: Response = await fetch(
-											`${Utils.baseUrl}/extraincomes/remove/${extraincome.id}`,
-											{
-												method: "DELETE",
-												headers: { Authorization: `Bearer ${authStore}` },
-											},
-										);
-
-										if (!removeExtraincomeResponse.ok) {
-											const removeExtraincomeResponseError: IResponseError = await removeExtraincomeResponse.json();
-
-											throw new Error(removeExtraincomeResponseError.errorMessage);
-										}
-
-										const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
-											method: "GET",
-											headers: { Authorization: `Bearer ${authStore}` },
-										});
-
-										if (!getUserResponse.ok) {
-											const getUserResponseError: IResponseError = await getUserResponse.json();
-
-											throw new Error(getUserResponseError.errorMessage);
-										}
-
-										const getUserResponseBody: IUserResponse = await getUserResponse.json();
-
-										dispatch(setUserStore(getUserResponseBody.errorNoData.user));
-										dispatch(setBudgetsStore(getUserResponseBody.errorNoData.budgets));
-
-										const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
-											(budget: IBudget): boolean => {
-												return new Date(budget.created_at).getMonth() === new Date().getMonth();
-											},
-										);
-
-										dispatch(setBudgetStore(currentBudget));
-									}
-								}}
+								onClick={async (): Promise<void> => handleCreateExtraincome(extraincome)}
 							>
 								<div className="flex items-center gap-x-2 w-full">
 									<span className="text-base text-[#66666F] font-normal">
@@ -145,6 +153,6 @@ function ExtraincomesDialog(): React.ReactNode {
 			</div>
 		</div>
 	);
-}
+};
 
 export default ExtraincomesDialog;

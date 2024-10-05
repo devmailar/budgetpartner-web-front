@@ -215,7 +215,7 @@ const Budget = (): React.ReactNode => {
 	}, [budgetStore]);
 
 	return (
-		<div className="h-screen animate__animated animate__slideInLeft animate__faster">
+		<div className="animate__animated animate__slideInLeft animate__faster">
 			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
 				<a href="/" className="text-lg text-white font-medium">
 					BudgetPartner

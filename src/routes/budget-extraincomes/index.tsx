@@ -79,7 +79,7 @@ const BudgetExtraincomes = (): React.ReactNode => {
 	};
 
 	return (
-		<div className="animate__animated animate__slideInRight animate__faster flex flex-col gap-y-6 px-7 py-7 overflow-hidden">
+		<div className="animate__animated animate__slideInRight animate__faster flex flex-col gap-y-6 px-7 py-7">
 			<div className="flex gap-x-3 items-center justify-end h-[26px]">
 				<button
 					type="button"

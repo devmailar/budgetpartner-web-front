@@ -319,9 +319,11 @@ const Budget = (): React.ReactNode => {
 						className="flex items-center justify-center gap-1 btn bg-[#007AFF] px-2 py-3 rounded-lg"
 						onClick={(): void => {
 							if (!authStore) {
-								navigate("login");
+								navigate("/login");
 								return;
 							}
+
+							navigate("/extraincomes");
 						}}
 					>
 						<span className="text-base text-white font-medium">View Income</span>
@@ -345,7 +347,7 @@ const Budget = (): React.ReactNode => {
 						className="flex items-center justify-center gap-1 btn bg-transparent px-2 py-3 rounded-lg border-[1.5px] border-[#B85C3D]"
 						onClick={(): void => {
 							if (!authStore) {
-								navigate("login");
+								navigate("/login");
 								return;
 							}
 						}}

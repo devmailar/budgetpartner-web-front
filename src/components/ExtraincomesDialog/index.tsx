@@ -80,7 +80,7 @@ const ExtraincomesDialog = (): React.ReactNode => {
 	};
 
 	return (
-		<div className="animate__animated animate__slideInUp animate__faster flex flex-col gap-y-6 absolute bottom-0 bg-black w-full h-[95%] px-7 py-7 border border-[#212121] rounded-3xl">
+		<div className="animate__animated animate__slideInUp animate__faster flex flex-col gap-y-6 absolute bottom-0 bg-black w-full h-[92%] px-7 py-7 border border-[#212121] rounded-3xl">
 			<div className="flex gap-x-3 items-center justify-end h-[26px]">
 				<button
 					type="button"

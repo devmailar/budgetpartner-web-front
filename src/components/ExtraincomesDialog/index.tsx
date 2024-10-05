@@ -123,7 +123,7 @@ const ExtraincomesDialog = (): React.ReactNode => {
 					</span>
 				</div>
 
-				<div className="flex flex-col gap-y-4 h-[80%] md:h-[40rem] overflow-scroll">
+				<div className="flex flex-col gap-y-4 h-80 overflow-scroll">
 					{extraincomesSortedByCreatedAtAscending.length > 0 &&
 						extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome) => (
 							<button

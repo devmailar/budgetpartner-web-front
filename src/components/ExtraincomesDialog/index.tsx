@@ -28,33 +28,7 @@ function ExtraincomesDialog(): React.ReactNode {
 	});
 
 	return (
-		<div className="animate__animated animate__slideInBottom animate__faster flex flex-col gap-y-6 absolute bottom-0 bg-black w-full h-[80%] md:h-[95%] px-7 pb-5 border border-[#212121] rounded-3xl">
-			<button
-				type="button"
-				className="flex items-center justify-center pt-[18px]"
-				onClick={(): void => {
-					dispatch(
-						setDialogStore({
-							extraincomes: false,
-							extraexpenses: false,
-						}),
-					);
-				}}
-			>
-				<button
-					type="button"
-					className="w-[125px] h-[5px] bg-white rounded-lg"
-					onClick={(): void => {
-						dispatch(
-							setDialogStore({
-								extraincomes: false,
-								extraexpenses: false,
-							}),
-						);
-					}}
-				/>
-			</button>
-
+		<div className="animate__animated animate__slideInUp animate__faster flex flex-col gap-y-6 absolute bottom-0 bg-black w-full h-[95%] px-7 py-7 border border-[#212121] rounded-3xl">
 			<div className="flex gap-x-3 items-center justify-end h-[26px]">
 				<button
 					type="button"
@@ -97,9 +71,9 @@ function ExtraincomesDialog(): React.ReactNode {
 					</span>
 				</div>
 
-				<div className="flex flex-col gap-y-4 h-72 md:h-[40rem] overflow-scroll">
+				<div className="flex flex-col gap-y-4 h-[80%] md:h-[40rem] overflow-scroll">
 					{extraincomesSortedByCreatedAtAscending.length > 0 &&
-						extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome, index: number) => (
+						extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome) => (
 							<button
 								type="button"
 								key={extraincome.id}

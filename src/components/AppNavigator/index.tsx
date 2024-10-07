@@ -5,6 +5,7 @@ import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import Image404 from "../../assets/404.webp";
 import Budget from "../../routes/budget";
+import BudgetExtraexpenses from "../../routes/budget-extraexpenses";
 import BudgetExtraincomes from "../../routes/budget-extraincomes";
 import BudgetNewExtraexpense from "../../routes/budget-new-extraexpense";
 import BudgetNewExtraincome from "../../routes/budget-new-extraincome";
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
 	{
 		path: "/extraincomes",
 		element: <BudgetExtraincomes />,
+	},
+	{
+		path: "/extraexpenses",
+		element: <BudgetExtraexpenses />,
 	},
 	{
 		path: "/new-extraincome",

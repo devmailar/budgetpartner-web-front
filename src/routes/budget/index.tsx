@@ -350,6 +350,8 @@ const Budget = (): React.ReactNode => {
 								navigate("/login");
 								return;
 							}
+
+							navigate("/extraexpenses");
 						}}
 					>
 						<svg width={29} height={28} fill="none" viewBox="0 0 29 28">

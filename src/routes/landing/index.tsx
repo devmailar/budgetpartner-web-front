@@ -1,8 +1,8 @@
 import Spline from "@splinetool/react-spline";
-import type React from "react";
+import React, { type ReactNode } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 
-function Landing(): React.ReactNode {
+const Landing = (): ReactNode => {
 	const navigate: NavigateFunction = useNavigate();
 
 	return (
@@ -34,6 +34,6 @@ function Landing(): React.ReactNode {
 			</div>
 		</div>
 	);
-}
+};
 
 export default Landing;

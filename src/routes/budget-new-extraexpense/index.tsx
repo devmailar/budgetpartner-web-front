@@ -1,6 +1,6 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import { format } from "date-fns";
-import React from "react";
+import React, { useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { setBudgetStore } from "../../stores/budget";
@@ -9,17 +9,17 @@ import { setUserStore } from "../../stores/user";
 import type { IBudget, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
-function BudgetNewExtraexpense(): React.ReactNode {
+const BudgetNewExtraexpense = (): ReactNode => {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
 	const authStore: string = useSelector((state: IRootState) => state.auth);
 	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
 
-	const [extraexpenseDate, setExtraexpenseDate] = React.useState<Date>(new Date());
-	const [disableSubmit, setDisableSubmit] = React.useState<boolean>(false);
+	const [extraexpenseDate, setExtraexpenseDate] = useState<Date>(new Date());
+	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
 
@@ -180,7 +180,7 @@ function BudgetNewExtraexpense(): React.ReactNode {
 							id="date"
 							value={format(extraexpenseDate, "yyyy-MM-dd")}
 							required
-							onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setExtraexpenseDate(new Date(e.target.value))}
+							onChange={(e: ChangeEvent<HTMLInputElement>): void => setExtraexpenseDate(new Date(e.target.value))}
 						/>
 					</div>
 				</div>
@@ -197,6 +197,6 @@ function BudgetNewExtraexpense(): React.ReactNode {
 			</form>
 		</div>
 	);
-}
+};
 
 export default BudgetNewExtraexpense;

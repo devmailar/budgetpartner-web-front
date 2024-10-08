@@ -1,5 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import React from "react";
+import React, { type ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
@@ -76,7 +76,7 @@ export const router = createBrowserRouter([
 	},
 ]);
 
-function AppNavigator(): React.ReactNode {
+const AppNavigator = (): ReactNode => {
 	const dispatch: Dispatch = useDispatch();
 
 	React.useEffect((): void => {
@@ -101,6 +101,6 @@ function AppNavigator(): React.ReactNode {
 	}, [dispatch]);
 
 	return <RouterProvider router={router} />;
-}
+};
 
 export default AppNavigator;

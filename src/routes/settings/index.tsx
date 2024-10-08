@@ -1,10 +1,10 @@
-import type React from "react";
+import React, { type ChangeEvent, type ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import type { IBudget, IResponseError, IRootState } from "../../types";
 import { Utils } from "../../utils";
 
-function Settings(): React.ReactNode {
+const Settings = (): ReactNode => {
 	const navigate: NavigateFunction = useNavigate();
 
 	const authStore: string = useSelector((state: IRootState) => state.auth);
@@ -34,7 +34,7 @@ function Settings(): React.ReactNode {
 						name="currencies"
 						className="px-2.5 py-1.5 bg-transparent border-[1.5px] border-[#3F3F46] rounded-2xl text-lg text-[#66666F] font-normal"
 						defaultValue={budgetStore.currency}
-						onChange={async (e: React.ChangeEvent<HTMLSelectElement>) => {
+						onChange={async (e: ChangeEvent<HTMLSelectElement>) => {
 							try {
 								// update {budgetStore.id} currency column in table budgets
 
@@ -67,6 +67,6 @@ function Settings(): React.ReactNode {
 			</div>
 		</div>
 	);
-}
+};
 
 export default Settings;

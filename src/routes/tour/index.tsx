@@ -1,5 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import React from "react";
+import React, { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImagePiggy from "../../assets/piggy.webp";
@@ -10,15 +10,15 @@ import { setUserStore } from "../../stores/user";
 import type { IBudget, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
-function Tour(): React.ReactNode {
+const Tour = (): ReactNode => {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
 	const authStore: string = useSelector((state: IRootState) => state.auth);
 
-	const [disableSubmit, setDisableSubmit] = React.useState<boolean>(false);
+	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
 
@@ -114,7 +114,7 @@ function Tour(): React.ReactNode {
 		}
 	};
 
-	React.useEffect((): void => {
+	useEffect((): void => {
 		const handleCreateBudget = async (): Promise<void> => {
 			try {
 				const createBudgetResponse: Response = await fetch(`${Utils.baseUrl}/budgets/create`, {
@@ -205,6 +205,6 @@ function Tour(): React.ReactNode {
 			</form>
 		</div>
 	);
-}
+};
 
 export default Tour;

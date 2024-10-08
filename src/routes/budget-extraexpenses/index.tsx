@@ -1,5 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type React from "react";
+import React, { type ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { setBudgetStore } from "../../stores/budget";
@@ -8,7 +8,7 @@ import { setUserStore } from "../../stores/user";
 import type { IBudget, IExtraexpense, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
-const BudgetExtraexpenses = (): React.ReactNode => {
+const BudgetExtraexpenses = (): ReactNode => {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 

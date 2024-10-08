@@ -1,8 +1,8 @@
-import type * as Redux from "@reduxjs/toolkit";
-import * as Datefns from "date-fns";
-import * as React from "react";
-import * as ReactRedux from "react-redux";
-import * as ReactRouter from "react-router-dom";
+import type { Dispatch } from "@reduxjs/toolkit/react";
+import { eachDayOfInterval, endOfMonth, isWeekend, startOfMonth } from "date-fns";
+import React, { type ReactNode, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImageGrowth from "../../assets/growth.webp";
 import Switch from "../../components/Switch";
 import { setAuthStore } from "../../stores/auth";
@@ -12,17 +12,17 @@ import { setUserStore } from "../../stores/user";
 import type { IBudget, IExtraexpense, IExtraincome, IResponseError, IRootState, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
-const Budget = (): React.ReactNode => {
-	const dispatch: Redux.Dispatch = ReactRedux.useDispatch();
-	const navigate: ReactRouter.NavigateFunction = ReactRouter.useNavigate();
+const Budget = (): ReactNode => {
+	const dispatch: Dispatch = useDispatch();
+	const navigate: NavigateFunction = useNavigate();
 
-	const authStore: string = ReactRedux.useSelector((state: IRootState) => state.auth);
-	const budgetStore: IBudget = ReactRedux.useSelector((state: IRootState) => state.budget);
+	const authStore: string = useSelector((state: IRootState) => state.auth);
+	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
 
-	const [dailyBudget, setDailyBudget] = React.useState<number>(0);
-	const [monthlyBudget, setMonthlyBudget] = React.useState<number>(0);
+	const [dailyBudget, setDailyBudget] = useState<number>(0);
+	const [monthlyBudget, setMonthlyBudget] = useState<number>(0);
 
-	React.useEffect((): void => {
+	useEffect((): void => {
 		try {
 			const handleGetUserResponse = async (): Promise<void> => {
 				try {
@@ -152,7 +152,7 @@ const Budget = (): React.ReactNode => {
 		}
 	}, [authStore, navigate, dispatch]);
 
-	React.useEffect((): void => {
+	useEffect((): void => {
 		try {
 			if (Object.keys(budgetStore).length === 0) {
 				return;
@@ -180,9 +180,9 @@ const Budget = (): React.ReactNode => {
 				return;
 			}
 
-			const currentDaysInMonth: Date[] = Datefns.eachDayOfInterval({
-				start: Datefns.startOfMonth(new Date()),
-				end: Datefns.endOfMonth(new Date()),
+			const currentDaysInMonth: Date[] = eachDayOfInterval({
+				start: startOfMonth(new Date()),
+				end: endOfMonth(new Date()),
 			});
 
 			const includesWeekends: boolean = budgetStore.extraincomes.some((extraincome: IExtraincome) => {
@@ -192,11 +192,11 @@ const Budget = (): React.ReactNode => {
 			const daysInMonth: Date[] = includesWeekends
 				? currentDaysInMonth
 				: currentDaysInMonth.filter((day: Date) => {
-						return !Datefns.isWeekend(day);
+						return !isWeekend(day);
 					});
 
 			const weekdaysInMonth: Date[] = daysInMonth.filter((day: Date) => {
-				return !Datefns.isWeekend(day);
+				return !isWeekend(day);
 			});
 
 			const dailyBudgetAmount: number = includesWeekends

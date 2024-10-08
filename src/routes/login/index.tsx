@@ -1,19 +1,18 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type React from "react";
-import { useState } from "react";
+import React, { useState, type FormEvent, type ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { setAuthStore } from "../../stores/auth";
 import type { IResponseError } from "../../types";
 import { Utils } from "../../utils";
 
-function Login(): React.ReactNode {
+const Login = (): ReactNode => {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
 	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
 
@@ -184,6 +183,6 @@ function Login(): React.ReactNode {
 			</form>
 		</div>
 	);
-}
+};
 
 export default Login;

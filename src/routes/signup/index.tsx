@@ -1,26 +1,24 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import React from "react";
+import React, { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import { type NavigateFunction, useNavigate, useSearchParams } from "react-router-dom";
 import { setAuthStore } from "../../stores/auth";
 import type { IResponseError } from "../../types";
 import { Utils } from "../../utils";
 
-function Signup(): React.ReactNode {
+const Signup = (): ReactNode => {
 	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
 	const [searchParams] = useSearchParams();
 
 	// if token exists then request backend to validate the token agaisnt the signup
-
 	// 1. client signup -> server creates email verification token and sends smtp message
-
 	// 2. server then saves this token to database under that
 
-	const [disableSubmit, setDisableSubmit] = React.useState<boolean>(false);
+	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
 		try {
 			event.preventDefault();
 
@@ -77,7 +75,7 @@ function Signup(): React.ReactNode {
 		}
 	};
 
-	React.useEffect((): void => {
+	useEffect((): void => {
 		const transporterVerificationToken: string = searchParams.get("token") ?? "";
 
 		const verify = async (): Promise<void> => {
@@ -239,6 +237,6 @@ function Signup(): React.ReactNode {
 			</form>
 		</div>
 	);
-}
+};
 
 export default Signup;

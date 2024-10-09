@@ -13,7 +13,7 @@ const Switch = (): ReactNode => {
 
 	return (
 		<select
-			className="flex gap-x-1.5 items-center px-3 py-1.5 bg-transparent border-2 border-[#343434] text-base text-[#343434] font-bold shadow-md rounded-xl"
+			className="flex gap-x-1.5 items-center px-3 py-1.5 bg-transparent text-base text-[#343434] font-bold shadow-md rounded-xl"
 			onChange={(e: ChangeEvent<HTMLSelectElement>): void => {
 				const selectedBudget: IBudget | undefined = budgetsStore.find((budget: IBudget) => {
 					return (
@@ -36,7 +36,7 @@ const Switch = (): ReactNode => {
 							: "text-[#A0A0A0]"
 					} font-rubik`}
 				>
-					{Utils.monthsList[new Date(b.created_at).getMonth()]} {"-"} {new Date(b.created_at).getFullYear()}
+					{Utils.monthsList[new Date(b.created_at).getMonth()]} {new Date(b.created_at).getFullYear()}
 				</option>
 			))}
 		</select>

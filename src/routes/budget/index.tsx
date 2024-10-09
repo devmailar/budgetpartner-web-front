@@ -229,6 +229,8 @@ const Budget = (): ReactNode => {
 					</a>
 
 					<div className="flex gap-x-2 items-center">
+						{authStore && <Switch />}
+
 						<button type="button" onClick={(): void => navigate("/settings")}>
 							<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<title>Settings</title>
@@ -338,8 +340,6 @@ const Budget = (): ReactNode => {
 
 				<div className="flex flex-col gap-y-6">
 					<div className="flex flex-col gap-y-4 items-center justify-center p-4 border-[0.33px] border-[#ADADAD6E] shadow-sm rounded-2xl">
-						{authStore && <Switch />}
-
 						<div className="flex flex-col gap-y-1.5 items-center justify-center">
 							<span className="text-base text-[#262626] font-medium">We saved this month</span>
 

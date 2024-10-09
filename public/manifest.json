@@ -1,0 +1,39 @@
+{
+	"short_name": "BudgetPartner",
+	"name": "BudgetPartner - The Easiest Way to Save Money",
+	"icons": [
+		{
+			"src": "/images/icons-192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "/images/icons-512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"id": "/?source=pwa",
+	"start_url": "/?source=pwa",
+	"background_color": "#000000",
+	"display_override": ["fullscreen", "minimal-ui"],
+	"display": "standalone",
+	"scope": "/",
+	"theme_color": "#007AFF",
+	"description": "Save money effortlessly with BudgetPartner – the easiest way to track your budget, manage expenses, and reach your financial goals with our free online budgeting tool.",
+	"orientation": "natural",
+	"screenshots": [
+		{
+			"src": "/images/screenshot1.png",
+			"type": "image/png",
+			"sizes": "540x720",
+			"form_factor": "narrow"
+		},
+		{
+			"src": "/images/screenshot2.jpg",
+			"type": "image/jpg",
+			"sizes": "720x540",
+			"form_factor": "wide"
+		}
+	]
+}

@@ -341,7 +341,7 @@ const Budget = (): ReactNode => {
 				<div className="flex flex-col gap-y-6">
 					<div className="flex flex-col gap-y-4 items-center justify-center p-4 border-[0.33px] border-[#ADADAD6E] shadow-sm rounded-2xl">
 						<div className="flex flex-col gap-y-1.5 items-center justify-center">
-							<span className="text-base text-[#262626] font-medium">We saved this month</span>
+							<span className="text-base text-[#262626] font-bold">We saved this month</span>
 
 							<span className="text-[1.75rem] text-[#262626] font-bold">
 								{monthlyBudget ? monthlyBudget.toFixed(2) : "···"}

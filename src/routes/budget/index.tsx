@@ -3,7 +3,6 @@ import { eachDayOfInterval, endOfMonth, isWeekend, startOfMonth } from "date-fns
 import React, { type ReactNode, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import ImageGrowth from "../../assets/growth.webp";
 import Switch from "../../components/Switch";
 import { setAuthStore } from "../../stores/auth";
 import { setBudgetStore } from "../../stores/budget";
@@ -215,7 +214,7 @@ const Budget = (): ReactNode => {
 	}, [budgetStore]);
 
 	return (
-		<div className="flex items-start justify-center p-16 animate__animated animate__faster">
+		<div className="flex items-start justify-center p-16 animate__animated animate__slideInLeft animate__faster">
 			<div className="flex flex-col gap-y-8 w-[27.25rem]">
 				<nav className="flex items-center justify-between p-4 border-[0.33px] border-[#ADADAD6E] shadow-sm rounded-[1.75rem]">
 					<a
@@ -327,16 +326,18 @@ const Budget = (): ReactNode => {
 					</div>
 				</nav>
 
-				<div className="flex items-center justify-center">
-					<div className="bg-[#FEF8E5] px-3 py-2 border border-white rounded-lg">
-						<span className="text-lg text-[#262626] font-bold">
-							Don't wanna signup? Try our{" "}
-							<a className="underline font-normal" href="#Demo">
-								Demo
-							</a>
-						</span>
+				{!authStore && (
+					<div className="flex items-center justify-center">
+						<div className="bg-[#FEF8E5] px-3 py-2 border border-white rounded-lg">
+							<span className="text-lg text-[#262626] font-bold">
+								Don't wanna signup? Try our{" "}
+								<a className="underline font-normal" href="#Demo">
+									Demo
+								</a>
+							</span>
+						</div>
 					</div>
-				</div>
+				)}
 
 				<div className="flex flex-col gap-y-6">
 					<div className="flex flex-col gap-y-4 items-center justify-center p-4 border-[0.33px] border-[#ADADAD6E] shadow-sm rounded-2xl">

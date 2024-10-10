@@ -81,21 +81,19 @@ const BudgetExtraexpenses = (): ReactNode => {
 	};
 
 	return (
-		<div className="animate__animated animate__slideInRight animate__faster flex flex-col gap-y-6 px-7 py-7">
+		<div className="flex flex-col gap-y-6 h-screen animate__animated animate__slideInRight animate__faster">
 			<div className="flex gap-x-3 items-center justify-end h-[26px]">
 				<button
 					type="button"
-					className="bg-[#B85C3D] h-full px-2 py-0 rounded-2xl"
-					onClick={(): void => {
-						navigate("/new-extraexpense");
-					}}
+					className="flex items-center btn bg-[#B85C3D] px-2 h-full shadow-md rounded-2xl"
+					onClick={(): void => navigate("/new-extraexpense")}
 				>
-					<span className="text-base text-white font-medium">+ Add new</span>
+					<span className="text-sm text-white font-bold">+ Add new</span>
 				</button>
 
 				<button
 					type="button"
-					className="bg-[#1B1818] h-full px-6 py-0 rounded-2xl"
+					className="btn bg-transparent h-full px-6 border-[0.33px] border-[#ADADAD6E] shadow-sm rounded-2xl"
 					onClick={(): void => {
 						navigate("/");
 					}}
@@ -104,41 +102,41 @@ const BudgetExtraexpenses = (): ReactNode => {
 						<title>Close</title>
 						<path
 							d="M14 1.16049L13.1045 0L7 5.97531L0.895476 0L0 1.16049L5.96256 7L0 12.8395L0.895476 14L7 8.02469L13.1045 14L14 12.8395L8.03744 7L14 1.16049Z"
-							fill="white"
+							fill="#262626"
 						/>
 					</svg>
 				</button>
 			</div>
 
-			<div className="flex flex-col gap-y-3">
+			<div className="flex flex-col gap-y-4">
 				<div className="flex items-center justify-between">
-					<span className="text-xl text-white font-semibold">Total Expenses</span>
-					<span className="text-xl text-white font-bold">
+					<span className="text-lg text-[#262626] font-bold">Total Expenses</span>
+					<span className="text-lg text-[#262626] font-bold">
 						{totalExtraexpenses ? totalExtraexpenses.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "···"}
 						{Utils.formatCurrencyFunction(budgetStore.currency)}
 					</span>
 				</div>
 
-				<div className="flex flex-col gap-y-4 h-[30rem] overflow-y-scroll">
+				<div className="flex flex-col gap-y-4 max-h-[30rem] overflow-y-scroll">
 					{extraexpensesSortedByCreatedAtAscending.length > 0 &&
 						extraexpensesSortedByCreatedAtAscending.map((extraexpense: IExtraexpense) => (
 							<button
 								type="button"
 								key={extraexpense.id}
-								className="flex flex-col gap-y-1 btn px-0 py-0 w-full rounded-none"
-								onClick={(): Promise<void> => handleRemoveExtraexpense(extraexpense)}
+								className="flex flex-col gap-y-2 btn px-0 py-0 w-full rounded-none"
+								onClick={async (): Promise<void> => handleRemoveExtraexpense(extraexpense)}
 							>
-								<div className="flex items-center gap-x-2 w-full">
-									<span className="text-base text-[#66666F] font-normal">
+								<div className="flex items-center gap-x-2 bg-[#FEF8E5] w-full">
+									<span className="text-sm text-[#5B4B15] font-normal">
 										{new Date(extraexpense.date).toDateString()}
 									</span>
 
-									<hr className="flex-grow bg-[#66666F] text-[#66666F] h-[0.5px] border-none" />
+									<hr className="flex-grow bg-[#66666F] text-[#66666F] h-[0.33px] border-none" />
 								</div>
 
 								<div className="flex items-center justify-between w-full">
-									<span className="text-lg text-[#91919A] font-medium truncate">{extraexpense.type}</span>
-									<span className="text-lg text-[#B85C3D] font-medium truncate">
+									<span className="text-[0.938rem] text-[#262626] font-medium truncate">{extraexpense.type}</span>
+									<span className="text-[0.938rem] text-[#262626] font-medium truncate">
 										-{extraexpense.amount_monthly.toFixed(2)}
 										{Utils.formatCurrencyFunction(budgetStore.currency)}
 									</span>
@@ -146,6 +144,15 @@ const BudgetExtraexpenses = (): ReactNode => {
 							</button>
 						))}
 				</div>
+			</div>
+
+			<div className="flex flex-col gap-y-3 justify-center py-4 border-t border-t-[#262626]">
+				<h2 className="text-xs text-[#262626] font-bold">Privacy</h2>
+
+				<p className="text-xs text-[#262626] font-normal">
+					Your financial information is safe with us. BudgetPartner securely stores your data, allowing you to revisit
+					your progress over time. It’s like having a personal financial assistant at your fingertips.
+				</p>
 			</div>
 		</div>
 	);

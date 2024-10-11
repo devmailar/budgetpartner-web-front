@@ -111,15 +111,16 @@ const AppNavigator = (): ReactNode => {
 		<div className="flex items-start justify-center p-16 animate__animated animate__slideInLeft animate__faster">
 			<div className="flex flex-col gap-y-8 w-[27.25rem]">
 				<nav className="flex items-center justify-between p-4 border border-[#212121] rounded-[1.75rem]">
-					<a
-						href="/"
+					<button
+						type="button"
 						className="text-lg text-white font-bold"
 						style={{
 							letterSpacing: -0.43,
 						}}
+						onClick={(): void => router.navigate("/")}
 					>
 						BudgetPartner
-					</a>
+					</button>
 
 					<div className="flex gap-x-2 items-center">
 						{authStore && <Switch />}
@@ -192,21 +193,21 @@ const AppNavigator = (): ReactNode => {
 									<title>Login</title>
 									<path
 										d="M10.5 9.33317V6.99984C10.5 6.381 10.7458 5.78751 11.1834 5.34992C11.621 4.91234 12.2145 4.6665 12.8333 4.6665H21C21.6188 4.6665 22.2123 4.91234 22.6499 5.34992C23.0875 5.78751 23.3333 6.381 23.3333 6.99984V20.9998C23.3333 21.6187 23.0875 22.2122 22.6499 22.6498C22.2123 23.0873 21.6188 23.3332 21 23.3332H12.8333C12.2145 23.3332 11.621 23.0873 11.1834 22.6498C10.7458 22.2122 10.5 21.6187 10.5 20.9998V18.6665"
-										stroke="#262626"
+										stroke="white"
 										stroke-width="2"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									/>
 									<path
 										d="M3.5 14H18.6667L15.1667 10.5"
-										stroke="#262626"
+										stroke="white"
 										stroke-width="2"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									/>
 									<path
 										d="M15.1665 17.5L18.6665 14"
-										stroke="#262626"
+										stroke="white"
 										stroke-width="2"
 										stroke-linecap="round"
 										stroke-linejoin="round"

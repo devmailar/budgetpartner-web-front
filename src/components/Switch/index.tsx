@@ -13,7 +13,7 @@ const Switch = (): ReactNode => {
 
 	return (
 		<select
-			className="flex gap-x-1.5 items-center px-3 py-1.5 bg-transparent text-base text-[#343434] font-bold shadow-md rounded-xl"
+			className="flex gap-x-1.5 items-center px-3 py-1.5 bg-[#1E1804] text-base text-[#FF9500] font-bold border border-[#212121] rounded-xl"
 			onChange={(e: ChangeEvent<HTMLSelectElement>): void => {
 				const selectedBudget: IBudget | undefined = budgetsStore.find((budget: IBudget) => {
 					return (

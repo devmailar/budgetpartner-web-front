@@ -217,8 +217,8 @@ const Budget = (): ReactNode => {
 		<div className="flex flex-col gap-y-8 h-screen animate__animated animate__slideInLeft animate__faster">
 			{!authStore && (
 				<div className="flex items-center justify-center">
-					<div className="bg-[#FEF8E5] px-3 py-2 border border-white rounded-lg">
-						<span className="text-lg text-[#262626] font-bold">
+					<div className="bg-[#1E1804] px-3 py-2 rounded-lg">
+						<span className="text-lg text-[#FF9500] font-bold">
 							Don't wanna signup? Try our{" "}
 							<a className="underline font-normal" href="#Demo">
 								Demo
@@ -229,16 +229,16 @@ const Budget = (): ReactNode => {
 			)}
 
 			<div className="flex flex-col gap-y-6">
-				<div className="flex flex-col gap-y-4 items-center justify-center p-4 border-[0.33px] border-[#ADADAD6E] shadow-sm rounded-2xl">
+				<div className="flex flex-col gap-y-4 items-center justify-center p-4 bg-[#18181b] border border-[#212121] rounded-2xl">
 					<div className="flex flex-col gap-y-1.5 items-center justify-center">
-						<span className="text-base text-[#262626] font-bold">We saved this month</span>
+						<span className="text-base text-[#007AFF] font-bold">We saved this month</span>
 
-						<span className="text-[1.75rem] text-[#262626] font-bold">
+						<span className="text-[1.75rem] text-white font-bold">
 							{monthlyBudget ? monthlyBudget.toFixed(2) : "···"}
 							{Utils.formatCurrencyFunction(budgetStore.currency)}
 						</span>
 
-						<p className="text-base text-[#262626] font-extrabold italic">#budgetingmakeslegends</p>
+						<p className="text-base text-[#66666F] font-extrabold italic">#budgetingmakeslegends</p>
 					</div>
 				</div>
 
@@ -302,9 +302,9 @@ const Budget = (): ReactNode => {
 			</div>
 
 			<div className="flex flex-col gap-y-3 justify-center py-4 border-t border-t-[#262626]">
-				<h2 className="text-xs text-[#262626] font-bold">Privacy</h2>
+				<h2 className="text-xs text-[#66666F] font-bold">Privacy</h2>
 
-				<p className="text-xs text-[#262626] font-normal">
+				<p className="text-xs text-[#66666F] font-normal">
 					Your financial information is safe with us. BudgetPartner securely stores your data, allowing you to revisit
 					your progress over time. It’s like having a personal financial assistant at your fingertips.
 				</p>

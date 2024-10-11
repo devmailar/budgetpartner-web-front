@@ -140,34 +140,7 @@ const Tour = (): ReactNode => {
 
 	return (
 		<div className="h-screen animate__animated animate__slideInRight animate__faster">
-			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
-				<button
-					type="button"
-					onClick={(): void => {
-						navigate("/");
-					}}
-				>
-					<span className="text-lg text-[#007AFF] font-medium">Back</span>
-				</button>
-
-				<h2 className="text-lg text-white font-medium">BudgetPartner</h2>
-
-				<button
-					type="button"
-					onClick={(): void => {
-						dispatch(setAuthStore(""));
-						dispatch(setBudgetStore({}));
-						dispatch(setBudgetsStore([]));
-						dispatch(setUserStore({}));
-
-						navigate("/login");
-					}}
-				>
-					<span className="text-lg text-[#007AFF] font-medium">Logout</span>
-				</button>
-			</nav>
-
-			<form className="flex flex-col items-center px-6 py-12" onSubmit={handleSubmit}>
+			<form className="flex flex-col items-center" onSubmit={handleSubmit}>
 				<img src={ImagePiggy} alt={ImagePiggy} width={301} height={300} loading="lazy" fetchPriority="high" />
 
 				<div className="flex flex-col gap-7 items-center">

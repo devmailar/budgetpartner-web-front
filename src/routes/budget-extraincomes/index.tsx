@@ -100,7 +100,7 @@ const BudgetExtraincomes = (): ReactNode => {
 						<title>Close</title>
 						<path
 							d="M14 1.16049L13.1045 0L7 5.97531L0.895476 0L0 1.16049L5.96256 7L0 12.8395L0.895476 14L7 8.02469L13.1045 14L14 12.8395L8.03744 7L14 1.16049Z"
-							fill="#262626"
+							fill="white"
 						/>
 					</svg>
 				</button>
@@ -108,8 +108,8 @@ const BudgetExtraincomes = (): ReactNode => {
 
 			<div className="flex flex-col gap-y-4">
 				<div className="flex items-center justify-between">
-					<span className="text-lg text-[#262626] font-bold">Total Income</span>
-					<span className="text-lg text-[#262626] font-bold">
+					<span className="text-lg text-white font-bold">Total Income</span>
+					<span className="text-lg text-white font-bold">
 						{totalExtraincomes ? totalExtraincomes.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "···"}
 						{Utils.formatCurrencyFunction(budgetStore.currency)}
 					</span>
@@ -124,8 +124,8 @@ const BudgetExtraincomes = (): ReactNode => {
 								className="flex flex-col gap-y-2 btn px-0 py-0 w-full rounded-none"
 								onClick={async (): Promise<void> => handleRemoveExtraincome(extraincome)}
 							>
-								<div className="flex items-center gap-x-2 bg-[#FEF8E5] w-full">
-									<span className="text-sm text-[#5B4B15] font-normal">
+								<div className="flex items-center gap-x-2 bg-[#090f15] w-full">
+									<span className="text-sm text-[#007AFF] font-normal">
 										{new Date(extraincome.date).toDateString()}
 									</span>
 
@@ -133,8 +133,8 @@ const BudgetExtraincomes = (): ReactNode => {
 								</div>
 
 								<div className="flex items-center justify-between w-full">
-									<span className="text-[0.938rem] text-[#262626] font-medium truncate">{extraincome.type}</span>
-									<span className="text-[0.938rem] text-[#262626] font-medium truncate">
+									<span className="text-[0.938rem] text-white font-medium truncate">{extraincome.type}</span>
+									<span className="text-[0.938rem] text-white font-medium truncate">
 										+{extraincome.amount_monthly.toFixed(2)}
 										{Utils.formatCurrencyFunction(budgetStore.currency)}
 									</span>
@@ -145,9 +145,9 @@ const BudgetExtraincomes = (): ReactNode => {
 			</div>
 
 			<div className="flex flex-col gap-y-3 justify-center py-4 border-t border-t-[#262626]">
-				<h2 className="text-xs text-[#262626] font-bold">Privacy</h2>
+				<h2 className="text-xs text-[#66666F] font-bold">Privacy</h2>
 
-				<p className="text-xs text-[#262626] font-normal">
+				<p className="text-xs text-[#66666F] font-normal">
 					Your financial information is safe with us. BudgetPartner securely stores your data, allowing you to revisit
 					your progress over time. It’s like having a personal financial assistant at your fingertips.
 				</p>

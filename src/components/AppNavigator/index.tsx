@@ -9,6 +9,7 @@ import BudgetExtraexpenses from "../../routes/budget-extraexpenses";
 import BudgetExtraincomes from "../../routes/budget-extraincomes";
 import BudgetNewExtraexpense from "../../routes/budget-new-extraexpense";
 import BudgetNewExtraincome from "../../routes/budget-new-extraincome";
+import ContactUs from "../../routes/contact-us";
 import Landing from "../../routes/landing";
 import Login from "../../routes/login";
 import PrivacyPolicy from "../../routes/privacy-policy";
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
 	{
 		path: "/privacy-policy",
 		element: <PrivacyPolicy />,
+	},
+	{
+		path: "/contact-us",
+		element: <ContactUs />,
 	},
 	{
 		path: "/extraincomes",

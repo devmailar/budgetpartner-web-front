@@ -11,6 +11,7 @@ import BudgetNewExtraexpense from "../../routes/budget-new-extraexpense";
 import BudgetNewExtraincome from "../../routes/budget-new-extraincome";
 import Landing from "../../routes/landing";
 import Login from "../../routes/login";
+import PrivacyPolicy from "../../routes/privacy-policy";
 import Settings from "../../routes/settings";
 import Signup from "../../routes/signup";
 import Tour from "../../routes/tour";
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
 	{
 		path: "/landing",
 		element: <Landing />,
+	},
+	{
+		path: "/privacy-policy",
+		element: <PrivacyPolicy />,
 	},
 	{
 		path: "/extraincomes",

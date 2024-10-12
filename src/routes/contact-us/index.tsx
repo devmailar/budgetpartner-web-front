@@ -31,13 +31,13 @@ const ContactUs = (): ReactNode => {
 					</p>
 
 					<p>
-						If you need to send us physical mail, please use the following address: Budget Partner Support Team [Your
+						If you need to send us physical mail, please use the following address: BudgetPartner Support Team [Your
 						Company Address] [City, Postal Code] [Country]
 					</p>
 
 					<p>We aim to respond to all inquiries within 24-48 hours. Your patience is greatly appreciated.</p>
 
-					<p>Thank you for choosing Budget Partner. We look forward to hearing from you!</p>
+					<p>Thank you for choosing BudgetPartner. We look forward to hearing from you!</p>
 				</div>
 			</div>
 		</div>

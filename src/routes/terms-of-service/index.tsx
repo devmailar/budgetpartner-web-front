@@ -55,7 +55,7 @@ const TermsOfService = (): ReactNode => {
 					<h2>6. Intellectual Property</h2>
 					<p>
 						All content and software on BudgetPartner, including text, graphics, logos, and code, are the property of
-						Budget Partner or its licensors and are protected by intellectual property laws. You agree not to reproduce,
+						BudgetPartner or its licensors and are protected by intellectual property laws. You agree not to reproduce,
 						distribute, or create derivative works based on this content without our explicit permission.
 					</p>
 					<br />

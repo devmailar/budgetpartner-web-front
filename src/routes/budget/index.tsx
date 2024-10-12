@@ -378,6 +378,10 @@ const Budget = (): ReactNode => {
 						your progress over time. It’s like having a personal financial assistant at your fingertips.
 					</p>
 
+					<a className="text-sm text-[#66666F] text-center font-normal underline" href="/terms-of-service">
+						Terms of Service
+					</a>
+
 					<a className="text-sm text-[#66666F] text-center font-normal underline" href="/privacy-policy">
 						Privacy Policy
 					</a>

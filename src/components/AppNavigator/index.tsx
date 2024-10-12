@@ -15,6 +15,7 @@ import Login from "../../routes/login";
 import PrivacyPolicy from "../../routes/privacy-policy";
 import Settings from "../../routes/settings";
 import Signup from "../../routes/signup";
+import TermsOfService from "../../routes/terms-of-service";
 import Tour from "../../routes/tour";
 import { setAuthStore } from "../../stores/auth";
 
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
 	{
 		path: "/landing",
 		element: <Landing />,
+	},
+	{
+		path: "/terms-of-service",
+		element: <TermsOfService />,
 	},
 	{
 		path: "/privacy-policy",

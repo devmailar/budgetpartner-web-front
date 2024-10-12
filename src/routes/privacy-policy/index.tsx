@@ -58,8 +58,10 @@ const PrivacyPolicy = (): ReactNode => {
 					<br />
 					<h2>4. Advertising</h2>
 					<p>
-						We do not host any third-party advertisements on the Budget Partner platform. As such, no advertising
-						cookies or tracking systems are used.
+						We use Google AdSense to display advertisements on the Budget Partner platform. Google AdSense may use
+						cookies and other tracking technologies to personalize and improve ads. For more information on how Google
+						AdSense uses your data, please refer to their{" "}
+						<a href="https://policies.google.com/privacy">privacy policy</a>.
 					</p>
 					<br />
 					<h2>5. Data Sharing and Transfer</h2>
@@ -72,8 +74,8 @@ const PrivacyPolicy = (): ReactNode => {
 					<h2>6. Security of Your Information</h2>
 					<p>
 						We prioritize the security of your information and employ administrative, technical, and physical safeguards
-						designed to protect against the loss, misuse, unplatform-authd access, disclosure, alteration, or
-						destruction of the information we collect.
+						designed to protect against the loss, misuse, unauthorized access, disclosure, alteration, or destruction of
+						the information we collect.
 					</p>
 					<br />
 					<h2>7. Changes to Our Privacy Policy</h2>

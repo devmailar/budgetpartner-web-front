@@ -16,7 +16,7 @@ const PrivacyPolicy = (): ReactNode => {
 				</button>
 			</nav>
 
-			<div className="flex justify-center bg-black h-max">
+			<div className="flex bg-black h-max">
 				<div className="flex flex-col text-base text-white font-light leading-tight">
 					<h1>Welcome to BudgetPartner</h1>
 					<p>Effective Date: October 12, 2024</p>

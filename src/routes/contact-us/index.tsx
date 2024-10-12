@@ -16,7 +16,7 @@ const ContactUs = (): ReactNode => {
 				</button>
 			</nav>
 
-			<div className="flex justify-center bg-black h-max">
+			<div className="flex bg-black h-max">
 				<div className="flex flex-col text-base text-white font-light leading-tight">
 					<h1>Contact Us</h1>
 

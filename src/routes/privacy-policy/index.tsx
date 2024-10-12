@@ -18,7 +18,7 @@ const PrivacyPolicy = (): ReactNode => {
 
 			<div className="flex justify-center p-4 bg-black h-max">
 				<div className="flex flex-col text-base text-white font-light leading-tight">
-					<h1>Welcome to Budget Partner</h1>
+					<h1>Welcome to BudgetPartner</h1>
 					<p>Effective Date: October 12, 2024</p>
 					<br />
 					<p>
@@ -46,19 +46,19 @@ const PrivacyPolicy = (): ReactNode => {
 					<h2>2. Use of Your Information</h2>
 					<p>
 						Any personal information that you provide to us, like your name and email for account setup, will be used
-						solely to maintain your Budget Partner account, provide you with the services of Budget Partner, and
+						solely to maintain your BudgetPartner account, provide you with the services of BudgetPartner, and
 						communicate with you about your account or our services.
 					</p>
 					<br />
 					<h2>3. Cookies and Tracking</h2>
 					<p>
-						Budget Partner does not use cookies to track your activity. No third-party cookies are used on our platform,
+						BudgetPartner does not use cookies to track your activity. No third-party cookies are used on our platform,
 						and no tracking cookies are used by us.
 					</p>
 					<br />
 					<h2>4. Advertising</h2>
 					<p>
-						We use Google AdSense to display advertisements on the Budget Partner platform. Google AdSense may use
+						We use Google AdSense to display advertisements on the BudgetPartner platform. Google AdSense may use
 						cookies and other tracking technologies to personalize and improve ads. For more information on how Google
 						AdSense uses your data, please refer to their{" "}
 						<a href="https://policies.google.com/privacy">privacy policy</a>.
@@ -81,9 +81,32 @@ const PrivacyPolicy = (): ReactNode => {
 					<h2>7. Changes to Our Privacy Policy</h2>
 					<p>
 						We may update our Privacy Policy from time to time. If we make changes, we will post the new policy here
-						with a new effective date. Your continued use of Budget Partner after any changes to the Privacy Policy
+						with a new effective date. Your continued use of BudgetPartner after any changes to the Privacy Policy
 						constitutes your acceptance of the new terms.
 					</p>
+					<br />
+					<h2>8. GDPR Privacy Notice</h2>
+					<p>
+						If you are a resident of the European Economic Area (EEA), you have certain data protection rights. Budget
+						Partner aims to take reasonable steps to allow you to correct, amend, delete, or limit the use of your
+						personal data.
+					</p>
+					<br />
+					<h2>8.1 Your Data Protection Rights</h2>
+					<p>You have the following data protection rights:</p>
+					<p>You have the right to update or delete the information we have on you.</p>
+					<p>You have the right to have your information rectified if that information is inaccurate or incomplete.</p>
+					<p>You have the right to object to our processing of your personal data.</p>
+					<p>You have the right to request that we restrict the processing of your personal data.</p>
+					<p>
+						You have the right to be provided with a copy of your personal data in a structured, machine-readable, and
+						commonly used format.
+					</p>
+					<p>
+						You also have the right to withdraw your consent at any time where BudgetPartner relied on your consent to
+						process your personal information.
+					</p>
+
 					<br />
 					<h2>8. Contact Us</h2>
 					<p>
@@ -91,7 +114,7 @@ const PrivacyPolicy = (): ReactNode => {
 						<a href="mailto:support@budgetpartner.app">support@budgetpartner.app</a>.
 					</p>
 					<br />
-					<p>Thank you for choosing Budget Partner, where we value your privacy and data security.</p>
+					<p>Thank you for choosing BudgetPartner, where we value your privacy and data security.</p>
 				</div>
 			</div>
 		</div>

@@ -301,7 +301,7 @@ const Budget = (): ReactNode => {
 					<img src={ImageGrowth} alt={ImageGrowth} width={77} height={77} loading="lazy" fetchPriority="high" />
 
 					<div className="flex flex-col gap-1">
-						<h1 className="font-base font-semibold text-[#007AFF]">We saved Everyday</h1>
+						<h1 className="font-base font-semibold text-[#007AFF]">We saved today</h1>
 
 						<span className="text-[28px] font-bold text-white">
 							{" "}

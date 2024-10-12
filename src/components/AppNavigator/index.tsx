@@ -10,6 +10,7 @@ import BudgetExtraincomes from "../../routes/budget-extraincomes";
 import BudgetNewExtraexpense from "../../routes/budget-new-extraexpense";
 import BudgetNewExtraincome from "../../routes/budget-new-extraincome";
 import ContactUs from "../../routes/contact-us";
+import CookieNotice from "../../routes/cookie-notice";
 import Landing from "../../routes/landing";
 import Login from "../../routes/login";
 import PrivacyPolicy from "../../routes/privacy-policy";
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
 	{
 		path: "/contact-us",
 		element: <ContactUs />,
+	},
+	{
+		path: "/cookie-notice",
+		element: <CookieNotice />,
 	},
 	{
 		path: "/extraincomes",

@@ -18,7 +18,7 @@ const PrivacyPolicy = (): ReactNode => {
 
 			<div className="flex p-4 bg-black h-max">
 				<div className="flex flex-col text-base text-white font-light leading-tight">
-					<h1>Welcome to BudgetPartner</h1>
+					<h1>Privacy Policy</h1>
 					<p>Effective Date: October 12, 2024</p>
 					<br />
 					<p>

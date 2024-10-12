@@ -291,7 +291,7 @@ const Budget = (): ReactNode => {
 							</span>
 						</div>
 
-						<Switch />
+						{authStore && <Switch />}
 					</div>
 
 					<p className="text-base text-[#66666F] font-medium">#budgetingmakeslegends</p>

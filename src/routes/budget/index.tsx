@@ -381,6 +381,10 @@ const Budget = (): ReactNode => {
 					<a className="text-sm text-[#66666F] text-center font-normal underline" href="/privacy-policy">
 						Privacy Policy
 					</a>
+
+					<a className="text-sm text-[#66666F] text-center font-normal underline" href="/contact-us">
+						Contact Us
+					</a>
 				</div>
 			</div>
 		</div>

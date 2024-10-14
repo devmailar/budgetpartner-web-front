@@ -298,7 +298,7 @@ const Budget = (): ReactNode => {
 				</div>
 
 				<div className="flex gap-6 items-center px-[18px] py-[18px] bg-[#18181B] border border-[#212121] rounded-2xl">
-					<img src={ImageGrowth} alt={ImageGrowth} width={77} height={77} loading="lazy" fetchPriority="high" />
+					<img src={ImageGrowth} alt="growth" width={77} height={77} loading="lazy" />
 
 					<div className="flex flex-col gap-1">
 						<h1 className="font-base font-semibold text-[#007AFF]">We saved today</h1>

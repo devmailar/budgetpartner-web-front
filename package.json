@@ -12,7 +12,6 @@
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^2.2.8",
-		"@splinetool/react-spline": "^4.0.0",
 		"date-fns": "^3.6.0",
 		"kutty": "^0.6.0",
 		"react": "^18.3.1",

@@ -5,7 +5,7 @@
 :root {
 	background: #000000;
 
-	font-family: "SF Pro Display";
+	font-family: "SF Pro Display", sans-serif;
 	font-weight: 400;
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;

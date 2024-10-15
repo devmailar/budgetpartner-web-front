@@ -1,21 +1,29 @@
-import { type PayloadAction, type Slice, createSlice } from "@reduxjs/toolkit";
 import { setCookie } from "typescript-cookie";
+import { type StoreApi, type UseBoundStore, create } from "zustand";
 
-export const authStore: Slice = createSlice({
-	name: "auth",
-	initialState: "" as string,
-	reducers: {
-		setAuthStore: (_state: unknown, action: PayloadAction<string>) => {
-			setCookie("auth", action.payload, {
+export interface IAuthState {
+	value: string;
+	setAuthStore: (value: string) => void;
+}
+
+const useAuthStore: UseBoundStore<StoreApi<IAuthState>> = create((set) => ({
+	value: "",
+	setAuthStore: (value: string): void => {
+		try {
+			setCookie("auth", value, {
 				expires: 1,
 				sameSite: "strict",
 				secure: true,
 			});
 
-			return action.payload;
-		},
+			set({ value });
+		} catch (error) {
+			if (error instanceof Error) {
+				alert(error.message);
+				throw new Error(error.message);
+			}
+		}
 	},
-});
+}));
 
-export const { setAuthStore } = authStore.actions;
-export default authStore.reducer;
+export default useAuthStore;

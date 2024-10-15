@@ -1,15 +1,23 @@
-import { type PayloadAction, type Slice, createSlice } from "@reduxjs/toolkit";
+import { type StoreApi, type UseBoundStore, create } from "zustand";
 import type { IBudget } from "../../types";
 
-export const budgetsStore: Slice = createSlice({
-	name: "budgets",
-	initialState: [] as IBudget[],
-	reducers: {
-		setBudgetsStore: (_state, action: PayloadAction<IBudget[]>) => {
-			return action.payload;
-		},
-	},
-});
+export interface IBudgetsState {
+	value: IBudget[];
+	setBudgetsStore: (value: IBudget[]) => void;
+}
 
-export const { setBudgetsStore } = budgetsStore.actions;
-export default budgetsStore.reducer;
+const useBudgetsStore: UseBoundStore<StoreApi<IBudgetsState>> = create((set) => ({
+	value: [],
+	setBudgetsStore: (value: IBudget[]): void => {
+		try {
+			set({ value });
+		} catch (error) {
+			if (error instanceof Error) {
+				alert(error.message);
+				throw new Error(error.message);
+			}
+		}
+	},
+}));
+
+export default useBudgetsStore;

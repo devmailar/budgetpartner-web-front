@@ -1,23 +1,25 @@
-import type { Dispatch } from "@reduxjs/toolkit/react";
 import { eachDayOfInterval, endOfMonth, isWeekend, startOfMonth } from "date-fns";
 import React, { type ReactNode, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImageGrowth from "../../assets/growth.webp";
 import Switch from "../../components/Switch";
-import { setAuthStore } from "../../stores/auth";
-import { setBudgetStore } from "../../stores/budget";
-import { setBudgetsStore } from "../../stores/budgets";
-import { setUserStore } from "../../stores/user";
-import type { IBudget, IExtraexpense, IExtraincome, IResponseError, IRootState, IUserResponse } from "../../types";
+import useAuthStore, { type IAuthState } from "../../stores/auth";
+import useBudgetStore, { type IBudgetState } from "../../stores/budget";
+import useBudgetsStore, { type IBudgetsState } from "../../stores/budgets";
+import useUserStore, { type IUserState } from "../../stores/user";
+import type { IBudget, IExtraexpense, IExtraincome, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 const Budget = (): ReactNode => {
-	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const authStore: string = useSelector((state: IRootState) => state.auth);
-	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
+	const authStore: IAuthState["value"] = useAuthStore.getState().value;
+	const budgetStore: IBudgetState["value"] = useBudgetStore.getState().value;
+
+	const setAuthStore: IAuthState["setAuthStore"] = useAuthStore.getState().setAuthStore;
+	const setBudgetStore: IBudgetState["setBudgetStore"] = useBudgetStore.getState().setBudgetStore;
+	const setBudgetsStore: IBudgetsState["setBudgetsStore"] = useBudgetsStore.getState().setBudgetsStore;
+	const setUserStore: IUserState["setUserStore"] = useUserStore.getState().setUserStore;
 
 	const [dailyBudget, setDailyBudget] = useState<number>(0);
 	const [monthlyBudget, setMonthlyBudget] = useState<number>(0);
@@ -43,13 +45,11 @@ const Budget = (): ReactNode => {
 						return navigate("/tour");
 					}
 
-					dispatch(setUserStore(getUserResponseBody.errorNoData.user));
-					dispatch(setBudgetsStore(getUserResponseBody.errorNoData.budgets));
+					setUserStore(getUserResponseBody.errorNoData.user);
+					setBudgetsStore(getUserResponseBody.errorNoData.budgets);
 
 					const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
-						(budget: IBudget): boolean => {
-							return new Date(budget.created_at).getMonth() === new Date().getMonth();
-						},
+						(budget: IBudget): boolean => new Date(budget.created_at).getMonth() === new Date().getMonth(),
 					);
 
 					if (!currentBudget) {
@@ -79,9 +79,8 @@ const Budget = (): ReactNode => {
 						}
 
 						const getUserResponseBodyAgain: IUserResponse = await getUserResponseAgain.json();
-
-						dispatch(setUserStore(getUserResponseBodyAgain.errorNoData.user));
-						dispatch(setBudgetsStore(getUserResponseBodyAgain.errorNoData.budgets));
+						setUserStore(getUserResponseBodyAgain.errorNoData.user);
+						setBudgetsStore(getUserResponseBodyAgain.errorNoData.budgets);
 
 						const currentBudgetAgain: IBudget | undefined = getUserResponseBodyAgain.errorNoData.budgets.find(
 							(budget: IBudget): boolean => {
@@ -89,9 +88,11 @@ const Budget = (): ReactNode => {
 							},
 						);
 
-						dispatch(setBudgetStore(currentBudgetAgain));
+						if (!currentBudgetAgain) {
+							return;
+						}
 
-						return;
+						return setBudgetStore(currentBudgetAgain);
 					}
 
 					const storedBudgetDate: string = localStorage.getItem("budget") ?? "";
@@ -115,20 +116,19 @@ const Budget = (): ReactNode => {
 						);
 
 						if (!matchingBudget) {
-							dispatch(setBudgetStore(currentBudget));
-							return;
+							return setBudgetStore(currentBudget);
 						}
 
-						dispatch(setBudgetStore(matchingBudget));
+						setBudgetStore(matchingBudget);
 					} else {
-						dispatch(setBudgetStore(currentBudget));
+						setBudgetStore(currentBudget);
 					}
 				} catch (error: unknown) {
 					if (error instanceof Error) {
-						dispatch(setAuthStore(""));
-						dispatch(setBudgetStore({}));
-						dispatch(setBudgetsStore([]));
-						dispatch(setUserStore({}));
+						setAuthStore("" as IAuthState["value"]);
+						setBudgetStore({} as IBudgetState["value"]);
+						setBudgetsStore([] as IBudgetsState["value"]);
+						setUserStore({} as IUserState["value"]);
 
 						navigate("/login");
 
@@ -138,9 +138,9 @@ const Budget = (): ReactNode => {
 			};
 
 			if (!authStore) {
-				dispatch(setBudgetStore({}));
-				dispatch(setBudgetsStore([]));
-				dispatch(setUserStore({}));
+				setBudgetStore({} as IBudgetState["value"]);
+				setBudgetsStore([] as IBudgetsState["value"]);
+				setUserStore({} as IUserState["value"]);
 				return;
 			}
 
@@ -150,7 +150,7 @@ const Budget = (): ReactNode => {
 				alert(error.message);
 			}
 		}
-	}, [authStore, navigate, dispatch]);
+	}, [authStore, navigate, setAuthStore, setBudgetStore, setBudgetsStore, setUserStore]);
 
 	useEffect((): void => {
 		try {
@@ -225,10 +225,10 @@ const Budget = (): ReactNode => {
 					<button
 						type="button"
 						onClick={(): void => {
-							dispatch(setAuthStore(""));
-							dispatch(setBudgetStore({}));
-							dispatch(setBudgetsStore([]));
-							dispatch(setUserStore({}));
+							setAuthStore("" as IAuthState["value"]);
+							setBudgetStore({} as IBudgetState["value"]);
+							setBudgetsStore([] as IBudgetsState["value"]);
+							setUserStore({} as IUserState["value"]);
 
 							setDailyBudget(0);
 							setMonthlyBudget(0);

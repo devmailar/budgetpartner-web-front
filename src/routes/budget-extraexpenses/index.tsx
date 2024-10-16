@@ -1,31 +1,29 @@
-import type { Dispatch } from "@reduxjs/toolkit";
 import React, { type ReactNode } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import { setBudgetStore } from "../../stores/budget";
-import { setBudgetsStore } from "../../stores/budgets";
-import { setUserStore } from "../../stores/user";
-import type { IBudget, IExtraexpense, IResponseError, IRootState, IUserResponse } from "../../types";
+import useAuthStore, { type IAuthState } from "../../stores/auth";
+import useBudgetStore, { type IBudgetState } from "../../stores/budget";
+import useBudgetsStore, { type IBudgetsState } from "../../stores/budgets";
+import useUserStore, { type IUserState } from "../../stores/user";
+import type { IBudget, IExtraexpense, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 const BudgetExtraexpenses = (): ReactNode => {
-	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const authStore: string = useSelector((state: IRootState) => state.auth);
-	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
+	const authStore: IAuthState["value"] = useAuthStore.getState().value;
+	const budgetStore: IBudgetState["value"] = useBudgetStore.getState().value;
+
+	const setBudgetStore: IBudgetState["setBudgetStore"] = useBudgetStore.getState().setBudgetStore;
+	const setBudgetsStore: IBudgetsState["setBudgetsStore"] = useBudgetsStore.getState().setBudgetsStore;
+	const setUserStore: IUserState["setUserStore"] = useUserStore.getState().setUserStore;
 
 	const totalExtraexpenses: number = budgetStore?.extraexpenses?.reduce(
-		(accumulator: number, extraexpense: IExtraexpense) => {
-			return accumulator + extraexpense.amount_monthly;
-		},
+		(accumulator: number, extraexpense: IExtraexpense) => accumulator + extraexpense.amount_monthly,
 		0,
 	);
 
 	const extraexpensesSortedByCreatedAtAscending: IExtraexpense[] = [...budgetStore.extraexpenses].sort(
-		(a, b): number => {
-			return new Date(b.date).getTime() - new Date(a.date).getTime();
-		},
+		(a, b): number => new Date(b.date).getTime() - new Date(a.date).getTime(),
 	);
 
 	const handleRemoveExtraexpense = async (extraexpense: IExtraexpense): Promise<void> => {
@@ -62,8 +60,8 @@ const BudgetExtraexpenses = (): ReactNode => {
 
 				const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
-				dispatch(setUserStore(getUserResponseBody.errorNoData.user));
-				dispatch(setBudgetsStore(getUserResponseBody.errorNoData.budgets));
+				setUserStore(getUserResponseBody.errorNoData.user);
+				setBudgetsStore(getUserResponseBody.errorNoData.budgets);
 
 				const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
 					(budget: IBudget): boolean => {
@@ -71,7 +69,11 @@ const BudgetExtraexpenses = (): ReactNode => {
 					},
 				);
 
-				dispatch(setBudgetStore(currentBudget));
+				if (!currentBudget) {
+					return;
+				}
+
+				setBudgetStore(currentBudget);
 			}
 		} catch (error: unknown) {
 			if (error instanceof Error) {
@@ -86,20 +88,12 @@ const BudgetExtraexpenses = (): ReactNode => {
 				<button
 					type="button"
 					className="bg-[#B85C3D] h-full px-2 py-0 rounded-2xl"
-					onClick={(): void => {
-						navigate("/new-extraexpense");
-					}}
+					onClick={(): void => navigate("/new-extraexpense")}
 				>
 					<span className="text-base text-white font-medium">+ Add new</span>
 				</button>
 
-				<button
-					type="button"
-					className="bg-[#1B1818] h-full px-6 py-0 rounded-2xl"
-					onClick={(): void => {
-						navigate("/");
-					}}
-				>
+				<button type="button" className="bg-[#1B1818] h-full px-6 py-0 rounded-2xl" onClick={(): void => navigate("/")}>
 					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<title>Close</title>
 						<path

@@ -1,14 +1,13 @@
-import type { Dispatch } from "@reduxjs/toolkit";
 import React, { useState, type FormEvent, type ReactNode } from "react";
-import { useDispatch } from "react-redux";
-import { type NavigateFunction, useNavigate } from "react-router-dom";
-import { setAuthStore } from "../../stores/auth";
+import { useNavigate, type NavigateFunction } from "react-router-dom";
+import useAuthStore, { type IAuthState } from "../../stores/auth";
 import type { IResponseError } from "../../types";
 import { Utils } from "../../utils";
 
 const Login = (): ReactNode => {
-	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
+
+	const setAuthStore: IAuthState["setAuthStore"] = useAuthStore.getState().setAuthStore;
 
 	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
 
@@ -37,7 +36,7 @@ const Login = (): ReactNode => {
 			const authHeader: string = loginUserResponse.headers.get("Authorization") ?? "";
 			const auth: string = authHeader.split(" ")[1];
 
-			dispatch(setAuthStore(auth));
+			setAuthStore(auth);
 
 			navigate("/");
 		} catch (error: unknown) {
@@ -52,23 +51,13 @@ const Login = (): ReactNode => {
 	return (
 		<div className="h-screen animate__animated animate__slideInRight animate__faster">
 			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
-				<button
-					type="button"
-					onClick={(): void => {
-						navigate("/");
-					}}
-				>
+				<button type="button" onClick={(): void => navigate("/")}>
 					<span className="text-lg text-[#007AFF] font-medium">Back</span>
 				</button>
 
 				<h2 className="text-lg text-white font-medium">BudgetPartner</h2>
 
-				<button
-					type="button"
-					onClick={(): void => {
-						navigate("/signup");
-					}}
-				>
+				<button type="button" onClick={(): void => navigate("/signup")}>
 					<span className="text-lg text-[#007AFF] font-medium">Sign up</span>
 				</button>
 			</nav>

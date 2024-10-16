@@ -1,20 +1,19 @@
-import type { Dispatch } from "@reduxjs/toolkit";
-import React, { useEffect, useState, type FormEvent, type ReactNode } from "react";
-import { useDispatch } from "react-redux";
+import React, { type FormEvent, type ReactNode, useEffect, useState } from "react";
 import { type NavigateFunction, useNavigate, useSearchParams } from "react-router-dom";
-import { setAuthStore } from "../../stores/auth";
+import useAuthStore, { type IAuthState } from "../../stores/auth";
 import type { IResponseError } from "../../types";
 import { Utils } from "../../utils";
 
 const Signup = (): ReactNode => {
-	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const [searchParams] = useSearchParams();
+	const setAuthStore: IAuthState["setAuthStore"] = useAuthStore.getState().setAuthStore;
 
 	// if token exists then request backend to validate the token agaisnt the signup
 	// 1. client signup -> server creates email verification token and sends smtp message
 	// 2. server then saves this token to database under that
+
+	const [searchParams] = useSearchParams();
 
 	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
 
@@ -63,7 +62,7 @@ const Signup = (): ReactNode => {
 			const authHeader: string = loginUserResponse.headers.get("Authorization") ?? "";
 			const auth: string = authHeader.split(" ")[1];
 
-			dispatch(setAuthStore(auth));
+			setAuthStore(auth);
 
 			navigate("/");
 		} catch (error: unknown) {

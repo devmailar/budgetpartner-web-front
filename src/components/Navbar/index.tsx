@@ -31,7 +31,7 @@ const Navbar = (): ReactNode => {
 
 	return (
 		<nav className="flex items-center justify-between px-8 pt-4">
-			<a href="/" className="text-xl text-white font-bold">
+			<a href="/" className="text-lg text-white font-bold">
 				BudgetPartner
 			</a>
 

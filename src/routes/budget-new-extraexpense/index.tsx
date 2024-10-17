@@ -1,22 +1,20 @@
 import { format } from "date-fns";
 import React, { useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import useAuthStore, { type IAuthState } from "../../stores/auth";
-import useBudgetStore, { type IBudgetState } from "../../stores/budget";
-import useBudgetsStore, { type IBudgetsState } from "../../stores/budgets";
-import useUserStore, { type IUserState } from "../../stores/user";
+import useAuthStore from "../../stores/auth";
+import useBudgetStore from "../../stores/budget";
+import useBudgetsStore from "../../stores/budgets";
+import useUserStore from "../../stores/user";
 import type { IBudget, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 const BudgetNewExtraexpense = (): ReactNode => {
 	const navigate: NavigateFunction = useNavigate();
 
-	const authStore: IAuthState["value"] = useAuthStore.getState().value;
-	const budgetStore: IBudgetState["value"] = useBudgetStore.getState().value;
-
-	const setBudgetStore: IBudgetState["setBudgetStore"] = useBudgetStore.getState().setBudgetStore;
-	const setBudgetsStore: IBudgetsState["setBudgetsStore"] = useBudgetsStore.getState().setBudgetsStore;
-	const setUserStore: IUserState["setUserStore"] = useUserStore.getState().setUserStore;
+	const { value: auth } = useAuthStore();
+	const { value: budget, setBudgetStore } = useBudgetStore();
+	const { setBudgetsStore } = useBudgetsStore();
+	const { setUserStore } = useUserStore();
 
 	const [extraexpenseDate, setExtraexpenseDate] = useState<Date>(new Date());
 	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
@@ -33,17 +31,15 @@ const BudgetNewExtraexpense = (): ReactNode => {
 
 			if (amount_monthly < 1 || !amount_monthly) {
 				alert("Invalid expense amount");
-
 				setTimeout((): void => setDisableSubmit(false), 2500);
-
 				return;
 			}
 
 			const createExtraexpenseResponse: Response = await fetch(`${Utils.baseUrl}/extraexpenses/create`, {
 				method: "POST",
-				headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
+				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 				body: JSON.stringify({
-					budget_id: budgetStore.id,
+					budget_id: budget.id,
 					type: type,
 					amount_monthly: amount_monthly,
 					date: extraexpenseDate,
@@ -53,18 +49,18 @@ const BudgetNewExtraexpense = (): ReactNode => {
 			if (!createExtraexpenseResponse.ok) {
 				const createExtraexpenseResponseError: IResponseError = await createExtraexpenseResponse.json();
 
-				throw new Error(createExtraexpenseResponseError.errorMessage);
+				throw new Error(createExtraexpenseResponseError.message);
 			}
 
 			const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
 				method: "GET",
-				headers: { Authorization: `Bearer ${authStore}` },
+				headers: { Authorization: `Bearer ${auth}` },
 			});
 
 			if (!getUserResponse.ok) {
 				const getUserResponseError: IResponseError = await getUserResponse.json();
 
-				throw new Error(getUserResponseError.errorMessage);
+				throw new Error(getUserResponseError.message);
 			}
 
 			const getUserResponseBody: IUserResponse = await getUserResponse.json();
@@ -87,9 +83,10 @@ const BudgetNewExtraexpense = (): ReactNode => {
 			navigate("/");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				alert(error.message);
-
 				setTimeout(() => setDisableSubmit(false), 2250);
+
+				alert(error.message);
+				throw new Error(error.stack);
 			}
 		}
 	};
@@ -140,7 +137,7 @@ const BudgetNewExtraexpense = (): ReactNode => {
 					</div>
 
 					<div className="flex items-center gap-3.5 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
-						<span className="ml-1 text-xl text-[#66666F]">{Utils.formatCurrencyFunction(budgetStore.currency)}</span>
+						<span className="ml-1 text-xl text-[#66666F]">{Utils.formatCurrencyFunction(budget.currency)}</span>
 
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"

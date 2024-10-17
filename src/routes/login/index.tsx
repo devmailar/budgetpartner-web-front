@@ -1,5 +1,5 @@
 import React, { useState, type FormEvent, type ReactNode } from "react";
-import { useNavigate, type NavigateFunction } from "react-router-dom";
+import { type NavigateFunction, useNavigate } from "react-router-dom";
 import useAuthStore, { type IAuthState } from "../../stores/auth";
 import type { IResponseError } from "../../types";
 import { Utils } from "../../utils";
@@ -30,7 +30,7 @@ const Login = (): ReactNode => {
 			if (!loginUserResponse.ok) {
 				const loginUserResponseError: IResponseError = await loginUserResponse.json();
 
-				throw new Error(loginUserResponseError.errorMessage);
+				throw new Error(loginUserResponseError.message);
 			}
 
 			const authHeader: string = loginUserResponse.headers.get("Authorization") ?? "";
@@ -41,9 +41,10 @@ const Login = (): ReactNode => {
 			navigate("/");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				alert(error.message);
-
 				setTimeout(() => setDisableSubmit(false), 2250);
+
+				alert(error.message);
+				throw new Error(error.stack);
 			}
 		}
 	};

@@ -50,8 +50,9 @@ export interface IUserResponse {
 }
 
 export interface IResponseError {
-	errorMessage: string;
-	errorStatusCode: number;
+	error: string;
+	message: string;
+	statusCode: number;
 }
 
 export interface IRootState {

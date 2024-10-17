@@ -1,28 +1,26 @@
 import React, { type ReactNode } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import useAuthStore, { type IAuthState } from "../../stores/auth";
-import useBudgetStore, { type IBudgetState } from "../../stores/budget";
-import useBudgetsStore, { type IBudgetsState } from "../../stores/budgets";
-import useUserStore, { type IUserState } from "../../stores/user";
+import useAuthStore from "../../stores/auth";
+import useBudgetStore from "../../stores/budget";
+import useBudgetsStore from "../../stores/budgets";
+import useUserStore from "../../stores/user";
 import type { IBudget, IExtraexpense, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 const BudgetExtraexpenses = (): ReactNode => {
 	const navigate: NavigateFunction = useNavigate();
 
-	const authStore: IAuthState["value"] = useAuthStore.getState().value;
-	const budgetStore: IBudgetState["value"] = useBudgetStore.getState().value;
+	const { value: auth } = useAuthStore();
+	const { value: budget, setBudgetStore } = useBudgetStore();
+	const { setBudgetsStore } = useBudgetsStore();
+	const { setUserStore } = useUserStore();
 
-	const setBudgetStore: IBudgetState["setBudgetStore"] = useBudgetStore.getState().setBudgetStore;
-	const setBudgetsStore: IBudgetsState["setBudgetsStore"] = useBudgetsStore.getState().setBudgetsStore;
-	const setUserStore: IUserState["setUserStore"] = useUserStore.getState().setUserStore;
-
-	const totalExtraexpenses: number = budgetStore?.extraexpenses?.reduce(
+	const totalExtraexpenses: number = budget?.extraexpenses?.reduce(
 		(accumulator: number, extraexpense: IExtraexpense) => accumulator + extraexpense.amount_monthly,
 		0,
 	);
 
-	const extraexpensesSortedByCreatedAtAscending: IExtraexpense[] = [...budgetStore.extraexpenses].sort(
+	const extraexpensesSortedByCreatedAtAscending: IExtraexpense[] = [...budget.extraexpenses].sort(
 		(a, b): number => new Date(b.date).getTime() - new Date(a.date).getTime(),
 	);
 
@@ -30,32 +28,32 @@ const BudgetExtraexpenses = (): ReactNode => {
 		try {
 			if (
 				confirm(
-					`Are you sure you want to remove expense "${extraexpense.type}" with amount ${extraexpense.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budgetStore.currency)}?`,
+					`Are you sure you want to remove expense "${extraexpense.type}" with amount ${extraexpense.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budget.currency)}?`,
 				)
 			) {
 				const removeExtraexpenseResponse: Response = await fetch(
 					`${Utils.baseUrl}/extraexpenses/remove/${extraexpense.id}`,
 					{
 						method: "DELETE",
-						headers: { Authorization: `Bearer ${authStore}` },
+						headers: { Authorization: `Bearer ${auth}` },
 					},
 				);
 
 				if (!removeExtraexpenseResponse.ok) {
 					const removeExtraexpenseResponseError: IResponseError = await removeExtraexpenseResponse.json();
 
-					throw new Error(removeExtraexpenseResponseError.errorMessage);
+					throw new Error(removeExtraexpenseResponseError.message);
 				}
 
 				const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
 					method: "GET",
-					headers: { Authorization: `Bearer ${authStore}` },
+					headers: { Authorization: `Bearer ${auth}` },
 				});
 
 				if (!getUserResponse.ok) {
 					const getUserResponseError: IResponseError = await getUserResponse.json();
 
-					throw new Error(getUserResponseError.errorMessage);
+					throw new Error(getUserResponseError.message);
 				}
 
 				const getUserResponseBody: IUserResponse = await getUserResponse.json();
@@ -78,6 +76,7 @@ const BudgetExtraexpenses = (): ReactNode => {
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				alert(error.message);
+				throw new Error(error.stack);
 			}
 		}
 	};
@@ -108,8 +107,8 @@ const BudgetExtraexpenses = (): ReactNode => {
 				<div className="flex items-center justify-between">
 					<span className="text-xl text-white font-semibold">Total Expenses</span>
 					<span className="text-xl text-white font-bold">
-						{totalExtraexpenses ? totalExtraexpenses.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "···"}
-						{Utils.formatCurrencyFunction(budgetStore.currency)}
+						{totalExtraexpenses ? totalExtraexpenses.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "0 00"}
+						{Utils.formatCurrencyFunction(budget.currency)}
 					</span>
 				</div>
 
@@ -134,7 +133,7 @@ const BudgetExtraexpenses = (): ReactNode => {
 									<span className="text-lg text-[#91919A] font-medium truncate">{extraexpense.type}</span>
 									<span className="text-lg text-[#B85C3D] font-medium truncate">
 										-{extraexpense.amount_monthly.toFixed(2)}
-										{Utils.formatCurrencyFunction(budgetStore.currency)}
+										{Utils.formatCurrencyFunction(budget.currency)}
 									</span>
 								</div>
 							</button>

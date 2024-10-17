@@ -15,7 +15,6 @@ import Settings from "../../routes/settings";
 import Signup from "../../routes/signup";
 import TermsOfService from "../../routes/terms-of-service";
 import Tour from "../../routes/tour";
-import type { IAuthState } from "../../stores/auth";
 import useAuthStore from "../../stores/auth";
 
 export const router = createBrowserRouter([
@@ -91,13 +90,13 @@ export const router = createBrowserRouter([
 ]);
 
 const AppNavigator = (): ReactNode => {
+	const { setAuthStore } = useAuthStore();
+
 	useEffect((): void => {
 		try {
 			const authenticate = (): void => {
 				try {
 					const auth: string = getCookie("auth") ?? "";
-					const setAuthStore: IAuthState["setAuthStore"] = useAuthStore.getState().setAuthStore;
-
 					setAuthStore(auth);
 				} catch (error: unknown) {
 					if (error instanceof Error) {

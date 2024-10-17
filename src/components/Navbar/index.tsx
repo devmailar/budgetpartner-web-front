@@ -37,7 +37,7 @@ const Navbar = (): ReactNode => {
 
 			{auth ? (
 				<button type="button" className="btn px-0.5 py-0.5" onClick={(): void => handleLogout()}>
-					<svg width="38" height="38" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<title>Profile</title>
 						<g clip-path="url(#clip0_1_122)">
 							<path

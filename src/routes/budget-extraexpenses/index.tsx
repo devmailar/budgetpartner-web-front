@@ -1,69 +1,65 @@
-import type { Dispatch } from "@reduxjs/toolkit";
 import React, { type ReactNode } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import { setBudgetStore } from "../../stores/budget";
-import { setBudgetsStore } from "../../stores/budgets";
-import { setUserStore } from "../../stores/user";
-import type { IBudget, IExtraexpense, IResponseError, IRootState, IUserResponse } from "../../types";
+import useAuthStore from "../../stores/auth";
+import useBudgetStore from "../../stores/budget";
+import useBudgetsStore from "../../stores/budgets";
+import useUserStore from "../../stores/user";
+import type { IBudget, IExtraexpense, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 const BudgetExtraexpenses = (): ReactNode => {
-	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const authStore: string = useSelector((state: IRootState) => state.auth);
-	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
+	const { value: auth } = useAuthStore();
+	const { value: budget, setBudgetStore } = useBudgetStore();
+	const { setBudgetsStore } = useBudgetsStore();
+	const { setUserStore } = useUserStore();
 
-	const totalExtraexpenses: number = budgetStore?.extraexpenses?.reduce(
-		(accumulator: number, extraexpense: IExtraexpense) => {
-			return accumulator + extraexpense.amount_monthly;
-		},
+	const totalExtraexpenses: number = budget?.extraexpenses?.reduce(
+		(accumulator: number, extraexpense: IExtraexpense) => accumulator + extraexpense.amount_monthly,
 		0,
 	);
 
-	const extraexpensesSortedByCreatedAtAscending: IExtraexpense[] = [...budgetStore.extraexpenses].sort(
-		(a, b): number => {
-			return new Date(b.date).getTime() - new Date(a.date).getTime();
-		},
+	const extraexpensesSortedByCreatedAtAscending: IExtraexpense[] = [...budget.extraexpenses].sort(
+		(a, b): number => new Date(b.date).getTime() - new Date(a.date).getTime(),
 	);
 
 	const handleRemoveExtraexpense = async (extraexpense: IExtraexpense): Promise<void> => {
 		try {
 			if (
 				confirm(
-					`Are you sure you want to remove expense "${extraexpense.type}" with amount ${extraexpense.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budgetStore.currency)}?`,
+					`Are you sure you want to remove expense "${extraexpense.type}" with amount ${extraexpense.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budget.currency)}?`,
 				)
 			) {
 				const removeExtraexpenseResponse: Response = await fetch(
 					`${Utils.baseUrl}/extraexpenses/remove/${extraexpense.id}`,
 					{
 						method: "DELETE",
-						headers: { Authorization: `Bearer ${authStore}` },
+						headers: { Authorization: `Bearer ${auth}` },
 					},
 				);
 
 				if (!removeExtraexpenseResponse.ok) {
 					const removeExtraexpenseResponseError: IResponseError = await removeExtraexpenseResponse.json();
 
-					throw new Error(removeExtraexpenseResponseError.errorMessage);
+					throw new Error(removeExtraexpenseResponseError.message);
 				}
 
 				const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
 					method: "GET",
-					headers: { Authorization: `Bearer ${authStore}` },
+					headers: { Authorization: `Bearer ${auth}` },
 				});
 
 				if (!getUserResponse.ok) {
 					const getUserResponseError: IResponseError = await getUserResponse.json();
 
-					throw new Error(getUserResponseError.errorMessage);
+					throw new Error(getUserResponseError.message);
 				}
 
 				const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
-				dispatch(setUserStore(getUserResponseBody.errorNoData.user));
-				dispatch(setBudgetsStore(getUserResponseBody.errorNoData.budgets));
+				setUserStore(getUserResponseBody.errorNoData.user);
+				setBudgetsStore(getUserResponseBody.errorNoData.budgets);
 
 				const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
 					(budget: IBudget): boolean => {
@@ -71,11 +67,16 @@ const BudgetExtraexpenses = (): ReactNode => {
 					},
 				);
 
-				dispatch(setBudgetStore(currentBudget));
+				if (!currentBudget) {
+					return;
+				}
+
+				setBudgetStore(currentBudget);
 			}
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				alert(error.message);
+				throw new Error(error.stack);
 			}
 		}
 	};
@@ -86,20 +87,12 @@ const BudgetExtraexpenses = (): ReactNode => {
 				<button
 					type="button"
 					className="bg-[#B85C3D] h-full px-2 py-0 rounded-2xl"
-					onClick={(): void => {
-						navigate("/new-extraexpense");
-					}}
+					onClick={(): void => navigate("/new-extraexpense")}
 				>
 					<span className="text-base text-white font-medium">+ Add new</span>
 				</button>
 
-				<button
-					type="button"
-					className="bg-[#1B1818] h-full px-6 py-0 rounded-2xl"
-					onClick={(): void => {
-						navigate("/");
-					}}
-				>
+				<button type="button" className="bg-[#1B1818] h-full px-6 py-0 rounded-2xl" onClick={(): void => navigate("/")}>
 					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<title>Close</title>
 						<path
@@ -114,8 +107,8 @@ const BudgetExtraexpenses = (): ReactNode => {
 				<div className="flex items-center justify-between">
 					<span className="text-xl text-white font-semibold">Total Expenses</span>
 					<span className="text-xl text-white font-bold">
-						{totalExtraexpenses ? totalExtraexpenses.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "···"}
-						{Utils.formatCurrencyFunction(budgetStore.currency)}
+						{totalExtraexpenses ? totalExtraexpenses.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "0 00"}
+						{Utils.formatCurrencyFunction(budget.currency)}
 					</span>
 				</div>
 
@@ -140,7 +133,7 @@ const BudgetExtraexpenses = (): ReactNode => {
 									<span className="text-lg text-[#91919A] font-medium truncate">{extraexpense.type}</span>
 									<span className="text-lg text-[#B85C3D] font-medium truncate">
 										-{extraexpense.amount_monthly.toFixed(2)}
-										{Utils.formatCurrencyFunction(budgetStore.currency)}
+										{Utils.formatCurrencyFunction(budget.currency)}
 									</span>
 								</div>
 							</button>

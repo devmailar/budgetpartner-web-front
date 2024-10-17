@@ -1,40 +1,46 @@
-import type { Dispatch } from "@reduxjs/toolkit/react";
 import { eachDayOfInterval, endOfMonth, isWeekend, startOfMonth } from "date-fns";
 import React, { type ReactNode, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImageGrowth from "../../assets/growth.webp";
 import Switch from "../../components/Switch";
-import { setAuthStore } from "../../stores/auth";
-import { setBudgetStore } from "../../stores/budget";
-import { setBudgetsStore } from "../../stores/budgets";
-import { setUserStore } from "../../stores/user";
-import type { IBudget, IExtraexpense, IExtraincome, IResponseError, IRootState, IUserResponse } from "../../types";
+import useAuthStore, { type IAuthState } from "../../stores/auth";
+import useBudgetStore, { type IBudgetState } from "../../stores/budget";
+import useBudgetsStore, { type IBudgetsState } from "../../stores/budgets";
+import useUserStore, { type IUserState } from "../../stores/user";
+import type { IBudget, IExtraexpense, IExtraincome, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 const Budget = (): ReactNode => {
-	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const authStore: string = useSelector((state: IRootState) => state.auth);
-	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
+	const { value: auth, setAuthStore } = useAuthStore();
+	const { value: budget, setBudgetStore } = useBudgetStore();
+	const { setBudgetsStore } = useBudgetsStore();
+	const { setUserStore } = useUserStore();
 
 	const [dailyBudget, setDailyBudget] = useState<number>(0);
 	const [monthlyBudget, setMonthlyBudget] = useState<number>(0);
 
 	useEffect((): void => {
 		try {
+			if (!auth) {
+				setBudgetStore({} as IBudgetState["value"]);
+				setBudgetsStore([] as IBudgetsState["value"]);
+				setUserStore({} as IUserState["value"]);
+				return;
+			}
+
 			const handleGetUserResponse = async (): Promise<void> => {
 				try {
 					const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
 						method: "GET",
-						headers: { Authorization: `Bearer ${authStore}` },
+						headers: { Authorization: `Bearer ${auth}` },
 					});
 
 					if (!getUserResponse.ok) {
 						const getUserResponseError: IResponseError = await getUserResponse.json();
 
-						throw new Error(getUserResponseError.errorMessage);
+						throw new Error(getUserResponseError.message);
 					}
 
 					const getUserResponseBody: IUserResponse = await getUserResponse.json();
@@ -43,45 +49,42 @@ const Budget = (): ReactNode => {
 						return navigate("/tour");
 					}
 
-					dispatch(setUserStore(getUserResponseBody.errorNoData.user));
-					dispatch(setBudgetsStore(getUserResponseBody.errorNoData.budgets));
+					setUserStore(getUserResponseBody.errorNoData.user);
+					setBudgetsStore(getUserResponseBody.errorNoData.budgets);
 
 					const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
-						(budget: IBudget): boolean => {
-							return new Date(budget.created_at).getMonth() === new Date().getMonth();
-						},
+						(budget: IBudget): boolean => new Date(budget.created_at).getMonth() === new Date().getMonth(),
 					);
 
 					if (!currentBudget) {
 						const createBudgetResponse: Response = await fetch(`${Utils.baseUrl}/budgets/create`, {
 							method: "POST",
-							headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
+							headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 							body: JSON.stringify({ date: new Date() }),
 						});
 
 						if (!createBudgetResponse.ok) {
 							const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
 
-							throw new Error(createBudgetResponseError.errorMessage);
+							throw new Error(createBudgetResponseError.message);
 						}
 
 						alert(`Happy ${Utils.monthsList[new Date().getMonth()]} 💙\n\nEnjoy your new budget!`);
 
 						const getUserResponseAgain: Response = await fetch(`${Utils.baseUrl}/users/get`, {
 							method: "GET",
-							headers: { Authorization: `Bearer ${authStore}` },
+							headers: { Authorization: `Bearer ${auth}` },
 						});
 
 						if (!getUserResponseAgain.ok) {
 							const getUserResponseAgainError: IResponseError = await getUserResponseAgain.json();
 
-							throw new Error(getUserResponseAgainError.errorMessage);
+							throw new Error(getUserResponseAgainError.message);
 						}
 
 						const getUserResponseBodyAgain: IUserResponse = await getUserResponseAgain.json();
-
-						dispatch(setUserStore(getUserResponseBodyAgain.errorNoData.user));
-						dispatch(setBudgetsStore(getUserResponseBodyAgain.errorNoData.budgets));
+						setUserStore(getUserResponseBodyAgain.errorNoData.user);
+						setBudgetsStore(getUserResponseBodyAgain.errorNoData.budgets);
 
 						const currentBudgetAgain: IBudget | undefined = getUserResponseBodyAgain.errorNoData.budgets.find(
 							(budget: IBudget): boolean => {
@@ -89,9 +92,11 @@ const Budget = (): ReactNode => {
 							},
 						);
 
-						dispatch(setBudgetStore(currentBudgetAgain));
+						if (!currentBudgetAgain) {
+							return;
+						}
 
-						return;
+						return setBudgetStore(currentBudgetAgain);
 					}
 
 					const storedBudgetDate: string = localStorage.getItem("budget") ?? "";
@@ -115,61 +120,52 @@ const Budget = (): ReactNode => {
 						);
 
 						if (!matchingBudget) {
-							dispatch(setBudgetStore(currentBudget));
-							return;
+							return setBudgetStore(currentBudget);
 						}
 
-						dispatch(setBudgetStore(matchingBudget));
+						setBudgetStore(matchingBudget);
 					} else {
-						dispatch(setBudgetStore(currentBudget));
+						setBudgetStore(currentBudget);
 					}
 				} catch (error: unknown) {
 					if (error instanceof Error) {
-						dispatch(setAuthStore(""));
-						dispatch(setBudgetStore({}));
-						dispatch(setBudgetsStore([]));
-						dispatch(setUserStore({}));
+						setAuthStore("" as IAuthState["value"]);
+						setBudgetStore({} as IBudgetState["value"]);
+						setBudgetsStore([] as IBudgetsState["value"]);
+						setUserStore({} as IUserState["value"]);
 
 						navigate("/login");
 
 						alert(error.message);
+						throw new Error(error.stack);
 					}
 				}
 			};
-
-			if (!authStore) {
-				dispatch(setBudgetStore({}));
-				dispatch(setBudgetsStore([]));
-				dispatch(setUserStore({}));
-				return;
-			}
 
 			handleGetUserResponse();
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				alert(error.message);
+				throw new Error(error.stack);
 			}
 		}
-	}, [authStore, navigate, dispatch]);
+	}, [auth, navigate, setAuthStore, setBudgetStore, setBudgetsStore, setUserStore]);
 
 	useEffect((): void => {
 		try {
-			if (Object.keys(budgetStore).length === 0) {
+			if (Object.keys(budget).length === 0) {
 				return;
 			}
 
-			const totalExtraincomes: number = budgetStore.extraincomes.reduce(
-				(accumulator: number, extraincome: IExtraincome) => {
-					return accumulator + extraincome.amount_monthly;
-				},
-				0,
-			);
+			const totalExtraincomes: number = budget.extraincomes.reduce((accumulator: number, extraincome: IExtraincome) => {
+				return accumulator + extraincome.amount_monthly;
+			}, 0);
 
 			if (Number.isNaN(totalExtraincomes)) {
 				return;
 			}
 
-			const totalExtraexpenses: number = budgetStore.extraexpenses.reduce(
+			const totalExtraexpenses: number = budget.extraexpenses.reduce(
 				(accumulator: number, extraexpense: IExtraexpense) => {
 					return accumulator + extraexpense.amount_monthly;
 				},
@@ -185,7 +181,7 @@ const Budget = (): ReactNode => {
 				end: endOfMonth(new Date()),
 			});
 
-			const includesWeekends: boolean = budgetStore.extraincomes.some((extraincome: IExtraincome) => {
+			const includesWeekends: boolean = budget.extraincomes.some((extraincome: IExtraincome) => {
 				return extraincome.includes_weekends;
 			});
 
@@ -210,9 +206,10 @@ const Budget = (): ReactNode => {
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				alert(error.message);
+				throw new Error(error.stack);
 			}
 		}
-	}, [budgetStore]);
+	}, [budget]);
 
 	return (
 		<div className="animate__animated animate__slideInLeft animate__faster">
@@ -221,14 +218,14 @@ const Budget = (): ReactNode => {
 					BudgetPartner
 				</a>
 
-				{authStore ? (
+				{auth ? (
 					<button
 						type="button"
 						onClick={(): void => {
-							dispatch(setAuthStore(""));
-							dispatch(setBudgetStore({}));
-							dispatch(setBudgetsStore([]));
-							dispatch(setUserStore({}));
+							setAuthStore("" as IAuthState["value"]);
+							setBudgetStore({} as IBudgetState["value"]);
+							setBudgetsStore([] as IBudgetsState["value"]);
+							setUserStore({} as IUserState["value"]);
 
 							setDailyBudget(0);
 							setMonthlyBudget(0);
@@ -252,23 +249,23 @@ const Budget = (): ReactNode => {
 
 			<div className="flex flex-col gap-y-[18px] px-6 py-6">
 				<div className="flex items-center justify-end">
-					{authStore && (
+					{auth && (
 						<button type="button" onClick={(): void => navigate("/settings")}>
 							<svg width="39" height="38" viewBox="0 0 39 38" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<title>Settings</title>
 								<path
 									d="M16.8479 6.83525C17.5224 4.05492 21.4776 4.05492 22.1521 6.83525C22.2533 7.25293 22.4517 7.64082 22.7311 7.96733C23.0106 8.29385 23.3632 8.54977 23.7602 8.71426C24.1572 8.87876 24.5875 8.94718 25.016 8.91396C25.4445 8.88074 25.8591 8.74681 26.226 8.52308C28.6691 7.03475 31.4668 9.83092 29.9785 12.2756C29.7551 12.6424 29.6214 13.0567 29.5882 13.4849C29.5551 13.9131 29.6234 14.3431 29.7878 14.7399C29.9521 15.1367 30.2077 15.4891 30.5338 15.7685C30.86 16.0479 31.2474 16.2464 31.6648 16.3479C34.4451 17.0224 34.4451 20.9776 31.6648 21.6521C31.2471 21.7533 30.8592 21.9517 30.5327 22.2311C30.2062 22.5106 29.9502 22.8632 29.7857 23.2602C29.6212 23.6572 29.5528 24.0875 29.586 24.516C29.6193 24.9445 29.7532 25.3591 29.9769 25.726C31.4653 28.1691 28.6691 30.9668 26.2244 29.4785C25.8576 29.2551 25.4433 29.1214 25.0151 29.0882C24.5869 29.0551 24.1569 29.1234 23.7601 29.2878C23.3633 29.4521 23.0109 29.7077 22.7315 30.0338C22.4521 30.36 22.2536 30.7474 22.1521 31.1648C21.4776 33.9451 17.5224 33.9451 16.8479 31.1648C16.7467 30.7471 16.5483 30.3592 16.2689 30.0327C15.9894 29.7062 15.6368 29.4502 15.2398 29.2857C14.8428 29.1212 14.4125 29.0528 13.984 29.086C13.5555 29.1193 13.1409 29.2532 12.774 29.4769C10.3309 30.9653 7.53317 28.1691 9.0215 25.7244C9.24491 25.3576 9.37862 24.9433 9.41177 24.5151C9.44491 24.0869 9.37655 23.6569 9.21225 23.2601C9.04794 22.8633 8.79233 22.5109 8.46618 22.2315C8.14004 21.9521 7.75256 21.7536 7.33525 21.6521C4.55492 20.9776 4.55492 17.0224 7.33525 16.3479C7.75293 16.2467 8.14082 16.0483 8.46733 15.7689C8.79385 15.4894 9.04977 15.1368 9.21426 14.7398C9.37876 14.3428 9.44718 13.9125 9.41396 13.484C9.38074 13.0555 9.24681 12.6409 9.02308 12.274C7.53475 9.83092 10.3309 7.03317 12.7756 8.5215C14.3589 9.48417 16.4109 8.63233 16.8479 6.83525Z"
 									stroke="#007AFF"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
 								/>
 								<path
 									d="M14.75 19C14.75 20.2598 15.2504 21.468 16.1412 22.3588C17.032 23.2496 18.2402 23.75 19.5 23.75C20.7598 23.75 21.968 23.2496 22.8588 22.3588C23.7496 21.468 24.25 20.2598 24.25 19C24.25 17.7402 23.7496 16.532 22.8588 15.6412C21.968 14.7504 20.7598 14.25 19.5 14.25C18.2402 14.25 17.032 14.7504 16.1412 15.6412C15.2504 16.532 14.75 17.7402 14.75 19Z"
 									stroke="#007AFF"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
 								/>
 							</svg>
 						</button>
@@ -280,18 +277,18 @@ const Budget = (): ReactNode => {
 						<div className="flex flex-col gap-1">
 							<h1 className="font-base font-semibold text-[#007AFF]">
 								We saved in{" "}
-								{Object.keys(budgetStore).length === 0
+								{Object.keys(budget).length === 0
 									? Utils.monthsList[new Date().getMonth()]
-									: Utils.monthsList[new Date(budgetStore.created_at).getMonth()]}
+									: Utils.monthsList[new Date(budget.created_at).getMonth()]}
 							</h1>
 
 							<span className="text-[32px] font-bold text-white">
 								{monthlyBudget ? monthlyBudget.toFixed(2) : "···"}
-								{Utils.formatCurrencyFunction(budgetStore.currency)}
+								{Utils.formatCurrencyFunction(budget.currency)}
 							</span>
 						</div>
 
-						{authStore && <Switch />}
+						{auth && <Switch />}
 					</div>
 
 					<p className="text-base text-[#66666F] font-medium">#budgetingmakeslegends</p>
@@ -306,7 +303,7 @@ const Budget = (): ReactNode => {
 						<span className="text-[28px] font-bold text-white">
 							{" "}
 							{dailyBudget ? dailyBudget.toFixed(2) : "···"}
-							{Utils.formatCurrencyFunction(budgetStore.currency)}
+							{Utils.formatCurrencyFunction(budget.currency)}
 						</span>
 
 						<p className="text-base text-[#66666F] font-medium">#financialfreedom</p>
@@ -318,7 +315,7 @@ const Budget = (): ReactNode => {
 						type="button"
 						className="flex items-center justify-center gap-1 btn bg-[#007AFF] px-2 py-3 rounded-lg"
 						onClick={(): void => {
-							if (!authStore) {
+							if (!auth) {
 								navigate("/login");
 								return;
 							}
@@ -346,7 +343,7 @@ const Budget = (): ReactNode => {
 						type="button"
 						className="flex items-center justify-center gap-1 btn bg-transparent px-2 py-3 rounded-lg border-[1.5px] border-[#B85C3D]"
 						onClick={(): void => {
-							if (!authStore) {
+							if (!auth) {
 								navigate("/login");
 								return;
 							}

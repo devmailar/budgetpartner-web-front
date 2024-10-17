@@ -1,20 +1,22 @@
-import type { Dispatch } from "@reduxjs/toolkit";
-import React, { useEffect, useState, type FormEvent, type ReactNode } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { type FormEvent, type ReactNode, useEffect, useState } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImagePiggy from "../../assets/piggy.webp";
-import { setAuthStore } from "../../stores/auth";
-import { setBudgetStore } from "../../stores/budget";
-import { setBudgetsStore } from "../../stores/budgets";
-import { setUserStore } from "../../stores/user";
-import type { IBudget, IResponseError, IRootState, IUserResponse } from "../../types";
+import useAuthStore, { type IAuthState } from "../../stores/auth";
+import useBudgetStore, { type IBudgetState } from "../../stores/budget";
+import useBudgetsStore, { type IBudgetsState } from "../../stores/budgets";
+import useUserStore, { type IUserState } from "../../stores/user";
+import type { IBudget, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 const Tour = (): ReactNode => {
-	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const authStore: string = useSelector((state: IRootState) => state.auth);
+	const authStore: IAuthState["value"] = useAuthStore.getState().value;
+
+	const setAuthStore: IAuthState["setAuthStore"] = useAuthStore.getState().setAuthStore;
+	const setBudgetStore: IBudgetState["setBudgetStore"] = useBudgetStore.getState().setBudgetStore;
+	const setBudgetsStore: IBudgetsState["setBudgetsStore"] = useBudgetsStore.getState().setBudgetsStore;
+	const setUserStore: IUserState["setUserStore"] = useUserStore.getState().setUserStore;
 
 	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
 
@@ -43,7 +45,7 @@ const Tour = (): ReactNode => {
 			if (!getUserResponse.ok) {
 				const getUserResponseError: IResponseError = await getUserResponse.json();
 
-				throw new Error(getUserResponseError.errorMessage);
+				throw new Error(getUserResponseError.message);
 			}
 
 			const getUserResponseBody: IUserResponse = await getUserResponse.json();
@@ -73,7 +75,7 @@ const Tour = (): ReactNode => {
 			if (!createExtraincomeResponse.ok) {
 				const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();
 
-				throw new Error(createExtraincomeResponseError.errorMessage);
+				throw new Error(createExtraincomeResponseError.message);
 			}
 
 			const getUserResponseAgain: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -84,7 +86,7 @@ const Tour = (): ReactNode => {
 			if (!getUserResponseAgain.ok) {
 				const getUserResponseAgainError: IResponseError = await getUserResponseAgain.json();
 
-				throw new Error(getUserResponseAgainError.errorMessage);
+				throw new Error(getUserResponseAgainError.message);
 			}
 
 			const getUserResponseAgainBody: IUserResponse = await getUserResponseAgain.json();
@@ -93,8 +95,8 @@ const Tour = (): ReactNode => {
 				throw new Error("User response again is empty");
 			}
 
-			dispatch(setUserStore(getUserResponseAgainBody.errorNoData.user));
-			dispatch(setBudgetsStore(getUserResponseAgainBody.errorNoData.budgets));
+			setUserStore(getUserResponseAgainBody.errorNoData.user);
+			setBudgetsStore(getUserResponseAgainBody.errorNoData.budgets);
 
 			const currentBudgetAgain: IBudget | undefined = getUserResponseAgainBody.errorNoData.budgets.find(
 				(budget: IBudget): boolean => {
@@ -102,14 +104,19 @@ const Tour = (): ReactNode => {
 				},
 			);
 
-			dispatch(setBudgetStore(currentBudgetAgain));
+			if (!currentBudgetAgain) {
+				return;
+			}
+
+			setBudgetStore(currentBudgetAgain);
 
 			navigate("/");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				alert(error.message);
-
 				setTimeout(() => setDisableSubmit(false), 2250);
+
+				alert(error.message);
+				throw new Error(error.stack);
 			}
 		}
 	};
@@ -126,11 +133,12 @@ const Tour = (): ReactNode => {
 				if (!createBudgetResponse.ok) {
 					const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
 
-					throw new Error(createBudgetResponseError.errorMessage);
+					throw new Error(createBudgetResponseError.message);
 				}
 			} catch (error: unknown) {
 				if (error instanceof Error) {
 					alert(error.message);
+					throw new Error(error.stack);
 				}
 			}
 		};
@@ -155,10 +163,10 @@ const Tour = (): ReactNode => {
 				<button
 					type="button"
 					onClick={(): void => {
-						dispatch(setAuthStore(""));
-						dispatch(setBudgetStore({}));
-						dispatch(setBudgetsStore([]));
-						dispatch(setUserStore({}));
+						setAuthStore("" as IAuthState["value"]);
+						setBudgetStore({} as IBudgetState["value"]);
+						setBudgetsStore([] as IBudgetsState["value"]);
+						setUserStore({} as IUserState["value"]);
 
 						navigate("/login");
 					}}

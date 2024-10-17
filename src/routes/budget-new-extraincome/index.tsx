@@ -1,20 +1,20 @@
-import type { Dispatch } from "@reduxjs/toolkit";
 import { format } from "date-fns";
 import React, { useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
-import { setBudgetStore } from "../../stores/budget";
-import { setBudgetsStore } from "../../stores/budgets";
-import { setUserStore } from "../../stores/user";
-import type { IBudget, IResponseError, IRootState, IUserResponse } from "../../types";
+import useAuthStore from "../../stores/auth";
+import useBudgetStore from "../../stores/budget";
+import useBudgetsStore from "../../stores/budgets";
+import useUserStore from "../../stores/user";
+import type { IBudget, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 const BudgetNewExtraincome = (): ReactNode => {
-	const dispatch: Dispatch = useDispatch();
 	const navigate: NavigateFunction = useNavigate();
 
-	const authStore: string = useSelector((state: IRootState) => state.auth);
-	const budgetStore: IBudget = useSelector((state: IRootState) => state.budget);
+	const { value: auth } = useAuthStore();
+	const { value: budget, setBudgetStore } = useBudgetStore();
+	const { setBudgetsStore } = useBudgetsStore();
+	const { setUserStore } = useUserStore();
 
 	const [extraincomeDate, setExtraincomeDate] = useState<Date>(new Date());
 	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
@@ -39,9 +39,9 @@ const BudgetNewExtraincome = (): ReactNode => {
 
 			const createExtraincomeResponse: Response = await fetch(`${Utils.baseUrl}/extraincomes/create`, {
 				method: "POST",
-				headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
+				headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
 				body: JSON.stringify({
-					budget_id: budgetStore.id,
+					budget_id: budget.id,
 					type: type,
 					amount_monthly: amount_monthly,
 					includes_weekends: false,
@@ -52,24 +52,24 @@ const BudgetNewExtraincome = (): ReactNode => {
 			if (!createExtraincomeResponse.ok) {
 				const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();
 
-				throw new Error(createExtraincomeResponseError.errorMessage);
+				throw new Error(createExtraincomeResponseError.message);
 			}
 
 			const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
 				method: "GET",
-				headers: { Authorization: `Bearer ${authStore}` },
+				headers: { Authorization: `Bearer ${auth}` },
 			});
 
 			if (!getUserResponse.ok) {
 				const getUserResponseError: IResponseError = await getUserResponse.json();
 
-				throw new Error(getUserResponseError.errorMessage);
+				throw new Error(getUserResponseError.message);
 			}
 
 			const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
-			dispatch(setUserStore(getUserResponseBody.errorNoData.user));
-			dispatch(setBudgetsStore(getUserResponseBody.errorNoData.budgets));
+			setUserStore(getUserResponseBody.errorNoData.user);
+			setBudgetsStore(getUserResponseBody.errorNoData.budgets);
 
 			const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
 				(budget: IBudget): boolean => {
@@ -77,14 +77,19 @@ const BudgetNewExtraincome = (): ReactNode => {
 				},
 			);
 
-			dispatch(setBudgetStore(currentBudget));
+			if (!currentBudget) {
+				return;
+			}
+
+			setBudgetStore(currentBudget);
 
 			navigate("/");
 		} catch (error: unknown) {
 			if (error instanceof Error) {
-				alert(error.message);
-
 				setTimeout(() => setDisableSubmit(false), 2250);
+
+				alert(error.message);
+				throw new Error(error.stack);
 			}
 		}
 	};
@@ -94,12 +99,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
 				<h2 className="text-lg text-white font-medium">BudgetPartner</h2>
 
-				<button
-					type="button"
-					onClick={(): void => {
-						navigate("/");
-					}}
-				>
+				<button type="button" onClick={(): void => navigate("/")}>
 					<span className="text-lg text-[#007AFF] font-medium">Back</span>
 				</button>
 			</nav>
@@ -140,7 +140,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 					</div>
 
 					<div className="flex items-center gap-3.5 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
-						<span className="ml-1 text-xl text-[#66666F]">{Utils.formatCurrencyFunction(budgetStore.currency)}</span>
+						<span className="ml-1 text-xl text-[#66666F]">{Utils.formatCurrencyFunction(budget.currency)}</span>
 
 						<input
 							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"

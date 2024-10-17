@@ -1,15 +1,32 @@
-import { type PayloadAction, type Slice, createSlice } from "@reduxjs/toolkit";
+import { type StoreApi, type UseBoundStore, create } from "zustand";
+import { devtools } from "zustand/middleware";
 import type { IUser } from "../../types";
 
-export const userStore: Slice = createSlice({
-	name: "user",
-	initialState: {} as IUser,
-	reducers: {
-		setUserStore: (_state, action: PayloadAction<IUser>) => {
-			return action.payload;
-		},
-	},
-});
+export interface IUserState {
+	value: IUser;
+	setUserStore: (value: IUser) => void;
+}
 
-export const { setUserStore } = userStore.actions;
-export default userStore.reducer;
+const useUserStore: UseBoundStore<StoreApi<IUserState>> = create(
+	devtools(
+		(set) => ({
+			value: {} as IUser,
+			setUserStore: (value: IUser): void => {
+				try {
+					set({ value });
+				} catch (error) {
+					if (error instanceof Error) {
+						alert(error.message);
+						throw new Error(error.message);
+					}
+				}
+			},
+		}),
+		{
+			enabled: true,
+			anonymousActionType: "setUserStore",
+			store: "useUserStore",
+		},
+	),
+);
+export default useUserStore;

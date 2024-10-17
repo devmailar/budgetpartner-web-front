@@ -1,6 +1,4 @@
-import type { Dispatch } from "@reduxjs/toolkit";
-import React, { type ReactNode } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, type ReactNode } from "react";
 import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import Image404 from "../../assets/404.webp";
@@ -17,7 +15,7 @@ import Settings from "../../routes/settings";
 import Signup from "../../routes/signup";
 import TermsOfService from "../../routes/terms-of-service";
 import Tour from "../../routes/tour";
-import { setAuthStore } from "../../stores/auth";
+import useAuthStore from "../../stores/auth";
 
 export const router = createBrowserRouter([
 	{
@@ -92,14 +90,14 @@ export const router = createBrowserRouter([
 ]);
 
 const AppNavigator = (): ReactNode => {
-	const dispatch: Dispatch = useDispatch();
+	const { setAuthStore } = useAuthStore();
 
-	React.useEffect((): void => {
+	useEffect((): void => {
 		try {
 			const authenticate = (): void => {
 				try {
 					const auth: string = getCookie("auth") ?? "";
-					dispatch(setAuthStore(auth));
+					setAuthStore(auth);
 				} catch (error: unknown) {
 					if (error instanceof Error) {
 						alert(error.message);
@@ -113,7 +111,7 @@ const AppNavigator = (): ReactNode => {
 				alert(error.message);
 			}
 		}
-	}, [dispatch]);
+	}, []);
 
 	return <RouterProvider router={router} />;
 };

@@ -2,6 +2,7 @@ import { eachDayOfInterval, endOfMonth, isWeekend, startOfMonth } from "date-fns
 import React, { type ReactNode, useEffect, useState } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImageGrowth from "../../assets/growth.webp";
+import Navbar from "../../components/Navbar";
 import Switch from "../../components/Switch";
 import useAuthStore, { type IAuthState } from "../../stores/auth";
 import useBudgetStore, { type IBudgetState } from "../../stores/budget";
@@ -212,108 +213,62 @@ const Budget = (): ReactNode => {
 	}, [budget]);
 
 	return (
-		<div className="animate__animated animate__slideInLeft animate__faster">
-			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
-				<a href="/" className="text-lg text-white font-medium">
-					BudgetPartner
-				</a>
+		<div className="flex flex-col gap-y-8 animate__animated animate__slideInLeft animate__faster">
+			<Navbar />
 
-				{auth ? (
-					<button
-						type="button"
-						onClick={(): void => {
-							setAuthStore("" as IAuthState["value"]);
-							setBudgetStore({} as IBudgetState["value"]);
-							setBudgetsStore([] as IBudgetsState["value"]);
-							setUserStore({} as IUserState["value"]);
-
-							setDailyBudget(0);
-							setMonthlyBudget(0);
-
-							navigate("/login");
-						}}
-					>
-						<span className="text-lg text-[#007AFF] font-medium">Logout</span>
-					</button>
-				) : (
-					<button
-						type="button"
-						onClick={(): void => {
-							navigate("/login");
-						}}
-					>
-						<span className="text-lg text-[#007AFF] font-medium">Login</span>
-					</button>
-				)}
-			</nav>
-
-			<div className="flex flex-col gap-y-[18px] px-6 py-6">
+			<div className="flex flex-col gap-y-8 px-8">
 				<div className="flex items-center justify-end">
 					{auth && (
-						<button type="button" onClick={(): void => navigate("/settings")}>
-							<svg width="39" height="38" viewBox="0 0 39 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<title>Settings</title>
-								<path
-									d="M16.8479 6.83525C17.5224 4.05492 21.4776 4.05492 22.1521 6.83525C22.2533 7.25293 22.4517 7.64082 22.7311 7.96733C23.0106 8.29385 23.3632 8.54977 23.7602 8.71426C24.1572 8.87876 24.5875 8.94718 25.016 8.91396C25.4445 8.88074 25.8591 8.74681 26.226 8.52308C28.6691 7.03475 31.4668 9.83092 29.9785 12.2756C29.7551 12.6424 29.6214 13.0567 29.5882 13.4849C29.5551 13.9131 29.6234 14.3431 29.7878 14.7399C29.9521 15.1367 30.2077 15.4891 30.5338 15.7685C30.86 16.0479 31.2474 16.2464 31.6648 16.3479C34.4451 17.0224 34.4451 20.9776 31.6648 21.6521C31.2471 21.7533 30.8592 21.9517 30.5327 22.2311C30.2062 22.5106 29.9502 22.8632 29.7857 23.2602C29.6212 23.6572 29.5528 24.0875 29.586 24.516C29.6193 24.9445 29.7532 25.3591 29.9769 25.726C31.4653 28.1691 28.6691 30.9668 26.2244 29.4785C25.8576 29.2551 25.4433 29.1214 25.0151 29.0882C24.5869 29.0551 24.1569 29.1234 23.7601 29.2878C23.3633 29.4521 23.0109 29.7077 22.7315 30.0338C22.4521 30.36 22.2536 30.7474 22.1521 31.1648C21.4776 33.9451 17.5224 33.9451 16.8479 31.1648C16.7467 30.7471 16.5483 30.3592 16.2689 30.0327C15.9894 29.7062 15.6368 29.4502 15.2398 29.2857C14.8428 29.1212 14.4125 29.0528 13.984 29.086C13.5555 29.1193 13.1409 29.2532 12.774 29.4769C10.3309 30.9653 7.53317 28.1691 9.0215 25.7244C9.24491 25.3576 9.37862 24.9433 9.41177 24.5151C9.44491 24.0869 9.37655 23.6569 9.21225 23.2601C9.04794 22.8633 8.79233 22.5109 8.46618 22.2315C8.14004 21.9521 7.75256 21.7536 7.33525 21.6521C4.55492 20.9776 4.55492 17.0224 7.33525 16.3479C7.75293 16.2467 8.14082 16.0483 8.46733 15.7689C8.79385 15.4894 9.04977 15.1368 9.21426 14.7398C9.37876 14.3428 9.44718 13.9125 9.41396 13.484C9.38074 13.0555 9.24681 12.6409 9.02308 12.274C7.53475 9.83092 10.3309 7.03317 12.7756 8.5215C14.3589 9.48417 16.4109 8.63233 16.8479 6.83525Z"
-									stroke="#007AFF"
-									strokeWidth="2"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-								<path
-									d="M14.75 19C14.75 20.2598 15.2504 21.468 16.1412 22.3588C17.032 23.2496 18.2402 23.75 19.5 23.75C20.7598 23.75 21.968 23.2496 22.8588 22.3588C23.7496 21.468 24.25 20.2598 24.25 19C24.25 17.7402 23.7496 16.532 22.8588 15.6412C21.968 14.7504 20.7598 14.25 19.5 14.25C18.2402 14.25 17.032 14.7504 16.1412 15.6412C15.2504 16.532 14.75 17.7402 14.75 19Z"
-									stroke="#007AFF"
-									strokeWidth="2"
-									strokeLinecap="round"
-									strokeLinejoin="round"
-								/>
-							</svg>
-						</button>
+						<div className="flex gap-x-2.5 items-center justify-center px-1.5 py-1 bg-[#18181B] rounded-full">
+							<Switch />
+
+							<button type="button" className="btn px-0.5 py-0.5" onClick={(): void => navigate("/settings")}>
+								<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<title>Settings</title>
+									<path
+										d="M12.9062 5.39625C13.4387 3.20125 16.5613 3.20125 17.0938 5.39625C17.1736 5.726 17.3303 6.03222 17.5509 6.29C17.7715 6.54778 18.0499 6.74982 18.3633 6.87968C18.6768 7.00955 19.0165 7.06356 19.3547 7.03734C19.693 7.01111 20.0203 6.90538 20.31 6.72875C22.2387 5.55375 24.4475 7.76125 23.2725 9.69125C23.0961 9.98082 22.9906 10.3079 22.9644 10.646C22.9382 10.984 22.9922 11.3235 23.1219 11.6367C23.2516 11.95 23.4534 12.2282 23.7109 12.4488C23.9684 12.6694 24.2743 12.8261 24.6038 12.9062C26.7988 13.4387 26.7988 16.5613 24.6038 17.0938C24.274 17.1736 23.9678 17.3303 23.71 17.5509C23.4522 17.7715 23.2502 18.0499 23.1203 18.3633C22.9905 18.6768 22.9364 19.0165 22.9627 19.3547C22.9889 19.693 23.0946 20.0203 23.2713 20.31C24.4463 22.2387 22.2387 24.4475 20.3087 23.2725C20.0192 23.0961 19.6921 22.9906 19.354 22.9644C19.016 22.9382 18.6765 22.9922 18.3633 23.1219C18.05 23.2516 17.7718 23.4534 17.5512 23.7109C17.3306 23.9684 17.1739 24.2743 17.0938 24.6038C16.5613 26.7988 13.4387 26.7988 12.9062 24.6038C12.8264 24.274 12.6697 23.9678 12.4491 23.71C12.2285 23.4522 11.9501 23.2502 11.6367 23.1203C11.3232 22.9905 10.9835 22.9364 10.6453 22.9627C10.307 22.9889 9.97969 23.0946 9.69 23.2713C7.76125 24.4463 5.5525 22.2387 6.7275 20.3087C6.90388 20.0192 7.00944 19.6921 7.0356 19.354C7.06177 19.016 7.0078 18.6765 6.87809 18.3633C6.74838 18.05 6.54658 17.7718 6.28909 17.5512C6.03161 17.3306 5.7257 17.1739 5.39625 17.0938C3.20125 16.5613 3.20125 13.4387 5.39625 12.9062C5.726 12.8264 6.03222 12.6697 6.29 12.4491C6.54778 12.2285 6.74982 11.9501 6.87968 11.6367C7.00955 11.3232 7.06356 10.9835 7.03734 10.6453C7.01111 10.307 6.90538 9.97969 6.72875 9.69C5.55375 7.76125 7.76125 5.5525 9.69125 6.7275C10.9412 7.4875 12.5612 6.815 12.9062 5.39625Z"
+										stroke="#525252"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+									<path
+										d="M11.25 15C11.25 15.9946 11.6451 16.9484 12.3483 17.6517C13.0516 18.3549 14.0054 18.75 15 18.75C15.9946 18.75 16.9484 18.3549 17.6517 17.6517C18.3549 16.9484 18.75 15.9946 18.75 15C18.75 14.0054 18.3549 13.0516 17.6517 12.3483C16.9484 11.6451 15.9946 11.25 15 11.25C14.0054 11.25 13.0516 11.6451 12.3483 12.3483C11.6451 13.0516 11.25 14.0054 11.25 15Z"
+										stroke="#525252"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+							</button>
+						</div>
 					)}
 				</div>
 
-				<div className="flex flex-col gap-1 px-[18px] py-[18px] bg-[#18181B] border border-[#212121] rounded-2xl">
-					<div className="flex items-center justify-between">
-						<div className="flex flex-col gap-1">
-							<h1 className="font-base font-semibold text-[#007AFF]">
-								We saved in{" "}
-								{Object.keys(budget).length === 0
-									? Utils.monthsList[new Date().getMonth()]
-									: Utils.monthsList[new Date(budget.created_at).getMonth()]}
-							</h1>
+				<div className="flex gap-2 items-center px-2 py-4 bg-[#18181B] rounded-2xl">
+					<img src={ImageGrowth} alt="growth" width={60} height={60} loading="lazy" />
 
-							<span className="text-[32px] font-bold text-white">
-								{monthlyBudget ? monthlyBudget.toFixed(2) : "···"}
-								{Utils.formatCurrencyFunction(budget.currency)}
-							</span>
-						</div>
+					<div className="flex flex-col gap-y-1.5">
+						<h1 className="text-sm font-bold text-[#895FF5]">
+							We saved in{" "}
+							{Object.keys(budget).length === 0
+								? Utils.monthsList[new Date().getMonth()]
+								: Utils.monthsList[new Date(budget.created_at).getMonth()]}
+						</h1>
 
-						{auth && <Switch />}
-					</div>
-
-					<p className="text-base text-[#66666F] font-medium">#budgetingmakeslegends</p>
-				</div>
-
-				<div className="flex gap-6 items-center px-[18px] py-[18px] bg-[#18181B] border border-[#212121] rounded-2xl">
-					<img src={ImageGrowth} alt="growth" width={77} height={77} loading="lazy" />
-
-					<div className="flex flex-col gap-1">
-						<h1 className="font-base font-semibold text-[#007AFF]">We saved today</h1>
-
-						<span className="text-[28px] font-bold text-white">
-							{" "}
-							{dailyBudget ? dailyBudget.toFixed(2) : "···"}
+						<span className="text-2xl font-bold text-white">
+							{monthlyBudget ? monthlyBudget.toFixed(2) : "···"}
 							{Utils.formatCurrencyFunction(budget.currency)}
 						</span>
 
-						<p className="text-base text-[#66666F] font-medium">#financialfreedom</p>
+						<p className="text-sm text-[#66666F] font-medium underline">#financialfreedom</p>
 					</div>
 				</div>
 
-				<div className="flex items-center justify-center gap-3 pt-4 pb-4">
+				<div className="flex gap-x-3 items-center justify-center">
 					<button
 						type="button"
-						className="flex items-center justify-center gap-1 btn bg-[#007AFF] px-2 py-3 rounded-lg"
+						className="flex gap-x-1 items-center justify-center w-full btn px-2 py-1 bg-[#007AFF] rounded-lg"
 						onClick={(): void => {
 							if (!auth) {
 								navigate("/login");
@@ -323,17 +278,17 @@ const Budget = (): ReactNode => {
 							navigate("/extraincomes");
 						}}
 					>
-						<span className="text-base text-white font-medium">View Income</span>
+						<span className="text-xs text-white font-bold">View Income</span>
 
-						<svg width={29} height={28} fill="none" viewBox="0 0 29 28">
+						<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<title>Arrow Up</title>
-							<g clipPath="url(#clip0_838_2559)">
-								<path stroke="white" strokeWidth="2" d="M4.25 19.8333L11.25 12.8333L15.9167 17.5L25.25 8.16663" />
-								<path stroke="white" strokeWidth="2" d="M17.0833 8.16663H25.25V16.3333" />
+							<g clip-path="url(#clip0_1_82)">
+								<path d="M3.75 17L9.75 11L13.75 15L21.75 7" stroke="white" stroke-width="2" />
+								<path d="M14.75 7H21.75V14" stroke="white" stroke-width="2" />
 							</g>
 							<defs>
-								<clipPath id="clip0_838_2559">
-									<rect width={28} height={28} fill="white" transform="translate(0.75)" />
+								<clipPath id="clip0_1_82">
+									<rect width="24" height="24" fill="white" transform="translate(0.75)" />
 								</clipPath>
 							</defs>
 						</svg>
@@ -341,7 +296,7 @@ const Budget = (): ReactNode => {
 
 					<button
 						type="button"
-						className="flex items-center justify-center gap-1 btn bg-transparent px-2 py-3 rounded-lg border-[1.5px] border-[#B85C3D]"
+						className="flex gap-x-1 items-center justify-center w-full btn px-2 py-1 border-[1.5px] border-[#B85C3D] rounded-lg"
 						onClick={(): void => {
 							if (!auth) {
 								navigate("/login");
@@ -351,45 +306,46 @@ const Budget = (): ReactNode => {
 							navigate("/extraexpenses");
 						}}
 					>
-						<svg width={29} height={28} fill="none" viewBox="0 0 29 28">
+						<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<title>Arrow Down</title>
-							<g clipPath="url(#clip0_838_2565)">
-								<path stroke="white" strokeWidth="2" d="M3.75 8.16671L10.75 15.1667L15.4167 10.5L24.75 19.8334" />
-								<path stroke="white" strokeWidth="2" d="M16.5833 19.8334H24.75V11.6667" />
+							<g clip-path="url(#clip0_1_87)">
+								<path d="M3.75 7L9.75 13L13.75 9L21.75 17" stroke="#B85C3D" stroke-width="2" />
+								<path d="M14.75 17H21.75V10" stroke="#B85C3D" stroke-width="2" />
 							</g>
 							<defs>
-								<clipPath id="clip0_838_2559">
-									<rect width={28} height={28} fill="white" transform="matrix(1 0 0 -1 0.25 28)" />
+								<clipPath id="clip0_1_87">
+									<rect width="24" height="24" fill="white" transform="matrix(1 0 0 -1 0.75 24)" />
 								</clipPath>
 							</defs>
 						</svg>
-						<span className="text-base text-white font-medium">View Expenses</span>
+
+						<span className="text-xs text-[#B85C3D] font-bold">View Expenses</span>
 					</button>
 				</div>
 
-				<div className="flex flex-col items-center justify-center gap-3 px-4 py-4 border-t border-t-[#313131]">
-					<h2 className="text-base text-[#66666F] font-semibold">Privacy</h2>
-
-					<p className="text-sm text-[#66666F] text-center font-normal">
+				<div className="flex flex-col gap-y-3">
+					<p className="w-full text-[10px] text-[#66666F] font-normal">
 						Your financial information is safe with us. BudgetPartner securely stores your data, allowing you to revisit
 						your progress over time. It’s like having a personal financial assistant at your fingertips.
 					</p>
 
-					<a className="text-sm text-[#66666F] text-center font-normal underline" href="/terms-of-service">
-						Terms of Service
-					</a>
+					<div className="flex gap-x-2">
+						<a className="text-[10px] text-[#323232] font-normal underline" href="/terms-of-service">
+							Terms of Service
+						</a>
 
-					<a className="text-sm text-[#66666F] text-center font-normal underline" href="/privacy-policy">
-						Privacy Policy
-					</a>
+						<a className="text-[10px] text-[#323232] font-normal underline" href="/privacy-policy">
+							Privacy Policy
+						</a>
 
-					<a className="text-sm text-[#66666F] text-center font-normal underline" href="/contact-us">
-						Contact Us
-					</a>
+						<a className="text-[10px] text-[#323232] font-normal underline" href="/contact-us">
+							Contact Us
+						</a>
 
-					<a className="text-sm text-[#66666F] text-center font-normal underline" href="/cookie-notice">
-						Cookie Notice
-					</a>
+						<a className="text-[10px] text-[#323232] font-normal underline" href="/cookie-notice">
+							Cookie Notice
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>

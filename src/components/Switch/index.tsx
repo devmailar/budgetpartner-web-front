@@ -16,6 +16,7 @@ const Switch = (): ReactNode => {
 						`${new Date(budget.created_at).getMonth()}-${new Date(budget.created_at).getFullYear()}` === e.target.value,
 				) ?? ({} as IBudget);
 
+			console.log({ selectedBudget });
 			setBudgetStore(selectedBudget);
 		} catch (error) {
 			if (error instanceof Error) {
@@ -28,13 +29,13 @@ const Switch = (): ReactNode => {
 	return (
 		<select
 			className="flex items-center gap-1 w-28 px-2.5 py-1.5 bg-transparent border-[1.5px] border-[#3F3F46] rounded-2xl text-lg text-[#66666F] font-normal"
+			value={`${new Date(budget.created_at).getMonth()}-${new Date(budget.created_at).getFullYear()}`}
 			onChange={handleChangeBudget}
 		>
 			{budgets.map(
 				(b: IBudget): ReactNode => (
 					<option
 						key={b.id}
-						selected={b.id === budget.id}
 						value={`${new Date(b.created_at).getMonth()}-${new Date(b.created_at).getFullYear()}`}
 						className={`text-base ${
 							new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() &&

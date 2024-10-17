@@ -74,7 +74,7 @@ const Navbar = (): ReactNode => {
 					<div className="absolute -right-2 top-0 w-2 h-2 bg-[#ff0000] rounded-full" />
 
 					<button type="button" onClick={(): void => navigate("/login")}>
-						<span className="text-xl text-[#007AFF] font-medium">Login</span>
+						<span className="text-lg text-[#007AFF] font-medium">Login</span>
 					</button>
 				</div>
 			)}

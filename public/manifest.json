@@ -24,7 +24,7 @@
 	"display_override": ["window-controls-overlay", "fullscreen", "minimal-ui"],
 	"display": "standalone",
 	"scope": "/",
-	"theme_color": "#007AFF",
+	"theme_color": "#000000",
 	"description": "Save money effortlessly with BudgetPartner – the easiest way to track your budget, manage expenses, and reach your financial goals with our free online budgeting tool.",
 	"orientation": "natural",
 	"screenshots": [

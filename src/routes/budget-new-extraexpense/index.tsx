@@ -49,7 +49,7 @@ const BudgetNewExtraexpense = (): ReactNode => {
 			if (!createExtraexpenseResponse.ok) {
 				const createExtraexpenseResponseError: IResponseError = await createExtraexpenseResponse.json();
 
-				throw new Error(createExtraexpenseResponseError.message);
+				throw new Error(createExtraexpenseResponseError.errorMessage);
 			}
 
 			const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -60,7 +60,7 @@ const BudgetNewExtraexpense = (): ReactNode => {
 			if (!getUserResponse.ok) {
 				const getUserResponseError: IResponseError = await getUserResponse.json();
 
-				throw new Error(getUserResponseError.message);
+				throw new Error(getUserResponseError.errorMessage);
 			}
 
 			const getUserResponseBody: IUserResponse = await getUserResponse.json();

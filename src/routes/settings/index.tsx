@@ -43,7 +43,7 @@ const Settings = (): ReactNode => {
 								if (!changeCurrencyResponse.ok) {
 									const changeCurrencyResponseError: IResponseError = await changeCurrencyResponse.json();
 
-									throw new Error(changeCurrencyResponseError.message);
+									throw new Error(changeCurrencyResponseError.errorMessage);
 								}
 
 								// fetch the user again and set budgetStore state

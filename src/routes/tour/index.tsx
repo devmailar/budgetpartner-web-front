@@ -45,7 +45,7 @@ const Tour = (): ReactNode => {
 			if (!getUserResponse.ok) {
 				const getUserResponseError: IResponseError = await getUserResponse.json();
 
-				throw new Error(getUserResponseError.message);
+				throw new Error(getUserResponseError.errorMessage);
 			}
 
 			const getUserResponseBody: IUserResponse = await getUserResponse.json();
@@ -75,7 +75,7 @@ const Tour = (): ReactNode => {
 			if (!createExtraincomeResponse.ok) {
 				const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();
 
-				throw new Error(createExtraincomeResponseError.message);
+				throw new Error(createExtraincomeResponseError.errorMessage);
 			}
 
 			const getUserResponseAgain: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -86,7 +86,7 @@ const Tour = (): ReactNode => {
 			if (!getUserResponseAgain.ok) {
 				const getUserResponseAgainError: IResponseError = await getUserResponseAgain.json();
 
-				throw new Error(getUserResponseAgainError.message);
+				throw new Error(getUserResponseAgainError.errorMessage);
 			}
 
 			const getUserResponseAgainBody: IUserResponse = await getUserResponseAgain.json();
@@ -133,7 +133,7 @@ const Tour = (): ReactNode => {
 				if (!createBudgetResponse.ok) {
 					const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
 
-					throw new Error(createBudgetResponseError.message);
+					throw new Error(createBudgetResponseError.errorMessage);
 				}
 			} catch (error: unknown) {
 				if (error instanceof Error) {

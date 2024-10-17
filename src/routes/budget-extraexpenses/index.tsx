@@ -42,7 +42,7 @@ const BudgetExtraexpenses = (): ReactNode => {
 				if (!removeExtraexpenseResponse.ok) {
 					const removeExtraexpenseResponseError: IResponseError = await removeExtraexpenseResponse.json();
 
-					throw new Error(removeExtraexpenseResponseError.message);
+					throw new Error(removeExtraexpenseResponseError.errorMessage);
 				}
 
 				const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -53,7 +53,7 @@ const BudgetExtraexpenses = (): ReactNode => {
 				if (!getUserResponse.ok) {
 					const getUserResponseError: IResponseError = await getUserResponse.json();
 
-					throw new Error(getUserResponseError.message);
+					throw new Error(getUserResponseError.errorMessage);
 				}
 
 				const getUserResponseBody: IUserResponse = await getUserResponse.json();

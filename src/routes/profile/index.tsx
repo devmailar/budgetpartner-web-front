@@ -56,41 +56,25 @@ const Profile = (): ReactNode => {
 	};
 
 	return (
-		<div className="h-screen animate__animated animate__slideInRight animate__faster">
+		<div className="flex flex-col gap-y-8 animate__animated animate__slideInRight animate__faster">
 			<nav className="flex items-center justify-between px-8 pt-4">
 				<a href="/" className="text-lg text-white font-bold">
 					BudgetPartner
 				</a>
 
-				{auth ? (
-					<button type="button" className="btn px-0.5 py-0.5" onClick={(): void => navigate("/")}>
-						<svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<title>Arrow Back</title>
-							<path
-								d="M9 14L5 10L9 6"
-								stroke="#007AFF"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-							<path
-								d="M5 10H16C17.0609 10 18.0783 10.4214 18.8284 11.1716C19.5786 11.9217 20 12.9391 20 14C20 15.0609 19.5786 16.0783 18.8284 16.8284C18.0783 17.5786 17.0609 18 16 18H15"
-								stroke="#007AFF"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
-					</button>
-				) : (
-					<div className="relative">
-						<div className="absolute -right-2 top-0 w-2 h-2 bg-[#ff0000] rounded-full" />
-
-						<button type="button" onClick={(): void => navigate("/login")}>
-							<span className="text-lg text-[#007AFF] font-medium">Login</span>
-						</button>
-					</div>
-				)}
+				<button type="button" className="btn px-0.5 py-0.5" onClick={(): void => navigate("/")}>
+					<svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<title>Arrow Back</title>
+						<path d="M9 14L5 10L9 6" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+						<path
+							d="M5 10H16C17.0609 10 18.0783 10.4214 18.8284 11.1716C19.5786 11.9217 20 12.9391 20 14C20 15.0609 19.5786 16.0783 18.8284 16.8284C18.0783 17.5786 17.0609 18 16 18H15"
+							stroke="#007AFF"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
+					</svg>
+				</button>
 			</nav>
 
 			<div className="flex flex-col gap-y-6 items-start px-8 py-8">

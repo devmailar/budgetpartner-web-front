@@ -17,18 +17,20 @@ const Profile = (): ReactNode => {
 
 	const handleDelete = async () => {
 		try {
-			const removeUserResponse: Response = await fetch(`${Utils.baseUrl}/users/remove`, {
-				method: "DELETE",
-				headers: { Authorization: `Bearer ${auth}` },
-			});
+			if (confirm("Are you sure you want to delete your account?")) {
+				const removeUserResponse: Response = await fetch(`${Utils.baseUrl}/users/remove`, {
+					method: "DELETE",
+					headers: { Authorization: `Bearer ${auth}` },
+				});
 
-			if (!removeUserResponse.ok) {
-				const removeUserResponseError: IResponseError = await removeUserResponse.json();
+				if (!removeUserResponse.ok) {
+					const removeUserResponseError: IResponseError = await removeUserResponse.json();
 
-				throw new Error(removeUserResponseError.errorMessage);
+					throw new Error(removeUserResponseError.errorMessage);
+				}
+
+				handleLogout();
 			}
-
-			handleLogout();
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				alert(error.message);

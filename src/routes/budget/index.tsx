@@ -1,8 +1,8 @@
-import { eachDayOfInterval, endOfMonth, isWeekend, startOfMonth } from "date-fns";
 import React, { type ReactNode, useEffect, useState } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImageGrowth from "../../assets/growth.webp";
 import Switch from "../../components/Switch";
+import { db } from "../../db";
 import useAuthStore, { type IAuthState } from "../../stores/auth";
 import useBudgetStore, { type IBudgetState } from "../../stores/budget";
 import useBudgetsStore, { type IBudgetsState } from "../../stores/budgets";
@@ -18,15 +18,57 @@ const Budget = (): ReactNode => {
 	const { setBudgetsStore } = useBudgetsStore();
 	const { setUserStore } = useUserStore();
 
-	const [dailyBudget, setDailyBudget] = useState<number>(0);
 	const [monthlyBudget, setMonthlyBudget] = useState<number>(0);
 
 	useEffect((): void => {
 		try {
+			const handleGetDemoBudget = async (): Promise<void> => {
+				try {
+					const budgets: IBudget[] = await db.budgets.toArray();
+					if (budgets.length === 0) {
+						await db.budgets.add({
+							id: 1,
+							user_id: 1,
+							currency: "EUR",
+							extraincomes: [],
+							extraexpenses: [],
+							created_at: new Date(),
+							updated_at: new Date(),
+						});
+
+						return;
+					}
+
+					setBudgetStore(budgets[0]);
+
+					const extraincomes: IExtraincome[] = await db.extraincomes.toArray();
+					const extraexpenses: IExtraexpense[] = await db.extraexpenses.toArray();
+
+					setBudgetStore({
+						id: budgets[0].id,
+						user_id: budgets[0].user_id,
+						currency: budgets[0].currency,
+						extraincomes: extraincomes,
+						extraexpenses: extraexpenses,
+						created_at: budgets[0].created_at,
+						updated_at: budgets[0].updated_at,
+					});
+
+					return;
+				} catch (error: unknown) {
+					if (error instanceof Error) {
+						alert(error.message);
+						throw new Error(error.stack);
+					}
+				}
+			};
+
 			if (!auth) {
 				setBudgetStore({} as IBudgetState["value"]);
 				setBudgetsStore([] as IBudgetsState["value"]);
 				setUserStore({} as IUserState["value"]);
+
+				handleGetDemoBudget();
 				return;
 			}
 
@@ -176,32 +218,7 @@ const Budget = (): ReactNode => {
 				return;
 			}
 
-			const currentDaysInMonth: Date[] = eachDayOfInterval({
-				start: startOfMonth(new Date()),
-				end: endOfMonth(new Date()),
-			});
-
-			const includesWeekends: boolean = budget.extraincomes.some((extraincome: IExtraincome) => {
-				return extraincome.includes_weekends;
-			});
-
-			const daysInMonth: Date[] = includesWeekends
-				? currentDaysInMonth
-				: currentDaysInMonth.filter((day: Date) => {
-						return !isWeekend(day);
-					});
-
-			const weekdaysInMonth: Date[] = daysInMonth.filter((day: Date) => {
-				return !isWeekend(day);
-			});
-
-			const dailyBudgetAmount: number = includesWeekends
-				? (totalExtraincomes - totalExtraexpenses) / daysInMonth.length
-				: (totalExtraincomes - totalExtraexpenses) / weekdaysInMonth.length;
-
 			const monthlyBudgetAmount: number = totalExtraincomes - totalExtraexpenses;
-
-			setDailyBudget(dailyBudgetAmount);
 			setMonthlyBudget(monthlyBudgetAmount);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
@@ -222,25 +239,25 @@ const Budget = (): ReactNode => {
 					<button type="button" className="btn px-0.5 py-0.5" onClick={(): void => navigate("/profile")}>
 						<svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<title>Profile</title>
-							<g clip-path="url(#clip0_1_122)">
+							<g clipPath="url(#clip0_1_122)">
 								<path
 									d="M3 12C3 13.1819 3.23279 14.3522 3.68508 15.4442C4.13738 16.5361 4.80031 17.5282 5.63604 18.364C6.47177 19.1997 7.46392 19.8626 8.55585 20.3149C9.64778 20.7672 10.8181 21 12 21C13.1819 21 14.3522 20.7672 15.4442 20.3149C16.5361 19.8626 17.5282 19.1997 18.364 18.364C19.1997 17.5282 19.8626 16.5361 20.3149 15.4442C20.7672 14.3522 21 13.1819 21 12C21 10.8181 20.7672 9.64778 20.3149 8.55585C19.8626 7.46392 19.1997 6.47177 18.364 5.63604C17.5282 4.80031 16.5361 4.13738 15.4442 3.68508C14.3522 3.23279 13.1819 3 12 3C10.8181 3 9.64778 3.23279 8.55585 3.68508C7.46392 4.13738 6.47177 4.80031 5.63604 5.63604C4.80031 6.47177 4.13738 7.46392 3.68508 8.55585C3.23279 9.64778 3 10.8181 3 12Z"
 									stroke="#525252"
-									stroke-width="1.5"
+									strokeWidth="1.5"
 									stroke-linecap="round"
 									stroke-linejoin="round"
 								/>
 								<path
 									d="M9 10C9 10.7956 9.31607 11.5587 9.87868 12.1213C10.4413 12.6839 11.2044 13 12 13C12.7956 13 13.5587 12.6839 14.1213 12.1213C14.6839 11.5587 15 10.7956 15 10C15 9.20435 14.6839 8.44129 14.1213 7.87868C13.5587 7.31607 12.7956 7 12 7C11.2044 7 10.4413 7.31607 9.87868 7.87868C9.31607 8.44129 9 9.20435 9 10Z"
 									stroke="#525252"
-									stroke-width="1.5"
+									strokeWidth="1.5"
 									stroke-linecap="round"
 									stroke-linejoin="round"
 								/>
 								<path
 									d="M6.16803 18.849C6.41554 18.0252 6.922 17.3032 7.61228 16.79C8.30255 16.2768 9.13988 15.9997 10 16H14C14.8613 15.9997 15.6996 16.2774 16.3904 16.7918C17.0812 17.3062 17.5875 18.0298 17.834 18.855"
 									stroke="#525252"
-									stroke-width="1.5"
+									strokeWidth="1.5"
 									stroke-linecap="round"
 									stroke-linejoin="round"
 								/>
@@ -275,14 +292,14 @@ const Budget = (): ReactNode => {
 									<path
 										d="M12.9062 5.39625C13.4387 3.20125 16.5613 3.20125 17.0938 5.39625C17.1736 5.726 17.3303 6.03222 17.5509 6.29C17.7715 6.54778 18.0499 6.74982 18.3633 6.87968C18.6768 7.00955 19.0165 7.06356 19.3547 7.03734C19.693 7.01111 20.0203 6.90538 20.31 6.72875C22.2387 5.55375 24.4475 7.76125 23.2725 9.69125C23.0961 9.98082 22.9906 10.3079 22.9644 10.646C22.9382 10.984 22.9922 11.3235 23.1219 11.6367C23.2516 11.95 23.4534 12.2282 23.7109 12.4488C23.9684 12.6694 24.2743 12.8261 24.6038 12.9062C26.7988 13.4387 26.7988 16.5613 24.6038 17.0938C24.274 17.1736 23.9678 17.3303 23.71 17.5509C23.4522 17.7715 23.2502 18.0499 23.1203 18.3633C22.9905 18.6768 22.9364 19.0165 22.9627 19.3547C22.9889 19.693 23.0946 20.0203 23.2713 20.31C24.4463 22.2387 22.2387 24.4475 20.3087 23.2725C20.0192 23.0961 19.6921 22.9906 19.354 22.9644C19.016 22.9382 18.6765 22.9922 18.3633 23.1219C18.05 23.2516 17.7718 23.4534 17.5512 23.7109C17.3306 23.9684 17.1739 24.2743 17.0938 24.6038C16.5613 26.7988 13.4387 26.7988 12.9062 24.6038C12.8264 24.274 12.6697 23.9678 12.4491 23.71C12.2285 23.4522 11.9501 23.2502 11.6367 23.1203C11.3232 22.9905 10.9835 22.9364 10.6453 22.9627C10.307 22.9889 9.97969 23.0946 9.69 23.2713C7.76125 24.4463 5.5525 22.2387 6.7275 20.3087C6.90388 20.0192 7.00944 19.6921 7.0356 19.354C7.06177 19.016 7.0078 18.6765 6.87809 18.3633C6.74838 18.05 6.54658 17.7718 6.28909 17.5512C6.03161 17.3306 5.7257 17.1739 5.39625 17.0938C3.20125 16.5613 3.20125 13.4387 5.39625 12.9062C5.726 12.8264 6.03222 12.6697 6.29 12.4491C6.54778 12.2285 6.74982 11.9501 6.87968 11.6367C7.00955 11.3232 7.06356 10.9835 7.03734 10.6453C7.01111 10.307 6.90538 9.97969 6.72875 9.69C5.55375 7.76125 7.76125 5.5525 9.69125 6.7275C10.9412 7.4875 12.5612 6.815 12.9062 5.39625Z"
 										stroke="#525252"
-										stroke-width="1.5"
+										strokeWidth="1.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									/>
 									<path
 										d="M11.25 15C11.25 15.9946 11.6451 16.9484 12.3483 17.6517C13.0516 18.3549 14.0054 18.75 15 18.75C15.9946 18.75 16.9484 18.3549 17.6517 17.6517C18.3549 16.9484 18.75 15.9946 18.75 15C18.75 14.0054 18.3549 13.0516 17.6517 12.3483C16.9484 11.6451 15.9946 11.25 15 11.25C14.0054 11.25 13.0516 11.6451 12.3483 12.3483C11.6451 13.0516 11.25 14.0054 11.25 15Z"
 										stroke="#525252"
-										stroke-width="1.5"
+										strokeWidth="1.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									/>
@@ -304,7 +321,7 @@ const Budget = (): ReactNode => {
 						</h1>
 
 						<span className="text-2xl font-bold text-white">
-							{monthlyBudget ? monthlyBudget.toFixed(2) : "···"}
+							{monthlyBudget.toFixed(2)}
 							{Utils.formatCurrencyFunction(budget.currency)}
 						</span>
 
@@ -317,11 +334,6 @@ const Budget = (): ReactNode => {
 						type="button"
 						className="flex gap-x-1 items-center justify-center w-full btn px-2 py-1 bg-[#007AFF] rounded-lg"
 						onClick={(): void => {
-							if (!auth) {
-								navigate("/login");
-								return;
-							}
-
 							navigate("/extraincomes");
 						}}
 					>
@@ -329,9 +341,9 @@ const Budget = (): ReactNode => {
 
 						<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<title>Arrow Up</title>
-							<g clip-path="url(#clip0_1_82)">
-								<path d="M3.75 17L9.75 11L13.75 15L21.75 7" stroke="white" stroke-width="2" />
-								<path d="M14.75 7H21.75V14" stroke="white" stroke-width="2" />
+							<g clipPath="url(#clip0_1_82)">
+								<path d="M3.75 17L9.75 11L13.75 15L21.75 7" stroke="white" strokeWidth="2" />
+								<path d="M14.75 7H21.75V14" stroke="white" strokeWidth="2" />
 							</g>
 							<defs>
 								<clipPath id="clip0_1_82">
@@ -345,19 +357,14 @@ const Budget = (): ReactNode => {
 						type="button"
 						className="flex gap-x-1 items-center justify-center w-full btn px-2 py-1 border-[1.5px] border-[#B85C3D] rounded-lg"
 						onClick={(): void => {
-							if (!auth) {
-								navigate("/login");
-								return;
-							}
-
 							navigate("/extraexpenses");
 						}}
 					>
 						<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<title>Arrow Down</title>
-							<g clip-path="url(#clip0_1_87)">
-								<path d="M3.75 7L9.75 13L13.75 9L21.75 17" stroke="#B85C3D" stroke-width="2" />
-								<path d="M14.75 17H21.75V10" stroke="#B85C3D" stroke-width="2" />
+							<g clipPath="url(#clip0_1_87)">
+								<path d="M3.75 7L9.75 13L13.75 9L21.75 17" stroke="#B85C3D" strokeWidth="2" />
+								<path d="M14.75 17H21.75V10" stroke="#B85C3D" strokeWidth="2" />
 							</g>
 							<defs>
 								<clipPath id="clip0_1_87">

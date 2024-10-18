@@ -77,7 +77,7 @@ const Profile = (): ReactNode => {
 				</button>
 			</nav>
 
-			<div className="flex flex-col gap-y-6 items-start px-8 py-8">
+			<div className="flex flex-col gap-y-6 items-start px-8">
 				<button type="button" onClick={(): Promise<void> => handleDelete()}>
 					<span className="text-lg text-[#66666F] font-normal underline">Delete Account</span>
 				</button>

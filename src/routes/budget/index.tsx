@@ -230,8 +230,8 @@ const Budget = (): ReactNode => {
 
 	return (
 		<div className="flex flex-col gap-y-8 animate__animated animate__slideInLeft animate__faster">
-			<nav className="flex items-center justify-between px-8 pt-4">
-				<a href="/" className="text-lg text-white font-bold">
+			<nav className="flex items-center justify-between px-8 pt-3">
+				<a href="/" className="text-xl text-white font-bold">
 					BudgetPartner
 				</a>
 
@@ -280,26 +280,26 @@ const Budget = (): ReactNode => {
 				)}
 			</nav>
 
-			<div className="flex flex-col gap-y-8 px-8">
+			<div className="flex flex-col gap-y-6 px-8">
 				<div className="flex items-center justify-end">
 					{auth && (
 						<div className="flex gap-x-2.5 items-center justify-center px-1.5 py-1 bg-[#18181B] rounded-full">
 							<Switch />
 
 							<button type="button" className="btn px-0.5 py-0.5" onClick={(): void => navigate("/settings")}>
-								<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<title>Settings</title>
 									<path
-										d="M12.9062 5.39625C13.4387 3.20125 16.5613 3.20125 17.0938 5.39625C17.1736 5.726 17.3303 6.03222 17.5509 6.29C17.7715 6.54778 18.0499 6.74982 18.3633 6.87968C18.6768 7.00955 19.0165 7.06356 19.3547 7.03734C19.693 7.01111 20.0203 6.90538 20.31 6.72875C22.2387 5.55375 24.4475 7.76125 23.2725 9.69125C23.0961 9.98082 22.9906 10.3079 22.9644 10.646C22.9382 10.984 22.9922 11.3235 23.1219 11.6367C23.2516 11.95 23.4534 12.2282 23.7109 12.4488C23.9684 12.6694 24.2743 12.8261 24.6038 12.9062C26.7988 13.4387 26.7988 16.5613 24.6038 17.0938C24.274 17.1736 23.9678 17.3303 23.71 17.5509C23.4522 17.7715 23.2502 18.0499 23.1203 18.3633C22.9905 18.6768 22.9364 19.0165 22.9627 19.3547C22.9889 19.693 23.0946 20.0203 23.2713 20.31C24.4463 22.2387 22.2387 24.4475 20.3087 23.2725C20.0192 23.0961 19.6921 22.9906 19.354 22.9644C19.016 22.9382 18.6765 22.9922 18.3633 23.1219C18.05 23.2516 17.7718 23.4534 17.5512 23.7109C17.3306 23.9684 17.1739 24.2743 17.0938 24.6038C16.5613 26.7988 13.4387 26.7988 12.9062 24.6038C12.8264 24.274 12.6697 23.9678 12.4491 23.71C12.2285 23.4522 11.9501 23.2502 11.6367 23.1203C11.3232 22.9905 10.9835 22.9364 10.6453 22.9627C10.307 22.9889 9.97969 23.0946 9.69 23.2713C7.76125 24.4463 5.5525 22.2387 6.7275 20.3087C6.90388 20.0192 7.00944 19.6921 7.0356 19.354C7.06177 19.016 7.0078 18.6765 6.87809 18.3633C6.74838 18.05 6.54658 17.7718 6.28909 17.5512C6.03161 17.3306 5.7257 17.1739 5.39625 17.0938C3.20125 16.5613 3.20125 13.4387 5.39625 12.9062C5.726 12.8264 6.03222 12.6697 6.29 12.4491C6.54778 12.2285 6.74982 11.9501 6.87968 11.6367C7.00955 11.3232 7.06356 10.9835 7.03734 10.6453C7.01111 10.307 6.90538 9.97969 6.72875 9.69C5.55375 7.76125 7.76125 5.5525 9.69125 6.7275C10.9412 7.4875 12.5612 6.815 12.9062 5.39625Z"
+										d="M14.6271 6.11575C15.2306 3.62808 18.7694 3.62808 19.3729 6.11575C19.4635 6.48947 19.641 6.83652 19.891 7.12867C20.141 7.42081 20.4565 7.64979 20.8118 7.79697C21.167 7.94415 21.552 8.00537 21.9354 7.97565C22.3187 7.94592 22.6897 7.82609 23.018 7.62592C25.2039 6.29425 27.7072 8.79608 26.3755 10.9834C26.1756 11.3116 26.056 11.6823 26.0263 12.0654C25.9967 12.4485 26.0578 12.8333 26.2048 13.1883C26.3518 13.5433 26.5805 13.8587 26.8724 14.1087C27.1642 14.3587 27.5109 14.5363 27.8843 14.6271C30.3719 15.2306 30.3719 18.7694 27.8843 19.3729C27.5105 19.4635 27.1635 19.641 26.8713 19.891C26.5792 20.141 26.3502 20.4565 26.203 20.8118C26.0558 21.167 25.9946 21.552 26.0244 21.9354C26.0541 22.3187 26.1739 22.6897 26.3741 23.018C27.7058 25.2039 25.2039 27.7072 23.0166 26.3755C22.6884 26.1756 22.3177 26.056 21.9346 26.0263C21.5515 25.9967 21.1667 26.0578 20.8117 26.2048C20.4567 26.3518 20.1413 26.5805 19.8913 26.8724C19.6413 27.1642 19.4637 27.5109 19.3729 27.8843C18.7694 30.3719 15.2306 30.3719 14.6271 27.8843C14.5365 27.5105 14.359 27.1635 14.109 26.8713C13.859 26.5792 13.5435 26.3502 13.1882 26.203C12.833 26.0558 12.448 25.9946 12.0646 26.0244C11.6813 26.0541 11.3103 26.1739 10.982 26.3741C8.79608 27.7058 6.29283 25.2039 7.6245 23.0166C7.82439 22.6884 7.94403 22.3177 7.97369 21.9346C8.00334 21.5515 7.94218 21.1667 7.79517 20.8117C7.64816 20.4567 7.41945 20.1413 7.12764 19.8913C6.83582 19.6413 6.48913 19.4637 6.11575 19.3729C3.62808 18.7694 3.62808 15.2306 6.11575 14.6271C6.48947 14.5365 6.83652 14.359 7.12867 14.109C7.42081 13.859 7.64979 13.5435 7.79697 13.1882C7.94415 12.833 8.00537 12.448 7.97565 12.0646C7.94592 11.6813 7.82609 11.3103 7.62592 10.982C6.29425 8.79608 8.79608 6.29283 10.9834 7.6245C12.4001 8.48583 14.2361 7.72367 14.6271 6.11575Z"
 										stroke="#525252"
-										strokeWidth="1.5"
+										stroke-width="1.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									/>
 									<path
-										d="M11.25 15C11.25 15.9946 11.6451 16.9484 12.3483 17.6517C13.0516 18.3549 14.0054 18.75 15 18.75C15.9946 18.75 16.9484 18.3549 17.6517 17.6517C18.3549 16.9484 18.75 15.9946 18.75 15C18.75 14.0054 18.3549 13.0516 17.6517 12.3483C16.9484 11.6451 15.9946 11.25 15 11.25C14.0054 11.25 13.0516 11.6451 12.3483 12.3483C11.6451 13.0516 11.25 14.0054 11.25 15Z"
+										d="M12.75 17C12.75 18.1272 13.1978 19.2082 13.9948 20.0052C14.7918 20.8022 15.8728 21.25 17 21.25C18.1272 21.25 19.2082 20.8022 20.0052 20.0052C20.8022 19.2082 21.25 18.1272 21.25 17C21.25 15.8728 20.8022 14.7918 20.0052 13.9948C19.2082 13.1978 18.1272 12.75 17 12.75C15.8728 12.75 14.7918 13.1978 13.9948 13.9948C13.1978 14.7918 12.75 15.8728 12.75 17Z"
 										stroke="#525252"
-										strokeWidth="1.5"
+										stroke-width="1.5"
 										stroke-linecap="round"
 										stroke-linejoin="round"
 									/>
@@ -313,7 +313,7 @@ const Budget = (): ReactNode => {
 					<img src={ImageGrowth} alt="growth" width={60} height={60} loading="lazy" />
 
 					<div className="flex flex-col gap-y-1.5">
-						<h1 className="text-sm font-bold text-[#895FF5]">
+						<h1 className="text-base font-bold text-[#895FF5]">
 							We saved in{" "}
 							{Object.keys(budget).length === 0
 								? Utils.monthsList[new Date().getMonth()]
@@ -337,7 +337,7 @@ const Budget = (): ReactNode => {
 							navigate("/extraincomes");
 						}}
 					>
-						<span className="text-xs text-white font-bold">View Income</span>
+						<span className="text-sm text-white font-bold">View Income</span>
 
 						<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<title>Arrow Up</title>
@@ -373,30 +373,30 @@ const Budget = (): ReactNode => {
 							</defs>
 						</svg>
 
-						<span className="text-xs text-[#B85C3D] font-bold">View Expenses</span>
+						<span className="text-sm text-[#B85C3D] font-bold">View Expenses</span>
 					</button>
 				</div>
 
 				<div className="flex flex-col gap-y-3">
-					<p className="w-full text-[10px] text-[#66666F] font-normal">
+					<p className="w-full text-sm text-[#66666F] font-normal">
 						Your financial information is safe with us. BudgetPartner securely stores your data, allowing you to revisit
 						your progress over time. It’s like having a personal financial assistant at your fingertips.
 					</p>
 
-					<div className="flex gap-x-2">
-						<a className="text-[10px] text-[#323232] font-normal underline" href="/terms-of-service">
+					<div className="flex flex-wrap gap-x-2">
+						<a className="text-sm text-[#323232] font-normal underline" href="/terms-of-service">
 							Terms of Service
 						</a>
 
-						<a className="text-[10px] text-[#323232] font-normal underline" href="/privacy-policy">
+						<a className="text-sm text-[#323232] font-normal underline" href="/privacy-policy">
 							Privacy Policy
 						</a>
 
-						<a className="text-[10px] text-[#323232] font-normal underline" href="/contact-us">
+						<a className="text-sm text-[#323232] font-normal underline" href="/contact-us">
 							Contact Us
 						</a>
 
-						<a className="text-[10px] text-[#323232] font-normal underline" href="/cookie-notice">
+						<a className="text-sm text-[#323232] font-normal underline" href="/cookie-notice">
 							Cookie Notice
 						</a>
 					</div>

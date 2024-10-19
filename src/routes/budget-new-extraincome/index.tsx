@@ -128,7 +128,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 						</svg>
 
 						<input
-							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal w-72 outline-none"
+							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal outline-none"
 							type="text"
 							name="type"
 							id="type"
@@ -141,7 +141,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 						<span className="ml-1 text-xl text-[#66666F]">{Utils.formatCurrencyFunction(budget.currency)}</span>
 
 						<input
-							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal w-72 outline-none"
+							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal outline-none"
 							type="text"
 							name="amount_monthly"
 							id="amount_monthly"
@@ -173,7 +173,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 						</svg>
 
 						<input
-							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal w-72 outline-none"
+							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal outline-none"
 							type="date"
 							name="date"
 							id="date"

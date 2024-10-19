@@ -105,34 +105,18 @@ const Signup = (): ReactNode => {
 	}, [searchParams, navigate]);
 
 	return (
-		<div className="h-screen animate__animated animate__slideInRight animate__faster">
-			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
-				<button
-					type="button"
-					onClick={(): void => {
-						navigate("/login");
-					}}
-				>
-					<span className="text-lg text-[#007AFF] font-medium">Back</span>
-				</button>
-
-				<h2 className="text-lg text-white font-medium">BudgetPartner</h2>
-
-				<button
-					type="button"
-					onClick={(): void => {
-						navigate("/login");
-					}}
-				>
-					<span className="text-lg text-[#007AFF] font-medium">Login</span>
+		<div className="flex flex-col gap-y-6 animate__animated animate__slideInRight animate__faster">
+			<nav className="flex items-center justify-start px-8 py-3 border-b-[0.33px] border-b-[#454545]">
+				<button type="button" onClick={(): void => navigate("/login")}>
+					<span className="text-xl text-[#66666F] font-bold">Back</span>
 				</button>
 			</nav>
 
-			<form className="flex flex-col gap-7 items-center px-6 py-12" onSubmit={handleSubmit}>
-				<h2 className="text-2xl font-semibold text-white">Create an account</h2>
+			<form className="flex flex-col gap-y-6 items-center px-8" onSubmit={handleSubmit}>
+				<h2 className="text-2xl text-white font-bold">Create an account</h2>
 
-				<div className="flex flex-col gap-y-3">
-					<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
+				<div className="flex flex-col gap-y-2 w-full">
+					<div className="flex gap-x-2 items-center px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
 						<svg width={24} height={24} fill="none" viewBox="0 0 24 24">
 							<title>Email</title>
 							<g clipPath="url(#clip0_906_59)">
@@ -159,7 +143,7 @@ const Signup = (): ReactNode => {
 						</svg>
 
 						<input
-							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
+							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal outline-none"
 							type="email"
 							name="email"
 							id="email"
@@ -169,7 +153,7 @@ const Signup = (): ReactNode => {
 						/>
 					</div>
 
-					<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
+					<div className="flex gap-x-2 items-center px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
 						<svg width={24} height={24} fill="none" viewBox="0 0 24 24">
 							<title>Email</title>
 							<g clipPath="url(#clip0_906_69)">
@@ -215,7 +199,7 @@ const Signup = (): ReactNode => {
 						</svg>
 
 						<input
-							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
+							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal outline-none"
 							type="password"
 							name="password"
 							id="password"
@@ -226,14 +210,37 @@ const Signup = (): ReactNode => {
 					</div>
 				</div>
 
-				<div className="flex items-center justify-center w-full md:w-80 px-5 py-5 border-y border-y-[#313131]">
-					<button
-						type="submit"
-						className={`btn bg-[#007AFF] w-full px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}
-						disabled={disableSubmit}
-					>
-						<span className="text-base font-medium text-white">Sign up with email</span>
-					</button>
+				<button
+					type="submit"
+					className={`btn bg-[#895FF5] w-full px-2 py-3 ${disableSubmit ? "opacity-40" : "opacity-100"} rounded-lg`}
+					disabled={disableSubmit}
+				>
+					<span className="text-base text-white font-bold">Sign up with email</span>
+				</button>
+
+				<div className="flex flex-col gap-y-3">
+					<p className="w-full text-sm text-[#66666F] font-normal">
+						Your financial information is safe with us. BudgetPartner securely stores your data, allowing you to revisit
+						your progress over time. It’s like having a personal financial assistant at your fingertips.
+					</p>
+
+					<div className="flex flex-wrap gap-x-2">
+						<a className="text-sm text-[#323232] font-normal underline" href="/terms-of-service">
+							Terms of Service
+						</a>
+
+						<a className="text-sm text-[#323232] font-normal underline" href="/privacy-policy">
+							Privacy Policy
+						</a>
+
+						<a className="text-sm text-[#323232] font-normal underline" href="/contact-us">
+							Contact Us
+						</a>
+
+						<a className="text-sm text-[#323232] font-normal underline" href="/cookie-notice">
+							Cookie Notice
+						</a>
+					</div>
 				</div>
 			</form>
 		</div>

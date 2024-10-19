@@ -24,7 +24,7 @@ const Settings = (): ReactNode => {
 					<span className="font-lg text-[#66666F] font-semibold">Currency</span>
 					<select
 						name="currencies"
-						className="px-2.5 py-1.5 bg-transparent border-[1.5px] border-[#3F3F46] rounded-2xl text-lg text-[#66666F] font-normal"
+						className="px-2.5 py-1.5 bg-[#212121] text-base text-[#525252] font-medium rounded-full"
 						defaultValue={budgetStore.currency}
 						onChange={async (e: ChangeEvent<HTMLSelectElement>) => {
 							try {

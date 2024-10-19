@@ -118,7 +118,7 @@ const BudgetExtraincomes = (): ReactNode => {
 
 								<div className="flex items-center justify-between w-full">
 									<span className="text-base text-[#91919A] font-bold truncate">{extraincome.type}</span>
-									<span className="text-base text-[#0FC36E] font-bold truncate">
+									<span className="text-base text-[#009951] font-bold truncate">
 										+{extraincome.amount_monthly.toFixed(2)}
 										{Utils.formatCurrencyFunction(budget.currency)}
 									</span>

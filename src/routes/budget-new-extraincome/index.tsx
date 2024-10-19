@@ -186,7 +186,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 
 				<button
 					type="submit"
-					className={`btn bg-[#0FC36E] w-full px-2 py-3 ${disableSubmit ? "opacity-40" : "opacity-100"} rounded-lg`}
+					className={`btn bg-[#009951] w-full px-2 py-3 ${disableSubmit ? "opacity-40" : "opacity-100"} rounded-lg`}
 					disabled={disableSubmit}
 				>
 					<span className="text-base text-white font-bold">Create</span>

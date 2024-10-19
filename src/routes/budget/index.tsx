@@ -328,7 +328,7 @@ const Budget = (): ReactNode => {
 				<div className="flex gap-x-3 items-center justify-center">
 					<button
 						type="button"
-						className="flex gap-x-1 items-center justify-center w-full btn px-2 py-1 bg-[#0FC36E] rounded-lg"
+						className="flex gap-x-1 items-center justify-center w-full btn px-2 py-1 bg-[#009951] rounded-lg"
 						onClick={(): void => {
 							navigate("/extraincomes");
 						}}

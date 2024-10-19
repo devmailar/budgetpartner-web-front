@@ -102,7 +102,7 @@ const BudgetNewExtraexpense = (): ReactNode => {
 			<form className="flex flex-col gap-y-6 items-center px-8" onSubmit={handleSubmit}>
 				<h2 className="text-2xl text-white font-bold">New Expense</h2>
 
-				<div className="flex flex-col gap-y-2">
+				<div className="flex flex-col gap-y-2 w-full">
 					<div className="flex gap-x-2 items-center px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
 						<svg width={24} height={24} fill="none" viewBox="0 0 24 24">
 							<title>Description</title>
@@ -125,7 +125,7 @@ const BudgetNewExtraexpense = (): ReactNode => {
 						</svg>
 
 						<input
-							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal w-72 outline-none"
+							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal outline-none"
 							type="text"
 							name="type"
 							id="type"
@@ -138,7 +138,7 @@ const BudgetNewExtraexpense = (): ReactNode => {
 						<span className="ml-1 text-xl text-[#66666F]">{Utils.formatCurrencyFunction(budget.currency)}</span>
 
 						<input
-							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal w-72 outline-none"
+							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal outline-none"
 							type="text"
 							name="amount_monthly"
 							id="amount_monthly"
@@ -170,7 +170,7 @@ const BudgetNewExtraexpense = (): ReactNode => {
 						</svg>
 
 						<input
-							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal w-72 outline-none"
+							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal outline-none"
 							type="date"
 							name="date"
 							id="date"

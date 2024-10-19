@@ -229,7 +229,7 @@ const Budget = (): ReactNode => {
 	}, [budget]);
 
 	return (
-		<div className="flex flex-col gap-y-8 animate__animated animate__slideInLeft animate__faster">
+		<div className="flex flex-col gap-y-12 animate__animated animate__slideInLeft animate__faster">
 			<nav className="flex items-center justify-between px-8 pt-3">
 				<a href="/" className="text-xl text-white font-bold">
 					BudgetPartner
@@ -270,13 +270,9 @@ const Budget = (): ReactNode => {
 						</svg>
 					</button>
 				) : (
-					<div className="relative">
-						<div className="absolute -right-2 top-0 w-2 h-2 bg-[#ff0000] rounded-full" />
-
-						<button type="button" onClick={(): void => navigate("/login")}>
-							<span className="text-lg text-[#007AFF] font-medium">Login</span>
-						</button>
-					</div>
+					<button type="button" onClick={(): void => navigate("/login")}>
+						<span className="text-xl text-[#66666F] font-bold">Login</span>
+					</button>
 				)}
 			</nav>
 
@@ -309,10 +305,10 @@ const Budget = (): ReactNode => {
 					)}
 				</div>
 
-				<div className="flex gap-2 items-center px-2 py-4 bg-[#18181B] rounded-2xl">
+				<div className="flex gap-x-2 items-center px-2 py-4 bg-[#18181B] rounded-2xl">
 					<img src={ImageGrowth} alt="growth" width={60} height={60} loading="lazy" />
 
-					<div className="flex flex-col gap-y-1.5">
+					<div className="flex flex-col gap-y-2">
 						<h1 className="text-base font-bold text-[#895FF5]">
 							We saved in{" "}
 							{Object.keys(budget).length === 0
@@ -325,7 +321,7 @@ const Budget = (): ReactNode => {
 							{Utils.formatCurrencyFunction(budget.currency)}
 						</span>
 
-						<p className="text-sm text-[#66666F] font-medium underline">#financialfreedom</p>
+						<p className="text-sm text-[#66666F] font-medium">#budgetingmakeslegends</p>
 					</div>
 				</div>
 

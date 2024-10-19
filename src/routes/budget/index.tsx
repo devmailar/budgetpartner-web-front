@@ -317,7 +317,7 @@ const Budget = (): ReactNode => {
 						</h1>
 
 						<span className="text-2xl font-bold text-white">
-							{monthlyBudget.toFixed(2)}
+							{monthlyBudget ? monthlyBudget.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "0 00"}
 							{Utils.formatCurrencyFunction(budget.currency)}
 						</span>
 

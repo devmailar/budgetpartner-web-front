@@ -1,5 +1,5 @@
 import React, { useState, type FormEvent, type ReactNode } from "react";
-import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { useNavigate, type NavigateFunction } from "react-router-dom";
 import useAuthStore, { type IAuthState } from "../../stores/auth";
 import type { IResponseError } from "../../types";
 import { Utils } from "../../utils";

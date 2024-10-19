@@ -13,7 +13,7 @@ const Settings = (): ReactNode => {
 
 	return (
 		<div className="flex flex-col gap-y-12 animate__animated animate__slideInRight animate__faster">
-			<nav className="flex items-center justify-start px-8 pt-3">
+			<nav className="flex items-center justify-start px-8 py-3 border-b-[0.33px] border-b-[#454545]">
 				<button type="button" onClick={(): void => navigate("/")}>
 					<span className="text-xl text-[#66666F] font-bold">Back</span>
 				</button>

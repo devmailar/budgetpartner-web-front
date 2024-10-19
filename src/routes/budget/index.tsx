@@ -230,7 +230,7 @@ const Budget = (): ReactNode => {
 
 	return (
 		<div className="flex flex-col gap-y-12 animate__animated animate__slideInLeft animate__faster">
-			<nav className="flex items-center justify-between px-8 pt-3">
+			<nav className="flex items-center justify-between px-8 py-3 border-b-[0.33px] border-b-[#454545]">
 				<a href="/" className="text-xl text-white font-bold">
 					BudgetPartner
 				</a>

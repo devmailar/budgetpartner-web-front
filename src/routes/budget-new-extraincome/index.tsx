@@ -95,20 +95,18 @@ const BudgetNewExtraincome = (): ReactNode => {
 	};
 
 	return (
-		<div className="h-screen animate__animated animate__slideInRight animate__faster">
-			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
-				<h2 className="text-lg text-white font-medium">BudgetPartner</h2>
-
-				<button type="button" onClick={(): void => navigate("/")}>
-					<span className="text-lg text-[#007AFF] font-medium">Back</span>
+		<div className="flex flex-col gap-y-6 animate__animated animate__slideInRight animate__faster">
+			<nav className="flex items-center justify-start px-8 pt-3">
+				<button type="button" onClick={(): void => navigate("/extraincomes")}>
+					<span className="text-xl text-[#66666F] font-bold">Back</span>
 				</button>
 			</nav>
 
-			<form className="flex flex-col gap-7 items-center px-6 py-12" onSubmit={handleSubmit}>
-				<h2 className="text-2xl font-semibold text-white">New Income</h2>
+			<form className="flex flex-col gap-y-6 items-center px-8" onSubmit={handleSubmit}>
+				<h2 className="text-2xl text-white font-bold">New Income</h2>
 
-				<div className="flex flex-col gap-y-3">
-					<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
+				<div className="flex flex-col gap-y-2">
+					<div className="flex gap-x-2 items-center px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
 						<svg width={24} height={24} fill="none" viewBox="0 0 24 24">
 							<title>Description</title>
 							<path
@@ -130,7 +128,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 						</svg>
 
 						<input
-							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
+							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal w-72 outline-none"
 							type="text"
 							name="type"
 							id="type"
@@ -139,11 +137,11 @@ const BudgetNewExtraincome = (): ReactNode => {
 						/>
 					</div>
 
-					<div className="flex items-center gap-3.5 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
+					<div className="flex gap-x-2 items-center px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
 						<span className="ml-1 text-xl text-[#66666F]">{Utils.formatCurrencyFunction(budget.currency)}</span>
 
 						<input
-							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
+							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal w-72 outline-none"
 							type="text"
 							name="amount_monthly"
 							id="amount_monthly"
@@ -152,7 +150,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 						/>
 					</div>
 
-					<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
+					<div className="flex gap-x-2 items-center px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
 						<svg width={24} height={24} fill="none" viewBox="0 0 24 24">
 							<title>Calendar</title>
 							<path
@@ -175,7 +173,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 						</svg>
 
 						<input
-							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] outline-none"
+							className="bg-transparent text-base text-white placeholder:text-[#66666F] font-normal w-72 outline-none"
 							type="date"
 							name="date"
 							id="date"
@@ -186,14 +184,37 @@ const BudgetNewExtraincome = (): ReactNode => {
 					</div>
 				</div>
 
-				<div className="flex items-center justify-center w-full md:w-80 px-5 py-5 border-y border-y-[#313131]">
-					<button
-						type="submit"
-						className={`btn bg-[#007AFF] w-full px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}
-						disabled={disableSubmit}
-					>
-						<span className="text-base font-medium text-white">Add new income</span>
-					</button>
+				<button
+					type="submit"
+					className={`btn bg-[#007AFF] w-full px-2 py-3 ${disableSubmit ? "opacity-40" : "opacity-100"} rounded-lg`}
+					disabled={disableSubmit}
+				>
+					<span className="text-base text-white font-bold">Create</span>
+				</button>
+
+				<div className="flex flex-col gap-y-3">
+					<p className="w-full text-sm text-[#66666F] font-normal">
+						Your financial information is safe with us. BudgetPartner securely stores your data, allowing you to revisit
+						your progress over time. It’s like having a personal financial assistant at your fingertips.
+					</p>
+
+					<div className="flex flex-wrap gap-x-2">
+						<a className="text-sm text-[#323232] font-normal underline" href="/terms-of-service">
+							Terms of Service
+						</a>
+
+						<a className="text-sm text-[#323232] font-normal underline" href="/privacy-policy">
+							Privacy Policy
+						</a>
+
+						<a className="text-sm text-[#323232] font-normal underline" href="/contact-us">
+							Contact Us
+						</a>
+
+						<a className="text-sm text-[#323232] font-normal underline" href="/cookie-notice">
+							Cookie Notice
+						</a>
+					</div>
 				</div>
 			</form>
 		</div>

@@ -65,11 +65,11 @@ const Profile = (): ReactNode => {
 
 			<div className="flex flex-col gap-y-6 px-8">
 				<button type="button" onClick={(): Promise<void> => handleDelete()}>
-					<span className="text-lg text-[#66666F] font-normal underline">Delete Account</span>
+					<span className="text-lg text-[#66666F] font-bold underline">Delete Account</span>
 				</button>
 
 				<button type="button" onClick={(): void => handleLogout()}>
-					<span className="text-lg text-[#66666F] font-normal underline">Logout</span>
+					<span className="text-lg text-[#66666F] font-bold underline">Logout</span>
 				</button>
 			</div>
 		</div>

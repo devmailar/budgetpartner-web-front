@@ -21,7 +21,7 @@ const Settings = (): ReactNode => {
 
 			<div className="flex flex-col gap-y-6 px-8">
 				<div className="flex flex-col gap-y-1 items-center">
-					<span className="font-lg text-[#66666F] font-semibold">Currency</span>
+					<span className="font-lg text-[#66666F] font-bold">Currency</span>
 					<select
 						name="currencies"
 						className="px-2.5 py-1.5 bg-[#212121] text-base text-[#525252] font-medium rounded-full"

@@ -1,5 +1,6 @@
 import React, { type ReactNode } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { db } from "../../db";
 import useAuthStore from "../../stores/auth";
 import useBudgetStore from "../../stores/budget";
 import useBudgetsStore from "../../stores/budgets";
@@ -31,6 +32,14 @@ const BudgetExtraincomes = (): ReactNode => {
 					`Are you sure you want to remove income "${extraincome.type}" with amount ${extraincome.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budget.currency)}?`,
 				)
 			) {
+				if (!auth) {
+					await db.extraincomes.delete(extraincome.id);
+
+					navigate("/");
+
+					return;
+				}
+
 				const removeExtraincomeResponse: Response = await fetch(
 					`${Utils.baseUrl}/extraincomes/remove/${extraincome.id}`,
 					{

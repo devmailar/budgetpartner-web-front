@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import React, { useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { db } from "../../db";
 import useAuthStore from "../../stores/auth";
 import useBudgetStore from "../../stores/budget";
 import useBudgetsStore from "../../stores/budgets";
@@ -32,6 +33,21 @@ const BudgetNewExtraexpense = (): ReactNode => {
 			if (amount_monthly < 1 || !amount_monthly) {
 				alert("Invalid expense amount");
 				setTimeout((): void => setDisableSubmit(false), 2500);
+				return;
+			}
+
+			if (!auth) {
+				await db.extraexpenses.add({
+					user_id: 1,
+					type: type,
+					amount_monthly: amount_monthly,
+					date: extraexpenseDate,
+					created_at: new Date(),
+					updated_at: new Date(),
+				});
+
+				navigate("/");
+
 				return;
 			}
 

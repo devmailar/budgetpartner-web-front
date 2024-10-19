@@ -1,5 +1,6 @@
 import React, { type FormEvent, type ReactNode, useEffect, useState } from "react";
 import { type NavigateFunction, useNavigate, useSearchParams } from "react-router-dom";
+import ImageTrustpilot from "../../assets/trustpilot.webp";
 import useAuthStore, { type IAuthState } from "../../stores/auth";
 import type { IResponseError } from "../../types";
 import { Utils } from "../../utils";
@@ -242,6 +243,8 @@ const Signup = (): ReactNode => {
 						</a>
 					</div>
 				</div>
+
+				<img src={ImageTrustpilot} alt={ImageTrustpilot} />
 			</form>
 		</div>
 	);

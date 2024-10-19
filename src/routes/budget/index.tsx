@@ -1,6 +1,7 @@
 import React, { type ReactNode, useEffect, useState } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImageGrowth from "../../assets/growth.webp";
+import ImageTrustpilot from "../../assets/trustpilot.webp";
 import Switch from "../../components/Switch";
 import { db } from "../../db";
 import useAuthStore, { type IAuthState } from "../../stores/auth";
@@ -397,6 +398,8 @@ const Budget = (): ReactNode => {
 						</a>
 					</div>
 				</div>
+
+				<img src={ImageTrustpilot} alt={ImageTrustpilot} />
 			</div>
 		</div>
 	);

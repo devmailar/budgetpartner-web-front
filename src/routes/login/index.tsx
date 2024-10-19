@@ -193,7 +193,7 @@ const Login = (): ReactNode => {
 					</div>
 				</div>
 
-				<img src={ImageTrustpilot} alt={ImageTrustpilot} />
+				<img src={ImageTrustpilot} alt="trustpilot" width={60} />
 			</form>
 		</div>
 	);

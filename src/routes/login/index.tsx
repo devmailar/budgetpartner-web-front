@@ -1,6 +1,7 @@
 import React, { useState, type FormEvent, type ReactNode } from "react";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import ImageCopyright from "../../assets/copyright.webp";
+import ImageNortonsecured from "../../assets/nortonsecured.webp";
 import ImageTrustpilot from "../../assets/trustpilot.webp";
 import useAuthStore, { type IAuthState } from "../../stores/auth";
 import type { IResponseError } from "../../types";
@@ -193,6 +194,7 @@ const Login = (): ReactNode => {
 
 				<div className="flex gap-x-6 items-center">
 					<img src={ImageTrustpilot} alt="trustpilot" width={100} />
+					<img src={ImageNortonsecured} alt="copyright" width={100} />
 					<img src={ImageCopyright} alt="copyright" width={30} />
 				</div>
 			</form>

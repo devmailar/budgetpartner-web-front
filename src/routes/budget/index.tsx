@@ -2,6 +2,7 @@ import React, { type ReactNode, useEffect, useState } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImageCopyright from "../../assets/copyright.webp";
 import ImageGrowth from "../../assets/growth.webp";
+import ImageNortonsecured from "../../assets/nortonsecured.webp";
 import ImageTrustpilot from "../../assets/trustpilot.webp";
 import Switch from "../../components/Switch";
 import { db } from "../../db";
@@ -402,6 +403,7 @@ const Budget = (): ReactNode => {
 
 				<div className="flex gap-x-6 items-center">
 					<img src={ImageTrustpilot} alt="trustpilot" width={100} />
+					<img src={ImageNortonsecured} alt="copyright" width={100} />
 					<img src={ImageCopyright} alt="copyright" width={30} />
 				</div>
 			</div>

@@ -128,8 +128,8 @@ const AppNavigator = (): ReactNode => {
 				<div className="absolute z-10 bg-black w-full h-screen flex items-center justify-center">
 					<img
 						className="animate-ping"
-						src="https://budgetpartner.app/images/icons-144.png"
-						alt="growth"
+						src="/images/icons-144.png"
+						alt="budgetpartner"
 						width={60}
 						height={60}
 						loading="lazy"

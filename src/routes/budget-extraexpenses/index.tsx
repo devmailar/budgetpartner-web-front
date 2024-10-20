@@ -104,7 +104,7 @@ const BudgetExtraexpenses = (): ReactNode => {
 
 			<div className="flex flex-col gap-y-6 px-8">
 				<div className="flex items-center justify-between">
-					<span className="text-xl text-white font-bold">Total Expenses</span>
+					<h2 className="text-xl text-white font-bold">Total Expenses</h2>
 					<span className="text-xl text-white font-bold">
 						{totalExtraexpenses ? totalExtraexpenses.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "0 00"}
 						{Utils.formatCurrencyFunction(budget.currency)}
@@ -112,7 +112,7 @@ const BudgetExtraexpenses = (): ReactNode => {
 				</div>
 
 				<div className="flex flex-col gap-y-4 h-[30rem] overflow-y-scroll">
-					{extraexpensesSortedByCreatedAtAscending.length > 0 &&
+					{extraexpensesSortedByCreatedAtAscending.length > 0 ? (
 						extraexpensesSortedByCreatedAtAscending.map((extraexpense: IExtraexpense) => (
 							<button
 								type="button"
@@ -133,7 +133,21 @@ const BudgetExtraexpenses = (): ReactNode => {
 									</span>
 								</div>
 							</button>
-						))}
+						))
+					) : (
+						<div className="flex items-center justify-center">
+							<p className="text-base text-[#66666F] font-medium text-center">
+								it looks super empty here🤔
+								<br />
+								<br />
+								click{" "}
+								<button type="button" onClick={(): void => navigate("/new-extraexpense")}>
+									<span className="text-[#B85C3D] underline">Add new</span>
+								</button>{" "}
+								to add new expense
+							</p>
+						</div>
+					)}
 				</div>
 
 				<div className="flex flex-col gap-y-3">

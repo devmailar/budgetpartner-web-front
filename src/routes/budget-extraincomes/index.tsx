@@ -104,7 +104,7 @@ const BudgetExtraincomes = (): ReactNode => {
 
 			<div className="flex flex-col gap-y-6 px-8">
 				<div className="flex items-center justify-between">
-					<span className="text-xl text-white font-bold">Total Income</span>
+					<h2 className="text-xl text-white font-bold">Total Income</h2>
 					<span className="text-xl text-white font-bold">
 						{totalExtraincomes ? totalExtraincomes.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "0 00"}
 						{Utils.formatCurrencyFunction(budget.currency)}
@@ -112,7 +112,7 @@ const BudgetExtraincomes = (): ReactNode => {
 				</div>
 
 				<div className="flex flex-col gap-y-4 h-[30rem] overflow-y-scroll">
-					{extraincomesSortedByCreatedAtAscending.length > 0 &&
+					{extraincomesSortedByCreatedAtAscending.length > 0 ? (
 						extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome) => (
 							<button
 								type="button"
@@ -124,7 +124,6 @@ const BudgetExtraincomes = (): ReactNode => {
 									<span className="text-sm text-[#66666F] font-bold">{new Date(extraincome.date).toDateString()}</span>
 									<hr className="flex-grow bg-[#66666F] h-[0.5px] border-none" />
 								</div>
-
 								<div className="flex items-center justify-between w-full">
 									<span className="text-base text-[#91919A] font-bold truncate">{extraincome.type}</span>
 									<span className="text-base text-[#009951] font-bold truncate">
@@ -133,7 +132,21 @@ const BudgetExtraincomes = (): ReactNode => {
 									</span>
 								</div>
 							</button>
-						))}
+						))
+					) : (
+						<div className="flex items-center justify-center">
+							<p className="text-base text-[#66666F] font-medium text-center">
+								it looks super empty here🤔
+								<br />
+								<br />
+								click{" "}
+								<button type="button" onClick={(): void => navigate("/new-extraincome")}>
+									<span className="text-[#009951] underline">Add new</span>
+								</button>{" "}
+								to add new income
+							</p>
+						</div>
+					)}
 				</div>
 
 				<div className="flex flex-col gap-y-3">

@@ -244,7 +244,7 @@ const Signup = (): ReactNode => {
 					</div>
 				</div>
 
-				<img src={ImageTrustpilot} alt="trustpilot" width={80} />
+				<img src={ImageTrustpilot} alt="trustpilot" width={90} />
 			</form>
 		</div>
 	);

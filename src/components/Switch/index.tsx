@@ -1,12 +1,14 @@
 import React, { type ChangeEvent, type ReactNode } from "react";
 import useBudgetStore from "../../stores/budget";
 import useBudgetsStore from "../../stores/budgets";
+import useLoaderStore from "../../stores/loader";
 import type { IBudget } from "../../types";
 import { Utils } from "../../utils";
 
 const Switch = (): ReactNode => {
 	const { value: budget, setBudgetStore } = useBudgetStore();
 	const { value: budgets } = useBudgetsStore();
+	const { setLoaderStore } = useLoaderStore();
 
 	const handleChangeBudget = (e: ChangeEvent<HTMLSelectElement>): void => {
 		try {
@@ -16,7 +18,9 @@ const Switch = (): ReactNode => {
 						`${new Date(budget.created_at).getMonth()}-${new Date(budget.created_at).getFullYear()}` === e.target.value,
 				) ?? ({} as IBudget);
 
+			setLoaderStore(true);
 			setBudgetStore(selectedBudget);
+			setTimeout((): void => setLoaderStore(false), 500);
 		} catch (error) {
 			if (error instanceof Error) {
 				alert(error.message);

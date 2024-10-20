@@ -399,7 +399,7 @@ const Budget = (): ReactNode => {
 					</div>
 				</div>
 
-				<img src={ImageTrustpilot} alt="trustpilot" width={60} />
+				<img src={ImageTrustpilot} alt="trustpilot" width={80} />
 			</div>
 		</div>
 	);

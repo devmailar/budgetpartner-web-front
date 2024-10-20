@@ -17,6 +17,7 @@ import Signup from "../../routes/signup";
 import TermsOfService from "../../routes/terms-of-service";
 import Tour from "../../routes/tour";
 import useAuthStore from "../../stores/auth";
+import useLoaderStore from "../../stores/loader";
 
 export const router = createBrowserRouter([
 	{
@@ -96,6 +97,7 @@ export const router = createBrowserRouter([
 
 const AppNavigator = (): ReactNode => {
 	const { setAuthStore } = useAuthStore();
+	const { value: loader, setLoaderStore } = useLoaderStore();
 
 	useEffect((): void => {
 		try {
@@ -103,6 +105,7 @@ const AppNavigator = (): ReactNode => {
 				try {
 					const auth: string = getCookie("auth") ?? "";
 					setAuthStore(auth);
+					setTimeout((): void => setLoaderStore(false), 1500);
 				} catch (error: unknown) {
 					if (error instanceof Error) {
 						alert(error.message);
@@ -110,15 +113,33 @@ const AppNavigator = (): ReactNode => {
 				}
 			};
 
+			setLoaderStore(true);
 			authenticate();
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				alert(error.message);
 			}
 		}
-	}, []);
+	}, [setAuthStore, setLoaderStore]);
 
-	return <RouterProvider router={router} />;
+	return (
+		<>
+			{loader && (
+				<div className="absolute z-10 bg-black w-full h-screen flex items-center justify-center">
+					<img
+						className="animate-ping"
+						src="https://budgetpartner.app/images/icons-144.png"
+						alt="growth"
+						width={60}
+						height={60}
+						loading="lazy"
+					/>
+				</div>
+			)}
+
+			<RouterProvider router={router} />
+		</>
+	);
 };
 
 export default AppNavigator;

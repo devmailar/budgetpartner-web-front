@@ -1,5 +1,6 @@
 import React, { useState, type FormEvent, type ReactNode } from "react";
-import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { useNavigate, type NavigateFunction } from "react-router-dom";
+import ImageCopyright from "../../assets/copyright.webp";
 import ImageTrustpilot from "../../assets/trustpilot.webp";
 import useAuthStore, { type IAuthState } from "../../stores/auth";
 import type { IResponseError } from "../../types";
@@ -64,7 +65,6 @@ const Login = (): ReactNode => {
 
 			<form className="flex flex-col gap-y-6 items-center px-8" onSubmit={handleSubmit}>
 				<h2 className="text-2xl text-white font-bold">Login to existing account</h2>
-
 				<div className="flex flex-col gap-y-2 w-full">
 					<div className="flex gap-x-2 items-center px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
 						<svg width={24} height={24} fill="none" viewBox="0 0 24 24">
@@ -159,7 +159,6 @@ const Login = (): ReactNode => {
 						/>
 					</div>
 				</div>
-
 				<button
 					type="submit"
 					className={`btn bg-[#009951] w-full px-2 py-3 ${disableSubmit ? "opacity-40" : "opacity-100"} rounded-lg`}
@@ -167,7 +166,6 @@ const Login = (): ReactNode => {
 				>
 					<span className="text-base text-white font-bold">Login</span>
 				</button>
-
 				<div className="flex flex-col gap-y-3">
 					<p className="w-full text-sm text-[#66666F] font-normal">
 						Your financial information is safe with us. BudgetPartner securely stores your data, allowing you to revisit
@@ -193,7 +191,10 @@ const Login = (): ReactNode => {
 					</div>
 				</div>
 
-				<img src={ImageTrustpilot} alt="trustpilot" width={90} />
+				<div className="flex gap-x-6 items-center">
+					<img src={ImageTrustpilot} alt="trustpilot" width={100} />
+					<img src={ImageCopyright} alt="copyright" width={30} />
+				</div>
 			</form>
 		</div>
 	);

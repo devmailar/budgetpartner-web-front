@@ -144,7 +144,7 @@ const BudgetExtraexpenses = (): ReactNode => {
 								<button type="button" onClick={(): void => navigate("/new-extraexpense")}>
 									<span className="text-[#B85C3D] underline">Add new</span>
 								</button>{" "}
-								to add new expense
+								to add new expense💡
 							</p>
 						</div>
 					)}

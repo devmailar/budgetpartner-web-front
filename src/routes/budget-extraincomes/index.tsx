@@ -143,7 +143,7 @@ const BudgetExtraincomes = (): ReactNode => {
 								<button type="button" onClick={(): void => navigate("/new-extraincome")}>
 									<span className="text-[#009951] underline">Add new</span>
 								</button>{" "}
-								to add new income
+								to add new income💡
 							</p>
 						</div>
 					)}

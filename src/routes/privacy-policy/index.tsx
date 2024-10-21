@@ -37,9 +37,9 @@ const PrivacyPolicy = (): ReactNode => {
 					<h3>1.1 Third-Party Services</h3>
 					<p>
 						Our platform is hosted on Cloudflare, which employs a feature called Browser Insights to collect performance
-						and geolocation metrics. This information aids in optimizing and improving the performance of Budget
-						Partner. Importantly, Cloudflare does not store any personally identifiable data from our users. For more
-						in-depth information on how Cloudflare uses Browser Insights, you can visit their blog post{" "}
+						and geolocation metrics. This information aids in optimizing and improving the performance of BudgetPartner.
+						Importantly, Cloudflare does not store any personally identifiable data from our users. For more in-depth
+						information on how Cloudflare uses Browser Insights, you can visit their blog post{" "}
 						<a href="https://blog.cloudflare.com/browser-insights/">here</a>.
 					</p>
 					<br />
@@ -87,8 +87,8 @@ const PrivacyPolicy = (): ReactNode => {
 					<br />
 					<h2>8. GDPR Privacy Notice</h2>
 					<p>
-						If you are a resident of the European Economic Area (EEA), you have certain data protection rights. Budget
-						Partner aims to take reasonable steps to allow you to correct, amend, delete, or limit the use of your
+						If you are a resident of the European Economic Area (EEA), you have certain data protection rights.
+						BudgetPartner aims to take reasonable steps to allow you to correct, amend, delete, or limit the use of your
 						personal data.
 					</p>
 					<br />

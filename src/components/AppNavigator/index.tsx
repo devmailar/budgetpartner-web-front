@@ -18,6 +18,7 @@ import TermsOfService from "../../routes/terms-of-service";
 import Tour from "../../routes/tour";
 import useAuthStore from "../../stores/auth";
 import useLoaderStore from "../../stores/loader";
+import usePopupStore from "../../stores/popup";
 
 export const router = createBrowserRouter([
 	{
@@ -98,6 +99,7 @@ export const router = createBrowserRouter([
 const AppNavigator = (): ReactNode => {
 	const { setAuthStore } = useAuthStore();
 	const { value: loader, setLoaderStore } = useLoaderStore();
+	const { value: popup, setPopupStore } = usePopupStore();
 
 	useEffect((): void => {
 		try {
@@ -114,16 +116,39 @@ const AppNavigator = (): ReactNode => {
 			};
 
 			setLoaderStore(true);
+			setPopupStore({ install: true });
 			authenticate();
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				alert(error.message);
 			}
 		}
-	}, [setAuthStore, setLoaderStore]);
+	}, [setAuthStore, setLoaderStore, setPopupStore]);
 
 	return (
 		<>
+			{popup.install && (
+				<div className="absolute z-10 bg-black bg-opacity-40 backdrop-blur-sm w-full h-screen flex items-center justify-center">
+					<div className="flex flex-col gap-y-4 bg-[#18181B] w-[260px] p-4 rounded-2xl">
+						<div className="flex gap-x-2.5 items-center">
+							<img src="/images/icons-144.png" alt="" width={30} />
+							<h3 className="text-sm text-white font-bold">Install BudgetPartner</h3>
+						</div>
+
+						<p className="text-sm text-white font-normal">
+							Install the app on your device to have it easily accessible at any time. Quite simply without an App
+							Store.
+							<br />
+							<br />
+							1. Click below on
+							<br />
+							<br />
+							2. Choose Add to Home Screen
+						</p>
+					</div>
+				</div>
+			)}
+
 			{loader && (
 				<div className="absolute z-10 bg-black w-full h-screen flex items-center justify-center">
 					<img

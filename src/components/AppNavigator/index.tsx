@@ -115,8 +115,12 @@ const AppNavigator = (): ReactNode => {
 				}
 			};
 
+			const installPopupAlreadyShowed: string | null = localStorage.getItem("installPopupAlreadyShowed");
+			if (installPopupAlreadyShowed !== "true") {
+				setPopupStore({ install: true });
+			}
+
 			setLoaderStore(true);
-			setPopupStore({ install: true });
 			authenticate();
 		} catch (error: unknown) {
 			if (error instanceof Error) {
@@ -139,12 +143,36 @@ const AppNavigator = (): ReactNode => {
 							Install the app on your device to have it easily accessible at any time. Quite simply without an App
 							Store.
 							<br />
-							<br />
-							1. Click below on
-							<br />
-							<br />
-							2. Choose Add to Home Screen
+							<div className="flex gap-x-0.5 items-center">
+								1. Click below on{" "}
+								<svg
+									className="mb-2"
+									width="20"
+									height="20"
+									viewBox="0 0 20 20"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<title>Share</title>
+									<path
+										d="M13.3333 4.16683L12.1499 5.35016L10.8249 4.02516V13.3335H9.17492V4.02516L7.84992 5.35016L6.66659 4.16683L9.99992 0.833496L13.3333 4.16683ZM16.6666 8.3335V17.5002C16.6666 18.4168 15.9166 19.1668 14.9999 19.1668H4.99992C4.55789 19.1668 4.13397 18.9912 3.82141 18.6787C3.50885 18.3661 3.33325 17.9422 3.33325 17.5002V8.3335C3.33325 7.4085 4.07492 6.66683 4.99992 6.66683H7.49992V8.3335H4.99992V17.5002H14.9999V8.3335H12.4999V6.66683H14.9999C15.4419 6.66683 15.8659 6.84242 16.1784 7.15499C16.491 7.46755 16.6666 7.89147 16.6666 8.3335Z"
+										fill="#037BFF"
+									/>
+								</svg>
+							</div>
+							2. Choose <b>Add to Home Screen</b>
 						</p>
+
+						<button
+							type="button"
+							className="flex gap-x-1 items-center justify-center w-full btn px-2 py-2 bg-transparent border border-[#66666F] rounded-lg"
+							onClick={(): void => {
+								setPopupStore({ install: false });
+								localStorage.setItem("installPopupAlreadyShowed", "true");
+							}}
+						>
+							<span className="text-sm text-[#66666F] font-bold">Close</span>
+						</button>
 					</div>
 				</div>
 			)}

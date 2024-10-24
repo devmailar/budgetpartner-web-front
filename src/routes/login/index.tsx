@@ -8,7 +8,7 @@ import { Utils } from "../../utils";
 
 const Login = (): ReactNode => {
 	const navigate: NavigateFunction = useNavigate();
-	1;
+
 	const setAuthStore: IAuthState["setAuthStore"] = useAuthStore.getState().setAuthStore;
 
 	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);

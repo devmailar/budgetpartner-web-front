@@ -115,10 +115,11 @@ const Tour = (): ReactNode => {
 			}
 
 			setBudgetStore(currentBudgetAgain);
-			setPopupStore({ install: true });
-			setLoaderStore(true);
 
 			navigate("/");
+
+			setPopupStore({ install: true });
+			setLoaderStore(true);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				setTimeout(() => setDisableSubmit(false), 2250);

@@ -84,33 +84,36 @@ const Budget = (): ReactNode => {
 					if (!getUserResponse.ok) {
 						const getUserResponseError: IResponseError = await getUserResponse.json();
 
-						throw new Error(getUserResponseError.errorMessage);
+						throw new Error(getUserResponseError.message);
 					}
 
 					const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
-					if (getUserResponseBody.errorNoData.user.is_new) {
+					if (getUserResponseBody.user.is_new) {
 						return navigate("/tour");
 					}
 
-					setUserStore(getUserResponseBody.errorNoData.user);
-					setBudgetsStore(getUserResponseBody.errorNoData.budgets);
+					setUserStore(getUserResponseBody.user);
+					setBudgetsStore(getUserResponseBody.budgets);
 
-					const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
+					const currentBudget: IBudget | undefined = getUserResponseBody.budgets.find(
 						(budget: IBudget): boolean => new Date(budget.created_at).getMonth() === new Date().getMonth(),
 					);
 
 					if (!currentBudget) {
 						const createBudgetResponse: Response = await fetch(`${Utils.baseUrl}/budgets/create`, {
 							method: "POST",
-							headers: { Authorization: `Bearer ${auth}`, "Content-Type": "application/json" },
+							headers: {
+								Authorization: `Bearer ${auth}`,
+								"Content-Type": "application/json",
+							},
 							body: JSON.stringify({ date: new Date() }),
 						});
 
 						if (!createBudgetResponse.ok) {
 							const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
 
-							throw new Error(createBudgetResponseError.errorMessage);
+							throw new Error(createBudgetResponseError.message);
 						}
 
 						alert(`Happy ${Utils.monthsList[new Date().getMonth()]} 💙\n\nEnjoy your new budget!`);
@@ -123,14 +126,14 @@ const Budget = (): ReactNode => {
 						if (!getUserResponseAgain.ok) {
 							const getUserResponseAgainError: IResponseError = await getUserResponseAgain.json();
 
-							throw new Error(getUserResponseAgainError.errorMessage);
+							throw new Error(getUserResponseAgainError.message);
 						}
 
 						const getUserResponseBodyAgain: IUserResponse = await getUserResponseAgain.json();
-						setUserStore(getUserResponseBodyAgain.errorNoData.user);
-						setBudgetsStore(getUserResponseBodyAgain.errorNoData.budgets);
+						setUserStore(getUserResponseBodyAgain.user);
+						setBudgetsStore(getUserResponseBodyAgain.budgets);
 
-						const currentBudgetAgain: IBudget | undefined = getUserResponseBodyAgain.errorNoData.budgets.find(
+						const currentBudgetAgain: IBudget | undefined = getUserResponseBodyAgain.budgets.find(
 							(budget: IBudget): boolean => {
 								return new Date(budget.created_at).getMonth() === new Date().getMonth();
 							},
@@ -146,22 +149,20 @@ const Budget = (): ReactNode => {
 					const storedBudgetDate: string = localStorage.getItem("budget") ?? "";
 					// alert("Welcome Back💙");
 					setTimeout((): void => {
-						if (!getUserResponseBody.errorNoData.user.is_email_verified) {
+						if (!getUserResponseBody.user.is_email_verified) {
 							alert(
-								`We have sent a verification email to ${getUserResponseBody.errorNoData.user.email}. Please check your inbox or spam folder for the message and click the link to complete the verification process.\n\nBest regards,\nsupport@budgetpartner.app`,
+								`We have sent a verification email to ${getUserResponseBody.user.email}. Please check your inbox or spam folder for the message and click the link to complete the verification process.\n\nBest regards,\nsupport@budgetpartner.app`,
 							);
 						}
 					}, 1500);
 
 					if (storedBudgetDate) {
-						const matchingBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
-							(budget: IBudget): boolean => {
-								const budgetDate: Date = new Date(budget.created_at);
-								const match: boolean = budgetDate.toISOString() === storedBudgetDate;
+						const matchingBudget: IBudget | undefined = getUserResponseBody.budgets.find((budget: IBudget): boolean => {
+							const budgetDate: Date = new Date(budget.created_at);
+							const match: boolean = budgetDate.toISOString() === storedBudgetDate;
 
-								return match;
-							},
-						);
+							return match;
+						});
 
 						if (!matchingBudget) {
 							return setBudgetStore(currentBudget);

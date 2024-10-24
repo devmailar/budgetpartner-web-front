@@ -45,16 +45,14 @@ const Tour = (): ReactNode => {
 			if (!getUserResponse.ok) {
 				const getUserResponseError: IResponseError = await getUserResponse.json();
 
-				throw new Error(getUserResponseError.errorMessage);
+				throw new Error(getUserResponseError.message);
 			}
 
 			const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
-			const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
-				(budget: IBudget): boolean => {
-					return new Date(budget.created_at).getMonth() === new Date().getMonth();
-				},
-			);
+			const currentBudget: IBudget | undefined = getUserResponseBody.budgets.find((budget: IBudget): boolean => {
+				return new Date(budget.created_at).getMonth() === new Date().getMonth();
+			});
 
 			if (!currentBudget) {
 				throw new Error("No currentBudget");
@@ -62,7 +60,10 @@ const Tour = (): ReactNode => {
 
 			const createExtraincomeResponse: Response = await fetch(`${Utils.baseUrl}/extraincomes/create`, {
 				method: "POST",
-				headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
+				headers: {
+					Authorization: `Bearer ${authStore}`,
+					"Content-Type": "application/json",
+				},
 				body: JSON.stringify({
 					budget_id: currentBudget.id,
 					type: "Salary",
@@ -75,7 +76,7 @@ const Tour = (): ReactNode => {
 			if (!createExtraincomeResponse.ok) {
 				const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();
 
-				throw new Error(createExtraincomeResponseError.errorMessage);
+				throw new Error(createExtraincomeResponseError.message);
 			}
 
 			const getUserResponseAgain: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -86,7 +87,7 @@ const Tour = (): ReactNode => {
 			if (!getUserResponseAgain.ok) {
 				const getUserResponseAgainError: IResponseError = await getUserResponseAgain.json();
 
-				throw new Error(getUserResponseAgainError.errorMessage);
+				throw new Error(getUserResponseAgainError.message);
 			}
 
 			const getUserResponseAgainBody: IUserResponse = await getUserResponseAgain.json();
@@ -95,10 +96,10 @@ const Tour = (): ReactNode => {
 				throw new Error("User response again is empty");
 			}
 
-			setUserStore(getUserResponseAgainBody.errorNoData.user);
-			setBudgetsStore(getUserResponseAgainBody.errorNoData.budgets);
+			setUserStore(getUserResponseAgainBody.user);
+			setBudgetsStore(getUserResponseAgainBody.budgets);
 
-			const currentBudgetAgain: IBudget | undefined = getUserResponseAgainBody.errorNoData.budgets.find(
+			const currentBudgetAgain: IBudget | undefined = getUserResponseAgainBody.budgets.find(
 				(budget: IBudget): boolean => {
 					return new Date(budget.created_at).getMonth() === new Date().getMonth();
 				},
@@ -126,14 +127,17 @@ const Tour = (): ReactNode => {
 			try {
 				const createBudgetResponse: Response = await fetch(`${Utils.baseUrl}/budgets/create`, {
 					method: "POST",
-					headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
+					headers: {
+						Authorization: `Bearer ${authStore}`,
+						"Content-Type": "application/json",
+					},
 					body: JSON.stringify({ date: new Date() }),
 				});
 
 				if (!createBudgetResponse.ok) {
 					const createBudgetResponseError: IResponseError = await createBudgetResponse.json();
 
-					throw new Error(createBudgetResponseError.errorMessage);
+					throw new Error(createBudgetResponseError.message);
 				}
 			} catch (error: unknown) {
 				if (error instanceof Error) {

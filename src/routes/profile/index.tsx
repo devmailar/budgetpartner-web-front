@@ -26,7 +26,7 @@ const Profile = (): ReactNode => {
 				if (!removeUserResponse.ok) {
 					const removeUserResponseError: IResponseError = await removeUserResponse.json();
 
-					throw new Error(removeUserResponseError.errorMessage);
+					throw new Error(removeUserResponseError.message);
 				}
 
 				handleLogout();

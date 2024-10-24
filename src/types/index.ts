@@ -41,17 +41,14 @@ export interface IBudget {
 }
 
 export interface IUserResponse {
-	errorMessage: string;
-	errorStatusCode: number;
-	errorNoData: {
-		user: IUser;
-		budgets: IBudget[];
-	};
+	user: IUser;
+	budgets: IBudget[];
 }
 
 export interface IResponseError {
-	errorMessage: string;
-	errorStatusCode: number;
+	message: string;
+	error: string;
+	statusCode: number;
 }
 
 export interface IRootState {

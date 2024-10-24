@@ -51,7 +51,7 @@ const BudgetExtraexpenses = (): ReactNode => {
 				if (!removeExtraexpenseResponse.ok) {
 					const removeExtraexpenseResponseError: IResponseError = await removeExtraexpenseResponse.json();
 
-					throw new Error(removeExtraexpenseResponseError.errorMessage);
+					throw new Error(removeExtraexpenseResponseError.message);
 				}
 
 				const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -62,19 +62,17 @@ const BudgetExtraexpenses = (): ReactNode => {
 				if (!getUserResponse.ok) {
 					const getUserResponseError: IResponseError = await getUserResponse.json();
 
-					throw new Error(getUserResponseError.errorMessage);
+					throw new Error(getUserResponseError.message);
 				}
 
 				const getUserResponseBody: IUserResponse = await getUserResponse.json();
 
-				setUserStore(getUserResponseBody.errorNoData.user);
-				setBudgetsStore(getUserResponseBody.errorNoData.budgets);
+				setUserStore(getUserResponseBody.user);
+				setBudgetsStore(getUserResponseBody.budgets);
 
-				const currentBudget: IBudget | undefined = getUserResponseBody.errorNoData.budgets.find(
-					(budget: IBudget): boolean => {
-						return new Date(budget.created_at).getMonth() === new Date().getMonth();
-					},
-				);
+				const currentBudget: IBudget | undefined = getUserResponseBody.budgets.find((budget: IBudget): boolean => {
+					return new Date(budget.created_at).getMonth() === new Date().getMonth();
+				});
 
 				if (!currentBudget) {
 					return;

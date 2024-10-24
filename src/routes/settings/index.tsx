@@ -30,14 +30,20 @@ const Settings = (): ReactNode => {
 							try {
 								const changeCurrencyResponse: Response = await fetch(`${Utils.baseUrl}/budgets/change-currency`, {
 									method: "POST",
-									headers: { Authorization: `Bearer ${authStore}`, "Content-Type": "application/json" },
-									body: JSON.stringify({ id: budgetStore.id, currency: e.target.value }),
+									headers: {
+										Authorization: `Bearer ${authStore}`,
+										"Content-Type": "application/json",
+									},
+									body: JSON.stringify({
+										id: budgetStore.id,
+										currency: e.target.value,
+									}),
 								});
 
 								if (!changeCurrencyResponse.ok) {
 									const changeCurrencyResponseError: IResponseError = await changeCurrencyResponse.json();
 
-									throw new Error(changeCurrencyResponseError.errorMessage);
+									throw new Error(changeCurrencyResponseError.message);
 								}
 							} catch (error: unknown) {
 								if (error instanceof Error) {

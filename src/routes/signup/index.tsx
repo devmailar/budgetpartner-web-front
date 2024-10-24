@@ -38,7 +38,7 @@ const Signup = (): ReactNode => {
 			if (!signupUserResponse.ok) {
 				const signupUserResponseError: IResponseError = await signupUserResponse.json();
 
-				throw new Error(signupUserResponseError.errorMessage);
+				throw new Error(signupUserResponseError.message);
 			}
 
 			navigate("/login");
@@ -58,7 +58,7 @@ const Signup = (): ReactNode => {
 			if (!loginUserResponse.ok) {
 				const loginUserResponseError: IResponseError = await loginUserResponse.json();
 
-				throw new Error(loginUserResponseError.errorMessage);
+				throw new Error(loginUserResponseError.message);
 			}
 
 			const authHeader: string = loginUserResponse.headers.get("Authorization") ?? "";
@@ -91,7 +91,7 @@ const Signup = (): ReactNode => {
 				if (!signupVerifyUserResponse.ok) {
 					const signupVerifyUserResponseError: IResponseError = await signupVerifyUserResponse.json();
 
-					throw new Error(signupVerifyUserResponseError.errorMessage);
+					throw new Error(signupVerifyUserResponseError.message);
 				}
 
 				navigate("/");

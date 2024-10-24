@@ -4,12 +4,17 @@ import ImagePiggy from "../../assets/piggy.webp";
 import useAuthStore, { type IAuthState } from "../../stores/auth";
 import useBudgetStore, { type IBudgetState } from "../../stores/budget";
 import useBudgetsStore, { type IBudgetsState } from "../../stores/budgets";
+import useLoaderStore from "../../stores/loader";
+import usePopupStore from "../../stores/popup";
 import useUserStore, { type IUserState } from "../../stores/user";
 import type { IBudget, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 const Tour = (): ReactNode => {
 	const navigate: NavigateFunction = useNavigate();
+
+	const { setLoaderStore } = useLoaderStore();
+	const { setPopupStore } = usePopupStore();
 
 	const authStore: IAuthState["value"] = useAuthStore.getState().value;
 
@@ -110,6 +115,8 @@ const Tour = (): ReactNode => {
 			}
 
 			setBudgetStore(currentBudgetAgain);
+			setPopupStore({ install: true });
+			setLoaderStore(true);
 
 			navigate("/");
 		} catch (error: unknown) {

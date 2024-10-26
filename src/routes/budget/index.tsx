@@ -23,6 +23,8 @@ const Budget = (): ReactNode => {
 	const { setUserStore } = useUserStore();
 
 	const [monthlyBudget, setMonthlyBudget] = useState<number>(0);
+	const [isAddMenu, setIsAddMenu] = useState<boolean>(false);
+
 	const [selectedTab, setSelectedTab] = useState<"incomes" | "expenses">((): "incomes" | "expenses" => {
 		const storedValue: string | null = localStorage.getItem("selectedTab");
 		return storedValue === "expenses" ? "expenses" : "incomes";
@@ -292,7 +294,7 @@ const Budget = (): ReactNode => {
 			<div className="flex flex-col gap-y-8 px-6 relative">
 				<img className="absolute -top-14 right-0 -z-10" src={ImagePattern} alt="pattern" />
 
-				<div className="flex items-center justify-between">
+				<div className="flex items-center justify-between relative">
 					<div className="flex flex-col gap-y-3">
 						<h2 className="text-base text-[#878787] font-normal font-rubik">Budget Balance</h2>
 
@@ -312,24 +314,102 @@ const Budget = (): ReactNode => {
 						</div>
 					</div>
 
-					<button type="button" className="px-3 py-3 bg-white border-4 border-[#EDEDED] rounded-full">
-						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<title>Add</title>
-							<path
-								d="M10 4.16667V15.8333"
-								stroke="black"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-							<path
-								d="M4.16669 10H15.8334"
-								stroke="black"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-						</svg>
+					{isAddMenu && (
+						<div className="animate__animated animate__fadeIn absolute right-16 flex flex-col gap-y-1.5 items-center justify-end bg-[#000000] bg-opacity-80">
+							<button
+								type="button"
+								className="flex gap-x-0.5 items-center btn px-2 py-1.5 bg-[#3E3E3E] bg-opacity-80 rounded-2xl"
+								onClick={(): void => navigate("/new-extraincome")}
+							>
+								<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<title>Income</title>
+									<path
+										d="M7 2.91669V11.0834"
+										stroke="white"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+									<path
+										d="M2.91669 7H11.0834"
+										stroke="white"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+								<span className="text-xs text-white font-medium font-rubik">Add Income</span>
+							</button>
+
+							<button
+								type="button"
+								className="flex gap-x-0.5 items-center btn px-2 py-1.5 bg-[#3E3E3E] bg-opacity-80 rounded-2xl"
+								onClick={(): void => navigate("/new-extraexpense")}
+							>
+								<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<title>Expense</title>
+									<path
+										d="M7 2.91669V11.0834"
+										stroke="white"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+									<path
+										d="M2.91669 7H11.0834"
+										stroke="white"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+								<span className="text-xs text-white font-medium font-rubik">Add Expense</span>
+							</button>
+						</div>
+					)}
+
+					<button
+						type="button"
+						className="px-3 py-3 bg-white border-4 border-[#EDEDED] rounded-full"
+						onClick={(): void => setIsAddMenu(!isAddMenu)}
+					>
+						{isAddMenu ? (
+							<svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<title>Close</title>
+								<path
+									d="M15.9725 5.83331L5.97253 15.8333"
+									stroke="black"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M5.97253 5L15.9725 15"
+									stroke="black"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						) : (
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<title>Add</title>
+								<path
+									d="M10 4.16667V15.8333"
+									stroke="black"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M4.16669 10H15.8334"
+									stroke="black"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						)}
 					</button>
 				</div>
 
@@ -359,7 +439,7 @@ const Budget = (): ReactNode => {
 								localStorage.setItem("selectedTab", "expenses");
 							}}
 						>
-							<span className="h-[17px] 	text-sm text-white font-extrabold font-rubik">View Expenses</span>
+							<span className="h-[17px] text-sm text-white font-extrabold font-rubik">View Expenses</span>
 							<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<title>Arrow Down</title>
 								<path d="M3.25 7L9.25 13L13.25 9L21.25 17" stroke="white" stroke-width="2" />

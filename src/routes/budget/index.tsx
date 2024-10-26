@@ -1,9 +1,10 @@
 import React, { type ReactNode, useEffect, useState } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImageCopyright from "../../assets/copyright.webp";
-import ImageGrowth from "../../assets/growth.webp";
+import ImagePattern from "../../assets/pattern.webp";
 import ImageTrustpilot from "../../assets/trustpilot.webp";
-import Switch from "../../components/Switch";
+import Extraexpenses from "../../components/Extraexpenses";
+import Extraincomes from "../../components/Extraincomes";
 import { db } from "../../db";
 import useAuthStore, { type IAuthState } from "../../stores/auth";
 import useBudgetStore, { type IBudgetState } from "../../stores/budget";
@@ -21,6 +22,10 @@ const Budget = (): ReactNode => {
 	const { setUserStore } = useUserStore();
 
 	const [monthlyBudget, setMonthlyBudget] = useState<number>(0);
+	const [selectedTab, setSelectedTab] = useState<"incomes" | "expenses">((): "incomes" | "expenses" => {
+		const storedValue: string | null = localStorage.getItem("selectedTab");
+		return storedValue === "expenses" ? "expenses" : "incomes";
+	});
 
 	useEffect((): void => {
 		try {
@@ -232,9 +237,9 @@ const Budget = (): ReactNode => {
 	}, [budget]);
 
 	return (
-		<div className="flex flex-col gap-y-12 animate__animated animate__slideInLeft animate__faster">
+		<div className="flex flex-col gap-y-16 animate__animated animate__slideInLeft animate__faster">
 			<nav className="flex items-center justify-between px-8 py-3 border-b-[0.33px] border-b-[#454545]">
-				<a href="/" className="text-xl text-white font-bold">
+				<a href="/" className="text-xl text-white font-bold font-rubik">
 					BudgetPartner
 				</a>
 
@@ -252,14 +257,14 @@ const Budget = (): ReactNode => {
 								/>
 								<path
 									d="M9 10C9 10.7956 9.31607 11.5587 9.87868 12.1213C10.4413 12.6839 11.2044 13 12 13C12.7956 13 13.5587 12.6839 14.1213 12.1213C14.6839 11.5587 15 10.7956 15 10C15 9.20435 14.6839 8.44129 14.1213 7.87868C13.5587 7.31607 12.7956 7 12 7C11.2044 7 10.4413 7.31607 9.87868 7.87868C9.31607 8.44129 9 9.20435 9 10Z"
-									stroke="#525252"
+									stroke="white"
 									strokeWidth="1.5"
 									strokeLinecap="round"
 									strokeLinejoin="round"
 								/>
 								<path
 									d="M6.16803 18.849C6.41554 18.0252 6.922 17.3032 7.61228 16.79C8.30255 16.2768 9.13988 15.9997 10 16H14C14.8613 15.9997 15.6996 16.2774 16.3904 16.7918C17.0812 17.3062 17.5875 18.0298 17.834 18.855"
-									stroke="#525252"
+									stroke="white"
 									strokeWidth="1.5"
 									strokeLinecap="round"
 									strokeLinejoin="round"
@@ -274,136 +279,121 @@ const Budget = (): ReactNode => {
 					</button>
 				) : (
 					<button type="button" onClick={(): void => navigate("/login")}>
-						<span className="text-xl text-[#66666F] font-bold">Login</span>
+						<span className="text-xl text-white font-bold font-rubik">Login</span>
 					</button>
 				)}
 			</nav>
 
-			<div className="flex flex-col gap-y-6 px-8">
-				<div className="flex items-center justify-end">
-					{auth && (
-						<div className="flex gap-x-2.5 items-center justify-center px-1.5 py-1 bg-[#18181B] rounded-full">
-							<Switch />
+			<div className="flex flex-col gap-y-8 px-6 relative">
+				<img className="absolute -top-14 right-0 -z-10" src={ImagePattern} alt="pattern" />
 
-							<button type="button" className="btn px-0.5 py-0.5" onClick={(): void => navigate("/settings")}>
-								<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<title>Settings</title>
-									<path
-										d="M14.6271 6.11575C15.2306 3.62808 18.7694 3.62808 19.3729 6.11575C19.4635 6.48947 19.641 6.83652 19.891 7.12867C20.141 7.42081 20.4565 7.64979 20.8118 7.79697C21.167 7.94415 21.552 8.00537 21.9354 7.97565C22.3187 7.94592 22.6897 7.82609 23.018 7.62592C25.2039 6.29425 27.7072 8.79608 26.3755 10.9834C26.1756 11.3116 26.056 11.6823 26.0263 12.0654C25.9967 12.4485 26.0578 12.8333 26.2048 13.1883C26.3518 13.5433 26.5805 13.8587 26.8724 14.1087C27.1642 14.3587 27.5109 14.5363 27.8843 14.6271C30.3719 15.2306 30.3719 18.7694 27.8843 19.3729C27.5105 19.4635 27.1635 19.641 26.8713 19.891C26.5792 20.141 26.3502 20.4565 26.203 20.8118C26.0558 21.167 25.9946 21.552 26.0244 21.9354C26.0541 22.3187 26.1739 22.6897 26.3741 23.018C27.7058 25.2039 25.2039 27.7072 23.0166 26.3755C22.6884 26.1756 22.3177 26.056 21.9346 26.0263C21.5515 25.9967 21.1667 26.0578 20.8117 26.2048C20.4567 26.3518 20.1413 26.5805 19.8913 26.8724C19.6413 27.1642 19.4637 27.5109 19.3729 27.8843C18.7694 30.3719 15.2306 30.3719 14.6271 27.8843C14.5365 27.5105 14.359 27.1635 14.109 26.8713C13.859 26.5792 13.5435 26.3502 13.1882 26.203C12.833 26.0558 12.448 25.9946 12.0646 26.0244C11.6813 26.0541 11.3103 26.1739 10.982 26.3741C8.79608 27.7058 6.29283 25.2039 7.6245 23.0166C7.82439 22.6884 7.94403 22.3177 7.97369 21.9346C8.00334 21.5515 7.94218 21.1667 7.79517 20.8117C7.64816 20.4567 7.41945 20.1413 7.12764 19.8913C6.83582 19.6413 6.48913 19.4637 6.11575 19.3729C3.62808 18.7694 3.62808 15.2306 6.11575 14.6271C6.48947 14.5365 6.83652 14.359 7.12867 14.109C7.42081 13.859 7.64979 13.5435 7.79697 13.1882C7.94415 12.833 8.00537 12.448 7.97565 12.0646C7.94592 11.6813 7.82609 11.3103 7.62592 10.982C6.29425 8.79608 8.79608 6.29283 10.9834 7.6245C12.4001 8.48583 14.2361 7.72367 14.6271 6.11575Z"
-										stroke="#525252"
-										strokeWidth="1.5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-									<path
-										d="M12.75 17C12.75 18.1272 13.1978 19.2082 13.9948 20.0052C14.7918 20.8022 15.8728 21.25 17 21.25C18.1272 21.25 19.2082 20.8022 20.0052 20.0052C20.8022 19.2082 21.25 18.1272 21.25 17C21.25 15.8728 20.8022 14.7918 20.0052 13.9948C19.2082 13.1978 18.1272 12.75 17 12.75C15.8728 12.75 14.7918 13.1978 13.9948 13.9948C13.1978 14.7918 12.75 15.8728 12.75 17Z"
-										stroke="#525252"
-										strokeWidth="1.5"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
-							</button>
+				<div className="flex items-center justify-between">
+					<div className="flex flex-col gap-y-3">
+						<h2 className="text-base text-[#878787] font-normal font-rubik">Budget Balance</h2>
+
+						<div className="flex items-end">
+							<span className="text-[1.75rem] text-white font-bold font-hanson">
+								{Utils.formatCurrencyFunction(budget.currency)}
+							</span>
+							<span className="text-[2.5rem] text-white font-bold font-hanson">{monthlyBudget.toFixed(0)}</span>
+							<span className="text-[1.75rem] text-white font-bold font-hanson">
+								.{monthlyBudget.toFixed(2).split(".")[1]}
+							</span>
 						</div>
-					)}
-				</div>
 
-				<div className="flex gap-x-2 items-center px-2 py-4 bg-[#18181B] rounded-2xl">
-					<img src={ImageGrowth} alt="growth" width={60} height={60} loading="lazy" />
-
-					<div className="flex flex-col gap-y-2">
-						<h1 className="text-base font-bold text-[#895FF5]">
-							We saved in{" "}
-							{Object.keys(budget).length === 0
-								? Utils.monthsList[new Date().getMonth()]
-								: Utils.monthsList[new Date(budget.created_at).getMonth()]}
-						</h1>
-
-						<span className="text-2xl font-bold text-white">
-							{monthlyBudget ? monthlyBudget.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "0 00"}
-							{Utils.formatCurrencyFunction(budget.currency)}
-						</span>
-
-						<p className="text-sm text-[#66666F] font-medium">#budgetingmakeslegends</p>
+						<div className="flex gap-x-2 items-center">
+							<span className="text-sm text-white font-bold font-hanson">NET M/M</span>
+							<span className="text-sm text-[#56AB4D] font-bold font-hanson">N/A%</span>
+						</div>
 					</div>
+
+					<button type="button" className="px-3 py-3 bg-white border-4 border-[#EDEDED] rounded-full">
+						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<title>Add</title>
+							<path
+								d="M10 4.16667V15.8333"
+								stroke="black"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+							<path
+								d="M4.16669 10H15.8334"
+								stroke="black"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+					</button>
 				</div>
 
-				<div className="flex gap-x-3 items-center justify-center">
-					<button
-						type="button"
-						className="flex gap-x-1 items-center justify-center w-full btn px-2 py-1 bg-[#009951] rounded-lg"
-						onClick={(): void => {
-							navigate("/extraincomes");
-						}}
-					>
-						<span className="text-sm text-white font-bold">View Income</span>
+				<div className="flex flex-col gap-y-6">
+					<div className="flex gap-x-4 items-center px-0.5 py-0.5 bg-[#171717] rounded-full">
+						<button
+							type="button"
+							className={`flex items-center justify-center w-full btn px-2 py-1 ${selectedTab === "incomes" ? "bg-[#4400DE]" : "bg-transparent"} rounded-full`}
+							onClick={(): void => {
+								setSelectedTab("incomes");
+								localStorage.setItem("selectedTab", "incomes");
+							}}
+						>
+							<span className="h-[17px] text-sm text-white font-extrabold font-rubik">View Income</span>
+							<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<title>Arrow Up</title>
+								<path d="M3.75 17L9.75 11L13.75 15L21.75 7" stroke="white" stroke-width="2" />
+								<path d="M14.75 7H21.75V14" stroke="white" stroke-width="2" />
+							</svg>
+						</button>
 
-						<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<title>Arrow Up</title>
-							<g clipPath="url(#clip0_1_82)">
-								<path d="M3.75 17L9.75 11L13.75 15L21.75 7" stroke="white" strokeWidth="2" />
-								<path d="M14.75 7H21.75V14" stroke="white" strokeWidth="2" />
-							</g>
-							<defs>
-								<clipPath id="clip0_1_82">
-									<rect width="24" height="24" fill="white" transform="translate(0.75)" />
-								</clipPath>
-							</defs>
-						</svg>
-					</button>
+						<button
+							type="button"
+							className={`flex items-center justify-center w-full btn px-2 py-1 ${selectedTab === "expenses" ? "bg-[#4400DE]" : "bg-transparent"} rounded-full`}
+							onClick={(): void => {
+								setSelectedTab("expenses");
+								localStorage.setItem("selectedTab", "expenses");
+							}}
+						>
+							<span className="h-[17px] 	text-sm text-white font-extrabold font-rubik">View Expenses</span>
+							<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<title>Arrow Down</title>
+								<path d="M3.25 7L9.25 13L13.25 9L21.25 17" stroke="white" stroke-width="2" />
+								<path d="M14.25 17H21.25V10" stroke="white" stroke-width="2" />
+							</svg>
+						</button>
+					</div>
 
-					<button
-						type="button"
-						className="flex gap-x-1 items-center justify-center w-full btn px-2 py-1 border-[1.5px] border-[#B85C3D] rounded-lg"
-						onClick={(): void => {
-							navigate("/extraexpenses");
-						}}
-					>
-						<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<title>Arrow Down</title>
-							<g clipPath="url(#clip0_1_87)">
-								<path d="M3.75 7L9.75 13L13.75 9L21.75 17" stroke="#B85C3D" strokeWidth="2" />
-								<path d="M14.75 17H21.75V10" stroke="#B85C3D" strokeWidth="2" />
-							</g>
-							<defs>
-								<clipPath id="clip0_1_87">
-									<rect width="24" height="24" fill="white" transform="matrix(1 0 0 -1 0.75 24)" />
-								</clipPath>
-							</defs>
-						</svg>
-
-						<span className="text-sm text-[#B85C3D] font-bold">View Expenses</span>
-					</button>
+					{Object.keys(budget).length > 0 && (selectedTab === "incomes" ? <Extraincomes /> : <Extraexpenses />)}
 				</div>
 
 				<div className="flex flex-col gap-y-3">
-					<p className="w-full text-sm text-[#66666F] font-normal">
+					<p className="w-full text-sm text-[#66666F] font-normal font-rubik">
 						Your financial information is safe with us. BudgetPartner securely stores your data, allowing you to revisit
 						your progress over time. It’s like having a personal financial assistant at your fingertips.
 					</p>
 
 					<div className="flex flex-wrap gap-x-2">
-						<a className="text-sm text-[#323232] font-normal underline" href="/terms-of-service">
+						<a className="text-sm text-[#323232] font-medium font-rubik underline" href="/terms-of-service">
 							Terms of Service
 						</a>
 
-						<a className="text-sm text-[#323232] font-normal underline" href="/privacy-policy">
+						<a className="text-sm text-[#323232] font-medium font-rubik underline" href="/privacy-policy">
 							Privacy Policy
 						</a>
 
-						<a className="text-sm text-[#323232] font-normal underline" href="/contact-us">
+						<a className="text-sm text-[#323232] font-medium font-rubik underline" href="/contact-us">
 							Contact Us
 						</a>
 
-						<a className="text-sm text-[#323232] font-normal underline" href="/cookie-notice">
+						<a className="text-sm text-[#323232] font-medium font-rubik underline" href="/cookie-notice">
 							Cookie Notice
 						</a>
 					</div>
 				</div>
 
 				<div className="flex gap-x-6 items-center">
-					<img src={ImageTrustpilot} alt="trustpilot" width={100} />
-					<img src={ImageCopyright} alt="copyright" width={25} />
+					<img src={ImageTrustpilot} alt="trustpilot" width={75} />
+					<img src={ImageCopyright} alt="copyright" width={15} />
 				</div>
 			</div>
 		</div>

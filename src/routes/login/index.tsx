@@ -25,7 +25,7 @@ const Login = (): ReactNode => {
 
 			const loginUserResponse: Response = await fetch(`${Utils.baseUrl}/users/login`, {
 				method: "POST",
-				headers: { "Content-Type": "application/json" },
+				headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
 				body: JSON.stringify({ email: email, password: password }),
 			});
 

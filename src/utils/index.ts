@@ -1,4 +1,4 @@
-const baseUrl: string = "https://unique-legible-seagull.ngrok-free.app";
+const baseUrl: string = "https://drunkywhale.com";
 const monthsList: string[] = [
 	"January",
 	"February",

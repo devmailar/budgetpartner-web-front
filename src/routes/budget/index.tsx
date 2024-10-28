@@ -86,7 +86,7 @@ const Budget = (): ReactNode => {
 				try {
 					const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
 						method: "GET",
-						headers: { Authorization: `Bearer ${auth}`, "ngrok-skip-browser-warning": "true" },
+						headers: { Authorization: `Bearer ${auth}` },
 					});
 
 					if (!getUserResponse.ok) {
@@ -114,7 +114,6 @@ const Budget = (): ReactNode => {
 							headers: {
 								Authorization: `Bearer ${auth}`,
 								"Content-Type": "application/json",
-								"ngrok-skip-browser-warning": "true",
 							},
 							body: JSON.stringify({ date: new Date() }),
 						});
@@ -129,7 +128,7 @@ const Budget = (): ReactNode => {
 
 						const getUserResponseAgain: Response = await fetch(`${Utils.baseUrl}/users/get`, {
 							method: "GET",
-							headers: { Authorization: `Bearer ${auth}`, "ngrok-skip-browser-warning": "true" },
+							headers: { Authorization: `Bearer ${auth}` },
 						});
 
 						if (!getUserResponseAgain.ok) {

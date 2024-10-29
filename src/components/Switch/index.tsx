@@ -31,7 +31,7 @@ const Switch = (): ReactNode => {
 
 	return (
 		<select
-			className="flex items-center gap-x-1 w-20 px-3 py-1.5 bg-[#212121] text-base text-[#525252] font-medium rounded-full"
+			className="flex items-center gap-x-1 w-40 px-1.5 py-1.5 bg-[#4400DE] text-xs text-white font-medium font-hanson rounded-md"
 			value={`${new Date(budget.created_at).getMonth()}-${new Date(budget.created_at).getFullYear()}`}
 			onChange={handleChangeBudget}
 		>

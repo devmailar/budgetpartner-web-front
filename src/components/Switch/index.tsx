@@ -37,16 +37,7 @@ const Switch = (): ReactNode => {
 		>
 			{budgets.map(
 				(b: IBudget): ReactNode => (
-					<option
-						key={b.id}
-						value={`${new Date(b.created_at).getMonth()}-${new Date(b.created_at).getFullYear()}`}
-						className={`text-base ${
-							new Date(budget.created_at).getMonth() === new Date(b.created_at).getMonth() &&
-							new Date(budget.created_at).getFullYear() === new Date(b.created_at).getFullYear()
-								? "text-white"
-								: "text-[#A0A0A0]"
-						} font-rubik`}
-					>
+					<option key={b.id} value={`${new Date(b.created_at).getMonth()}-${new Date(b.created_at).getFullYear()}`}>
 						{Utils.monthsList[new Date(b.created_at).getMonth()]} {"-"} {new Date(b.created_at).getFullYear()}
 					</option>
 				),

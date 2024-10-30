@@ -115,13 +115,13 @@ const BudgetNewExtraincome = (): ReactNode => {
 	return (
 		<div className="flex justify-center">
 			<div className="flex flex-col gap-y-6 md:w-[40rem] animate__animated animate__slideInRight animate__faster">
-				<nav className="flex items-center justify-start px-8 py-3 border-b-[0.33px] border-b-[#454545]">
+				<nav className="flex items-center justify-start px-6 py-3 border-b-[0.33px] border-b-[#454545]">
 					<button type="button" onClick={(): void => navigate("/")}>
 						<span className="text-xl text-[#66666F] font-bold">Back</span>
 					</button>
 				</nav>
 
-				<form className="flex flex-col gap-y-6 items-center px-8" onSubmit={handleSubmit}>
+				<form className="flex flex-col gap-y-6 items-center px-6" onSubmit={handleSubmit}>
 					<h2 className="text-2xl text-white font-bold">New Income</h2>
 
 					<div className="flex flex-col gap-y-2 w-full">
@@ -236,7 +236,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 						</div>
 					</div>
 				</form>
-			</div>{" "}
+			</div>
 		</div>
 	);
 };

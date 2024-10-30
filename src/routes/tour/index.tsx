@@ -161,70 +161,72 @@ const Tour = (): ReactNode => {
 	}, [authStore]);
 
 	return (
-		<div className="h-screen animate__animated animate__slideInRight animate__faster">
-			<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
-				<button
-					type="button"
-					onClick={(): void => {
-						navigate("/");
-					}}
-				>
-					<span className="text-lg text-[#007AFF] font-medium">Back</span>
-				</button>
+		<div className="flex justify-center">
+			<div className="flex flex-col gap-y-6 md:w-[40rem] animate__animated animate__slideInRight animate__faster">
+				<nav className="flex items-center justify-between px-5 py-2.5 border-b border-b-[#313131]">
+					<button
+						type="button"
+						onClick={(): void => {
+							navigate("/");
+						}}
+					>
+						<span className="text-lg text-[#007AFF] font-medium">Back</span>
+					</button>
 
-				<h2 className="text-lg text-white font-medium">BudgetPartner</h2>
+					<h2 className="text-lg text-white font-medium">BudgetPartner</h2>
 
-				<button
-					type="button"
-					onClick={(): void => {
-						setAuthStore("" as IAuthState["value"]);
-						setBudgetStore({} as IBudgetState["value"]);
-						setBudgetsStore([] as IBudgetsState["value"]);
-						setUserStore({} as IUserState["value"]);
+					<button
+						type="button"
+						onClick={(): void => {
+							setAuthStore("" as IAuthState["value"]);
+							setBudgetStore({} as IBudgetState["value"]);
+							setBudgetsStore([] as IBudgetsState["value"]);
+							setUserStore({} as IUserState["value"]);
 
-						navigate("/login");
-					}}
-				>
-					<span className="text-lg text-[#007AFF] font-medium">Logout</span>
-				</button>
-			</nav>
+							navigate("/login");
+						}}
+					>
+						<span className="text-lg text-[#007AFF] font-medium">Logout</span>
+					</button>
+				</nav>
 
-			<form className="flex flex-col items-center px-6 py-12" onSubmit={handleSubmit}>
-				<img src={ImagePiggy} alt={ImagePiggy} width={301} height={300} loading="lazy" fetchPriority="high" />
+				<form className="flex flex-col items-center px-6 py-12" onSubmit={handleSubmit}>
+					<img src={ImagePiggy} alt={ImagePiggy} width={301} height={300} loading="lazy" fetchPriority="high" />
 
-				<div className="flex flex-col gap-7 items-center">
-					<div className="flex flex-col items-center justify-center gap-y-3">
-						<h1 className="text-2xl font-semibold text-white">
-							{Utils.monthsList[new Date().getMonth()]} ({new Date().getFullYear()})
-						</h1>
+					<div className="flex flex-col gap-7 items-center">
+						<div className="flex flex-col items-center justify-center gap-y-3">
+							<h1 className="text-2xl font-semibold text-white">
+								{Utils.monthsList[new Date().getMonth()]} ({new Date().getFullYear()})
+							</h1>
 
-						<p className="text-sm font-normal text-[#66666F] text-center">
-							Set your start eg. salary to start a budget.
-						</p>
+							<p className="text-sm font-normal text-[#66666F] text-center">
+								Set your start eg. salary to start a budget.
+							</p>
+						</div>
+
+						<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
+							<input
+								className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
+								type="text"
+								name="amount_monthly"
+								id="amount_monthly"
+								placeholder="0.00"
+								required
+							/>
+						</div>
+
+						<div className="flex items-center justify-center w-full md:w-80 px-5 py-5 border-y border-y-[#313131]">
+							<button
+								type="submit"
+								className={`btn bg-[#007AFF] w-full px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}
+								disabled={disableSubmit}
+							>
+								<span className="text-base font-medium text-white">Finish</span>
+							</button>
+						</div>
 					</div>
-
-					<div className="flex items-center gap-2 px-4 py-3 bg-[#18181B] border border-[#212121] rounded-lg">
-						<input
-							className="bg-transparent text-base font-normal text-white placeholder:text-[#66666F] w-72 outline-none"
-							type="text"
-							name="amount_monthly"
-							id="amount_monthly"
-							placeholder="0.00"
-							required
-						/>
-					</div>
-
-					<div className="flex items-center justify-center w-full md:w-80 px-5 py-5 border-y border-y-[#313131]">
-						<button
-							type="submit"
-							className={`btn bg-[#007AFF] w-full px-2 py-3 rounded-lg ${disableSubmit ? "opacity-40" : "opacity-100"}`}
-							disabled={disableSubmit}
-						>
-							<span className="text-base font-medium text-white">Finish</span>
-						</button>
-					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 	);
 };

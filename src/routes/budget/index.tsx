@@ -3,7 +3,6 @@ import { type NavigateFunction, useNavigate } from "react-router-dom";
 import ImageCopyright from "../../assets/copyright.webp";
 import ImagePattern from "../../assets/pattern.webp";
 import ImageTrustpilot from "../../assets/trustpilot.webp";
-import ImageLogo from "../../assets/logo.webp";
 import Extraexpenses from "../../components/Extraexpenses";
 import Extraincomes from "../../components/Extraincomes";
 import Switch from "../../components/Switch";
@@ -243,11 +242,9 @@ const Budget = (): ReactNode => {
 	return (
 		<div className="flex flex-col gap-y-16 animate__animated animate__slideInLeft animate__faster">
 			<nav className="animate__animated animate__fadeInDown animate__fast flex items-center justify-between px-8 py-3 border-b-[0.33px] border-b-[#454545]">
-				<img src={ImageLogo} alt="logo" width={40} />
-				{/*
 				<a href="/" className="text-xl text-white font-bold font-rubik">
 					BudgetPartner
-				</a> */}
+				</a>
 
 				{auth ? (
 					<div className="flex gap-x-4 items-center">

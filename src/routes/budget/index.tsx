@@ -242,7 +242,7 @@ const Budget = (): ReactNode => {
 
 	return (
 		<div className="flex flex-col gap-y-16 animate__animated animate__slideInLeft animate__faster">
-			<nav className="flex items-center justify-between px-8 py-3 border-b-[0.33px] border-b-[#454545]">
+			<nav className="animate__animated animate__fadeInDown animate__fast flex items-center justify-between px-8 py-3 border-b-[0.33px] border-b-[#454545]">
 				<img src={ImageLogo} alt="logo" width={40} />
 				{/*
 				<a href="/" className="text-xl text-white font-bold font-rubik">
@@ -436,7 +436,7 @@ const Budget = (): ReactNode => {
 					<div className="flex gap-x-4 items-center px-0.5 py-0.5 bg-[#171717] rounded-full">
 						<button
 							type="button"
-							className={`flex items-center justify-center w-full btn px-2 py-1 ${selectedTab === "incomes" ? "bg-[#4400DE]" : "bg-transparent"} rounded-full`}
+							className={`flex items-center justify-center w-full btn px-2 py-1 ${selectedTab === "incomes" ? "bg-[#4400DE] animate__animated animate__pulse animate__slower animate__infinite" : "bg-transparent"} rounded-full`}
 							onClick={(): void => {
 								setSelectedTab("incomes");
 								localStorage.setItem("selectedTab", "incomes");
@@ -452,7 +452,7 @@ const Budget = (): ReactNode => {
 
 						<button
 							type="button"
-							className={`flex items-center justify-center w-full btn px-2 py-1 ${selectedTab === "expenses" ? "bg-[#4400DE]" : "bg-transparent"} rounded-full`}
+							className={`flex items-center justify-center w-full btn px-2 py-1 ${selectedTab === "expenses" ? "bg-[#4400DE] animate__animated animate__pulse animate__slower animate__infinite" : "bg-transparent"} rounded-full`}
 							onClick={(): void => {
 								setSelectedTab("expenses");
 								localStorage.setItem("selectedTab", "expenses");

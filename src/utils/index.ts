@@ -1,4 +1,4 @@
-const baseUrl: string = "https://drunkywhale.com";
+const baseUrl: string = import.meta.env.VITE_API_URL ?? "https://drunkywhale.com";
 const monthsList: string[] = [
 	"January",
 	"February",

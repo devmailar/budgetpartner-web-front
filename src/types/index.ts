@@ -1,4 +1,5 @@
 export interface IUser {
+	uuid: string;
 	email: string;
 	email_verification_token: string;
 	password_hash: string;
@@ -10,7 +11,8 @@ export interface IUser {
 
 export interface IExtraincome {
 	id: number;
-	user_id: number;
+	uuid: string;
+	budget_uuid: string;
 	type: string;
 	amount_monthly: number;
 	includes_weekends: boolean;
@@ -21,7 +23,8 @@ export interface IExtraincome {
 
 export interface IExtraexpense {
 	id: number;
-	user_id: number;
+	uuid: string;
+	budget_uuid: string;
 	type: string;
 	amount_monthly: number;
 	date: Date;
@@ -31,7 +34,8 @@ export interface IExtraexpense {
 
 export interface IBudget {
 	id: number;
-	user_id: number;
+	uuid: string;
+	user_uuid: string;
 	currency: string;
 	extraincomes: IExtraincome[];
 	extraexpenses: IExtraexpense[];

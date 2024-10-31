@@ -61,7 +61,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					budget_id: budget.id,
+					budget_uuid: budget.uuid,
 					type: type,
 					amount_monthly: amount_monthly,
 					includes_weekends: false,

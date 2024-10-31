@@ -70,7 +70,7 @@ const Tour = (): ReactNode => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					budget_id: currentBudget.id,
+					budget_uuid: currentBudget.uuid,
 					type: "Salary",
 					amount_monthly: amount_monthly,
 					includes_weekends: false,

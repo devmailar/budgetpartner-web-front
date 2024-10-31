@@ -14,13 +14,13 @@ const Settings = (): ReactNode => {
 	return (
 		<div className="flex justify-center">
 			<div className="flex flex-col gap-y-12 w-full md:w-[40rem] animate__animated animate__slideInRight animate__faster">
-				<nav className="flex items-center justify-start px-6 py-3 border-b-[0.33px] border-b-[#454545]">
+				<nav className="flex items-center justify-start px-6 md:px-0 py-3 border-b-[0.33px] border-b-[#454545]">
 					<button type="button" className="btn" onClick={(): void => navigate("/")}>
 						<span className="text-xl text-[#66666F] font-bold font-rubik">Back</span>
 					</button>
 				</nav>
 
-				<div className="flex flex-col gap-y-6 px-6">
+				<div className="flex flex-col gap-y-6 px-6 md:px-0">
 					<span className="font-lg text-[#66666F] font-bold">Currency</span>
 					<select
 						name="currencies"

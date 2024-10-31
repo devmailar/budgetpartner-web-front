@@ -242,7 +242,7 @@ const Budget = (): ReactNode => {
 	return (
 		<div className="flex justify-center">
 			<div className="flex flex-col gap-y-16 md:w-[40rem] animate__animated animate__slideInLeft animate__faster">
-				<nav className="flex items-center justify-between px-6 py-3 border-b-[0.33px] border-b-[#454545] animate__animated animate__fadeInDown animate__fast">
+				<nav className="flex items-center justify-between px-6 md:px-0 py-3 border-b-[0.33px] border-b-[#454545] animate__animated animate__fadeInDown animate__fast">
 					<a href="/" className="text-xl text-white font-bold font-rubik">
 						BudgetPartner
 					</a>
@@ -292,7 +292,7 @@ const Budget = (): ReactNode => {
 					)}
 				</nav>
 
-				<div className="flex flex-col gap-y-8 px-6 relative">
+				<div className="flex flex-col gap-y-8 px-6 md:px-0 relative">
 					<img className="absolute -top-14 right-0 -z-10" src={ImagePattern} alt="pattern" />
 
 					<div className="flex items-center justify-between relative">

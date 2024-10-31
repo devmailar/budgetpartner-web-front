@@ -162,7 +162,7 @@ const Tour = (): ReactNode => {
 
 	return (
 		<div className="flex justify-center">
-			<div className="flex flex-col gap-y-6 md:w-[40rem] animate__animated animate__slideInRight animate__faster">
+			<div className="flex flex-col gap-y-6 w-full md:w-[40rem] animate__animated animate__slideInRight animate__faster">
 				<nav className="flex items-center justify-between px-6 md:px-0 py-2.5 border-b border-b-[#313131]">
 					<button
 						type="button"

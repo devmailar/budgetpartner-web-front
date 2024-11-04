@@ -1,4 +1,3 @@
-import { Haptics } from "@capacitor/haptics";
 import React, { type ReactNode, useEffect, useState } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -437,7 +436,6 @@ const Budget = (): ReactNode => {
 								type="button"
 								className={`flex items-center justify-center w-full btn px-2 py-1 ${selectedTab === "incomes" ? "bg-[#4400DE] animate__animated animate__pulse animate__slower animate__infinite" : "bg-transparent"} rounded-full`}
 								onClick={async (): Promise<void> => {
-									await Haptics.vibrate();
 									setSelectedTab("incomes");
 									localStorage.setItem("selectedTab", "incomes");
 								}}
@@ -454,7 +452,6 @@ const Budget = (): ReactNode => {
 								type="button"
 								className={`flex items-center justify-center w-full btn px-2 py-1 ${selectedTab === "expenses" ? "bg-[#4400DE] animate__animated animate__pulse animate__slower animate__infinite" : "bg-transparent"} rounded-full`}
 								onClick={async (): Promise<void> => {
-									await Haptics.vibrate();
 									setSelectedTab("expenses");
 									localStorage.setItem("selectedTab", "expenses");
 								}}

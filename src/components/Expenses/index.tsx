@@ -17,6 +17,10 @@ const Expenses = (): ReactNode => {
 	const { setBudgetsStore } = useBudgetsStore();
 	const { setUserStore } = useUserStore();
 
+	if (!budget || !budget.expenses) {
+		throw new Error();
+	}
+
 	const totalExpenses: number = budget?.expenses?.reduce(
 		(accumulator: number, expense: IExpense) => accumulator + expense.amount_monthly,
 		0,

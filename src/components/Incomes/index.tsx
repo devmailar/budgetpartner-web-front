@@ -17,6 +17,10 @@ const Incomes = (): ReactNode => {
 	const { setBudgetsStore } = useBudgetsStore();
 	const { setUserStore } = useUserStore();
 
+	if (!budget || !budget.incomes) {
+		throw new Error();
+	}
+
 	const totalIncomes: number = budget?.incomes?.reduce(
 		(accumulator: number, income: IIncome) => accumulator + income.amount_monthly,
 		0,
@@ -160,7 +164,7 @@ const Incomes = (): ReactNode => {
 							<button type="button" onClick={(): void => navigate("/new-income")}>
 								<span className="text-[#009951] underline">Add new</span>
 							</button>{" "}
-							to add new income💡
+							to add new income��
 						</p>
 					</div>
 				)}

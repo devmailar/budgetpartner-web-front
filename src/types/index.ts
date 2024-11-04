@@ -9,7 +9,7 @@ export interface IUser {
 	updated_at: Date;
 }
 
-export interface IExtraincome {
+export interface IIncome {
 	id: number;
 	uuid: string;
 	budget_uuid: string;
@@ -21,7 +21,7 @@ export interface IExtraincome {
 	updated_at: Date;
 }
 
-export interface IExtraexpense {
+export interface IExpense {
 	id: number;
 	uuid: string;
 	budget_uuid: string;
@@ -37,8 +37,8 @@ export interface IBudget {
 	uuid: string;
 	user_uuid: string;
 	currency: string;
-	extraincomes: IExtraincome[];
-	extraexpenses: IExtraexpense[];
+	incomes: IIncome[];
+	expenses: IExpense[];
 	created_at: Date;
 	updated_at: Date;
 }

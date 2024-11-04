@@ -1,14 +1,15 @@
 import React, { type ReactNode } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import { db } from "../../db";
 import useAuthStore from "../../stores/auth";
 import useBudgetStore from "../../stores/budget";
 import useBudgetsStore from "../../stores/budgets";
 import useUserStore from "../../stores/user";
-import type { IBudget, IExtraexpense, IExtraincome, IResponseError, IUserResponse } from "../../types";
+import type { IBudget, IExpense, IIncome, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
-const Extraexpenses = (): ReactNode => {
+const Expenses = (): ReactNode => {
 	const navigate: NavigateFunction = useNavigate();
 
 	const { value: auth } = useAuthStore();
@@ -16,33 +17,34 @@ const Extraexpenses = (): ReactNode => {
 	const { setBudgetsStore } = useBudgetsStore();
 	const { setUserStore } = useUserStore();
 
-	const totalExtraexpenses: number = budget?.extraexpenses?.reduce(
-		(accumulator: number, extraexpense: IExtraexpense) => accumulator + extraexpense.amount_monthly,
+	const totalExpenses: number = budget?.expenses?.reduce(
+		(accumulator: number, expense: IExpense) => accumulator + expense.amount_monthly,
 		0,
 	);
 
-	const extraexpensesSortedByCreatedAtAscending: IExtraexpense[] = [...budget.extraexpenses].sort(
+	const expensesSortedByCreatedAtAscending: IExpense[] = [...budget.expenses].sort(
 		(a, b): number => new Date(b.date).getTime() - new Date(a.date).getTime(),
 	);
 
-	const handleRemoveExtraexpense = async (extraexpense: IExtraexpense): Promise<void> => {
+	const handleRemoveExpense = async (expense: IExpense): Promise<void> => {
 		try {
 			if (
 				confirm(
-					`Are you sure you want to remove expense "${extraexpense.type}" with amount ${extraexpense.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budget.currency)}?`,
+					`Are you sure you want to remove expense "${expense.type}" with amount ${expense.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budget.currency)}?`,
 				)
 			) {
 				if (!auth) {
-					await db.extraexpenses.delete(extraexpense.id);
+					await db.expenses.delete(expense.id);
 
 					const budgets: IBudget[] = await db.budgets.toArray();
 					if (budgets.length === 0) {
 						await db.budgets.add({
 							id: 1,
-							user_id: 1,
+							uuid: uuidv4(),
+							user_uuid: uuidv4(),
 							currency: "EUR",
-							extraincomes: [],
-							extraexpenses: [],
+							incomes: [],
+							expenses: [],
 							created_at: new Date(),
 							updated_at: new Date(),
 						});
@@ -52,15 +54,16 @@ const Extraexpenses = (): ReactNode => {
 
 					setBudgetStore(budgets[0]);
 
-					const extraincomes: IExtraincome[] = await db.extraincomes.toArray();
-					const extraexpenses: IExtraexpense[] = await db.extraexpenses.toArray();
+					const incomes: IIncome[] = await db.incomes.toArray();
+					const expenses: IExpense[] = await db.expenses.toArray();
 
 					setBudgetStore({
 						id: budgets[0].id,
-						user_id: budgets[0].user_id,
+						uuid: uuidv4(),
+						user_uuid: uuidv4(),
 						currency: budgets[0].currency,
-						extraincomes: extraincomes,
-						extraexpenses: extraexpenses,
+						incomes: incomes,
+						expenses: expenses,
 						created_at: budgets[0].created_at,
 						updated_at: budgets[0].updated_at,
 					});
@@ -68,18 +71,15 @@ const Extraexpenses = (): ReactNode => {
 					return;
 				}
 
-				const removeExtraexpenseResponse: Response = await fetch(
-					`${Utils.baseUrl}/extraexpenses/remove/${extraexpense.id}`,
-					{
-						method: "DELETE",
-						headers: { Authorization: `Bearer ${auth}` },
-					},
-				);
+				const removeExpenseResponse: Response = await fetch(`${Utils.baseUrl}/expenses/remove/${expense.id}`, {
+					method: "DELETE",
+					headers: { Authorization: `Bearer ${auth}` },
+				});
 
-				if (!removeExtraexpenseResponse.ok) {
-					const removeExtraexpenseResponseError: IResponseError = await removeExtraexpenseResponse.json();
+				if (!removeExpenseResponse.ok) {
+					const removeExpenseResponseError: IResponseError = await removeExpenseResponse.json();
 
-					throw new Error(removeExtraexpenseResponseError.message);
+					throw new Error(removeExpenseResponseError.message);
 				}
 
 				const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -121,30 +121,30 @@ const Extraexpenses = (): ReactNode => {
 			<div className="flex items-center justify-between">
 				<h2 className="text-base text-white font-bold font-rubik">Total Expenses</h2>
 				<span className="text-base text-white font-bold font-hanson">
-					{totalExtraexpenses ? totalExtraexpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "0 00"}
+					{totalExpenses ? totalExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "0 00"}
 					{Utils.formatCurrencyFunction(budget.currency)}
 				</span>
 			</div>
 
 			<div className="flex flex-col gap-y-4">
-				{extraexpensesSortedByCreatedAtAscending.length > 0 ? (
-					extraexpensesSortedByCreatedAtAscending.map((extraexpense: IExtraexpense) => (
+				{expensesSortedByCreatedAtAscending.length > 0 ? (
+					expensesSortedByCreatedAtAscending.map((expense: IExpense) => (
 						<button
 							type="button"
-							key={extraexpense.id}
+							key={expense.id}
 							className="flex flex-col gap-y-0.5 btn px-0 py-0 w-full rounded-none"
-							onClick={(): Promise<void> => handleRemoveExtraexpense(extraexpense)}
+							onClick={(): Promise<void> => handleRemoveExpense(expense)}
 						>
 							<div className="flex items-center gap-x-2 w-full">
 								<span className="text-sm text-[#66666F] font-bold font-rubik">
-									{new Date(extraexpense.date).toDateString()}
+									{new Date(expense.date).toDateString()}
 								</span>
 								<hr className="flex-grow bg-[#66666F] h-[0.5px] border-none" />
 							</div>
 							<div className="flex items-center justify-between w-full">
-								<span className="text-base text-[#91919A] font-bold font-rubik truncate">{extraexpense.type}</span>
+								<span className="text-base text-[#91919A] font-bold font-rubik truncate">{expense.type}</span>
 								<span className="text-base text-[#B85C3D] font-bold font-hanson truncate">
-									-{extraexpense.amount_monthly.toFixed(2)}
+									-{expense.amount_monthly.toFixed(2)}
 									{Utils.formatCurrencyFunction(budget.currency)}
 								</span>
 							</div>
@@ -157,7 +157,7 @@ const Extraexpenses = (): ReactNode => {
 							<br />
 							<br />
 							click{" "}
-							<button type="button" onClick={(): void => navigate("/new-extraexpense")}>
+							<button type="button" onClick={(): void => navigate("/new-expense")}>
 								<span className="text-[#B85C3D] underline">Add new</span>
 							</button>{" "}
 							to add new expense💡
@@ -169,4 +169,4 @@ const Extraexpenses = (): ReactNode => {
 	);
 };
 
-export default Extraexpenses;
+export default Expenses;

@@ -63,7 +63,7 @@ const Tour = (): ReactNode => {
 				throw new Error("No currentBudget");
 			}
 
-			const createExtraincomeResponse: Response = await fetch(`${Utils.baseUrl}/extraincomes/create`, {
+			const createIncomeResponse: Response = await fetch(`${Utils.baseUrl}/incomes/create`, {
 				method: "POST",
 				headers: {
 					Authorization: `Bearer ${authStore}`,
@@ -78,10 +78,10 @@ const Tour = (): ReactNode => {
 				}),
 			});
 
-			if (!createExtraincomeResponse.ok) {
-				const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();
+			if (!createIncomeResponse.ok) {
+				const createIncomeResponseError: IResponseError = await createIncomeResponse.json();
 
-				throw new Error(createExtraincomeResponseError.message);
+				throw new Error(createIncomeResponseError.message);
 			}
 
 			const getUserResponseAgain: Response = await fetch(`${Utils.baseUrl}/users/get`, {

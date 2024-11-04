@@ -1,17 +1,18 @@
 import React, { type ReactNode, useEffect, useState } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import ImageCopyright from "../../assets/copyright.webp";
 import ImagePattern from "../../assets/pattern.webp";
 import ImageTrustpilot from "../../assets/trustpilot.webp";
-import Extraexpenses from "../../components/Extraexpenses";
-import Extraincomes from "../../components/Extraincomes";
+import Expenses from "../../components/Expenses";
+import Incomes from "../../components/Incomes";
 import Switch from "../../components/Switch";
 import { db } from "../../db";
 import useAuthStore, { type IAuthState } from "../../stores/auth";
 import useBudgetStore, { type IBudgetState } from "../../stores/budget";
 import useBudgetsStore, { type IBudgetsState } from "../../stores/budgets";
 import useUserStore, { type IUserState } from "../../stores/user";
-import type { IBudget, IExtraexpense, IExtraincome, IResponseError, IUserResponse } from "../../types";
+import type { IBudget, IExpense, IIncome, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
 const Budget = (): ReactNode => {
@@ -38,10 +39,11 @@ const Budget = (): ReactNode => {
 					if (budgets.length === 0) {
 						await db.budgets.add({
 							id: 1,
-							user_id: 1,
+							uuid: uuidv4(),
+							user_uuid: uuidv4(),
 							currency: "EUR",
-							extraincomes: [],
-							extraexpenses: [],
+							incomes: [],
+							expenses: [],
 							created_at: new Date(),
 							updated_at: new Date(),
 						});
@@ -51,15 +53,16 @@ const Budget = (): ReactNode => {
 
 					setBudgetStore(budgets[0]);
 
-					const extraincomes: IExtraincome[] = await db.extraincomes.toArray();
-					const extraexpenses: IExtraexpense[] = await db.extraexpenses.toArray();
+					const incomes: IIncome[] = await db.incomes.toArray();
+					const expenses: IExpense[] = await db.expenses.toArray();
 
 					setBudgetStore({
 						id: budgets[0].id,
-						user_id: budgets[0].user_id,
+						uuid: budgets[0].uuid,
+						user_uuid: budgets[0].user_uuid,
 						currency: budgets[0].currency,
-						extraincomes: extraincomes,
-						extraexpenses: extraexpenses,
+						incomes: incomes,
+						expenses: expenses,
 						created_at: budgets[0].created_at,
 						updated_at: budgets[0].updated_at,
 					});
@@ -210,26 +213,23 @@ const Budget = (): ReactNode => {
 				return;
 			}
 
-			const totalExtraincomes: number = budget.extraincomes.reduce((accumulator: number, extraincome: IExtraincome) => {
-				return accumulator + extraincome.amount_monthly;
+			const totalIncomes: number = budget.incomes.reduce((accumulator: number, income: IIncome) => {
+				return accumulator + income.amount_monthly;
 			}, 0);
 
-			if (Number.isNaN(totalExtraincomes)) {
+			if (Number.isNaN(totalIncomes)) {
 				return;
 			}
 
-			const totalExtraexpenses: number = budget.extraexpenses.reduce(
-				(accumulator: number, extraexpense: IExtraexpense) => {
-					return accumulator + extraexpense.amount_monthly;
-				},
-				0,
-			);
+			const totalExpenses: number = budget.expenses.reduce((accumulator: number, expense: IExpense) => {
+				return accumulator + expense.amount_monthly;
+			}, 0);
 
-			if (Number.isNaN(totalExtraexpenses)) {
+			if (Number.isNaN(totalExpenses)) {
 				return;
 			}
 
-			const monthlyBudgetAmount: number = totalExtraincomes - totalExtraexpenses;
+			const monthlyBudgetAmount: number = totalIncomes - totalExpenses;
 			setMonthlyBudget(monthlyBudgetAmount);
 		} catch (error: unknown) {
 			if (error instanceof Error) {
@@ -336,7 +336,7 @@ const Budget = (): ReactNode => {
 								<button
 									type="button"
 									className="flex gap-x-0.5 items-center btn px-2 py-1.5 bg-[#3E3E3E] bg-opacity-80 rounded-2xl"
-									onClick={(): void => navigate("/new-extraincome")}
+									onClick={(): void => navigate("/new-income")}
 								>
 									<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<title>Income</title>
@@ -361,7 +361,7 @@ const Budget = (): ReactNode => {
 								<button
 									type="button"
 									className="flex gap-x-0.5 items-center btn px-2 py-1.5 bg-[#3E3E3E] bg-opacity-80 rounded-2xl"
-									onClick={(): void => navigate("/new-extraexpense")}
+									onClick={(): void => navigate("/new-expense")}
 								>
 									<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<title>Expense</title>
@@ -465,7 +465,7 @@ const Budget = (): ReactNode => {
 							</button>
 						</div>
 
-						{Object.keys(budget).length > 0 && (selectedTab === "incomes" ? <Extraincomes /> : <Extraexpenses />)}
+						{Object.keys(budget).length > 0 && (selectedTab === "incomes" ? <Incomes /> : <Expenses />)}
 					</div>
 
 					<div className="flex flex-col gap-y-3">

@@ -3,8 +3,8 @@ import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { getCookie } from "typescript-cookie";
 import Image404 from "../../assets/404.webp";
 import Budget from "../../routes/budget";
-import BudgetNewExtraexpense from "../../routes/budget-new-extraexpense";
-import BudgetNewExtraincome from "../../routes/budget-new-extraincome";
+import BudgetNewExpense from "../../routes/budget-new-expense";
+import BudgetNewIncome from "../../routes/budget-new-income";
 import ContactUs from "../../routes/contact-us";
 import CookieNotice from "../../routes/cookie-notice";
 import Login from "../../routes/login";
@@ -57,12 +57,12 @@ export const router = createBrowserRouter([
 		element: <CookieNotice />,
 	},
 	{
-		path: "/new-extraincome",
-		element: <BudgetNewExtraincome />,
+		path: "/new-income",
+		element: <BudgetNewIncome />,
 	},
 	{
-		path: "/new-extraexpense",
-		element: <BudgetNewExtraexpense />,
+		path: "/new-expense",
+		element: <BudgetNewExpense />,
 	},
 	{
 		path: "/login",

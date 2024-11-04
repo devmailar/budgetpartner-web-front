@@ -1,14 +1,15 @@
 import React, { type ReactNode } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import { db } from "../../db";
 import useAuthStore from "../../stores/auth";
 import useBudgetStore from "../../stores/budget";
 import useBudgetsStore from "../../stores/budgets";
 import useUserStore from "../../stores/user";
-import type { IBudget, IExtraexpense, IExtraincome, IResponseError, IUserResponse } from "../../types";
+import type { IBudget, IExpense, IIncome, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
-const Extraincomes = (): ReactNode => {
+const Incomes = (): ReactNode => {
 	const navigate: NavigateFunction = useNavigate();
 
 	const { value: auth } = useAuthStore();
@@ -16,33 +17,34 @@ const Extraincomes = (): ReactNode => {
 	const { setBudgetsStore } = useBudgetsStore();
 	const { setUserStore } = useUserStore();
 
-	const totalExtraincomes: number = budget?.extraincomes?.reduce(
-		(accumulator: number, extraincome: IExtraincome) => accumulator + extraincome.amount_monthly,
+	const totalIncomes: number = budget?.incomes?.reduce(
+		(accumulator: number, income: IIncome) => accumulator + income.amount_monthly,
 		0,
 	);
 
-	const extraincomesSortedByCreatedAtAscending: IExtraincome[] = [...budget.extraincomes].sort((a, b): number => {
+	const incomesSortedByCreatedAtAscending: IIncome[] = [...budget.incomes].sort((a, b): number => {
 		return new Date(b.date).getTime() - new Date(a.date).getTime();
 	});
 
-	const handleRemoveExtraincome = async (extraincome: IExtraincome): Promise<void> => {
+	const handleRemoveIncome = async (income: IIncome): Promise<void> => {
 		try {
 			if (
 				confirm(
-					`Are you sure you want to remove income "${extraincome.type}" with amount ${extraincome.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budget.currency)}?`,
+					`Are you sure you want to remove income "${income.type}" with amount ${income.amount_monthly.toFixed(2)}${Utils.formatCurrencyFunction(budget.currency)}?`,
 				)
 			) {
 				if (!auth) {
-					await db.extraincomes.delete(extraincome.id);
+					await db.incomes.delete(income.id);
 
 					const budgets: IBudget[] = await db.budgets.toArray();
 					if (budgets.length === 0) {
 						await db.budgets.add({
 							id: 1,
-							user_id: 1,
+							uuid: uuidv4(),
+							user_uuid: uuidv4(),
 							currency: "EUR",
-							extraincomes: [],
-							extraexpenses: [],
+							incomes: [],
+							expenses: [],
 							created_at: new Date(),
 							updated_at: new Date(),
 						});
@@ -52,15 +54,16 @@ const Extraincomes = (): ReactNode => {
 
 					setBudgetStore(budgets[0]);
 
-					const extraincomes: IExtraincome[] = await db.extraincomes.toArray();
-					const extraexpenses: IExtraexpense[] = await db.extraexpenses.toArray();
+					const incomes: IIncome[] = await db.incomes.toArray();
+					const expenses: IExpense[] = await db.expenses.toArray();
 
 					setBudgetStore({
 						id: budgets[0].id,
-						user_id: budgets[0].user_id,
+						uuid: budgets[0].uuid,
+						user_uuid: budgets[0].user_uuid,
 						currency: budgets[0].currency,
-						extraincomes: extraincomes,
-						extraexpenses: extraexpenses,
+						incomes: incomes,
+						expenses: expenses,
 						created_at: budgets[0].created_at,
 						updated_at: budgets[0].updated_at,
 					});
@@ -68,18 +71,15 @@ const Extraincomes = (): ReactNode => {
 					return;
 				}
 
-				const removeExtraincomeResponse: Response = await fetch(
-					`${Utils.baseUrl}/extraincomes/remove/${extraincome.id}`,
-					{
-						method: "DELETE",
-						headers: { Authorization: `Bearer ${auth}` },
-					},
-				);
+				const removeIncomeResponse: Response = await fetch(`${Utils.baseUrl}/incomes/remove/${income.id}`, {
+					method: "DELETE",
+					headers: { Authorization: `Bearer ${auth}` },
+				});
 
-				if (!removeExtraincomeResponse.ok) {
-					const removeExtraincomeResponseError: IResponseError = await removeExtraincomeResponse.json();
+				if (!removeIncomeResponse.ok) {
+					const removeIncomeResponseError: IResponseError = await removeIncomeResponse.json();
 
-					throw new Error(removeExtraincomeResponseError.message);
+					throw new Error(removeIncomeResponseError.message);
 				}
 
 				const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -121,30 +121,30 @@ const Extraincomes = (): ReactNode => {
 			<div className="flex items-center justify-between">
 				<h2 className="text-base text-white font-bold font-rubik">Total Income</h2>
 				<span className="text-base text-white font-bold font-hanson">
-					{totalExtraincomes ? totalExtraincomes.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "0 00"}
+					{totalIncomes ? totalIncomes.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "0 00"}
 					{Utils.formatCurrencyFunction(budget.currency)}
 				</span>
 			</div>
 
 			<div className="flex flex-col gap-y-4">
-				{extraincomesSortedByCreatedAtAscending.length > 0 ? (
-					extraincomesSortedByCreatedAtAscending.map((extraincome: IExtraincome) => (
+				{incomesSortedByCreatedAtAscending.length > 0 ? (
+					incomesSortedByCreatedAtAscending.map((income: IIncome) => (
 						<button
 							type="button"
-							key={extraincome.id}
+							key={income.id}
 							className="flex flex-col gap-y-0.5 btn px-0 py-0 w-full rounded-none"
-							onClick={async (): Promise<void> => handleRemoveExtraincome(extraincome)}
+							onClick={async (): Promise<void> => handleRemoveIncome(income)}
 						>
 							<div className="flex items-center gap-x-2 w-full">
 								<span className="text-sm text-[#66666F] font-bold font-rubik">
-									{new Date(extraincome.date).toDateString()}
+									{new Date(income.date).toDateString()}
 								</span>
 								<hr className="flex-grow bg-[#66666F] h-[0.5px] border-none" />
 							</div>
 							<div className="flex items-center justify-between w-full">
-								<span className="text-base text-[#91919A] font-bold font-rubik truncate">{extraincome.type}</span>
+								<span className="text-base text-[#91919A] font-bold font-rubik truncate">{income.type}</span>
 								<span className="text-base text-[#56AB4D] font-bold font-hanson truncate">
-									+{extraincome.amount_monthly.toFixed(2)}
+									+{income.amount_monthly.toFixed(2)}
 									{Utils.formatCurrencyFunction(budget.currency)}
 								</span>
 							</div>
@@ -157,7 +157,7 @@ const Extraincomes = (): ReactNode => {
 							<br />
 							<br />
 							click{" "}
-							<button type="button" onClick={(): void => navigate("/new-extraincome")}>
+							<button type="button" onClick={(): void => navigate("/new-income")}>
 								<span className="text-[#009951] underline">Add new</span>
 							</button>{" "}
 							to add new income💡
@@ -169,4 +169,4 @@ const Extraincomes = (): ReactNode => {
 	);
 };
 
-export default Extraincomes;
+export default Incomes;

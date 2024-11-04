@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import React, { useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import { db } from "../../db";
 import useAuthStore from "../../stores/auth";
 import useBudgetStore from "../../stores/budget";
@@ -9,7 +10,7 @@ import useUserStore from "../../stores/user";
 import type { IBudget, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
-const BudgetNewExtraexpense = (): ReactNode => {
+const BudgetNewExpense = (): ReactNode => {
 	const navigate: NavigateFunction = useNavigate();
 
 	const { value: auth } = useAuthStore();
@@ -17,7 +18,7 @@ const BudgetNewExtraexpense = (): ReactNode => {
 	const { setBudgetsStore } = useBudgetsStore();
 	const { setUserStore } = useUserStore();
 
-	const [extraexpenseDate, setExtraexpenseDate] = useState<Date>(new Date());
+	const [expenseDate, setExpenseDate] = useState<Date>(new Date());
 	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -37,11 +38,13 @@ const BudgetNewExtraexpense = (): ReactNode => {
 			}
 
 			if (!auth) {
-				await db.extraexpenses.add({
-					user_id: 1,
+				await db.expenses.add({
+					id: 1,
+					uuid: uuidv4(),
+					budget_uuid: uuidv4(),
 					type: type,
 					amount_monthly: amount_monthly,
-					date: extraexpenseDate,
+					date: expenseDate,
 					created_at: new Date(),
 					updated_at: new Date(),
 				});
@@ -51,7 +54,7 @@ const BudgetNewExtraexpense = (): ReactNode => {
 				return;
 			}
 
-			const createExtraexpenseResponse: Response = await fetch(`${Utils.baseUrl}/extraexpenses/create`, {
+			const createExpenseResponse: Response = await fetch(`${Utils.baseUrl}/expenses/create`, {
 				method: "POST",
 				headers: {
 					Authorization: `Bearer ${auth}`,
@@ -61,14 +64,14 @@ const BudgetNewExtraexpense = (): ReactNode => {
 					budget_uuid: budget.uuid,
 					type: type,
 					amount_monthly: amount_monthly,
-					date: extraexpenseDate,
+					date: expenseDate,
 				}),
 			});
 
-			if (!createExtraexpenseResponse.ok) {
-				const createExtraexpenseResponseError: IResponseError = await createExtraexpenseResponse.json();
+			if (!createExpenseResponse.ok) {
+				const createExpenseResponseError: IResponseError = await createExpenseResponse.json();
 
-				throw new Error(createExtraexpenseResponseError.message);
+				throw new Error(createExpenseResponseError.message);
 			}
 
 			const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -192,9 +195,9 @@ const BudgetNewExtraexpense = (): ReactNode => {
 								type="date"
 								name="date"
 								id="date"
-								value={format(extraexpenseDate, "yyyy-MM-dd")}
+								value={format(expenseDate, "yyyy-MM-dd")}
 								required
-								onChange={(e: ChangeEvent<HTMLInputElement>): void => setExtraexpenseDate(new Date(e.target.value))}
+								onChange={(e: ChangeEvent<HTMLInputElement>): void => setExpenseDate(new Date(e.target.value))}
 							/>
 						</div>
 					</div>
@@ -237,4 +240,4 @@ const BudgetNewExtraexpense = (): ReactNode => {
 	);
 };
 
-export default BudgetNewExtraexpense;
+export default BudgetNewExpense;

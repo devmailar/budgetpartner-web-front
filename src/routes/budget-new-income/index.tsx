@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import React, { useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { type NavigateFunction, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import { db } from "../../db";
 import useAuthStore from "../../stores/auth";
 import useBudgetStore from "../../stores/budget";
@@ -9,7 +10,7 @@ import useUserStore from "../../stores/user";
 import type { IBudget, IResponseError, IUserResponse } from "../../types";
 import { Utils } from "../../utils";
 
-const BudgetNewExtraincome = (): ReactNode => {
+const BudgetNewIncome = (): ReactNode => {
 	const navigate: NavigateFunction = useNavigate();
 
 	const { value: auth } = useAuthStore();
@@ -17,7 +18,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 	const { setBudgetsStore } = useBudgetsStore();
 	const { setUserStore } = useUserStore();
 
-	const [extraincomeDate, setExtraincomeDate] = useState<Date>(new Date());
+	const [incomeDate, setIncomeDate] = useState<Date>(new Date());
 	const [disableSubmit, setDisableSubmit] = useState<boolean>(false);
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -39,12 +40,14 @@ const BudgetNewExtraincome = (): ReactNode => {
 			}
 
 			if (!auth) {
-				await db.extraincomes.add({
-					user_id: 1,
+				await db.incomes.add({
+					id: 1,
+					uuid: uuidv4(),
+					budget_uuid: uuidv4(),
 					type: type,
 					amount_monthly: amount_monthly,
 					includes_weekends: false,
-					date: extraincomeDate,
+					date: incomeDate,
 					created_at: new Date(),
 					updated_at: new Date(),
 				});
@@ -54,7 +57,7 @@ const BudgetNewExtraincome = (): ReactNode => {
 				return;
 			}
 
-			const createExtraincomeResponse: Response = await fetch(`${Utils.baseUrl}/extraincomes/create`, {
+			const createIncomeResponse: Response = await fetch(`${Utils.baseUrl}/incomes/create`, {
 				method: "POST",
 				headers: {
 					Authorization: `Bearer ${auth}`,
@@ -65,14 +68,14 @@ const BudgetNewExtraincome = (): ReactNode => {
 					type: type,
 					amount_monthly: amount_monthly,
 					includes_weekends: false,
-					date: extraincomeDate,
+					date: incomeDate,
 				}),
 			});
 
-			if (!createExtraincomeResponse.ok) {
-				const createExtraincomeResponseError: IResponseError = await createExtraincomeResponse.json();
+			if (!createIncomeResponse.ok) {
+				const createIncomeResponseError: IResponseError = await createIncomeResponse.json();
 
-				throw new Error(createExtraincomeResponseError.message);
+				throw new Error(createIncomeResponseError.message);
 			}
 
 			const getUserResponse: Response = await fetch(`${Utils.baseUrl}/users/get`, {
@@ -196,9 +199,9 @@ const BudgetNewExtraincome = (): ReactNode => {
 								type="date"
 								name="date"
 								id="date"
-								value={format(extraincomeDate, "yyyy-MM-dd")}
+								value={format(incomeDate, "yyyy-MM-dd")}
 								required
-								onChange={(e: ChangeEvent<HTMLInputElement>): void => setExtraincomeDate(new Date(e.target.value))}
+								onChange={(e: ChangeEvent<HTMLInputElement>): void => setIncomeDate(new Date(e.target.value))}
 							/>
 						</div>
 					</div>
@@ -241,4 +244,4 @@ const BudgetNewExtraincome = (): ReactNode => {
 	);
 };
 
-export default BudgetNewExtraincome;
+export default BudgetNewIncome;
